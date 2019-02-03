@@ -46,29 +46,35 @@ sub gtk_main_quit ( )
     { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+our $gui-initialized = False;
+
+#-------------------------------------------------------------------------------
 submethod BUILD ( Bool :$check = False ) {
 
-  # Must setup gtk otherwise perl6 will crash
-  my $argc = CArray[int32].new;
-  $argc[0] = 1 + +@*ARGS;
+  if not $gui-initialized {
+    # Must setup gtk otherwise perl6 will crash
+    my $argc = CArray[int32].new;
+    $argc[0] = 1 + +@*ARGS;
 
-  my $arg_arr = CArray[Str].new;
-  my Int $arg-count = 0;
-  $arg_arr[$arg-count] = $*PROGRAM.Str;
-  for @*ARGS -> $arg {
-    $arg_arr[$arg-count] = $arg;
-  }
+    my $arg_arr = CArray[Str].new;
+    my Int $arg-count = 0;
+    $arg_arr[$arg-count] = $*PROGRAM.Str;
+    for @*ARGS -> $arg {
+      $arg_arr[$arg-count] = $arg;
+    }
 
-  my $argv = CArray[CArray[Str]].new;
-  $argv[0] = $arg_arr;
+    my $argv = CArray[CArray[Str]].new;
+    $argv[0] = $arg_arr;
 
-  # here, we don't need fancy calling with self.gtk-init( $argc, $argv);
-  if $check {
-    gtk_init_check( $argc, $argv);
-  }
+    if $check {
+      gtk_init_check( $argc, $argv);
+      $gui-initialized = True;
+    }
 
-  else {
-    gtk_init( $argc, $argv);
+    else {
+      gtk_init( $argc, $argv);
+      $gui-initialized = True;
+    }
   }
 }
 
@@ -82,7 +88,5 @@ method FALLBACK ( $native-sub is copy, |c ) {
   my Callable $s;
   try { $s = &::($native-sub); }
 
-#note "l call sub: ", $s.perl, ', ', $!gtk-widget.perl;
   test-call( &$s, Any, |c)
-#  &$s(|c)
 }

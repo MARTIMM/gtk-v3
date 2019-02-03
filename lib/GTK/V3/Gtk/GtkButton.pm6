@@ -34,7 +34,7 @@ sub gtk_button_set_label ( N-GtkWidget $widget, Str $label )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( Str :$text ) {
+submethod BUILD ( Str :$text? ) {
 
   if ?$text {
     $!gtk-widget = gtk_button_new_with_label($text);

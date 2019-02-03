@@ -1,0 +1,35 @@
+{
+  "description": "Interfacing Glade XML to Perl6",
+  "name": "GTK::V3",
+  "version": "0.0.1",
+  "authors": [ "Marcel Timmerman"],
+  "tags": [ "Gui", "Gtk"],
+
+  "perl": "6",
+  "license": "Artistic-2.0",
+
+  "provides": {
+    "GTK::V3::Gui": "lib/GTK/V3/Gui.pm6",
+    "GTK::V3::X": "lib/GTK/V3/X.pm6",
+
+    "GTK::V3::Gdk::GdkDisplay": "lib/GTK/V3/Gdk/GdkDisplay.pm6",
+    "GTK::V3::Gdk::GdkScreen": "lib/GTK/V3/Gdk/GdkScreen.pm6",
+    "GTK::V3::Gdk::GdkWindow": "lib/GTK/V3/Gdk/GdkWindow.pm6",
+
+    "GTK::V3::Glib::GMain": "lib/GTK/V3/Glib/GMain.pm6",
+
+    "GTK::V3::Gtk::GtkBin": "lib/GTK/V3/Gtk/GtkBin.pm6",
+    "GTK::V3::Gtk::GtkButton": "lib/GTK/V3/Gtk/GtkButton.pm6",
+    "GTK::V3::Gtk::GtkContainer": "lib/GTK/V3/Gtk/GtkContainer.pm6",
+    "GTK::V3::Gtk::GtkLabel": "lib/GTK/V3/Gtk/GtkLabel.pm6",
+    "GTK::V3::Gtk::GtkMain": "lib/GTK/V3/Gtk/GtkMain.pm6",
+    "GTK::V3::Gtk::GtkWidget": "lib/GTK/V3/Gtk/GtkWidget.pm6"
+  },
+
+  "source-url": "git://github.com/MARTIMM/gtk-v3.git",
+
+  "depends": [ ],
+  "test-depends": [ ],
+  "build-depends": [ ],
+  "resources": [ ]
+}

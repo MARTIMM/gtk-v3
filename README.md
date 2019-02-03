@@ -39,18 +39,24 @@ Not all of the GTK, GDK or Glib libraries will be covered because not everything
 
 * GTK::V3::Gtk::GtkBin is GTK::V3::Gtk::GtkContainer
 
+* GTK::V3::Gtk::GtkBuilder
+  * `new ( )`
+  * `new ( Str:D :$filename! )`
+  * `new ( Str:D :$string! )`
+  * `add-gui ( Str:D :$filename! )`
+  * `add-gui ( Str:D :$$string! )`
+  * `gtk_builder_get_object ( Str $object-id --> N-GtkWidget )`
+  * `gtk_builder_get_type_from_name ( Str $type_name --> int32 )`
+
 * GTK::V3::Gtk::GtkButton is GTK::V3::Gtk::GtkBin
-  * `new ( Str :$text )`
-  * `gtk_button_get_label ( )`
-  * `gtk_button_set_label ( N-GtkWidget $widget, Str $label )`
-<!--  * `gtk_button_new ( )`
-  * `gtk_button_new_with_label ( Str $label )`
--->
+  * `new ( Str :$text? )`
+  * `gtk_button_get_label ( --> Str )`
+  * `gtk_button_set_label ( Str $label )`
 
 * GTK::V3::Gtk::GtkContainer is GTK::V3::Gtk::GtkWidget
   * `gtk_container_add ( N-GtkWidget $widget )`
-  * `gtk_container_get_border_width ( )`
-  * `gtk_container_get_children ( )`
+  * `gtk_container_get_border_width ( --> int32 )`
+  * `gtk_container_get_children ( --> CArray[N-GtkWidget] )`
   * `gtk_container_set_border_width ( Int $border_width )`
 
 * GTK::V3::Gtk::GtkLabel is GTK::V3::Gtk::GtkWidget

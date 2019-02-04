@@ -37,29 +37,66 @@ Not all of the GTK, GDK or Glib libraries will be covered because not everything
 
 ## Gtk library
 
-* GTK::V3::Gtk::GtkBin is GTK::V3::Gtk::GtkContainer
+* **GTK::V3::Gui**
+  * `class N-GtkWidget`
+  * `CALL-ME ( N-GtkWidget $widget? --> N-GtkWidget )` [1]
+  * `FALLBACK ( $native-sub, |c )` [2]
 
-* GTK::V3::Gtk::GtkBuilder
+* **GTK::V3::X**
+  is **Exception**
+  * `test-catch-exception ( Exception $e, Str $native-sub )`
+  * `test-call ( $handler, $gobject, |c )`
+
+* [GTK::V3::Gtk::GtkBin][gtkbin]
+    is **GTK::V3::Gtk::GtkContainer**
+    does **GTK::V3::Gui**
+  <!--* `new ( N-GtkWidget $widget )`-->
+  * `gtk_bin_get_child ( --> N-GtkWidget )` [3][4][5]
+
+* [GTK::V3::Gtk::GtkBuilder][gtkbuilder]
   * `new ( )`
   * `new ( Str:D :$filename! )`
   * `new ( Str:D :$string! )`
   * `add-gui ( Str:D :$filename! )`
   * `add-gui ( Str:D :$$string! )`
   * `gtk_builder_get_object ( Str $object-id --> N-GtkWidget )`
-  * `gtk_builder_get_type_from_name ( Str $type_name --> int32 )`
+  * `gtk_builder_get_type_from_name ( Str $type_name --> Int )`
 
-* GTK::V3::Gtk::GtkButton is GTK::V3::Gtk::GtkBin
+* [GTK::V3::Gtk::GtkButton][gtkbutton]
+  is **GTK::V3::Gtk::GtkBin**
+  does **GTK::V3::Gui**
   * `new ( Str :$text? )`
+  <!--* `new ( N-GtkWidget $button )`-->
   * `gtk_button_get_label ( --> Str )`
   * `gtk_button_set_label ( Str $label )`
 
-* GTK::V3::Gtk::GtkContainer is GTK::V3::Gtk::GtkWidget
+* [GTK::V3::Gtk::GtkContainer][gtkcontainer]
+  is **GTK::V3::Gtk::GtkWidget**
+  does **GTK::V3::Gui**
   * `gtk_container_add ( N-GtkWidget $widget )`
-  * `gtk_container_get_border_width ( --> int32 )`
-  * `gtk_container_get_children ( --> CArray[N-GtkWidget] )`
+  * `gtk_container_get_border_width ( --> Int )`
+  * `gtk_container_get_children ( --> N-GList )`
   * `gtk_container_set_border_width ( Int $border_width )`
 
-* GTK::V3::Gtk::GtkLabel is GTK::V3::Gtk::GtkWidget
+* [GTK::V3::Gtk::GtkGrid][gtkgrid]
+  is **GTK::V3::Gtk::GtkContainer**
+  does **GTK::V3::Gui**
+  * `new ( )`
+  <!--* `new ( N-GtkWidget $grid )`-->
+  * `gtk_grid_attach ( N-GtkWidget $child, Int $x, Int $y, Int $w, Int $h)`
+  * `gtk_grid_insert_row ( Int $position )`
+  * `gtk_grid_insert_column ( Int $position )`
+  * `gtk_grid_get_child_at ( UInt $left, UInt $top --> N-GtkWidget )`
+  * `gtk_grid_set_row_spacing ( UInt $spacing )`
+
+* [GTK::V3::Gtk::GtkLabel][gtklabel]
+  is **GTK::V3::Gtk::GtkWidget**
+  does **GTK::V3::Gui**
+  * `new ( Str :$text? )`
+  <!--* `new ( N-GtkWidget $grid )`-->
+  * `gtk_label_get_text ( --> Str )`
+  * `gtk_label_set_text ( Str $str )`
+
 * GTK::V3::Gtk::GtkMain
 * GTK::V3::Gtk::GtkWidget
 
@@ -75,19 +112,17 @@ Not all of the GTK, GDK or Glib libraries will be covered because not everything
 * GTK::V3::Glib::GSignal
 
 ### Notes
-  1) `N-GtkWidget` is a native widget which is held internally in most of the classes. Sometimes they need to be handed over in a call. The `CALL-ME` method is coded in such a way that this object can be set or retrieved easily. E.g.
-
+  1) The `CALL-ME` method is coded in such a way that an object can be set or retrieved easily. E.g.
       ```
       my GTK::V3::Gtk::GtkLabel $label .= new(:text('my label'));
       my GTK::V3::Gtk::GtkGrid $grid .= new;
       $grid.gtk_grid_attach( $label(), 0, 0, 1, 1);
       ```
-
       Notice how the native widget is retrieved with `$label()`.
-
-  2) Each method can at least be called with perl6 like dashes in the method name. E.g. `gtk_container_add` can be written as `gtk-container-add`.
-
-  3) In some cases the calls can be shortened too. E.g. `gtk_button_get_label` can also be called like `get_label` or `get-label`. Sometimes, when shortened, calls can end up with a call using the wrong native widget. When in doubt use the complete method call.
+  2) The `FALLBACK` method is used to test for the defined native functions as if the functions where methods. It calls the `fallback` methods in the class which in turn call the parent fallback using `callsame`. The resulting function addres is returned and processed with the `test-call` functions from **GTK::V3::X**. Thrown exceptions are handled by the function `test-catch-exception` from the same module.
+  3) `N-GtkWidget` is a native widget which is held internally in most of the classes. Sometimes they need to be handed over in a call.
+  4) Each method can at least be called with perl6 like dashes in the method name. E.g. `gtk_container_add` can be written as `gtk-container-add`.
+  5) In some cases the calls can be shortened too. E.g. `gtk_button_get_label` can also be called like `get_label` or `get-label`. Sometimes, when shortened, calls can end up with a call using the wrong native widget. When in doubt use the complete method call.
 
 ## Miscellaneous
 * [Release notes][release]
@@ -114,7 +149,14 @@ Github account name: Github account MARTIMM
 <!---- [refs] ----------------------------------------------------------------->
 [release]: https://github.com/MARTIMM/gtk-glade/blob/master/doc/CHANGES.md
 [logo]: doc/gtk-logo-100.png
-[gtklabel]: https://developer.gnome.org/gtk3/stable/GtkLabel.html#gtk-label-set-text
+
+[gtkbin]: https://developer.gnome.org/gtk3/stable/GtkBin.html
+[gtkbuilder]: https://developer.gnome.org/gtk3/stable/GtkBuilder.html
+[gtkbutton]: https://developer.gnome.org/gtk3/stable/GtkButton.html
+[gtkcontainer]: https://developer.gnome.org/gtk3/stable/GtkContainer.html
+[gtkgrid]: https://developer.gnome.org/gtk3/stable/GtkGrid.html
+[gtklabel]: https://developer.gnome.org/gtk3/stable/GtkLabel.html
+
 <!--
 [todo]: https://github.com/MARTIMM/Library/blob/master/doc/TODO.md
 [man]: https://github.com/MARTIMM/Library/blob/master/doc/manual.pdf

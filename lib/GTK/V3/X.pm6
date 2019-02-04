@@ -74,7 +74,7 @@ sub test-call ( $handler, $gobject, |c ) is export {
 #note "Parameters: ", $sig-params, ', ', $gobject;
 #note "P0: ", $sig-params[0].type.^name;
   if +$sig-params and
-     $sig-params[0].type.^name ~~ m/^ ['GTK::V3::G' .*?]? 'N-' [ 'Gtk'||'Gdk'] / {
+     $sig-params[0].type.^name ~~ m/^ ['GTK::V3::G' .*?]? 'N-G' / {
 #note "\ncall with widget";
     &$handler( $gobject, |c)
   }

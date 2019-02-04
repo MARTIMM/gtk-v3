@@ -21,6 +21,11 @@ sub gtk_bin_get_child ( N-GtkWidget $bin )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+submethod BUILD ( N-GtkWidget $widget ) {
+  $!gtk-widget = $widget;
+}
+
+#-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {
 
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');

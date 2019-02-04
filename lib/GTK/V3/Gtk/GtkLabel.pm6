@@ -29,12 +29,21 @@ sub gtk_label_set_text ( N-GtkWidget $label, Str $str )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( Str :$text = '' ) {
+multi submethod BUILD ( Str :$text = '' ) {
 
   die X::Gui.new(:message('GTK is not initialized'))
       unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
   $!gtk-widget = gtk_label_new($text);
+}
+
+#-------------------------------------------------------------------------------
+multi submethod BUILD ( N-GtkWidget $widget ) {
+
+  die X::Gui.new(:message('GTK is not initialized'))
+      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
+
+  $!gtk-widget = $widget;
 }
 
 #-------------------------------------------------------------------------------

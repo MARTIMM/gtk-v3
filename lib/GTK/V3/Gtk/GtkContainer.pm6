@@ -4,11 +4,12 @@ use NativeCall;
 use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GList;
+use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
-# See /usr/include/gtk-3.0/gtk/gtkbin.h
-# https://developer.gnome.org/gtk3/stable/GtkBin.html
+# See /usr/include/gtk-3.0/gtk/gtkcontainer.h
+# https://developer.gnome.org/gtk3/stable/GtkContainer.html
 unit class GTK::V3::Gtk::GtkContainer:auth<github:MARTIMM>
   is GTK::V3::Gtk::GtkWidget
   does GTK::V3::Gui;
@@ -45,4 +46,13 @@ method fallback ( $native-sub is copy --> Callable ) {
   $s = callsame unless ?$s;
 
   $s
+}
+
+#-------------------------------------------------------------------------------
+submethod BUILD ( N-GtkWidget $widget ) {
+
+  die X::Gui.new(:message('GTK is not initialized'))
+      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
+
+  $!gtk-widget = $widget;
 }

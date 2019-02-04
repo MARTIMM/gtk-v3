@@ -22,7 +22,7 @@ sub gtk_grid_new()
   is export
   { * }
 
-sub gtk_grid_attach( N-GtkWidget $grid, N-GtkWidget $child, int32 $x, int32 $y,
+sub gtk_grid_attach ( N-GtkWidget $grid, N-GtkWidget $child, int32 $x, int32 $y,
   int32 $w, int32 $h
 ) is native(&gtk-lib)
   is export
@@ -50,12 +50,21 @@ sub gtk_grid_set_row_spacing ( N-GtkWidget $grid, uint32 $spacing)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( ) {
+multi submethod BUILD ( ) {
 
   die X::Gui.new(:message('GTK is not initialized'))
       unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
   $!gtk-widget = gtk_grid_new;
+}
+
+#-------------------------------------------------------------------------------
+multi submethod BUILD ( N-GtkWidget $widget ) {
+
+  die X::Gui.new(:message('GTK is not initialized'))
+      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
+
+  $!gtk-widget = $widget;
 }
 
 #-------------------------------------------------------------------------------

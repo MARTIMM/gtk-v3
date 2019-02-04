@@ -3,6 +3,7 @@ use NativeCall;
 
 use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
+use GTK::V3::Glib::GList;
 use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
@@ -23,7 +24,7 @@ sub gtk_container_get_border_width ( N-GtkWidget $container )
   { * }
 
 sub gtk_container_get_children ( N-GtkWidget $container )
-  returns CArray[N-GtkWidget]
+  returns N-GList
   is native(&gtk-lib)
   { * }
 

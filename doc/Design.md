@@ -22,8 +22,11 @@ class GdkWindow
 class GtkMain
 class GtkWidget
 GdkScreen <-o GtkWidget
-GdkDisplay <--o GtkWidget
+GdkDisplay <---o GtkWidget
 GtkWidget o-> GdkWindow
+
+GSignal <|-- GtkWidget
+X <-* Gui
 
 class GtkBin
 class GtkContainer

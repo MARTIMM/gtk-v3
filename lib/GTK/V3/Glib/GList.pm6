@@ -40,6 +40,7 @@ sub g_list_nth_data ( N-GList $list, int32 $n)
   is native(&gtk-lib)
   { * }
 
+#TODO free $!g-list too
 sub g_list_free ( N-GList $list )
   is native(&gtk-lib)
   { * }

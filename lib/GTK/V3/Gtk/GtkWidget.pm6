@@ -3,12 +3,14 @@ use NativeCall;
 
 use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
+use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gdk::GdkScreen;
 use GTK::V3::Gdk::GdkDisplay;
 use GTK::V3::Gdk::GdkWindow;
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-unit class GTK::V3::Gtk::GtkWidget:auth<github:MARTIMM>;
+unit class GTK::V3::Gtk::GtkWidget:auth<github:MARTIMM>
+  does GTK::V3::Gui;
 
 #-------------------------------------------------------------------------------
 sub gtk_widget_get_display ( N-GtkWidget $widget )

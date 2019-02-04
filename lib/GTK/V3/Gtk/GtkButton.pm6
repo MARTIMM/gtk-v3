@@ -65,3 +65,9 @@ method fallback ( $native-sub is copy --> Callable ) {
 
   $s
 }
+
+#-------------------------------------------------------------------------------
+method handle-click ( $handler, CArray[Str] $data, Int $connect_flags ) {
+  #TODO check signature of handler
+  self.g-signal-connect-object( 'clicked', $handler, $data, $connect_flags);
+}

@@ -2,7 +2,9 @@ use v6;
 use NativeCall;
 
 use GTK::V3::Gui;
+#use GTK::V3::N::Widget;
 use GTK::V3::N::NativeLib;
+use GTK::V3::Glib::GSignal;
 use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gdk::GdkScreen;
 use GTK::V3::Gdk::GdkDisplay;
@@ -10,6 +12,7 @@ use GTK::V3::Gdk::GdkWindow;
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 unit class GTK::V3::Gtk::GtkWidget:auth<github:MARTIMM>
+  is GTK::V3::Glib::GSignal
   does GTK::V3::Gui;
 
 #-------------------------------------------------------------------------------
@@ -120,8 +123,7 @@ method fallback ( $native-sub is copy --> Callable ) {
 #note "w s1: gtk_widget_$native-sub, ", $s unless ?$s;
   try { $s = &::("gtk_widget_$native-sub"); } unless ?$s;
 
-  # Stop here and do not go further up
-  #$s = callsame unless ?$s;
+  $s = callsame unless ?$s;
 
   $s
 }

@@ -4,7 +4,6 @@ use NativeCall;
 use GTK::V3::X;
 use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
-use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 # See /usr/include/glib-2.0/gobject/gsignal.h
@@ -24,7 +23,7 @@ enum GConnectFlags is export (
 # User data is set to CArray[Str] type
 sub g_signal_connect (
   N-GtkWidget $widget, Str $signal,
-  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
+  &handler, # ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data
 ) {
   g_signal_connect_data(
@@ -34,7 +33,7 @@ sub g_signal_connect (
 
 sub g_signal_connect_after (
   N-GtkWidget $widget, Str $signal,
-  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
+  &handler, # ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data
 ) {
   g_signal_connect_data(
@@ -44,7 +43,7 @@ sub g_signal_connect_after (
 
 sub g_signal_connect_swapped (
   N-GtkWidget $widget, Str $signal,
-  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
+  &handler, # ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data
 ) {
   g_signal_connect_data(
@@ -55,7 +54,7 @@ sub g_signal_connect_swapped (
 #-------------------------------------------------------------------------------
 sub g_signal_connect_data(
   N-GtkWidget $widget, Str $signal,
-  &Handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
+  &handler, # ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data, OpaquePointer $destroy_data, int32 $connect_flags
 ) returns int32
   is native(&gobject-lib)
@@ -64,7 +63,7 @@ sub g_signal_connect_data(
 # unsave in threaded programs
 sub g_signal_connect_object(
   N-GtkWidget $widget, Str $signal,
-  &Handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
+  &handler, # ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data, int32 $connect_flags
 ) returns uint32
   is native(&gobject-lib)
@@ -93,6 +92,7 @@ sub g_signal_handler_disconnect( N-GtkWidget $widget, int32 $handler_id)
   is native(&gobject-lib)
   { * }
 
+#`{{
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 method FALLBACK ( $native-sub is copy, |c ) {
 
@@ -105,4 +105,18 @@ method FALLBACK ( $native-sub is copy, |c ) {
   try { $s = &::("g_signal_$native-sub"); }
 
   test-call( $s, $!gtk-widget, |c)
+}
+}}
+
+method fallback ( $native-sub is copy --> Callable ) {
+
+  $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
+
+  my Callable $s;
+note "sig s0: $native-sub, ", $s;
+  try { $s = &::($native-sub); }
+note "sig s1: gtk_widget_$native-sub, ", $s unless ?$s;
+  try { $s = &::("g_signal_$native-sub"); } unless ?$s;
+
+  $s
 }

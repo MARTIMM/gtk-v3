@@ -73,4 +73,18 @@ subtest 'Button as container', {
 }
 
 #-------------------------------------------------------------------------------
+subtest 'Button set sinal', {
+  my GTK::V3::Gtk::GtkButton $button .= new(:text('xyz'));
+  my CArray[Str] $data .= new;
+  $data[0] = 'str 1';
+  $data[1] = 'str 2';
+  $button.handle-click( &click-handler, $data, 0);
+}
+
+#-------------------------------------------------------------------------------
+sub click-handler ( N-GtkWidget $widget, CArray[Str] $data ) {
+  note "Click handler says: $data[0] and $data[1]";
+}
+
+#-------------------------------------------------------------------------------
 done-testing;

@@ -189,8 +189,6 @@ method FALLBACK ( $native-sub is copy, |c ) {
 #-------------------------------------------------------------------------------
 multi method add-gui ( Str:D :$filename! ) {
 
-note "B: $!gtk-builder";
-
   if ?$!gtk-builder {
 #    my N-GError $g-error;
     my Int $e-code = gtk_builder_add_from_file(

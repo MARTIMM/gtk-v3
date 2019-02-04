@@ -8,13 +8,6 @@ class X::Gui is Exception {
 }
 
 #-------------------------------------------------------------------------------
-class X::Glade is Exception {
-  has $.message;
-
-  submethod BUILD ( Str:D :$!message ) { }
-}
-
-#-------------------------------------------------------------------------------
 sub test-catch-exception ( Exception $e, Str $native-sub ) is export {
 
 note "Error type: ", $e.WHAT;

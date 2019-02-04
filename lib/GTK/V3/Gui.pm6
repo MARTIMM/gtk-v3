@@ -49,4 +49,14 @@ role GTK::V3::Gui:auth<github:MARTIMM> {
 
     test-call( $s, $!gtk-widget, |c)
   }
+#`{{
+  #-----------------------------------------------------------------------------
+  multi submethod BUILD ( N-GtkWidget:D :$widget! ) {
+
+    die X::Gui.new(:message('GTK is not initialized'))
+        unless $GTK::V3::Gtk::GtkMain::gui-initialized;
+
+    $!gtk-widget = $widget;
+  }
+}}
 }

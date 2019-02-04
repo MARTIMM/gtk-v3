@@ -20,11 +20,6 @@ sub gtk_bin_get_child ( N-GtkWidget $bin )
   is native(&gtk-lib)
   { * }
 
-# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( N-GtkWidget $widget ) {
-  $!gtk-widget = $widget;
-}
-
 #-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {
 

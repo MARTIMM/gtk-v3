@@ -3,7 +3,7 @@ use NativeCall;
 
 use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
-use GTK::V3::Gtk::GtkMain;
+#use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkBin;
 
@@ -35,27 +35,21 @@ sub gtk_button_set_label ( N-GtkWidget $widget, Str $label )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-multi submethod BUILD ( Str :$text? ) {
+multi submethod BUILD ( ) {
 
   die X::Gui.new(:message('GTK is not initialized'))
       unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
-  if ?$text {
-    $!gtk-widget = gtk_button_new_with_label($text);
-  }
-
-  else {
-    $!gtk-widget = gtk_button_new;
-  }
+  $!gtk-widget = gtk_button_new;
 }
 
 #-------------------------------------------------------------------------------
-multi submethod BUILD ( N-GtkWidget $widget ) {
+multi submethod BUILD ( Str:D :$text! ) {
 
   die X::Gui.new(:message('GTK is not initialized'))
       unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
-  $!gtk-widget = $widget;
+  $!gtk-widget = gtk_button_new_with_label($text);
 }
 
 #-------------------------------------------------------------------------------

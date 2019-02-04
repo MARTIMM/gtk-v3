@@ -4,7 +4,7 @@ use NativeCall;
 use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GList;
-use GTK::V3::Gtk::GtkMain;
+#use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
@@ -46,13 +46,4 @@ method fallback ( $native-sub is copy --> Callable ) {
   $s = callsame unless ?$s;
 
   $s
-}
-
-#-------------------------------------------------------------------------------
-submethod BUILD ( N-GtkWidget $widget ) {
-
-  die X::Gui.new(:message('GTK is not initialized'))
-      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
-
-  $!gtk-widget = $widget;
 }

@@ -3,6 +3,7 @@ use NativeCall;
 
 use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
+use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
@@ -28,7 +29,10 @@ sub gtk_label_set_text ( N-GtkWidget $label, Str $str )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( Str:D :$text ) {
+submethod BUILD ( Str :$text = '' ) {
+
+  die X::Gui.new(:message('GTK is not initialized'))
+      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
   $!gtk-widget = gtk_label_new($text);
 }
@@ -39,10 +43,10 @@ method fallback ( $native-sub is copy --> Callable ) {
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
 
   my Callable $s;
-#note "l s0: $native-sub, ", $s;
+
   try { $s = &::($native-sub); }
-#note "l s1: gtk_label_$native-sub, ", $s unless ?$s;
   try { $s = &::("gtk_label_$native-sub"); } unless ?$s;
+
   $s = callsame unless ?$s;
 
   $s

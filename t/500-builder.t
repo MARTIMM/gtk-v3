@@ -43,11 +43,11 @@ subtest 'Initialize error', {
   my GTK::V3::Gtk::GtkBuilder $builder;
   throws-like
     { $builder .= new; },
-    X::Gui, "forget to initialize",
+    X::Gui, "forget to initialize GTK",
     :message("GTK is not initialized");
 }
 
-# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+#-------------------------------------------------------------------------------
 subtest 'Empty builder', {
   # initialize
   my GTK::V3::Gtk::GtkMain $main .= new;

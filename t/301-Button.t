@@ -3,6 +3,7 @@ use NativeCall;
 use Test;
 
 use GTK::V3::Gui;
+use GTK::V3::Glib::GList;
 use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkBin;
@@ -12,11 +13,21 @@ use GTK::V3::Gtk::GtkLabel;
 
 diag "\n";
 
-# initialize
-my GTK::V3::Gtk::GtkMain $main .= new;
+
+#-------------------------------------------------------------------------------
+subtest 'Initialize error', {
+  my GTK::V3::Gtk::GtkButton $button;
+  throws-like
+    { $button .= new(:text('text')); },
+    X::Gui, "forget to initialize GTK",
+    :message("GTK is not initialized");
+}
 
 #-------------------------------------------------------------------------------
 subtest 'Button create', {
+
+  # initialize
+  my GTK::V3::Gtk::GtkMain $main .= new;
 
   my GTK::V3::Gtk::GtkButton $button1 .= new(:text('abc def'));
   isa-ok $button1, GTK::V3::Gtk::GtkButton;
@@ -40,7 +51,10 @@ subtest 'Button create', {
 subtest 'Button as container', {
   my GTK::V3::Gtk::GtkButton $button1 .= new(:text('xyz'));
   my GTK::V3::Gtk::GtkLabel $l .= new(:text(''));
-  $l($button1.get-children[0]);
+
+  my GTK::V3::Glib::GList $gl .= new;
+  $gl($button1.get-children);
+  $l($gl.nth-data(0));
   is $l.get-text, 'xyz', 'text label from button 1';
 
   my GTK::V3::Gtk::GtkLabel $label .= new(:text('pqr'));
@@ -53,6 +67,9 @@ subtest 'Button as container', {
   # Next statement is not able to get the text directly
   # when gtk-container-add is used.
   is $button2.get-label, Str, 'text cannot be returned like this anymore';
+
+  $gl.free;
+  $gl = GTK::V3::Glib::GList;
 }
 
 #-------------------------------------------------------------------------------

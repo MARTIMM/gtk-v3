@@ -10,15 +10,15 @@ class X::Gui is Exception {
 #-------------------------------------------------------------------------------
 sub test-catch-exception ( Exception $e, Str $native-sub ) is export {
 
-note "Error type: ", $e.WHAT;
-note "Error message: ", $e.message;
+#note "Error type: ", $e.WHAT;
+#note "Error message: ", $e.message;
 #.note;
   given $e {
 
 #TODO X::Method::NotFound
 #     No such method 'message' for invocant of type 'Any'
 #TODO Argument
-#
+#     Calling gtk_button_get_label(N-GtkWidget, Str) will never work with declared signature (N-GtkWidget $widget --> Str)
 #TODO Return
 #     Type check failed for return value
 

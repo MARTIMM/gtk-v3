@@ -2,7 +2,7 @@ use v6;
 use NativeCall;
 
 use GTK::V3::X;
-#use GTK::V3::Gui;
+use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Gtk::GtkWidget;
 
@@ -10,51 +10,52 @@ use GTK::V3::Gtk::GtkWidget;
 # See /usr/include/glib-2.0/gobject/gsignal.h
 # /usr/include/glib-2.0/gobject/gobject.h
 # https://developer.gnome.org/gobject/stable/gobject-Signals.html
-unit class GTK::V3::Glib::GSignal:auth<github:MARTIMM>;
+unit class GTK::V3::Glib::GSignal:auth<github:MARTIMM>
+  does GTK::V3::Gui;
 
 #-------------------------------------------------------------------------------
-enum GConnectFlags is export {
+enum GConnectFlags is export (
   G_CONNECT_AFTER	        => 1,
   G_CONNECT_SWAPPED	      => 1 +< 1
-};
+);
 
 #-------------------------------------------------------------------------------
 # Helper subs using the native calls
 # User data is set to CArray[Str] type
 sub g_signal_connect (
-  GtkWidget $widget, Str $signal,
-  &handler ( GtkWidget $h_widget, CArray[Str] $h_data),
+  N-GtkWidget $widget, Str $signal,
+  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data
 ) {
   g_signal_connect_data(
-    $widget, $signal, $handler, $data, Any, 0
+    $widget, $signal, &handler, $data, Any, 0
   );
 }
 
 sub g_signal_connect_after (
-  GtkWidget $widget, Str $signal,
-  &handler ( GtkWidget $h_widget, CArray[Str] $h_data),
+  N-GtkWidget $widget, Str $signal,
+  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data
 ) {
   g_signal_connect_data(
-    $widget, $signal, $handler, $data, Any, G_CONNECT_AFTER
+    $widget, $signal, &handler, $data, Any, G_CONNECT_AFTER
   );
 }
 
 sub g_signal_connect_swapped (
-  GtkWidget $widget, Str $signal,
-  &handler ( GtkWidget $h_widget, CArray[Str] $h_data),
+  N-GtkWidget $widget, Str $signal,
+  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data
 ) {
   g_signal_connect_data(
-    $widget, $signal, $handler, $data, Any, G_CONNECT_SWAPPED
+    $widget, $signal, &handler, $data, Any, G_CONNECT_SWAPPED
   );
 }
 
 #-------------------------------------------------------------------------------
 sub g_signal_connect_data(
   N-GtkWidget $widget, Str $signal,
-  &Handler ( GtkWidget $h_widget, CArray[Str] $h_data),
+  &Handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data, OpaquePointer $destroy_data, int32 $connect_flags
 ) returns int32
   is native(&gobject-lib)
@@ -103,5 +104,5 @@ method FALLBACK ( $native-sub is copy, |c ) {
   try { $s = &::($native-sub); }
   try { $s = &::("g_signal_$native-sub"); }
 
-  test-call( $s, $!gdk-window, |c)
+  test-call( $s, $!gtk-widget, |c)
 }

@@ -52,16 +52,21 @@ method fallback ( $native-sub is copy --> Callable ) {
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
 
   my Callable $s;
+#note "try $native-sub, ";
   try { $s = &::($native-sub); }
+#note "try gtk_button_$native-sub, " unless ?$s;
   try { $s = &::("gtk_button_$native-sub"); } unless ?$s;
 
   $s = callsame unless ?$s;
 
+#note "return ", $s.gist();
   $s
 }
 
 #-------------------------------------------------------------------------------
-method handle-click ( $handler, CArray[Str] $data, Int $connect_flags ) {
+method handle-click (
+  Callable $handler, CArray[Str] $data, Int $connect_flags = 0
+) {
   #TODO check signature of handler
-  self.g-signal-connect-object( 'clicked', $handler, $data, $connect_flags);
+  self.connect-object( 'clicked', $handler, $data, $connect_flags);
 }

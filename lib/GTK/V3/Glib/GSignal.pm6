@@ -23,7 +23,7 @@ enum GConnectFlags is export (
 # User data is set to CArray[Str] type
 sub g_signal_connect (
   N-GtkWidget $widget, Str $signal,
-  &handler, # ( N-GtkWidget $h_widget, CArray[Str] $h_data),
+  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data
 ) {
   g_signal_connect_data(
@@ -33,7 +33,7 @@ sub g_signal_connect (
 
 sub g_signal_connect_after (
   N-GtkWidget $widget, Str $signal,
-  &handler, # ( N-GtkWidget $h_widget, CArray[Str] $h_data),
+  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data
 ) {
   g_signal_connect_data(
@@ -43,7 +43,7 @@ sub g_signal_connect_after (
 
 sub g_signal_connect_swapped (
   N-GtkWidget $widget, Str $signal,
-  &handler, # ( N-GtkWidget $h_widget, CArray[Str] $h_data),
+  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data
 ) {
   g_signal_connect_data(
@@ -52,18 +52,19 @@ sub g_signal_connect_swapped (
 }
 
 #-------------------------------------------------------------------------------
+# safe in threaded programs
 sub g_signal_connect_data(
   N-GtkWidget $widget, Str $signal,
-  &handler, # ( N-GtkWidget $h_widget, CArray[Str] $h_data),
+  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data, OpaquePointer $destroy_data, int32 $connect_flags
 ) returns int32
   is native(&gobject-lib)
   { * }
 
-# unsave in threaded programs
+# unsafe in threaded programs
 sub g_signal_connect_object(
   N-GtkWidget $widget, Str $signal,
-  &handler, # ( N-GtkWidget $h_widget, CArray[Str] $h_data),
+  &handler ( N-GtkWidget $h_widget, CArray[Str] $h_data),
   CArray[Str] $data, int32 $connect_flags
 ) returns uint32
   is native(&gobject-lib)
@@ -75,7 +76,6 @@ sub g_signal_emit (
   N-GtkWidget $instance, uint32 $signal_id, uint32 $detail,
   N-GtkWidget $widget, Str $data, Str $return-value is rw
 ) is native(&gobject-lib)
-  is export
   { * }
 
 # Handlers above provided to the signal connect calls are having 2 arguments
@@ -85,7 +85,6 @@ sub g_signal_emit_by_name (
   N-GtkWidget $instance, Str $detailed_signal,
   N-GtkWidget $widget, Str $data, Str $return-value is rw
 ) is native(&gobject-lib)
-  is export
   { * }
 
 sub g_signal_handler_disconnect( N-GtkWidget $widget, int32 $handler_id)
@@ -113,10 +112,12 @@ method fallback ( $native-sub is copy --> Callable ) {
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
 
   my Callable $s;
-note "sig s0: $native-sub, ", $s;
+#note "try $native-sub, ";
   try { $s = &::($native-sub); }
-note "sig s1: gtk_widget_$native-sub, ", $s unless ?$s;
+#note "try gtk_signal_$native-sub, " unless ?$s;
   try { $s = &::("g_signal_$native-sub"); } unless ?$s;
+
+  #$s = callsame unless ?$s;
 
   $s
 }

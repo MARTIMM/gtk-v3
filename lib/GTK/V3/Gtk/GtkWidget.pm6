@@ -129,7 +129,7 @@ method fallback ( $native-sub is copy --> Callable ) {
 }
 
 #-------------------------------------------------------------------------------
-submethod BUILD ( ) {
+submethod BUILD ( |c ) {
 
   die X::Gui.new(:message('GTK is not initialized'))
       unless $GTK::V3::Gtk::GtkMain::gui-initialized;

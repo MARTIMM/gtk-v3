@@ -10,9 +10,10 @@ class X::Gui is Exception {
 #-------------------------------------------------------------------------------
 sub test-catch-exception ( Exception $e, Str $native-sub ) is export {
 
-#note "Error type: ", $e.WHAT;
-#note "Error message: ", $e.message;
-#.note;
+note "Error type: ", $e.WHAT;
+note "Error message: ", $e.message;
+note "Exception: ", $e;
+
   given $e {
 
 #TODO X::Method::NotFound
@@ -61,19 +62,20 @@ sub test-catch-exception ( Exception $e, Str $native-sub ) is export {
 }
 
 #-------------------------------------------------------------------------------
-sub test-call ( $handler, $gobject, |c ) is export {
+sub test-call ( Callable:D $found-routine, $gobject, |c --> Mu ) is export {
 
-  my List $sig-params = $handler.signature.params;
-#note "Parameters: ", $sig-params, ', ', $gobject;
-#note "P0: ", $sig-params[0].type.^name;
+  my List $sig-params = $found-routine.signature.params;
+note "TC 0 parameters: ", $found-routine.signature.params;
+note "TC 1 type 1st arg: ", $sig-params[0].type.^name;
+
   if +$sig-params and
      $sig-params[0].type.^name ~~ m/^ ['GTK::V3::G' .*?]? 'N-G' / {
-#note "\ncall with widget";
-    &$handler( $gobject, |c)
+note "\ncall with widget: ", $gobject.gist, ', ', |c.gist;
+    $found-routine( $gobject, |c)
   }
 
   else {
-#note "\ncall without widget";
-    &$handler(|c)
+note "\ncall without widget: ", |c.gist;
+    $found-routine(|c)
   }
 }

@@ -46,7 +46,7 @@ role GTK::V3::Gui:auth<github:MARTIMM> {
 
     # call the fallback functions of the role user
     my Callable $s = self.fallback($native-sub);
-
+#note "test-call ", $s.gist;
     test-call( $s, $!gtk-widget, |c)
   }
 #`{{

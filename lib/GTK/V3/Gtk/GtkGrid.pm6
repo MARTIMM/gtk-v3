@@ -52,17 +52,11 @@ sub gtk_grid_set_row_spacing ( N-GtkWidget $grid, uint32 $spacing)
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 multi submethod BUILD ( ) {
 
-  die X::Gui.new(:message('GTK is not initialized'))
-      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
-
   $!gtk-widget = gtk_grid_new;
 }
 
 #-------------------------------------------------------------------------------
 multi submethod BUILD ( N-GtkWidget $widget ) {
-
-  die X::Gui.new(:message('GTK is not initialized'))
-      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
   $!gtk-widget = $widget;
 }

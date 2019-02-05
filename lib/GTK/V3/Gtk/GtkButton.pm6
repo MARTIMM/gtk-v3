@@ -37,17 +37,11 @@ sub gtk_button_set_label ( N-GtkWidget $widget, Str $label )
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 multi submethod BUILD ( ) {
 
-  die X::Gui.new(:message('GTK is not initialized'))
-      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
-
   $!gtk-widget = gtk_button_new;
 }
 
 #-------------------------------------------------------------------------------
 multi submethod BUILD ( Str:D :$text! ) {
-
-  die X::Gui.new(:message('GTK is not initialized'))
-      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
   $!gtk-widget = gtk_button_new_with_label($text);
 }

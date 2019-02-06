@@ -54,13 +54,13 @@ submethod BUILD ( Bool :$check = False ) {
   if not $gui-initialized {
     # Must setup gtk otherwise perl6 will crash
     my $argc = CArray[int32].new;
-    $argc[0] = 1 + +@*ARGS;
+    $argc[0] = 1 + @*ARGS.elems;
 
     my $arg_arr = CArray[Str].new;
     my Int $arg-count = 0;
-    $arg_arr[$arg-count] = $*PROGRAM.Str;
+    $arg_arr[$arg-count++] = $*PROGRAM.Str;
     for @*ARGS -> $arg {
-      $arg_arr[$arg-count] = $arg;
+      $arg_arr[$arg-count++] = $arg;
     }
 
     my $argv = CArray[CArray[Str]].new;

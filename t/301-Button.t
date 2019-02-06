@@ -23,11 +23,11 @@ subtest 'Initialize error', {
     :message("GTK is not initialized");
 }
 
+# initialize
+my GTK::V3::Gtk::GtkMain $main .= new;
+
 #-------------------------------------------------------------------------------
 subtest 'Button create', {
-
-  # initialize
-  my GTK::V3::Gtk::GtkMain $main .= new;
 
   my GTK::V3::Gtk::GtkButton $button1 .= new(:text('abc def'));
   isa-ok $button1, GTK::V3::Gtk::GtkButton;
@@ -57,6 +57,7 @@ subtest 'Button as container', {
   $l($gl.nth-data(0));
   is $l.get-text, 'xyz', 'text label from button 1';
 
+#`{{
   my GTK::V3::Gtk::GtkLabel $label .= new(:text('pqr'));
   my GTK::V3::Gtk::GtkButton $button2 .= new;
   $button2.add($label());
@@ -70,26 +71,34 @@ subtest 'Button as container', {
 
   $gl.free;
   $gl = GTK::V3::Glib::GList;
+}}
 }
 
+
 #-------------------------------------------------------------------------------
-subtest 'Button set sinal', {
-  my GTK::V3::Gtk::GtkButton $button .= new(:text('xyz'));
-  my CArray[Str] $data .= new;
-  $data[0] = 'Hello';
-  $data[1] = 'World';
-  my &h = -> $w, $data {
+class X {
+  method click-handler (
+    N-GtkWidget :$widget, Array :$data, Str :$target-object-name
+  ) {
     note "Click handler says: $data[0] $data[1]";
   }
-
-  my Int $i = $button.g_signal_connect-object( 'clicked', &h, $data, 0);
-
-#  $button.handle-click( &click-handler, $data);
 }
 
 #-------------------------------------------------------------------------------
-sub click-handler ( N-GtkWidget $widget, CArray[Str] $data ) {
-  note "Click handler says: $data[0] $data[1]";
+subtest 'Button connect signal', {
+  my GTK::V3::Gtk::GtkButton $button .= new(:text('xyz'));
+  my &h = -> $w {
+    note "Click handler says: ";
+  }
+  my Int $i = $button.connect-object( 'clicked', &h, OpaquePointer, 0);
+
+  my Array $data .= new;
+  $data[0] = 'Hello';
+  $data[1] = 'World';
+  my X $x .= new;
+  $button.register-signal( $x, 'click-handler', $data);
+
+  my GTK::V3::Gtk::GtkButton $b2 .= new(:widget($button));
 }
 
 #-------------------------------------------------------------------------------

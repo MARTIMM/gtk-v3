@@ -3,7 +3,6 @@ use NativeCall;
 
 use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
-#use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkBin;
 
@@ -37,13 +36,13 @@ sub gtk_button_set_label ( N-GtkWidget $widget, Str $label )
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 multi submethod BUILD ( ) {
 
-  $!gtk-widget = gtk_button_new;
+  $!gtk-widget = gtk_button_new unless ?$!gtk-widget;
 }
 
 #-------------------------------------------------------------------------------
 multi submethod BUILD ( Str:D :$text! ) {
 
-  $!gtk-widget = gtk_button_new_with_label($text);
+  $!gtk-widget = gtk_button_new_with_label($text) unless ?$!gtk-widget;
 }
 
 #-------------------------------------------------------------------------------
@@ -52,21 +51,10 @@ method fallback ( $native-sub is copy --> Callable ) {
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
 
   my Callable $s;
-#note "try $native-sub, ";
   try { $s = &::($native-sub); }
-#note "try gtk_button_$native-sub, " unless ?$s;
   try { $s = &::("gtk_button_$native-sub"); } unless ?$s;
 
   $s = callsame unless ?$s;
 
-#note "return ", $s.gist();
   $s
-}
-
-#-------------------------------------------------------------------------------
-method handle-click (
-  Callable $handler, CArray[Str] $data, Int $connect_flags = 0
-) {
-  #TODO check signature of handler
-  self.connect-object( 'clicked', $handler, $data, $connect_flags);
 }

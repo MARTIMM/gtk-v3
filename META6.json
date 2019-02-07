@@ -9,7 +9,6 @@
   "license": "Artistic-2.0",
 
   "provides": {
-    "GTK::V3::Gui": "lib/GTK/V3/Gui.pm6",
     "GTK::V3::X": "lib/GTK/V3/X.pm6",
     "GTK::V3::N::NativeLib": "lib/GTK/V3/N/NativeLib.pm6",
 
@@ -20,7 +19,6 @@
     "GTK::V3::Glib::GError": "lib/GTK/V3/Glib/GError.pm6",
     "GTK::V3::Glib::GList": "lib/GTK/V3/Glib/GList.pm6",
     "GTK::V3::Glib::GMain": "lib/GTK/V3/Glib/GMain.pm6",
-    "GTK::V3::Glib::GSignal": "lib/GTK/V3/Glib/GSignal.pm6",
 
     "GTK::V3::Gtk::GtkBin": "lib/GTK/V3/Gtk/GtkBin.pm6",
     "GTK::V3::Gtk::GtkBuilder": "lib/GTK/V3/Gtk/GtkBuilder.pm6",

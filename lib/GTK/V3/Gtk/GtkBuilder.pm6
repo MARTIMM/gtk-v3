@@ -2,7 +2,6 @@ use v6;
 use NativeCall;
 
 use GTK::V3::X;
-use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Gdk::GdkScreen;
 use GTK::V3::Gtk::GtkMain;
@@ -67,7 +66,7 @@ constant G_TYPE_INT64 = 10 +< G_TYPE_FUNDAMENTAL_SHIFT;
 constant G_TYPE_UINT64 = 11 +< G_TYPE_FUNDAMENTAL_SHIFT;
 
 #define G_TYPE_ENUM G_TYPE_MAKE_FUNDAMENTAL (12)
-constant G_TYPE_ = 12 +< G_TYPE_FUNDAMENTAL_SHIFT;
+constant G_TYPE_ENUM = 12 +< G_TYPE_FUNDAMENTAL_SHIFT;
 
 #define G_TYPE_FLAGS G_TYPE_MAKE_FUNDAMENTAL (13)
 constant G_TYPE_FLAGS = 13 +< G_TYPE_FUNDAMENTAL_SHIFT;

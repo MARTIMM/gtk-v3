@@ -24,6 +24,7 @@
     "GTK::V3::Gtk::GtkBuilder": "lib/GTK/V3/Gtk/GtkBuilder.pm6",
     "GTK::V3::Gtk::GtkButton": "lib/GTK/V3/Gtk/GtkButton.pm6",
     "GTK::V3::Gtk::GtkContainer": "lib/GTK/V3/Gtk/GtkContainer.pm6",
+    "GTK::V3::Gtk::GtkCssProvider": "lib/GTK/V3/Gtk/GtkCssProvider.pm6",
     "GTK::V3::Gtk::GtkGrid": "lib/GTK/V3/Gtk/GtkGrid.pm6",
     "GTK::V3::Gtk::GtkLabel": "lib/GTK/V3/Gtk/GtkLabel.pm6",
     "GTK::V3::Gtk::GtkMain": "lib/GTK/V3/Gtk/GtkMain.pm6",

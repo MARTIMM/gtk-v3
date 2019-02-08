@@ -2,6 +2,7 @@
 
 * 2019-02-08 0.2.0
   * Connecting signals
+  * new module GtkCssProvider
 
 * 2019-02-04 0.1.0
   * Added GtkGrid and GList

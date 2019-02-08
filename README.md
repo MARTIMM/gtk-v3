@@ -13,34 +13,29 @@
 # Motivation
 I perhaps should have used parts of `GTK::Simple` but I wanted to study the native call interface which I am now encountering more seriously. Therefore I started a new project with likewise objects as can be found in `GTK::Simple`.
 
-The other reason I want to start a new project is that after some time working with the native call interface. I came to the conclusion that Perl6 is not yet capable to return a proper message when mistakes are made by me e.g. spelling errors or using wrong types. Most of them end up in **MoarVM panic: Internal error: Unwound entire stack and missed handler**. Other times it ends in just a plain crash. I am very confident that this will be improved later but for the time being I had to improve the maintainability of this project by hiding the native stuff as much as possible. Although this may be improved, some of the crashes are caused from within GTK and cannot be captured by Perl6. One of those moments are the use of GTK calls without initializing GTK with `gtk_init`. This can also be covered by setting a init-flag which should be checked by almost every other module.
+The other reason I want to start a new project is that after some time working with the native call interface. I came to the conclusion that Perl6 is not yet capable to return a proper message when mistakes are made by me e.g. spelling errors or using wrong types. Most of them end up in **MoarVM panic: Internal error: Unwound entire stack and missed handler**. Other times it ends in just a plain crash. I am very confident that this will be improved later but for the time being I had to improve the maintainability of this project by hiding the native stuff as much as possible. Although the error messages may be improved, some of the crashes are happening within GTK and cannot be captured by Perl6. One of those moments are the use of GTK calls without initializing GTK with `gtk_init`. This can also be covered by setting an init-flag which should be checked by almost every other module.
 
 There are some points I noticed in the `GTK::Simple` modules.
 * The `GTK::Simple::Raw` module where all the native subs are defined is quite large. Only a few subs can be found elsewhere. The file is also growing with each additional declaration. Using that module is always a parsing impact despite the several import selection switches one can use.
-* I would like to follow the GTK interface more closely when it comes to the native subs. What I want therefore is a class per gtk include file as much as possible. For example there is this file `gtklabel.h` for which I would like to make the class `GtkLabel` in perl6. In a similar module in `GTK::Simple` named `Label`, there is a `text` method while I want to have `gtk_label_get_text` and `gtk_label_set_text` modules as in the [documentation of GTK][gtklabel] is specified.
-* There is no inheritance. A kind of a central role is made which most widget classes use. I would like to have inheritance where for example `GtkLabel` inherits from `GtkWidget`. Then the methods from `GtkWidget` will also be available in `GtkLabel`.
+* I would like to follow the GTK interface more closely when it comes to the native subs. What I want therefore is a class per gtk include file as much as possible. For example, there is this file `gtklabel.h` for which I would like to make the class `GtkLabel` in perl6. In a similar module in `GTK::Simple` named `Label`, there is a `text` method while I want to have `gtk_label_get_text` and `gtk_label_set_text` modules as in the [documentation of GTK][gtklabel] is specified. This makes it more legitimate to just refer to the GTK documentation instead of having my own docs.
+* There is no inheritance in `GTK::Simple`. A kind of a central role is made which most widget classes use. I would like to have inheritance where for example `GtkLabel` inherits from `GtkWidget`. Then the methods from `GtkWidget` will also be available in `GtkLabel`.
 * I want the native subs out of reach of the user. So the `is export` trait is removed. This is important to prevent LTA messages mentioned above.
 * When callbacks are defined in GTK, they can accept most of the time some user data to do something with it in the callback. GTK::Simple gives them the OpaquePointer type which renders them useless. Most of the time small Routines are used in place of the handler entry. The code used there can close over the variables you want to use and in that situation there is no problem. This changes when the Routines are defined in a separate sub because of the length or complexity of the code. The data can only be handed over to the Routine using the call interface. What type should I take then. I found out that all kinds can be used so I decided to take `CArray[Str]` to have the most flexible choice.
-* defined original `g_signal_connect_object` instead of changed name `g_signal_connect_wd`.
+* Next thought of mine is wrong: **Define original `g_signal_connect_object` function instead of changing the name into `g_signal_connect_wd`.** The problem is that in Perl6 the handlers signature is fixed when defining a callback for signals and that there are several types of callbacks possible in GTK widgets. Most of the handlers are having the same signature for a handler. E.g. a `clicked` event handler receives a widget and data. That's why the sub is called like that: `g_signal_connect_wd`. There are other signals using a different signature such as the gtk container `add` event. That one has 2 widgets and then data. So I added `g_signal_connect_wwd` to handle that one. Similar setups may follow.
 
-This will present some problems
+These arguments will present some problems
 * How to store the native widget. This is a central object representing the widget for the class wherein it is created. It is used where widgets like labels, dialogs, frames, listboxes etc are used. Because it is just a pointer to a C object we do not need to build inheritance around this. Like in `GTK::Simple` I used a role for that, only not named after a GTK like class.
 * Do I have to write a method for each native sub introduced? Fortunately, that is not necessary. I used the **FALLBACK** mechanism for that. When not found, the search is handed over to the parent. In this process it is possible to accept other names as well which end up finding the same native sub. To let this mechanism work the `FALLBACK` method is defined in the role module. This method will then call the method `fallback` in the modules using the role. When nothing found, `fallback` must call the parents fallback with `callsame`. The subs in some classes all start with some prefix which can be left out too, provided that the fallback functions also test with an added prefix. So e.g. a sub `gtk_label_get_text` defined in class `GtkLabel` can be called like `$label.gtk_label_get_text()` or `$label.get_text()`. As an extra feature dashes can be used instead of underscores, so `$label.gtk-label-get-text()` or `$label.get-text()` works too.
 * Is the sub accessible when removing the `is export` trait? No, not directly but because the `fallback` method will search in their own name space, they can get hold of the sub reference which is returned to the callers `FALLBACK`. The call then is made with the given arguments prefixed with the native widgets address stored in the role. This way the native call is shielded off and perl6 is able to return proper messages when mistakes are made in spelling or type mismatches.
-**TODO: not all calls have the widget on their first argument**
+* Not all calls have the widget on their first argument. That is solved by investigating the subroutines signature of which the first argument is a N-GtkWidget or not.
 
-Not all of the GTK, GDK or Glib libraries will be covered because not everything is needed, partly because a lot can be designed by the `Glade` user interface designer tool which is the base point of this package. Other reasons are that classes and many subs are deprecated. This package will support the 3.* version of GTK. There is already a 4.* version out but that is food for later thoughts. The root of the library will be GTK::V3 and can be separated later into a another package.
+Not all of the GTK, GDK or Glib subroutines from the libraries will be covered because not everything is needed. Other reasons are that classes and many subs are deprecated. This package will support the 3.* version of GTK. There is already a 4.* version out but that is food for later thoughts. The root of the library will be GTK::V3 and can be separated later into a another package.
 
 # Documentation
 
 ## Glade engine
 
 ## Gtk library
-
-* **GTK::V3::Gui**
-  * `class N-GtkWidget`
-  * `CALL-ME ( N-GtkWidget $widget? --> N-GtkWidget )` [1]
-  * `FALLBACK ( $native-sub, |c )` [2]
 
 * **GTK::V3::X**
   is **Exception**
@@ -50,7 +45,6 @@ Not all of the GTK, GDK or Glib libraries will be covered because not everything
 * [GTK::V3::Gtk::GtkBin][gtkbin]
     is **GTK::V3::Gtk::GtkContainer**
     does **GTK::V3::Gui**
-  <!--* `new ( N-GtkWidget $widget )`-->
   * `gtk_bin_get_child ( --> N-GtkWidget )` [3][4][5]
 
 * [GTK::V3::Gtk::GtkBuilder][gtkbuilder]
@@ -98,7 +92,13 @@ Not all of the GTK, GDK or Glib libraries will be covered because not everything
   * `gtk_label_set_text ( Str $str )`
 
 * GTK::V3::Gtk::GtkMain
+
 * GTK::V3::Gtk::GtkWidget
+  * `class N-GtkWidget`
+  * `CALL-ME ( N-GtkWidget $widget? --> N-GtkWidget )` [1]
+  * `FALLBACK ( $native-sub, |c )` [2]
+  * `new ( N-GtkWidget :$widget )`
+  * `setWidget ( N-GtkWidget $widget )`
 
 ## Gdk library
 
@@ -109,7 +109,6 @@ Not all of the GTK, GDK or Glib libraries will be covered because not everything
 ## Glib library
 
 * GTK::V3::Glib::GMain
-* GTK::V3::Glib::GSignal
 
 ### Notes
   1) The `CALL-ME` method is coded in such a way that an object can be set or retrieved easily. E.g.

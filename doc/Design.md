@@ -8,11 +8,15 @@
 hide members
 hide circle
 
-class Gui
+'class Gui
+'class GSignal
+'GSignal <|-- GtkWidget
+'X <-* Gui
+
+
 class X
 
 class GMain
-class GSignal
 
 class GdkScreen
 class GdkDisplay
@@ -21,12 +25,10 @@ class GdkWindow
 
 class GtkMain
 class GtkWidget
-GdkScreen <-o GtkWidget
-GdkDisplay <---o GtkWidget
+GdkScreen <--o GtkWidget
+GdkDisplay <--o GtkWidget
 GtkWidget o-> GdkWindow
 
-GSignal <|-- GtkWidget
-X <-* Gui
 
 class GtkBin
 class GtkContainer

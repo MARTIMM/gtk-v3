@@ -1,7 +1,6 @@
 use v6;
 use NativeCall;
 
-use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkBin;
@@ -10,8 +9,7 @@ use GTK::V3::Gtk::GtkBin;
 # See /usr/include/gtk-3.0/gtk/gtkbutton.h
 # https://developer.gnome.org/gtk3/stable/GtkButton.html
 unit class GTK::V3::Gtk::GtkButton:auth<github:MARTIMM>
-  is GTK::V3::Gtk::GtkBin
-  does GTK::V3::Gui;
+  is GTK::V3::Gtk::GtkBin;
 
 #-------------------------------------------------------------------------------
 sub gtk_button_get_label ( N-GtkWidget $widget )
@@ -36,13 +34,13 @@ sub gtk_button_set_label ( N-GtkWidget $widget, Str $label )
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 multi submethod BUILD ( ) {
 
-  $!gtk-widget = gtk_button_new unless ?$!gtk-widget;
+  self.setWidget(gtk_button_new);
 }
 
 #-------------------------------------------------------------------------------
 multi submethod BUILD ( Str:D :$text! ) {
 
-  $!gtk-widget = gtk_button_new_with_label($text) unless ?$!gtk-widget;
+  self.setWidget(gtk_button_new_with_label($text));
 }
 
 #-------------------------------------------------------------------------------

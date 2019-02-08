@@ -2,7 +2,6 @@ use v6;
 use NativeCall;
 
 use GTK::V3::X;
-use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
@@ -12,8 +11,7 @@ use GTK::V3::Gtk::GtkContainer;
 # See /usr/include/gtk-3.0/gtk/gtklabel.h
 # https://developer.gnome.org/gtk3/stable/GtkGrid.html
 unit class GTK::V3::Gtk::GtkGrid:auth<github:MARTIMM>
-  is GTK::V3::Gtk::GtkContainer
-  does GTK::V3::Gui;
+  is GTK::V3::Gtk::GtkContainer;
 
 #-------------------------------------------------------------------------------
 sub gtk_grid_new()
@@ -50,15 +48,9 @@ sub gtk_grid_set_row_spacing ( N-GtkWidget $grid, uint32 $spacing)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-multi submethod BUILD ( ) {
+submethod BUILD ( ) {
 
-  $!gtk-widget = gtk_grid_new;
-}
-
-#-------------------------------------------------------------------------------
-multi submethod BUILD ( N-GtkWidget $widget ) {
-
-  $!gtk-widget = $widget;
+  self.setWidget(gtk_grid_new);
 }
 
 #-------------------------------------------------------------------------------

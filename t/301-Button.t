@@ -2,7 +2,8 @@ use v6;
 use NativeCall;
 use Test;
 
-use GTK::V3::Gui;
+#use GTK::V3::Gui;
+#use GTK::V3::Glib::GSignal;
 use GTK::V3::Glib::GList;
 use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
@@ -34,17 +35,29 @@ subtest 'Button create', {
   isa-ok $button1, GTK::V3::Gtk::GtkBin;
   isa-ok $button1, GTK::V3::Gtk::GtkContainer;
   isa-ok $button1, GTK::V3::Gtk::GtkWidget;
-  does-ok $button1, GTK::V3::Gui;
+  #does-ok $button1, GTK::V3::Gui;
   isa-ok $button1(), N-GtkWidget;
 
   throws-like
     { $button1.get-label('xyz'); },
     X::Gui, "wrong arguments",
-    :message('Calling gtk_button_get_label(N-GtkWidget, Str) will never work with declared signature (N-GtkWidget $widget --> Str)');
+    :message('Calling gtk_button_get_label(GTK::V3::Gtk::GtkWidget::N-GtkWidget, Str) will never work with declared signature (GTK::V3::Gtk::GtkWidget::N-GtkWidget $widget --> Str)');
 
   is $button1.get-label, 'abc def', 'text on button ok';
   $button1.set-label('xyz');
   is $button1.get-label, 'xyz', 'text on button changed ok';
+#`{{
+  my GTK::V3::Gtk::GtkButton $b2;
+  throws-like
+    { $b2 .= new(:widget($button1)) },
+    X::Gui, "Wrong type for init",
+    :message('Wrong type or undefined widget, must be type N-GtkWidget');
+
+  $b2 .= new(:widget($button1()));
+note "B2: $b2, $b2()";
+  ok ?$b2, 'button b2 defined';
+  is $b2.get-label, 'xyz', 'text on button b2 ok';
+}}
 }
 
 #-------------------------------------------------------------------------------
@@ -57,7 +70,7 @@ subtest 'Button as container', {
   $l($gl.nth-data(0));
   is $l.get-text, 'xyz', 'text label from button 1';
 
-#`{{
+#`{{}}
   my GTK::V3::Gtk::GtkLabel $label .= new(:text('pqr'));
   my GTK::V3::Gtk::GtkButton $button2 .= new;
   $button2.add($label());
@@ -71,14 +84,12 @@ subtest 'Button as container', {
 
   $gl.free;
   $gl = GTK::V3::Glib::GList;
-}}
 }
 
-
 #-------------------------------------------------------------------------------
-class X {
+class X is GTK::V3::Gtk::GtkWidget {
   method click-handler (
-    N-GtkWidget :$widget, Array :$data, Str :$target-object-name
+    N-GtkWidget :$widget, Array :$data, Str :$target-widget-name
   ) {
     note "Click handler says: $data[0] $data[1]";
   }
@@ -86,19 +97,20 @@ class X {
 
 #-------------------------------------------------------------------------------
 subtest 'Button connect signal', {
+
   my GTK::V3::Gtk::GtkButton $button .= new(:text('xyz'));
-  my &h = -> $w {
-    note "Click handler says: ";
+  my &h = -> N-GtkWidget $w, $d {
+    note "Click handler says: {$w//'-'}, {$d//'-'}";
   }
-  my Int $i = $button.connect-object( 'clicked', &h, OpaquePointer, 0);
+
+  my Int $i = $button.connect-object_wd( 'clicked', &h, OpaquePointer, 0);
 
   my Array $data .= new;
   $data[0] = 'Hello';
   $data[1] = 'World';
+
   my X $x .= new;
   $button.register-signal( $x, 'click-handler', $data);
-
-  my GTK::V3::Gtk::GtkButton $b2 .= new(:widget($button));
 }
 
 #-------------------------------------------------------------------------------

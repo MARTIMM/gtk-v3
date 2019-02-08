@@ -1,7 +1,6 @@
 use v6;
 use NativeCall;
 
-use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
@@ -10,8 +9,7 @@ use GTK::V3::Gtk::GtkWidget;
 # See /usr/include/gtk-3.0/gtk/gtklabel.h
 # https://developer.gnome.org/gtk3/stable/GtkLabel.html
 unit class GTK::V3::Gtk::GtkLabel:auth<github:MARTIMM>
-  is GTK::V3::Gtk::GtkWidget
-  does GTK::V3::Gui;
+  is GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 sub gtk_label_new ( Str $text )
@@ -29,15 +27,10 @@ sub gtk_label_set_text ( N-GtkWidget $label, Str $str )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-multi submethod BUILD ( Str :$text = '' ) {
+submethod BUILD ( Str :$text = '' ) {
 
-  $!gtk-widget = gtk_label_new($text);
-}
-
-#-------------------------------------------------------------------------------
-multi submethod BUILD ( N-GtkWidget $widget ) {
-
-  $!gtk-widget = $widget;
+  #$!gtk-widget = gtk_label_new($text) unless ?$!gtk-widget;
+  self.setWidget(gtk_label_new($text));
 }
 
 #-------------------------------------------------------------------------------

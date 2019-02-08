@@ -2,7 +2,6 @@ use v6;
 use NativeCall;
 use Test;
 
-use GTK::V3::Gui;
 use GTK::V3::Glib::GMain;
 use GTK::V3::Gtk::GtkMain;
 

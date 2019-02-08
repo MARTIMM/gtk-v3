@@ -1,18 +1,15 @@
 use v6;
 use NativeCall;
 
-use GTK::V3::Gui;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GList;
-#use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtkcontainer.h
 # https://developer.gnome.org/gtk3/stable/GtkContainer.html
 unit class GTK::V3::Gtk::GtkContainer:auth<github:MARTIMM>
-  is GTK::V3::Gtk::GtkWidget
-  does GTK::V3::Gui;
+  is GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 sub gtk_container_add ( N-GtkWidget $container, N-GtkWidget $widget )

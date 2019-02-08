@@ -2,7 +2,7 @@ use v6;
 use NativeCall;
 use Test;
 
-use GTK::V3::Gui;
+use GTK::V3::X;
 use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkLabel;
@@ -27,7 +27,6 @@ subtest 'Label create', {
   my GTK::V3::Gtk::GtkLabel $label1 .= new(:text('abc def'));
   isa-ok $label1, GTK::V3::Gtk::GtkLabel;
   isa-ok $label1, GTK::V3::Gtk::GtkWidget;
-  does-ok $label1, GTK::V3::Gui;
   isa-ok $label1(), N-GtkWidget;
 
   throws-like

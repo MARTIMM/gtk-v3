@@ -110,6 +110,7 @@ sub g_signal_connect_object_wwd(
   is symbol('g_signal_connect_object')
   { * }
 
+#`{{
 # a GQuark is a guint32, $detail is a quark
 # See https://developer.gnome.org/glib/stable/glib-Quarks.html
 sub g_signal_emit (
@@ -117,6 +118,7 @@ sub g_signal_emit (
   N-GtkWidget $widget, Str $data, Str $return-value is rw
 ) is native(&gobject-lib)
   { * }
+}}
 
 # Handlers above provided to the signal connect calls are having 2 arguments
 # a widget and data. So the provided extra arguments are then those 2

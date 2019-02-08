@@ -12,7 +12,7 @@ sub test-catch-exception ( Exception $e, Str $native-sub ) is export {
 
 #note "Error type: ", $e.WHAT;
 #note "Error message: ", $e.message;
-note "Exception: ", $e;
+#note "Exception: ", $e;
 
   given $e {
 

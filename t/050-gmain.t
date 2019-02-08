@@ -20,10 +20,6 @@ my GTK::V3::Glib::GMain $gmain .= new;
 my $main-context1 = $gmain.context-new;
 my $loop = $gmain.loop-new( $main-context1, False);
 
-my CArray[Str] $data .= new;
-$data[0] = 'handler data';
-$data[1] = 'some more data';
-
 #-------------------------------------------------------------------------------
 subtest "start thread with a new context", {
   diag "$*THREAD.id(), Start thread";
@@ -47,7 +43,7 @@ subtest "start thread with a new context", {
 
     $gmain.context-invoke-full(
       $main-context2, G_PRIORITY_DEFAULT, &handler,
-      $data, &notify
+      OpaquePointer, &notify
     );
 
     diag "$*THREAD.id(), " ~
@@ -86,7 +82,7 @@ subtest "start thread with a default context", {
 
     $gmain.context-invoke-full(
       $main-context2, G_PRIORITY_DEFAULT, &handler,
-      $data, &notify
+      OpaquePointer, &notify
     );
 
     diag "$*THREAD.id(), no need to pop default context";
@@ -105,11 +101,9 @@ subtest "start thread with a default context", {
 done-testing;
 
 #-------------------------------------------------------------------------------
-sub handler ( CArray[Str] $h-data ) {
+sub handler ( OpaquePointer ) {
 
   diag "$*THREAD.id(), In handler on same thread";
-  is $h-data[0], 'handler data', 'data[0] ok';
-  is $h-data[1], 'some more data', 'data[1] ok';
   diag "$*THREAD.id(), Use g-main-loop-quit() to stop loop";
   $gmain.g-main-loop-quit($loop);
 
@@ -117,8 +111,6 @@ sub handler ( CArray[Str] $h-data ) {
 }
 
 #-------------------------------------------------------------------------------
-sub notify ( CArray[Str] $h-data ) {
+sub notify ( OpaquePointer ) {
   diag "$*THREAD.id(), In notify handler";
-  is $h-data[0], 'handler data', 'data[0] ok';
-  is $h-data[1], 'some more data', 'data[1] ok';
 }

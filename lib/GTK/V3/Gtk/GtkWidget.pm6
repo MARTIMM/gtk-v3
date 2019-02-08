@@ -128,7 +128,7 @@ sub g_signal_emit_by_name_wd (
   N-GtkWidget $instance, Str $detailed_signal,
   # The rest depends on the handler defined when connecting
   # There is no return value from the handler
-  N-GtkWidget $widget, Str $data
+  N-GtkWidget $widget, OpaquePointer
 ) is native(&gobject-lib)
   is symbol('g_signal_emit_by_name')
   { * }
@@ -138,7 +138,7 @@ sub g_signal_emit_by_name_wwd (
   N-GtkWidget $instance, Str $detailed_signal,
   # The rest depends on the handler defined when connecting
   # There is no return value from the handler
-  N-GtkWidget $widget1, N-GtkWidget $widget2, Str $data
+  N-GtkWidget $widget1, N-GtkWidget $widget2, OpaquePointer
 ) is native(&gobject-lib)
   is symbol('g_signal_emit_by_name')
   { * }
@@ -277,7 +277,7 @@ method FALLBACK ( $native-sub, |c ) {
   # call the fallback functions of the role user
   my Callable $s = self.fallback($native-sub);
 
-note "test-call ", $s.gist;
+#note "test-call ", $s.gist;
   test-call( $s, $!gtk-widget, |c)
 }
 
@@ -287,11 +287,11 @@ method fallback ( $native-sub is copy --> Callable ) {
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
 
   my Callable $s;
-note "w s0: $native-sub, ", $s;
+#note "w s0: $native-sub, ", $s;
   try { $s = &::($native-sub); }
-note "w s1: gtk_widget_$native-sub, ", $s unless ?$s;
+#note "w s1: gtk_widget_$native-sub, ", $s unless ?$s;
   try { $s = &::("gtk_widget_$native-sub"); } unless ?$s;
-note "w s2: g_signal_$native-sub, ", $s unless ?$s;
+#note "w s2: g_signal_$native-sub, ", $s unless ?$s;
   try { $s = &::("g_signal_$native-sub"); } unless ?$s;
 
   $s = callsame unless ?$s;
@@ -340,7 +340,7 @@ method register-signal (
         'clicked',
         -> $w, $d {
           if $handler-object.^can($handler-name) {
-note "in callback, calling $handler-name ($handler-type)";
+#note "in callback, calling $handler-name ($handler-type)";
             $handler-object."$handler-name"(
               :widget($w), :$data, :$target-widget-name
             );
@@ -355,7 +355,7 @@ note "in callback, calling $handler-name ($handler-type)";
         'clicked',
         -> $w1, $w2, $d {
           if $handler-object.^can($handler-name) {
-note "in callback, calling $handler-name ($handler-type)";
+#note "in callback, calling $handler-name ($handler-type)";
             $handler-object."$handler-name"(
               :widget1($w1), :widget2($w2), :$data, :$target-widget-name
             );

@@ -13,10 +13,6 @@ my GTK::V3::Gtk::GtkMain $main .= new;
 #-------------------------------------------------------------------------------
 my GTK::V3::Glib::GMain $gmain .= new;
 
-my CArray[Str] $data .= new;
-$data[0] = 'handler data';
-$data[1] = 'some more data';
-
 diag "$*THREAD.id(), Start thread";
 my Promise $p = start {
   # wait for loop to start
@@ -33,19 +29,15 @@ my Promise $p = start {
 
   $gmain.context-invoke(
     $main-context,
-    -> $h-data {
+    -> $d {
 
       diag "$*THREAD.id(), In handler on same thread";
-      is $h-data[0], 'handler data', 'data[0] ok';
-      is $h-data[1], 'some more data', 'data[1] ok';
-      $h-data[1] = 'replaced data';
-
       diag "$*THREAD.id(), Use gtk-main-quit() to stop loop";
       $main.gtk-main-quit;
 
       0
     },
-    $data
+    OpaquePointer
   );
 
   'test done'
@@ -56,9 +48,6 @@ diag "$*THREAD.id(), start loop with gtk-main()";
 $main.gtk-main;
 diag "$*THREAD.id(), loop stopped";
 is $main.gtk-main-level, 0, "loop level is 0 again";
-
-# data should be locked before changing
-is $data[1], 'replaced data', 'replaced data[1] ok';
 
 await $p;
 is $p.result, 'test done', 'result promise ok';

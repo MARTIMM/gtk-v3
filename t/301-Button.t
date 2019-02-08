@@ -5,6 +5,7 @@ use Test;
 #use GTK::V3::Gui;
 #use GTK::V3::Glib::GSignal;
 use GTK::V3::Glib::GList;
+use GTK::V3::Glib::GMain;
 use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkBin;
@@ -91,26 +92,50 @@ class X is GTK::V3::Gtk::GtkWidget {
   method click-handler (
     N-GtkWidget :$widget, Array :$data, Str :$target-widget-name
   ) {
-    note "Click handler says: $data[0] $data[1]";
+    is $data[0], 'Hello', 'data 0 ok';
+    is $data[1], 'World', 'data 1 ok';
   }
 }
 
 #-------------------------------------------------------------------------------
-subtest 'Button connect signal', {
+subtest 'Button connect and emit signal', {
 
+  # register button signal
   my GTK::V3::Gtk::GtkButton $button .= new(:text('xyz'));
-  my &h = -> N-GtkWidget $w, $d {
-    note "Click handler says: {$w//'-'}, {$d//'-'}";
-  }
-
-  my Int $i = $button.connect-object_wd( 'clicked', &h, OpaquePointer, 0);
-
   my Array $data .= new;
   $data[0] = 'Hello';
   $data[1] = 'World';
 
   my X $x .= new;
   $button.register-signal( $x, 'click-handler', $data);
+
+  my Promise $p = start {
+    # wait for loop to start
+    sleep(1.1);
+    is $main.gtk-main-level, 1, "loop level now 1";
+
+    my GTK::V3::Glib::GMain $gmain .= new;
+    my $main-context = $gmain.context-get-thread-default;
+
+    $gmain.context-invoke(
+      $main-context,
+      -> $d {
+        $button.emit-by-name-wd( 'clicked', $button(), OpaquePointer);
+
+        sleep(1.0);
+        $main.gtk-main-quit;
+
+        0
+      },
+      OpaquePointer
+    );
+
+    'test done'
+  }
+
+  is $main.gtk-main-level, 0, "loop level 0";
+  $main.gtk-main;
+  is $main.gtk-main-level, 0, "loop level is 0 again";
 }
 
 #-------------------------------------------------------------------------------

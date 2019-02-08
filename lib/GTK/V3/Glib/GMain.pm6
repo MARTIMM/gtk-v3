@@ -46,18 +46,14 @@ sub g_main_context_get_thread_default ( )
 
 sub g_main_context_invoke (
   OpaquePointer $context,
-  &sourceFunction ( CArray[Str] $data_h is rw --> int32 ),
-  CArray[Str] $data
+  &sourceFunction ( OpaquePointer --> int32 ), OpaquePointer
   ) is native(&gtk-lib)
     { * }
 
-# User data is set to CArray[Str] type
 sub g_main_context_invoke_full (
-  OpaquePointer $context,
-  int32 $priority,
-  &sourceFunction ( CArray[Str] $data_sf --> int32 ),
-  CArray[Str] $data,
-  &destroyNotify ( CArray[Str] $data_dn )
+  OpaquePointer $context, int32 $priority,
+  &sourceFunction ( OpaquePointer --> int32 ), OpaquePointer,
+  &destroyNotify ( OpaquePointer )
   ) is native(&gtk-lib)
     { * }
 
@@ -104,10 +100,8 @@ sub g_source_remove ( uint32 $tag )
   is native(&gtk-lib)
   { * }
 
-# User data is set to CArray[Str] type
 sub g_timeout_add (
-  int32 $interval, &Handler ( CArray[Str] $h_data, --> int32 ),
-  CArray[Str] $data
+  int32 $interval, &Handler ( OpaquePointer, --> int32 ), OpaquePointer
   ) returns int32
     is native(&gtk-lib)
     { * }

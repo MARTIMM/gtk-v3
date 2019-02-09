@@ -6,7 +6,8 @@ use GTK::V3::N::NativeLib;
 use GTK::V3::Gdk::GdkScreen;
 
 #-------------------------------------------------------------------------------
-# See /usr/include/gtk-3.0/gdk/gdkscreen.h
+# See /usr/include/gtk-3.0/gtk/gtkcssprovider.h
+# https://developer.gnome.org/gtk3/stable/GtkCssProvider.html
 unit class GTK::V3::Gtk::GtkCssProvider:auth<github:MARTIMM>;
 
 #-------------------------------------------------------------------------------

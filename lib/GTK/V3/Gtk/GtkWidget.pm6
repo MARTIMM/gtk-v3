@@ -110,6 +110,16 @@ sub g_signal_connect_object_wwd(
   is symbol('g_signal_connect_object')
   { * }
 
+sub g_signal_connect_object_wsd(
+  N-GtkWidget $widget, Str $signal, &handler (
+    N-GtkWidget, Str, OpaquePointer
+  ),
+  OpaquePointer, int32 $connect_flags
+) returns uint32
+  is native(&gobject-lib)
+  is symbol('g_signal_connect_object')
+  { * }
+
 #`{{
 # a GQuark is a guint32, $detail is a quark
 # See https://developer.gnome.org/glib/stable/glib-Quarks.html
@@ -307,9 +317,11 @@ submethod BUILD ( |c ) {
 
   for c.kv -> $k, $v {
     if $k eq 'widget' {
-#note "KV: {$k//'-'}, {$v//'-'}";
+note "KV: {$k//'-'}, {$v//'-'}";
       if ?$v and $v ~~ N-GtkWidget {
+note "set widget";
         self.setWidget($v);
+note "widget set";
       }
 
       else {
@@ -330,19 +342,41 @@ method setWidget ( N-GtkWidget $widget, Bool :$force = False ) {
 
 #-------------------------------------------------------------------------------
 method register-signal (
-  $handler-object, Str $handler-name, $data, Int $connect-flags = 0,
-  Str :$target-widget-name, Str :$handler-type where * ~~ any(<wd wwd>) = 'wd'
+  $handler-object, Str $handler-name, Int $connect-flags = 0,
+  Str :$target-widget-name,
+  Str :$handler-type where * ~~ any(<wd wwd wsd>) = 'wd',
+  Str :$signal-name = 'clicked'
 ) {
+
+#TODO use a hash to set all handler attributes in one go
+#note $handler-object.^methods;
 
   if ?$handler-object and $handler-object.^can($handler-name) {
     if $handler-type eq 'wd' {
+#note "set $handler-name ($handler-type)";
       self.g-signal-connect-object-wd(
-        'clicked',
+        $signal-name,
         -> $w, $d {
           if $handler-object.^can($handler-name) {
-#note "in callback, calling $handler-name ($handler-type)";
+#note "in callback, calling $handler-name ($handler-type), ", $handler-object;
+#note "widget: ", self;
             $handler-object."$handler-name"(
-              :widget($w), :$data, :$target-widget-name
+              :widget(self), :$target-widget-name
+            );
+          }
+        },
+        OpaquePointer, $connect-flags
+      );
+    }
+
+    elsif $handler-type eq 'wwd' {
+      self.g-signal-connect-object-wwd(
+        $signal-name,
+        -> $w1, $w2, $d {
+          if $handler-object.^can($handler-name) {
+#note "in callback, calling $handler-name ($handler-type), ", $handler-object;
+            $handler-object."$handler-name"(
+              :widget1(self), :widget2($w2), :$target-widget-name
             );
           }
         },
@@ -351,13 +385,13 @@ method register-signal (
     }
 
     else {
-      self.g-signal-connect-object-wwd(
-        'clicked',
-        -> $w1, $w2, $d {
+      self.g-signal-connect-object-wsd(
+        $signal-name,
+        -> $w, $s, $d {
           if $handler-object.^can($handler-name) {
-#note "in callback, calling $handler-name ($handler-type)";
+#note "in callback, calling $handler-name ($handler-type), ", $handler-object;
             $handler-object."$handler-name"(
-              :widget1($w1), :widget2($w2), :$data, :$target-widget-name
+              :widget(self), :d(''), :$target-widget-name
             );
           }
         },

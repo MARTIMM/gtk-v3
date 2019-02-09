@@ -22,16 +22,17 @@ class GdkScreen
 class GdkDisplay
 class GdkWindow
 
-
 class GtkMain
-class GtkWidget
-GdkScreen <--o GtkWidget
-GdkDisplay <--o GtkWidget
-GtkWidget o-> GdkWindow
+class GtkCssProvider
+class GtkTextBuffer
 
+class GObject
+
+class GtkWidget
 
 class GtkBin
 class GtkContainer
+class GtkTextView
 
 class GtkLabel
 
@@ -56,7 +57,14 @@ GtkDialog <|-- GtkAboutDialog
 GtkWidget <|-- GtkLabel
 
 GtkContainer <|-- GtkBin
+GtkContainer <|-- GtkTextView
 GtkWidget <|-- GtkContainer
+GObject <|-- GtkWidget
 'GtkBin --* GtkButton
+
+GdkScreen <---o GtkWidget
+GdkDisplay <---o GtkWidget
+GtkWidget o-> GdkWindow
+
 
 ```

@@ -10,10 +10,10 @@ use GTK::V3::N::NativeLib;
 unit class GTK::V3::Gtk::GtkTextBuffer:auth<github:MARTIMM>;
 
 #-------------------------------------------------------------------------------
-class N-GtkTextBuffer
-  is repr('CPointer')
-  is export
-  { }
+#class N-GtkTextBuffer
+#  is repr('CPointer')
+#  is export
+#  { }
 
 #-------------------------------------------------------------------------------
 sub gtk_text_buffer_get_text (
@@ -42,7 +42,7 @@ sub gtk_text_buffer_insert(
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-has N-GtkTextBuffer $!gtk-text-buffer;
+has OpaquePointer $!gtk-text-buffer;
 
 #-------------------------------------------------------------------------------
 #submethod BUILD ( ) {
@@ -50,7 +50,7 @@ has N-GtkTextBuffer $!gtk-text-buffer;
 #}
 
 #-------------------------------------------------------------------------------
-method CALL-ME ( N-GtkTextBuffer $text-buffer? --> N-GtkTextBuffer ) {
+method CALL-ME ( OpaquePointer $text-buffer? --> OpaquePointer ) {
   $!gtk-text-buffer = $text-buffer if ?$text-buffer;
   $!gtk-text-buffer
 }

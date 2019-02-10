@@ -23,30 +23,30 @@ sub gtk_text_view_get_buffer ( N-GtkWidget $view )
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_set_editable(N-GtkWidget $widget, int32 $setting)
+sub gtk_text_view_set_editable ( N-GtkWidget $widget, int32 $setting )
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_get_editable(N-GtkWidget $widget)
+sub gtk_text_view_get_editable ( N-GtkWidget $widget )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_set_cursor_visible(N-GtkWidget $widget, int32 $setting)
+sub gtk_text_view_set_cursor_visible ( N-GtkWidget $widget, int32 $setting )
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_get_cursor_visible(N-GtkWidget $widget)
+sub gtk_text_view_get_cursor_visible ( N-GtkWidget $widget )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_get_monospace(N-GtkWidget $widget)
+sub gtk_text_view_get_monospace ( N-GtkWidget $widget )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_set_monospace(N-GtkWidget $widget, int32 $setting)
+sub gtk_text_view_set_monospace ( N-GtkWidget $widget, int32 $setting )
   is native(&gtk-lib)
   { * }
 

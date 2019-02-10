@@ -14,48 +14,40 @@ unit class GTK::V3::Gtk::GtkTextView:auth<github:MARTIMM>
 
 #-------------------------------------------------------------------------------
 sub gtk_text_view_new()
-  is native(&gtk-lib)
-  is export(:text-view)
   returns N-GtkWidget
+  is native(&gtk-lib)
   { * }
 
 sub gtk_text_view_get_buffer ( N-GtkWidget $view )
-  is native(&gtk-lib)
-  is export(:text-view)
   returns OpaquePointer
+  is native(&gtk-lib)
   { * }
 
 sub gtk_text_view_set_editable(N-GtkWidget $widget, int32 $setting)
   is native(&gtk-lib)
-  is export
   { * }
 
 sub gtk_text_view_get_editable(N-GtkWidget $widget)
-  is native(&gtk-lib)
-  is export
   returns int32
+  is native(&gtk-lib)
   { * }
 
 sub gtk_text_view_set_cursor_visible(N-GtkWidget $widget, int32 $setting)
   is native(&gtk-lib)
-  is export
   { * }
 
 sub gtk_text_view_get_cursor_visible(N-GtkWidget $widget)
-  is native(&gtk-lib)
-  is export
   returns int32
+  is native(&gtk-lib)
   { * }
 
 sub gtk_text_view_get_monospace(N-GtkWidget $widget)
-  is native(&gtk-lib)
-  is export
   returns int32
+  is native(&gtk-lib)
   { * }
 
 sub gtk_text_view_set_monospace(N-GtkWidget $widget, int32 $setting)
   is native(&gtk-lib)
-  is export
   { * }
 
 #-------------------------------------------------------------------------------

@@ -28,6 +28,8 @@
     "GTK::V3::Gtk::GtkGrid": "lib/GTK/V3/Gtk/GtkGrid.pm6",
     "GTK::V3::Gtk::GtkLabel": "lib/GTK/V3/Gtk/GtkLabel.pm6",
     "GTK::V3::Gtk::GtkMain": "lib/GTK/V3/Gtk/GtkMain.pm6",
+    "GTK::V3::Gtk::GtkTextBuffer": "lib/GTK/V3/Gtk/GtkTextBuffer.pm6",
+    "GTK::V3::Gtk::GtkTextView": "lib/GTK/V3/Gtk/GtkTextView.pm6",
     "GTK::V3::Gtk::GtkWidget": "lib/GTK/V3/Gtk/GtkWidget.pm6"
   },
 

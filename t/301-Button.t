@@ -89,11 +89,9 @@ subtest 'Button as container', {
 
 #-------------------------------------------------------------------------------
 class X is GTK::V3::Gtk::GtkWidget {
-  method click-handler (
-    N-GtkWidget :$widget, Array :$data, Str :$target-widget-name
-  ) {
-    is $data[0], 'Hello', 'data 0 ok';
-    is $data[1], 'World', 'data 1 ok';
+  method click-handler ( N-GtkWidget :$widget, Array :$user-data ) {
+    is $user-data[0], 'Hello', 'data 0 ok';
+    is $user-data[1], 'World', 'data 1 ok';
   }
 }
 
@@ -107,7 +105,7 @@ subtest 'Button connect and emit signal', {
   $data[1] = 'World';
 
   my X $x .= new;
-  $button.register-signal( $x, 'click-handler', $data);
+  $button.register-signal( $x, 'click-handler', 'clicked', :user-data($data));
 
   my Promise $p = start {
     # wait for loop to start

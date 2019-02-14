@@ -9,7 +9,7 @@
   "license": "Artistic-2.0",
 
   "provides": {
-    "GTK::V3::X": "lib/GTK/V3/X.pm6",
+    "X::GTK::V3": "lib/GTK/V3/X.pm6",
     "GTK::V3::N::NativeLib": "lib/GTK/V3/N/NativeLib.pm6",
 
     "GTK::V3::Gdk::GdkDisplay": "lib/GTK/V3/Gdk/GdkDisplay.pm6",

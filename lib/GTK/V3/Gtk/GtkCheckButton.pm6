@@ -32,6 +32,9 @@ sub gtk_check_button_new_with_mnemonic ( Str $label )
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 #submethod BUILD ( Str :$text = '' ) {
 submethod BUILD ( *%options ) {
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkCheckButton';
 note "CB: ", %options;
 #  self.setWidget(gtk_check_button_new_with_label($text));
 #note "CB: '$text'";

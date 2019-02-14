@@ -6,9 +6,9 @@ use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 #use GTK::V3::Glib::GSignal;
 use GTK::V3::Gtk::GtkMain;
-use GTK::V3::Gdk::GdkScreen;
-use GTK::V3::Gdk::GdkDisplay;
-use GTK::V3::Gdk::GdkWindow;
+#use GTK::V3::Gdk::GdkScreen;
+#use GTK::V3::Gdk::GdkDisplay;
+#use GTK::V3::Gdk::GdkWindow;
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 unit class GTK::V3::Glib::GObject:auth<github:MARTIMM>;
@@ -156,19 +156,17 @@ sub g_signal_handler_disconnect( N-GtkWidget $widget, int32 $handler_id)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-has N-GtkWidget $!gtk-widget;
+has N-GtkWidget $!g-object;
 
 #-----------------------------------------------------------------------------
 #TODO destroy when overwritten?
 method CALL-ME ( N-GtkWidget $widget? --> N-GtkWidget ) {
 
   if ?$widget {
-    #if GdkWindow::GDK_WINDOW_TOPLEVEL
-    #$!gtk-widget = N-GtkWidget;
-    $!gtk-widget = $widget;
+    $!g-object = $widget;
   }
 
-  $!gtk-widget
+  $!g-object
 }
 
 #-----------------------------------------------------------------------------
@@ -189,7 +187,7 @@ method FALLBACK ( $native-sub, |c ) {
   my Callable $s = self.fallback($native-sub);
 
 #note "test-call ", $s.gist;
-  test-call( $s, $!gtk-widget, |c)
+  test-call( $s, $!g-object, |c)
 }
 
 #-------------------------------------------------------------------------------
@@ -213,6 +211,8 @@ method fallback ( $native-sub is copy --> Callable ) {
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
+#TODO can automatically initialize!
+  # Test if GTK is initialized
   die X::Gui.new(:message('GTK is not initialized'))
       unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
@@ -234,8 +234,8 @@ note "GO: {self}, ", %options;
 #-------------------------------------------------------------------------------
 #TODO destroy when overwritten?
 method setWidget ( N-GtkWidget $widget, Bool :$force = False ) {
-  $!gtk-widget = $widget if ( $force or not ?$!gtk-widget );
-note "set widget: ", $!gtk-widget;
+  $!g-object = $widget if ( $force or not ?$!g-object );
+#note "set widget: ", $!g-object;
 }
 
 #-------------------------------------------------------------------------------

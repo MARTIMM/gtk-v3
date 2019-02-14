@@ -49,6 +49,5 @@ method FALLBACK ( $native-sub is copy, |c ) {
   try { $s = &::($native-sub); }
   try { $s = &::("g_error_$native-sub"); }
 
-#note "l call sub: ", $s.perl, ', ', $!gtk-widget.perl;
   test-call( &$s, Any, |c)
 }

@@ -12,7 +12,8 @@ use GTK::V3::Glib::GError;
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtkbuilder.h
 # https://developer.gnome.org/gtk3/stable/GtkBuilder.html
-unit class GTK::V3::Gtk::GtkBuilder:auth<github:MARTIMM>;
+unit class GTK::V3::Gtk::GtkBuilder:auth<github:MARTIMM>
+  is GTK::V3::Glib::GObject;
 
 #-------------------------------------------------------------------------------
 #?? #define G_TYPE_FUNDAMENTAL(type)	(g_type_fundamental (type))
@@ -97,76 +98,96 @@ constant G_TYPE_OBJECT = 20 +< G_TYPE_FUNDAMENTAL_SHIFT;
 constant G_TYPE_VARIANT = 21 +< G_TYPE_FUNDAMENTAL_SHIFT;
 
 #-------------------------------------------------------------------------------
-class N-GtkBuilder is repr('CPointer') is export { }
+#class N-GtkWidget is repr('CPointer') is export { }
 #class N-GtkCssSection is repr('CPointer') is export { }
 #class N-GtkCssProvider is repr('CPointer') is export { }
 
 # GtkBuilder *gtk_builder_new (void);
 sub gtk_builder_new ()
-  returns N-GtkBuilder
+  returns N-GtkWidget       # GtkBuilder
   is native(&gtk-lib)
   { * }
 
 # GtkBuilder *gtk_builder_new_from_string (const gchar *string, gssize length);
 sub gtk_builder_new_from_file ( Str $glade-ui )
-  returns N-GtkBuilder
+  returns N-GtkWidget
   is native(&gtk-lib)
   { * }
 
 # GtkBuilder *gtk_builder_new_from_string (const gchar *string, gssize length);
 sub gtk_builder_new_from_string ( Str $glade-ui, uint32 $length)
-  returns N-GtkBuilder
+  returns N-GtkWidget
   is native(&gtk-lib)
   { * }
 
 sub gtk_builder_add_from_file (
-  N-GtkBuilder $builder, Str $glade-ui, N-GError $error is rw
+  N-GtkWidget $builder, Str $glade-ui, N-GError $error is rw
 ) returns int32         # 0 or 1, 1 = ok, 0 look into GError
   is native(&gtk-lib)
     { * }
 
 sub gtk_builder_add_from_string (
-  N-GtkBuilder $builder, Str $glade-ui, uint32 $size, N-GError $error is rw
+  N-GtkWidget $builder, Str $glade-ui, uint32 $size, N-GError $error is rw
 ) returns int32         # 0 or 1, 1 = ok, 0 look into GError
   is native(&gtk-lib)
   { * }
 
 sub gtk_builder_get_object (
-  N-GtkBuilder $builder, Str $object-id
+  N-GtkWidget $builder, Str $object-id
 ) returns N-GtkWidget   # is GObject
   is native(&gtk-lib)
   { * }
 
-sub gtk_builder_get_type_from_name ( N-GtkBuilder $builder, Str $type_name )
+sub gtk_builder_get_type_from_name ( N-GtkWidget $builder, Str $type_name )
   returns int32         # is GType
   is native(&gtk-lib)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-has N-GtkBuilder $!gtk-builder;
+#has N-GtkWidget $!gtk-builder;
+submethod BUILD ( *%options ) {
 
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkBuilder';
+note "Builder: ", %options;
+
+  if ? %options<filename> {
+    self.setWidget(gtk_builder_new_from_file(%options<filename>));
+  }
+
+  elsif ? %options<string> {
+    self.setWidget(gtk_builder_new_from_string(%options<string>));
+  }
+
+  else {
+    self.setWidget(gtk_builder_new());
+  }
+}
+
+#`{{
 multi submethod BUILD ( Str:D :$filename! ) {
-  die X::Gui.new(:message('GTK is not initialized'))
-      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
+#  die X::Gui.new(:message('GTK is not initialized'))
+#      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
   $!gtk-builder = gtk_builder_new_from_file($filename);
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 multi submethod BUILD ( Str:D :$string! ) {
-  die X::Gui.new(:message('GTK is not initialized'))
-      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
+#  die X::Gui.new(:message('GTK is not initialized'))
+#      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
   $!gtk-builder = gtk_builder_new_from_string( $string, $string.chars);
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 multi submethod BUILD ( ) {
-  die X::Gui.new(:message('GTK is not initialized'))
-      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
+#  die X::Gui.new(:message('GTK is not initialized'))
+#      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
   $!gtk-builder = gtk_builder_new;
 }
-
+}}
+#`{{
 #-------------------------------------------------------------------------------
-method CALL-ME ( N-GtkBuilder $builder? --> N-GtkBuilder ) {
+method CALL-ME ( N-GtkWidget $builder? --> N-GtkWidget ) {
 
   $!gtk-builder = $builder if ?$builder;
   $!gtk-builder
@@ -185,40 +206,39 @@ method FALLBACK ( $native-sub is copy, |c ) {
 
   test-call( &$s, $!gtk-builder, |c)
 }
+}}
+
+#-------------------------------------------------------------------------------
+method fallback ( $native-sub is copy --> Callable ) {
+
+  $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
+
+  my Callable $s;
+  try { $s = &::($native-sub); }
+  try { $s = &::("gtk_builder_$native-sub"); } unless ?$s;
+
+  $s = callsame unless ?$s;
+
+  $s;
+}
 
 #-------------------------------------------------------------------------------
 multi method add-gui ( Str:D :$filename! ) {
 
-  if ?$!gtk-builder {
-#    my N-GError $g-error;
-    my Int $e-code = gtk_builder_add_from_file(
-      $!gtk-builder, $filename, Any #$g-error
-    );
-#note "BE: $g-error";
-
-    die X::Gui.new(:message("Error adding file '$filename' to the Gui"))
-        if $e-code == 0;
-#    die X::Gui.new(:message("Error: " ~ $g-error().message)) if $e-code == 0;
-  }
-
-  else {
-    $!gtk-builder = gtk_builder_new_from_file($filename);
-  }
+  my $g := self;
+  my Int $e-code = gtk_builder_add_from_file( $g(), $filename, Any);
+  die X::Gui.new(:message("Error adding file '$filename' to the Gui"))
+      if $e-code == 0;
 }
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 multi method add-gui ( Str:D :$string! ) {
 
-  if ?$!gtk-builder {
-    my Int $e-code = gtk_builder_add_from_string(
-      $!gtk-builder, $string, $string.chars, Any
-    );
+  my $g := self;
+  my Int $e-code = gtk_builder_add_from_string(
+    $g(), $string, $string.chars, Any
+  );
 
-    die X::Gui.new(:message("Error adding xml text to the Gui"))
-        if $e-code == 0;
-  }
-
-  else {
-    $!gtk-builder = gtk_builder_new_from_string( $string, $string.chars);
-  }
+  die X::Gui.new(:message("Error adding xml text to the Gui"))
+      if $e-code == 0;
 }

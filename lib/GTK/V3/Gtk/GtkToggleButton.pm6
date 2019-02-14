@@ -36,6 +36,9 @@ sub gtk_toggle_button_set_active ( N-GtkWidget $w, int32 $active )
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 submethod BUILD ( *%options ) {
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkToggleButton';
 note "TB: ", %options;
 
 #  self.setWidget(gtk_toggle_button_new_with_label($text));

@@ -30,7 +30,6 @@ sub gtk_label_set_text ( N-GtkWidget $label, Str $str )
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 submethod BUILD ( Str :$text = '' ) {
 
-  #$!gtk-widget = gtk_label_new($text) unless ?$!gtk-widget;
   self.setWidget(gtk_label_new($text));
 }
 

@@ -1,8 +1,7 @@
 use v6;
 
+use GTK::V3::Glib::GObject;
 use GTK::V3::Gtk::GtkMain;
-use GTK::V3::Glib::GError;
-#use GTK::V3::Gtk::GtkButton;
 use GTK::V3::Gtk::GtkBuilder;
 
 use Test;
@@ -54,7 +53,7 @@ subtest 'Empty builder', {
 
   my GTK::V3::Gtk::GtkBuilder $builder .= new;
   isa-ok $builder, GTK::V3::Gtk::GtkBuilder;
-  isa-ok $builder(), N-GtkBuilder;
+  isa-ok $builder(), N-GtkWidget;
 }
 
 #-------------------------------------------------------------------------------
@@ -68,7 +67,7 @@ subtest 'Add ui from file to builder', {
   #$e-code = $builder.add-from-file( 'x', $g-error());
 #note "E: $e-code, ", $g-error().message;
   my Str $text = $ui-file.IO.slurp;
-  my N-GtkBuilder $b = $builder.new-from-string( $text, $text.chars);
+  my N-GtkWidget $b = $builder.new-from-string( $text, $text.chars);
   ok ?$b, 'builder is set';
 
   $builder .= new;

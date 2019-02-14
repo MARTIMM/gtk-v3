@@ -2,6 +2,7 @@ use v6;
 use NativeCall;
 use Test;
 
+use GTK::V3::Glib::GObject;
 use GTK::V3::X;
 use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;

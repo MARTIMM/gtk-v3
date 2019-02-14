@@ -2,8 +2,7 @@ use v6;
 use NativeCall;
 use Test;
 
-#use GTK::V3::Gui;
-#use GTK::V3::Glib::GSignal;
+use GTK::V3::Glib::GObject;
 use GTK::V3::Glib::GList;
 use GTK::V3::Glib::GMain;
 use GTK::V3::Gtk::GtkMain;
@@ -42,7 +41,7 @@ subtest 'Button create', {
   throws-like
     { $button1.get-label('xyz'); },
     X::Gui, "wrong arguments",
-    :message('Calling gtk_button_get_label(GTK::V3::Gtk::GtkWidget::N-GtkWidget, Str) will never work with declared signature (GTK::V3::Gtk::GtkWidget::N-GtkWidget $widget --> Str)');
+    :message('Calling gtk_button_get_label(GTK::V3::Glib::GObject::N-GtkWidget, Str) will never work with declared signature (GTK::V3::Glib::GObject::N-GtkWidget $widget --> Str)');
 
   is $button1.get-label, 'abc def', 'text on button ok';
   $button1.set-label('xyz');
@@ -89,7 +88,8 @@ subtest 'Button as container', {
 
 #-------------------------------------------------------------------------------
 class X is GTK::V3::Gtk::GtkWidget {
-  method click-handler ( N-GtkWidget :$widget, Array :$user-data ) {
+  method click-handler ( :widget($button), Array :$user-data ) {
+    isa-ok $button, GTK::V3::Gtk::GtkButton;
     is $user-data[0], 'Hello', 'data 0 ok';
     is $user-data[1], 'World', 'data 1 ok';
   }

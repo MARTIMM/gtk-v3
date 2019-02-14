@@ -17,6 +17,7 @@ hide circle
 class X
 
 class GMain
+class GList
 
 class GdkScreen
 class GdkDisplay
@@ -25,6 +26,7 @@ class GdkWindow
 class GtkMain
 class GtkCssProvider
 class GtkTextBuffer
+class GtkBuilder
 
 class GObject
 
@@ -55,16 +57,24 @@ GtkWindow <|-- GtkDialog
 GtkDialog <|-- GtkAboutDialog
 
 GtkWidget <|-- GtkLabel
+GtkWidget <|-- GtkEntry
 
 GtkContainer <|-- GtkBin
 GtkContainer <|-- GtkTextView
 GtkWidget <|-- GtkContainer
-GObject <|-- GtkWidget
 'GtkBin --* GtkButton
 
-GdkScreen <---o GtkWidget
-GdkDisplay <---o GtkWidget
-GtkWidget o-> GdkWindow
+'GdkScreen <---o GtkWidget
+'GdkDisplay <---o GtkWidget
+'GdkWindow <---o GtkWidget
 
+GObject <|--- GtkWidget
+GObject <|--- GtkBuilder
+GObject <|--- GtkTextBuffer
+GObject <|--- GtkCssProvider
+
+GObject <|--- GdkScreen
+GObject <|--- GdkWindow
+GObject <|--- GdkDisplay
 
 ```

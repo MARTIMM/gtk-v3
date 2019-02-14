@@ -3,7 +3,8 @@ use NativeCall;
 
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
-use GTK::V3::Gtk::GtkWidget;
+use GTK::V3::Glib::GObject;
+#use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkBin;
 
 #-------------------------------------------------------------------------------
@@ -55,8 +56,15 @@ sub gtk_window_set_transient_for ( N-GtkWidget $window, N-GtkWidget $parent )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( GtkWindowType :$window-type = GTK_WINDOW_TOPLEVEL ) {
-  self.setWidget(gtk_window_new($window-type));
+submethod BUILD ( *%options ) {
+  #self.setWidget(gtk_window_new($window-type));
+
+  if ?%options<create> and
+     ?%options<window-type> and
+     %options<window-type> ~~ GtkWindowType {
+
+    self.setWidget(gtk_dialog_new(%options<window-type>));
+  }
 }
 
 #-------------------------------------------------------------------------------

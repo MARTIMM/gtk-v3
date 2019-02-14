@@ -1,20 +1,21 @@
 use v6;
 use NativeCall;
 
-#use GTK::V3::Gui;
-use GTK::V3::X;
+#use GTK::V3::X;
 use GTK::V3::N::NativeLib;
-#use GTK::V3::Glib::GSignal;
-use GTK::V3::Gtk::GtkMain;
-use GTK::V3::Gdk::GdkScreen;
+use GTK::V3::Glib::GObject;
+#use GTK::V3::Gtk::GtkMain;
+#use GTK::V3::Gdk::GdkScreen;
 use GTK::V3::Gdk::GdkDisplay;
 use GTK::V3::Gdk::GdkWindow;
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+# /usr/include/gtk-3.0/gtk/gtkwidget.h
+# https://developer.gnome.org/gtk3/stable/GtkWidget.html
 unit class GTK::V3::Gtk::GtkWidget:auth<github:MARTIMM>
-;#  is GTK::V3::Glib::GSignal
-;#  does GTK::V3::Gui;
+  is GTK::V3::Glib::GObject;
 
+#`[[
 #-------------------------------------------------------------------------------
 class N-GtkWidget
   is repr('CPointer')
@@ -156,6 +157,7 @@ sub g_signal_emit_by_name_wwd (
 sub g_signal_handler_disconnect( N-GtkWidget $widget, int32 $handler_id)
   is native(&gobject-lib)
   { * }
+]]
 
 #-------------------------------------------------------------------------------
 # GtkWidget
@@ -255,7 +257,9 @@ sub gtk_widget_get_has_window ( N-GtkWidget $window )
   is native(&gtk-lib)
   { * }
 
+
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+#`[[
 has N-GtkWidget $!gtk-widget;
 
 #-----------------------------------------------------------------------------
@@ -291,6 +295,7 @@ method FALLBACK ( $native-sub, |c ) {
 #note "test-call ", $s.gist;
   test-call( $s, $!gtk-widget, |c)
 }
+]]
 
 #-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {
@@ -303,35 +308,31 @@ method fallback ( $native-sub is copy --> Callable ) {
 #note "w s1: gtk_widget_$native-sub, ", $s unless ?$s;
   try { $s = &::("gtk_widget_$native-sub"); } unless ?$s;
 #note "w s2: g_signal_$native-sub, ", $s unless ?$s;
-  try { $s = &::("g_signal_$native-sub"); } unless ?$s;
+#  try { $s = &::("g_signal_$native-sub"); } unless ?$s;
 
   $s = callsame unless ?$s;
 
   $s
 }
 
+#`{{
 #-------------------------------------------------------------------------------
-submethod BUILD ( |c ) {
+submethod BUILD ( *%options ) {
 
   die X::Gui.new(:message('GTK is not initialized'))
       unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
-  for c.kv -> $k, $v {
-    if $k eq 'widget' {
-note "KV: {$k//'-'}, {$v//'-'}";
-      if ?$v and $v ~~ N-GtkWidget {
-note "set widget";
-        self.setWidget($v);
-note "widget set";
-      }
+note "W: {self}, ", %options;
 
-      else {
-        die X::Gui.new(
-          :message('Wrong type or undefined widget, must be type N-GtkWidget')
-        );
-      }
+  if ? %options<widget> {
+    if %options<widget> ~~ N-GtkWidget {
+      self.setWidget(%options<widget>);
+    }
 
-      last;
+    else {
+      die X::Gui.new(
+        :message('Wrong type or undefined widget, must be type N-GtkWidget')
+      );
     }
   }
 }
@@ -340,6 +341,7 @@ note "widget set";
 #TODO destroy when overwritten?
 method setWidget ( N-GtkWidget $widget, Bool :$force = False ) {
   $!gtk-widget = $widget if ( $force or not ?$!gtk-widget );
+note "set widget: ", $!gtk-widget;
 }
 
 #-------------------------------------------------------------------------------
@@ -359,14 +361,14 @@ method register-signal (
     %options<target-widget-name> = $target-widget-name if $target-widget-name;
 
     if $handler-type eq 'wd' {
-#note "set $handler-name ($handler-type)";
+note "set $handler-name ($handler-type), options: %user-options";
       self.g-signal-connect-object-wd(
         $signal-name,
         -> $w, $d {
 #          if $handler-object.^can($handler-name) {
-#note "in callback, calling $handler-name ($handler-type), ", $handler-object;
-#note "widget: ", self;
-            $handler-object."$handler-name"(|%options);
+note "in callback, calling $handler-name ($handler-type), ", $handler-object;
+note "widget: ", self;
+            $handler-object."$handler-name"( |%options, |%user-options);
 #          }
         },
         OpaquePointer, $connect-flags
@@ -379,7 +381,9 @@ method register-signal (
         -> $w1, $w2, $d {
 #          if $handler-object.^can($handler-name) {
 #note "in callback, calling $handler-name ($handler-type), ", $handler-object;
-            $handler-object."$handler-name"( :widget2($w2), |%options);
+            $handler-object."$handler-name"(
+             :widget2($w2), |%options, |%user-options
+            );
 #          }
         },
         OpaquePointer, $connect-flags
@@ -392,7 +396,9 @@ method register-signal (
         -> $w, $s, $d {
 #          if $handler-object.^can($handler-name) {
 #note "in callback, calling $handler-name ($handler-type), ", $handler-object;
-            $handler-object."$handler-name"( :string($s), |%options);
+            $handler-object."$handler-name"(
+             :string($s), |%options, |%user-options
+            );
 #          }
         },
         OpaquePointer, $connect-flags
@@ -410,3 +416,4 @@ method register-signal (
 #    self.connect-object( 'clicked', $handler, OpaquePointer, $connect_flags);
   }
 }
+}}

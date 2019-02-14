@@ -3,8 +3,9 @@ use NativeCall;
 
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
+use GTK::V3::Glib::GObject;
 use GTK::V3::Gtk::GtkWindow;
-use GTK::V3::Gtk::GtkWidget;
+#use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtkdialog.h
@@ -51,8 +52,11 @@ sub gtk_about_dialog_set_logo (
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( ) {
-  self.setWidget(gtk_dialog_new);
+submethod BUILD ( *%options ) {
+
+  if ?%options<create> {
+    self.setWidget(gtk_dialog_new);
+  }
 }
 
 #-------------------------------------------------------------------------------

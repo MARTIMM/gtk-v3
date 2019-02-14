@@ -3,8 +3,9 @@ use NativeCall;
 
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
+use GTK::V3::Glib::GObject;
 use GTK::V3::Gtk::GtkToggleButton;
-use GTK::V3::Gtk::GtkWidget;
+#use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtkcheckbutton.h
@@ -13,16 +14,35 @@ unit class GTK::V3::Gtk::GtkCheckButton:auth<github:MARTIMM>
   is GTK::V3::Gtk::GtkToggleButton;
 
 #-------------------------------------------------------------------------------
+sub gtk_check_button_new ( )
+  returns N-GtkWidget
+  is native(&gtk-lib)
+  { * }
+
 sub gtk_check_button_new_with_label ( Str $label )
   returns N-GtkWidget
   is native(&gtk-lib)
   { * }
 
-# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( Str :$text = '' ) {
+sub gtk_check_button_new_with_mnemonic ( Str $label )
+  returns N-GtkWidget
+  is native(&gtk-lib)
+  { * }
 
-  #$!gtk-widget = gtk_label_new($text) unless ?$!gtk-widget;
-  self.setWidget(gtk_check_button_new_with_label($text));
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+#submethod BUILD ( Str :$text = '' ) {
+submethod BUILD ( *%options ) {
+note "CB: ", %options;
+#  self.setWidget(gtk_check_button_new_with_label($text));
+#note "CB: '$text'";
+
+  if ? %options<text> {
+    self.setWidget(gtk_check_button_new_with_label(%options<text>));
+  }
+
+  else {
+    self.setWidget(gtk_check_button_new());
+  }
 }
 
 #-------------------------------------------------------------------------------

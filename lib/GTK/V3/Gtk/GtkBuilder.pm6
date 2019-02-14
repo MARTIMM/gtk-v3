@@ -3,9 +3,10 @@ use NativeCall;
 
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
+use GTK::V3::Glib::GObject;
 use GTK::V3::Gdk::GdkScreen;
 use GTK::V3::Gtk::GtkMain;
-use GTK::V3::Gtk::GtkWidget;
+#use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Glib::GError;
 
 #-------------------------------------------------------------------------------

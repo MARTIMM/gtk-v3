@@ -2,7 +2,8 @@ use v6;
 use NativeCall;
 
 use GTK::V3::N::NativeLib;
-use GTK::V3::Gtk::GtkWidget;
+use GTK::V3::Glib::GObject;
+#use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkBin;
 
 #-------------------------------------------------------------------------------
@@ -32,15 +33,17 @@ sub gtk_button_set_label ( N-GtkWidget $widget, Str $label )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-multi submethod BUILD ( ) {
+submethod BUILD ( *%options ) {
 
-  self.setWidget(gtk_button_new);
-}
+note "B: ", %options;
 
-#-------------------------------------------------------------------------------
-multi submethod BUILD ( Str:D :$text! ) {
+  if ? %options<text> {
+    self.setWidget(gtk_button_new_with_label(%options<text>));
+  }
 
-  self.setWidget(gtk_button_new_with_label($text));
+  else {
+    self.setWidget(gtk_button_new());
+  }
 }
 
 #-------------------------------------------------------------------------------

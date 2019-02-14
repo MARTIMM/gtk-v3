@@ -3,8 +3,9 @@ use NativeCall;
 
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
+use GTK::V3::Glib::GObject;
 use GTK::V3::Gtk::GtkButton;
-use GTK::V3::Gtk::GtkWidget;
+#use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtktogglebutton.h
@@ -13,29 +14,39 @@ unit class GTK::V3::Gtk::GtkToggleButton:auth<github:MARTIMM>
   is GTK::V3::Gtk::GtkButton;
 
 #-------------------------------------------------------------------------------
+sub gtk_toggle_button_new ( )
+  returns N-GtkWidget
+  is native(&gtk-lib)
+  { * }
+
 sub gtk_toggle_button_new_with_label ( Str $label )
-    returns N-GtkWidget
-    is native(&gtk-lib)
-    is export
-    { * }
+  returns N-GtkWidget
+  is native(&gtk-lib)
+  { * }
 
 sub gtk_toggle_button_get_active ( N-GtkWidget $w )
-    returns int32
-    is native(&gtk-lib)
-    is export
-    { * }
+  returns int32
+  is native(&gtk-lib)
+  { * }
 
 sub gtk_toggle_button_set_active ( N-GtkWidget $w, int32 $active )
-    returns int32
-    is native(&gtk-lib)
-    is export
-    { * }
+  returns int32
+  is native(&gtk-lib)
+  { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( Str :$text = '' ) {
+submethod BUILD ( *%options ) {
+note "TB: ", %options;
 
-  #$!gtk-widget = gtk_label_new($text) unless ?$!gtk-widget;
-  self.setWidget(gtk_toggle_button_new_with_label($text));
+#  self.setWidget(gtk_toggle_button_new_with_label($text));
+
+  if ? %options<text> {
+    self.setWidget(gtk_toggle_button_new_with_label(%options<text>));
+  }
+
+  else {
+    self.setWidget(gtk_toggle_button_new());
+  }
 }
 
 #-------------------------------------------------------------------------------

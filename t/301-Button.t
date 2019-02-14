@@ -36,12 +36,12 @@ subtest 'Button create', {
   isa-ok $button1, GTK::V3::Gtk::GtkContainer;
   isa-ok $button1, GTK::V3::Gtk::GtkWidget;
   #does-ok $button1, GTK::V3::Gui;
-  isa-ok $button1(), N-GtkWidget;
+  isa-ok $button1(), N-GObject;
 
   throws-like
     { $button1.get-label('xyz'); },
     X::Gui, "wrong arguments",
-    :message('Calling gtk_button_get_label(GTK::V3::Glib::GObject::N-GtkWidget, Str) will never work with declared signature (GTK::V3::Glib::GObject::N-GtkWidget $widget --> Str)');
+    :message('Calling gtk_button_get_label(GTK::V3::Glib::GObject::N-GObject, Str) will never work with declared signature (GTK::V3::Glib::GObject::N-GObject $widget --> Str)');
 
   is $button1.get-label, 'abc def', 'text on button ok';
   $button1.set-label('xyz');
@@ -51,7 +51,7 @@ subtest 'Button create', {
   throws-like
     { $b2 .= new(:widget($button1)) },
     X::Gui, "Wrong type for init",
-    :message('Wrong type or undefined widget, must be type N-GtkWidget');
+    :message('Wrong type or undefined widget, must be type N-GObject');
 
   $b2 .= new(:widget($button1()));
 note "B2: $b2, $b2()";

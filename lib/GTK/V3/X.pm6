@@ -19,7 +19,7 @@ sub test-catch-exception ( Exception $e, Str $native-sub ) is export {
 #TODO X::Method::NotFound
 #     No such method 'message' for invocant of type 'Any'
 #TODO Argument
-#     Calling gtk_button_get_label(N-GtkWidget, Str) will never work with declared signature (N-GtkWidget $widget --> Str)
+#     Calling gtk_button_get_label(N-GObject, Str) will never work with declared signature (N-GObject $widget --> Str)
 #TODO Return
 #     Type check failed for return value
 

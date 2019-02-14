@@ -14,26 +14,26 @@ unit class GTK::V3::Gtk::GtkEntry:auth<github:MARTIMM>
 
 #-------------------------------------------------------------------------------
 sub gtk_entry_new ( )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
-sub gtk_entry_get_text ( N-GtkWidget $entry )
+sub gtk_entry_get_text ( N-GObject $entry )
   returns Str
   is native(&gtk-lib)
   { * }
 
-sub gtk_entry_set_text ( N-GtkWidget $entry, Str $text )
+sub gtk_entry_set_text ( N-GObject $entry, Str $text )
   is native(&gtk-lib)
   { * }
 
-sub gtk_entry_set_visibility ( N-GtkWidget $entry, Bool $visible )
+sub gtk_entry_set_visibility ( N-GObject $entry, Bool $visible )
   is native(&gtk-lib)
   { * }
 
 # hints is an enum with type GtkInputHints -> int
 # The values are defined in Enums.pm6
-sub gtk_entry_set_input_hints ( N-GtkWidget $entry, uint32 $hints )
+sub gtk_entry_set_input_hints ( N-GObject $entry, uint32 $hints )
   is native(&gtk-lib)
   { * }
 

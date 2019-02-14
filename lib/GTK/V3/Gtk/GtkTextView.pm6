@@ -15,39 +15,39 @@ unit class GTK::V3::Gtk::GtkTextView:auth<github:MARTIMM>
 
 #-------------------------------------------------------------------------------
 sub gtk_text_view_new()
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_get_buffer ( N-GtkWidget $view )
+sub gtk_text_view_get_buffer ( N-GObject $view )
   returns OpaquePointer
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_set_editable ( N-GtkWidget $widget, int32 $setting )
+sub gtk_text_view_set_editable ( N-GObject $widget, int32 $setting )
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_get_editable ( N-GtkWidget $widget )
+sub gtk_text_view_get_editable ( N-GObject $widget )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_set_cursor_visible ( N-GtkWidget $widget, int32 $setting )
+sub gtk_text_view_set_cursor_visible ( N-GObject $widget, int32 $setting )
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_get_cursor_visible ( N-GtkWidget $widget )
+sub gtk_text_view_get_cursor_visible ( N-GObject $widget )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_get_monospace ( N-GtkWidget $widget )
+sub gtk_text_view_get_monospace ( N-GObject $widget )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_view_set_monospace ( N-GtkWidget $widget, int32 $setting )
+sub gtk_text_view_set_monospace ( N-GObject $widget, int32 $setting )
   is native(&gtk-lib)
   { * }
 

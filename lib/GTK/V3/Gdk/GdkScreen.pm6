@@ -12,20 +12,20 @@ unit class GTK::V3::Gdk::GdkScreen:auth<github:MARTIMM>
 
 #`{{
 #-------------------------------------------------------------------------------
-class N-GtkWidget
+class N-GObject
   is repr('CPointer')
   is export
   { }
 }}
 #-------------------------------------------------------------------------------
 sub gdk_screen_get_default ( )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gdk-lib)
 #    is export
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-#has N-GtkWidget $!gdk-screen;
+#has N-GObject $!gdk-screen;
 
 #-------------------------------------------------------------------------------
 submethod BUILD (  ) {
@@ -34,7 +34,7 @@ submethod BUILD (  ) {
 
 #`{{
 #-------------------------------------------------------------------------------
-method CALL-ME ( --> N-GtkWidget ) {
+method CALL-ME ( --> N-GObject ) {
   $!gdk-screen
 }
 

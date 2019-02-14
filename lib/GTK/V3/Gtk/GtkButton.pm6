@@ -13,22 +13,22 @@ unit class GTK::V3::Gtk::GtkButton:auth<github:MARTIMM>
   is GTK::V3::Gtk::GtkBin;
 
 #-------------------------------------------------------------------------------
-sub gtk_button_get_label ( N-GtkWidget $widget )
+sub gtk_button_get_label ( N-GObject $widget )
   returns Str
   is native(&gtk-lib)
   { * }
 
 sub gtk_button_new ( )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
 sub gtk_button_new_with_label ( Str $label )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
-sub gtk_button_set_label ( N-GtkWidget $widget, Str $label )
+sub gtk_button_set_label ( N-GObject $widget, Str $label )
   is native(&gtk-lib)
   { * }
 

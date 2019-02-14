@@ -15,21 +15,21 @@ unit class GTK::V3::Gtk::GtkToggleButton:auth<github:MARTIMM>
 
 #-------------------------------------------------------------------------------
 sub gtk_toggle_button_new ( )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
 sub gtk_toggle_button_new_with_label ( Str $label )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
-sub gtk_toggle_button_get_active ( N-GtkWidget $w )
+sub gtk_toggle_button_get_active ( N-GObject $w )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_toggle_button_set_active ( N-GtkWidget $w, int32 $active )
+sub gtk_toggle_button_set_active ( N-GObject $w, int32 $active )
   returns int32
   is native(&gtk-lib)
   { * }

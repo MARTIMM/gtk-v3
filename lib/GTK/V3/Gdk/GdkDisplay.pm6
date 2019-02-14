@@ -19,7 +19,7 @@ unit class GTK::V3::Gdk::GdkDisplay:auth<github:MARTIMM>
 
 #-------------------------------------------------------------------------------
 sub gdk_display_warp_pointer (
-  N-GtkWidget $display, N-GtkWidget $screen, int32 $x, int32 $y
+  N-GObject $display, N-GObject $screen, int32 $x, int32 $y
 ) is native(&gdk-lib)
   { * }
 

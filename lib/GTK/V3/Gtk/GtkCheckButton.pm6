@@ -15,17 +15,17 @@ unit class GTK::V3::Gtk::GtkCheckButton:auth<github:MARTIMM>
 
 #-------------------------------------------------------------------------------
 sub gtk_check_button_new ( )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
 sub gtk_check_button_new_with_label ( Str $label )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
 sub gtk_check_button_new_with_mnemonic ( Str $label )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 

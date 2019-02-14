@@ -15,7 +15,7 @@ unit class GTK::V3::Gtk::GtkAboutDialog:auth<github:MARTIMM>
 
 #-------------------------------------------------------------------------------
 sub gtk_about_dialog_set_logo (
-  N-GtkWidget $about, OpaquePointer $logo-pixbuf
+  N-GObject $about, OpaquePointer $logo-pixbuf
 ) is native(&gtk-lib)
   { * }
 

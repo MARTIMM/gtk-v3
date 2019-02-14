@@ -14,98 +14,98 @@ unit class GTK::V3::Gtk::GtkWidget:auth<github:MARTIMM>
 
 #-------------------------------------------------------------------------------
 # GtkWidget
-sub gtk_widget_get_display ( N-GtkWidget $widget )
-  returns N-GtkWidget       # GdkDisplay
+sub gtk_widget_get_display ( N-GObject $widget )
+  returns N-GObject       # GdkDisplay
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_get_no_show_all ( N-GtkWidget $widgetw )
+sub gtk_widget_get_no_show_all ( N-GObject $widgetw )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_get_visible ( N-GtkWidget $widget )
+sub gtk_widget_get_visible ( N-GObject $widget )
   returns int32       # Bool 1=true
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_hide ( N-GtkWidget $widgetw )
+sub gtk_widget_hide ( N-GObject $widgetw )
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_set_no_show_all ( N-GtkWidget $widgetw, int32 $no_show_all )
+sub gtk_widget_set_no_show_all ( N-GObject $widgetw, int32 $no_show_all )
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_show ( N-GtkWidget $widgetw )
+sub gtk_widget_show ( N-GObject $widgetw )
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_show_all ( N-GtkWidget $widgetw )
+sub gtk_widget_show_all ( N-GObject $widgetw )
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_destroy ( N-GtkWidget $widget )
+sub gtk_widget_destroy ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_set_sensitive ( N-GtkWidget $widget, int32 $sensitive )
+sub gtk_widget_set_sensitive ( N-GObject $widget, int32 $sensitive )
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_get_sensitive ( N-GtkWidget $widget )
+sub gtk_widget_get_sensitive ( N-GObject $widget )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_set_size_request ( N-GtkWidget $widget, int32 $w, int32 $h )
+sub gtk_widget_set_size_request ( N-GObject $widget, int32 $w, int32 $h )
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_get_allocated_height ( N-GtkWidget $widget )
+sub gtk_widget_get_allocated_height ( N-GObject $widget )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_get_allocated_width ( N-GtkWidget $widget )
+sub gtk_widget_get_allocated_width ( N-GObject $widget )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_queue_draw ( N-GtkWidget $widget )
+sub gtk_widget_queue_draw ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_get_tooltip_text ( N-GtkWidget $widget )
+sub gtk_widget_get_tooltip_text ( N-GObject $widget )
   returns Str
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_set_tooltip_text ( N-GtkWidget $widget, Str $text )
+sub gtk_widget_set_tooltip_text ( N-GObject $widget, Str $text )
   is native(&gtk-lib)
   { * }
 
-# void gtk_widget_set_name ( N-GtkWidget *widget, const gchar *name );
-sub gtk_widget_set_name ( N-GtkWidget $widget, Str $name )
+# void gtk_widget_set_name ( N-GObject *widget, const gchar *name );
+sub gtk_widget_set_name ( N-GObject $widget, Str $name )
   is native(&gtk-lib)
   { * }
 
-# const gchar *gtk_widget_get_name ( N-GtkWidget *widget );
-sub gtk_widget_get_name ( N-GtkWidget $widget )
+# const gchar *gtk_widget_get_name ( N-GObject *widget );
+sub gtk_widget_get_name ( N-GObject $widget )
   returns Str
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_get_window ( N-GtkWidget $widget )
-  returns N-GtkWidget         # GdkWindow
+sub gtk_widget_get_window ( N-GObject $widget )
+  returns N-GObject         # GdkWindow
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_set_visible ( N-GtkWidget $widget, Bool $visible)
+sub gtk_widget_set_visible ( N-GObject $widget, Bool $visible)
   is native(&gtk-lib)
   { * }
 
-sub gtk_widget_get_has_window ( N-GtkWidget $window )
+sub gtk_widget_get_has_window ( N-GObject $window )
   returns Bool
   is native(&gtk-lib)
   { * }

@@ -26,32 +26,32 @@ enum GtkWindowType is export < GTK_WINDOW_TOPLEVEL GTK_WINDOW_POPUP >;
 
 #-------------------------------------------------------------------------------
 sub gtk_window_new ( int32 $window_type )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
-sub gtk_window_set_title ( N-GtkWidget $w, Str $title )
-  returns N-GtkWidget
+sub gtk_window_set_title ( N-GObject $w, Str $title )
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
-sub gtk_window_set_position ( N-GtkWidget $window, int32 $position )
+sub gtk_window_set_position ( N-GObject $window, int32 $position )
   is native(&gtk-lib)
   { * }
 
 sub gtk_window_set_default_size (
-  N-GtkWidget $window, int32 $width, int32 $height
+  N-GObject $window, int32 $width, int32 $height
 ) is native(&gtk-lib)
   { * }
 
 # void gtk_window_set_modal (GtkWindow *window, gboolean modal);
 # can be set in glade
-sub gtk_window_set_modal ( N-GtkWidget $window, Bool $modal )
+sub gtk_window_set_modal ( N-GObject $window, Bool $modal )
   is native(&gtk-lib)
   { * }
 
 # void gtk_window_set_transient_for ( GtkWindow *window, GtkWindow *parent);
-sub gtk_window_set_transient_for ( N-GtkWidget $window, N-GtkWidget $parent )
+sub gtk_window_set_transient_for ( N-GObject $window, N-GObject $parent )
   is native(&gtk-lib)
   { * }
 

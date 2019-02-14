@@ -14,14 +14,14 @@ unit class GTK::V3::Gtk::GtkListBox:auth<github:MARTIMM>
   is GTK::V3::Gtk::GtkContainer;
 
 #-------------------------------------------------------------------------------
-sub gtk_list_box_insert ( N-GtkWidget $box, N-GtkWidget $child, int32 $position)
+sub gtk_list_box_insert ( N-GObject $box, N-GObject $child, int32 $position)
     is native(&gtk-lib)
     { * }
 
 # The widget in the argument list is a GtkListBox
 # returned widget is a GtkListBoxRow
-sub gtk_list_box_get_row_at_index ( N-GtkWidget $box, int32 $index)
-    returns N-GtkWidget
+sub gtk_list_box_get_row_at_index ( N-GObject $box, int32 $index)
+    returns N-GObject
     is native(&gtk-lib)
     { * }
 

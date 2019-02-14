@@ -13,22 +13,22 @@ unit class GTK::V3::Gtk::GtkContainer:auth<github:MARTIMM>
   is GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
-sub gtk_container_add ( N-GtkWidget $container, N-GtkWidget $widget )
+sub gtk_container_add ( N-GObject $container, N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-sub gtk_container_get_border_width ( N-GtkWidget $container )
+sub gtk_container_get_border_width ( N-GObject $container )
   returns int32
   is native(&gtk-lib)
   { * }
 
-sub gtk_container_get_children ( N-GtkWidget $container )
+sub gtk_container_get_children ( N-GObject $container )
   returns N-GList
   is native(&gtk-lib)
   { * }
 
 sub gtk_container_set_border_width (
-  N-GtkWidget $container, int32 $border_width
+  N-GObject $container, int32 $border_width
 ) is native(&gtk-lib)
   { * }
 

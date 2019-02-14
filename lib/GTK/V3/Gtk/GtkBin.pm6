@@ -14,8 +14,8 @@ unit class GTK::V3::Gtk::GtkBin:auth<github:MARTIMM>
   is GTK::V3::Gtk::GtkContainer;
 
 #-------------------------------------------------------------------------------
-sub gtk_bin_get_child ( N-GtkWidget $bin )
-  returns N-GtkWidget
+sub gtk_bin_get_child ( N-GObject $bin )
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 

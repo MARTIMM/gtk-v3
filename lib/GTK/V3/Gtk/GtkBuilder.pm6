@@ -98,53 +98,53 @@ constant G_TYPE_OBJECT = 20 +< G_TYPE_FUNDAMENTAL_SHIFT;
 constant G_TYPE_VARIANT = 21 +< G_TYPE_FUNDAMENTAL_SHIFT;
 
 #-------------------------------------------------------------------------------
-#class N-GtkWidget is repr('CPointer') is export { }
+#class N-GObject is repr('CPointer') is export { }
 #class N-GtkCssSection is repr('CPointer') is export { }
 #class N-GtkCssProvider is repr('CPointer') is export { }
 
 # GtkBuilder *gtk_builder_new (void);
 sub gtk_builder_new ()
-  returns N-GtkWidget       # GtkBuilder
+  returns N-GObject       # GtkBuilder
   is native(&gtk-lib)
   { * }
 
 # GtkBuilder *gtk_builder_new_from_string (const gchar *string, gssize length);
 sub gtk_builder_new_from_file ( Str $glade-ui )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
 # GtkBuilder *gtk_builder_new_from_string (const gchar *string, gssize length);
 sub gtk_builder_new_from_string ( Str $glade-ui, uint32 $length)
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
 sub gtk_builder_add_from_file (
-  N-GtkWidget $builder, Str $glade-ui, N-GError $error is rw
+  N-GObject $builder, Str $glade-ui, N-GError $error is rw
 ) returns int32         # 0 or 1, 1 = ok, 0 look into GError
   is native(&gtk-lib)
     { * }
 
 sub gtk_builder_add_from_string (
-  N-GtkWidget $builder, Str $glade-ui, uint32 $size, N-GError $error is rw
+  N-GObject $builder, Str $glade-ui, uint32 $size, N-GError $error is rw
 ) returns int32         # 0 or 1, 1 = ok, 0 look into GError
   is native(&gtk-lib)
   { * }
 
 sub gtk_builder_get_object (
-  N-GtkWidget $builder, Str $object-id
-) returns N-GtkWidget   # is GObject
+  N-GObject $builder, Str $object-id
+) returns N-GObject   # is GObject
   is native(&gtk-lib)
   { * }
 
-sub gtk_builder_get_type_from_name ( N-GtkWidget $builder, Str $type_name )
+sub gtk_builder_get_type_from_name ( N-GObject $builder, Str $type_name )
   returns int32         # is GType
   is native(&gtk-lib)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-#has N-GtkWidget $!gtk-builder;
+#has N-GObject $!gtk-builder;
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
@@ -187,7 +187,7 @@ multi submethod BUILD ( ) {
 }}
 #`{{
 #-------------------------------------------------------------------------------
-method CALL-ME ( N-GtkWidget $builder? --> N-GtkWidget ) {
+method CALL-ME ( N-GObject $builder? --> N-GObject ) {
 
   $!gtk-builder = $builder if ?$builder;
   $!gtk-builder

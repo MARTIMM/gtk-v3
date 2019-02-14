@@ -26,31 +26,31 @@ enum GtkImageType  is export <
 
 #-------------------------------------------------------------------------------
 sub gtk_image_new ( )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
 sub gtk_image_new_from_file ( Str $filename )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
 # image is a GtkImage
-sub gtk_image_set_from_file ( N-GtkWidget $image, Str $filename)
+sub gtk_image_set_from_file ( N-GObject $image, Str $filename)
   is native(&gtk-lib)
   { * }
 
-sub gtk_image_clear ( N-GtkWidget $image )
+sub gtk_image_clear ( N-GObject $image )
   is native(&gtk-lib)
   { * }
 
 # GtkImageType is an enum -> uint32
-sub gtk_image_get_storage_type ( N-GtkWidget $image )
+sub gtk_image_get_storage_type ( N-GObject $image )
   returns uint32
   is native(&gtk-lib)
   { * }
 
-sub gtk_image_get_pixbuf ( N-GtkWidget $image )
+sub gtk_image_get_pixbuf ( N-GObject $image )
   returns OpaquePointer
   is native(&gtk-lib)
   { * }

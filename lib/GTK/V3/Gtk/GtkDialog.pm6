@@ -30,24 +30,24 @@ enum GtkResponseType is export (
 
 #-------------------------------------------------------------------------------
 sub gtk_dialog_new ( )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
 # gint gtk_dialog_run (GtkDialog *dialog);
 # GtkResponseType is an int32
-sub gtk_dialog_run ( N-GtkWidget $dialog )
+sub gtk_dialog_run ( N-GObject $dialog )
   returns int32
   is native(&gtk-lib)
   { * }
 
 # void gtk_dialog_response (GtkDialog *dialog, gint response_id);
-sub gtk_dialog_response ( N-GtkWidget $dialog, int32 $response_id )
+sub gtk_dialog_response ( N-GObject $dialog, int32 $response_id )
   is native(&gtk-lib)
   { * }
 
 sub gtk_about_dialog_set_logo (
-  N-GtkWidget $about, OpaquePointer $logo-pixbuf
+  N-GObject $about, OpaquePointer $logo-pixbuf
 ) is native(&gtk-lib)
   { * }
 

@@ -15,7 +15,7 @@ unit class GTK::V3::Gtk::GtkMenuItem:auth<github:MARTIMM>
 
 #-------------------------------------------------------------------------------
 sub gtk_menu_item_new ( )
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 

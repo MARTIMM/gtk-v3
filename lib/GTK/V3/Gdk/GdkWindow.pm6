@@ -11,7 +11,7 @@ unit class GTK::V3::Gdk::GdkWindow:auth<github:MARTIMM>
   is GTK::V3::Glib::GObject;
 
 #-------------------------------------------------------------------------------
-#class N-GtkWidget
+#class N-GObject
 #  is repr('CPointer')
 #  is export
 #  { }
@@ -29,25 +29,25 @@ enum GdkWindowType <
 
 #-------------------------------------------------------------------------------
 sub gdk_window_get_origin (
-  N-GtkWidget $window, int32 $x is rw, int32 $y is rw
+  N-GObject $window, int32 $x is rw, int32 $y is rw
   ) returns int32
     is native(&gdk-lib)
     is export
     { * }
 
-sub gdk_window_destroy ( N-GtkWidget $window )
+sub gdk_window_destroy ( N-GObject $window )
   is native(&gdk-lib)
   is export
   { * }
 
-sub gdk_window_get_window_type ( N-GtkWidget $window )
+sub gdk_window_get_window_type ( N-GObject $window )
   returns int32 #GdkWindowType
   is native(&gdk-lib)
   is export
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-#has N-GtkWidget $!gdk-window;
+#has N-GObject $!gdk-window;
 
 #-------------------------------------------------------------------------------
 #submethod BUILD ( GTK::V3::Gdk::GdkWindow :$parent ) {
@@ -59,13 +59,13 @@ submethod DESTROY ( ) {
 
   if ?$!gdk-window {
     gdk_window_destroy($!gdk-window);
-    $!gdk-window = N-GtkWidget;
+    $!gdk-window = N-GObject;
   }
 }
 
 
 #-------------------------------------------------------------------------------
-method CALL-ME ( --> N-GtkWidget ) {
+method CALL-ME ( --> N-GObject ) {
   $!gdk-window
 }
 

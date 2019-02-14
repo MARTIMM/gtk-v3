@@ -36,7 +36,7 @@ sub g_list_nth ( N-GList $list, int32 $n)
   { * }
 
 sub g_list_nth_data ( N-GList $list, int32 $n)
-  returns N-GtkWidget
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 

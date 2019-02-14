@@ -14,7 +14,7 @@ use GTK::V3::Gtk::GtkMain;
 unit class GTK::V3::Glib::GObject:auth<github:MARTIMM>;
 
 #-------------------------------------------------------------------------------
-class N-GtkWidget
+class N-GObject
   is repr('CPointer')
   is export
   { }
@@ -31,13 +31,13 @@ enum GConnectFlags is export (
 #
 #`{{
 # original handler signature:
-#   &handler ( N-GtkWidget $h_widget, OpaquePointer $h_data )
+#   &handler ( N-GObject $h_widget, OpaquePointer $h_data )
 # widget is inserted when second call to method is made and data is only
 # definable as an OpaquePointer so it can not give any data. This is also
 # inserted in second call. See GtkWidget.
 sub g_signal_connect_wd (
-  N-GtkWidget $widget, Str $signal,
-  &handler ( N-GtkWidget, OpaquePointer ), OpaquePointer
+  N-GObject $widget, Str $signal,
+  &handler ( N-GObject, OpaquePointer ), OpaquePointer
 ) {
   g_signal_connect_data_wd(
     $widget, $signal, &handler, OpaquePointer, Any, 0
@@ -45,8 +45,8 @@ sub g_signal_connect_wd (
 }
 
 sub g_signal_connect_after_wd (
-  N-GtkWidget $widget, Str $signal,
-  &handler ( N-GtkWidget, OpaquePointer ), OpaquePointer
+  N-GObject $widget, Str $signal,
+  &handler ( N-GObject, OpaquePointer ), OpaquePointer
 ) {
   g_signal_connect_data_wd(
     $widget, $signal, &handler, OpaquePointer, Any, G_CONNECT_AFTER
@@ -54,8 +54,8 @@ sub g_signal_connect_after_wd (
 }
 
 sub g_signal_connect_swapped_wd (
-  N-GtkWidget $widget, Str $signal,
-  &handler ( N-GtkWidget, OpaquePointer ), OpaquePointer
+  N-GObject $widget, Str $signal,
+  &handler ( N-GObject, OpaquePointer ), OpaquePointer
 ) {
   g_signal_connect_data_wd(
     $widget, $signal, &handler, OpaquePointer, Any, G_CONNECT_SWAPPED
@@ -65,16 +65,16 @@ sub g_signal_connect_swapped_wd (
 #-------------------------------------------------------------------------------
 # safe in threaded programs
 sub g_signal_connect_data_wd(
-  N-GtkWidget $widget, Str $signal,
-  &handler ( N-GtkWidget, OpaquePointer ), OpaquePointer $data,
+  N-GObject $widget, Str $signal,
+  &handler ( N-GObject, OpaquePointer ), OpaquePointer $data,
   OpaquePointer $destroy_data, int32 $connect_flags
 ) returns int32
   is native(&gobject-lib)
   { * }
 
 sub g_signal_connect_data_wwd(
-  N-GtkWidget $widget, Str $signal,
-  &handler ( N-GtkWidget, N-GtkWidget, OpaquePointer ), OpaquePointer $data,
+  N-GObject $widget, Str $signal,
+  &handler ( N-GObject, N-GObject, OpaquePointer ), OpaquePointer $data,
   OpaquePointer $destroy_data, int32 $connect_flags
 ) returns int32
   is native(&gobject-lib)
@@ -83,7 +83,7 @@ sub g_signal_connect_data_wwd(
 
 # unsafe in threaded programs
 #sub g_signal_connect_object(
-#  N-GtkWidget $widget, Str $signal, &handler ( N-GtkWidget, OpaquePointer ),
+#  N-GObject $widget, Str $signal, &handler ( N-GObject, OpaquePointer ),
 #  OpaquePointer, int32 $connect_flags
 #) returns uint32
 #  is native(&gobject-lib)
@@ -91,7 +91,7 @@ sub g_signal_connect_data_wwd(
 
 # unsafe in threaded programs
 sub g_signal_connect_object_wd(
-  N-GtkWidget $widget, Str $signal, &handler ( N-GtkWidget, OpaquePointer ),
+  N-GObject $widget, Str $signal, &handler ( N-GObject, OpaquePointer ),
   OpaquePointer $data, int32 $connect_flags
 ) returns uint32
   is native(&gobject-lib)
@@ -99,8 +99,8 @@ sub g_signal_connect_object_wd(
   { * }
 
 sub g_signal_connect_object_wwd(
-  N-GtkWidget $widget, Str $signal, &handler (
-    N-GtkWidget, N-GtkWidget, OpaquePointer
+  N-GObject $widget, Str $signal, &handler (
+    N-GObject, N-GObject, OpaquePointer
   ),
   OpaquePointer, int32 $connect_flags
 ) returns uint32
@@ -109,8 +109,8 @@ sub g_signal_connect_object_wwd(
   { * }
 
 sub g_signal_connect_object_wsd(
-  N-GtkWidget $widget, Str $signal, &handler (
-    N-GtkWidget, Str, OpaquePointer
+  N-GObject $widget, Str $signal, &handler (
+    N-GObject, Str, OpaquePointer
   ),
   OpaquePointer, int32 $connect_flags
 ) returns uint32
@@ -122,8 +122,8 @@ sub g_signal_connect_object_wsd(
 # a GQuark is a guint32, $detail is a quark
 # See https://developer.gnome.org/glib/stable/glib-Quarks.html
 sub g_signal_emit (
-  N-GtkWidget $instance, uint32 $signal_id, uint32 $detail,
-  N-GtkWidget $widget, Str $data, Str $return-value is rw
+  N-GObject $instance, uint32 $signal_id, uint32 $detail,
+  N-GObject $widget, Str $data, Str $return-value is rw
 ) is native(&gobject-lib)
   { * }
 }}
@@ -133,34 +133,34 @@ sub g_signal_emit (
 # plus a return value
 sub g_signal_emit_by_name_wd (
   # first two are obligatory by definition
-  N-GtkWidget $instance, Str $detailed_signal,
+  N-GObject $instance, Str $detailed_signal,
   # The rest depends on the handler defined when connecting
   # There is no return value from the handler
-  N-GtkWidget $widget, OpaquePointer
+  N-GObject $widget, OpaquePointer
 ) is native(&gobject-lib)
   is symbol('g_signal_emit_by_name')
   { * }
 
 sub g_signal_emit_by_name_wwd (
   # first two are obligatory by definition
-  N-GtkWidget $instance, Str $detailed_signal,
+  N-GObject $instance, Str $detailed_signal,
   # The rest depends on the handler defined when connecting
   # There is no return value from the handler
-  N-GtkWidget $widget1, N-GtkWidget $widget2, OpaquePointer
+  N-GObject $widget1, N-GObject $widget2, OpaquePointer
 ) is native(&gobject-lib)
   is symbol('g_signal_emit_by_name')
   { * }
 
-sub g_signal_handler_disconnect( N-GtkWidget $widget, int32 $handler_id)
+sub g_signal_handler_disconnect( N-GObject $widget, int32 $handler_id)
   is native(&gobject-lib)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-has N-GtkWidget $!g-object;
+has N-GObject $!g-object;
 
 #-----------------------------------------------------------------------------
 #TODO destroy when overwritten?
-method CALL-ME ( N-GtkWidget $widget? --> N-GtkWidget ) {
+method CALL-ME ( N-GObject $widget? --> N-GObject ) {
 
   if ?$widget {
     $!g-object = $widget;
@@ -219,13 +219,13 @@ submethod BUILD ( *%options ) {
 note "GO: {self}, ", %options;
 
   if ? %options<widget> {
-    if %options<widget> ~~ N-GtkWidget {
+    if %options<widget> ~~ N-GObject {
       self.setWidget(%options<widget>);
     }
 
     else {
       die X::Gui.new(
-        :message('Wrong type or undefined widget, must be type N-GtkWidget')
+        :message('Wrong type or undefined widget, must be type N-GObject')
       );
     }
   }
@@ -233,7 +233,7 @@ note "GO: {self}, ", %options;
 
 #-------------------------------------------------------------------------------
 #TODO destroy when overwritten?
-method setWidget ( N-GtkWidget $widget, Bool :$force = False ) {
+method setWidget ( N-GObject $widget, Bool :$force = False ) {
   $!g-object = $widget if ( $force or not ?$!g-object );
 #note "set widget: ", $!g-object;
 }

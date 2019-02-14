@@ -38,18 +38,7 @@ $ui-file.IO.spurt(Q:q:to/EOXML/);
 
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-subtest 'Initialize error', {
-  my GTK::V3::Gtk::GtkBuilder $builder;
-  throws-like
-    { $builder .= new; },
-    X::Gui, "forget to initialize GTK",
-    :message("GTK is not initialized");
-}
-
-#-------------------------------------------------------------------------------
 subtest 'Empty builder', {
-  # initialize
-  my GTK::V3::Gtk::GtkMain $main .= new;
 
   my GTK::V3::Gtk::GtkBuilder $builder .= new;
   isa-ok $builder, GTK::V3::Gtk::GtkBuilder;

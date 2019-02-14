@@ -4,26 +4,13 @@ use Test;
 
 use GTK::V3::Glib::GObject;
 use GTK::V3::X;
-use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkLabel;
 
 diag "\n";
 
 #-------------------------------------------------------------------------------
-subtest 'Initialize error', {
-  my GTK::V3::Gtk::GtkLabel $label;
-  throws-like
-    { $label .= new(:text('text')); },
-    X::Gui, "forget to initialize GTK",
-    :message("GTK is not initialized");
-}
-
-#-------------------------------------------------------------------------------
 subtest 'Label create', {
-
-  # initialize
-  my GTK::V3::Gtk::GtkMain $main .= new;
 
   my GTK::V3::Gtk::GtkLabel $label1 .= new(:text('abc def'));
   isa-ok $label1, GTK::V3::Gtk::GtkLabel;

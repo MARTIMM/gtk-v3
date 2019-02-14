@@ -1,14 +1,9 @@
 use v6;
 use NativeCall;
 
-#use GTK::V3::Gui;
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
-#use GTK::V3::Glib::GSignal;
 use GTK::V3::Gtk::GtkMain;
-#use GTK::V3::Gdk::GdkScreen;
-#use GTK::V3::Gdk::GdkDisplay;
-#use GTK::V3::Gdk::GdkWindow;
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 unit class GTK::V3::Glib::GObject:auth<github:MARTIMM>;
@@ -157,8 +152,9 @@ sub g_signal_handler_disconnect( N-GObject $widget, int32 $handler_id)
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 has N-GObject $!g-object;
+has GTK::V3::Gtk::GtkMain $!main;
 
-#-----------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 #TODO destroy when overwritten?
 method CALL-ME ( N-GObject $widget? --> N-GObject ) {
 
@@ -169,7 +165,7 @@ method CALL-ME ( N-GObject $widget? --> N-GObject ) {
   $!g-object
 }
 
-#-----------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # Fallback method to find the native subs which then can be called as if it
 # were a method. Each class must provide their own 'fallback' method which,
 # when nothing found, must call the parents fallback with 'callsame'.
@@ -211,10 +207,8 @@ method fallback ( $native-sub is copy --> Callable ) {
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
-#TODO can automatically initialize!
   # Test if GTK is initialized
-  die X::Gui.new(:message('GTK is not initialized'))
-      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
+  $!main .= new unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
 note "GO: {self}, ", %options;
 

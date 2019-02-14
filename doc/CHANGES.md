@@ -1,5 +1,9 @@
 ## Release notes
 
+* 2019-02-14 0.4.0
+  * Module GObject placed at the top of the foodchain.
+  * Automatic initialization of GTK before first access of a native sub.
+  
 * 2019-02-11 0.3.0
   * New modules GtkDialog, GtkAboutDialog, GtkImage, GtkEntry, GtkCheckButton, GtkToggleButton, GtkListBox, GtkWindow, GtkMenuItem, GtkImageMenuItem
 

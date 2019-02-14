@@ -16,18 +16,6 @@ diag "\n";
 
 
 #-------------------------------------------------------------------------------
-subtest 'Initialize error', {
-  my GTK::V3::Gtk::GtkButton $button;
-  throws-like
-    { $button .= new(:text('text')); },
-    X::Gui, "forget to initialize GTK",
-    :message("GTK is not initialized");
-}
-
-# initialize
-my GTK::V3::Gtk::GtkMain $main .= new;
-
-#-------------------------------------------------------------------------------
 subtest 'Button create', {
 
   my GTK::V3::Gtk::GtkButton $button1 .= new(:text('abc def'));
@@ -107,9 +95,11 @@ subtest 'Button connect and emit signal', {
   my X $x .= new;
   $button.register-signal( $x, 'click-handler', 'clicked', :user-data($data));
 
+  my GTK::V3::Gtk::GtkMain $main .= new(:check);
   my Promise $p = start {
     # wait for loop to start
     sleep(1.1);
+
     is $main.gtk-main-level, 1, "loop level now 1";
 
     my GTK::V3::Glib::GMain $gmain .= new;

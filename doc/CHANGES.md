@@ -1,7 +1,7 @@
 ## Release notes
 
 * 2019-02-11 0.3.0
-  * New modules GtkDialog, GtkAboutDialog, GtkImage, GtkEntry, GtkCheckButton, GtkToggleButton, GtkListBox, GtkWindow
+  * New modules GtkDialog, GtkAboutDialog, GtkImage, GtkEntry, GtkCheckButton, GtkToggleButton, GtkListBox, GtkWindow, GtkMenuItem, GtkImageMenuItem
 
 * 2019-02-08 0.2.0
   * Connecting signals

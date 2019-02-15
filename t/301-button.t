@@ -28,7 +28,7 @@ subtest 'Button create', {
 
   throws-like
     { $button1.get-label('xyz'); },
-    X::Gui, "wrong arguments",
+    X::GTK::V3, "wrong arguments",
     :message('Calling gtk_button_get_label(GTK::V3::Glib::GObject::N-GObject, Str) will never work with declared signature (GTK::V3::Glib::GObject::N-GObject $widget --> Str)');
 
   is $button1.get-label, 'abc def', 'text on button ok';
@@ -38,7 +38,7 @@ subtest 'Button create', {
   my GTK::V3::Gtk::GtkButton $b2;
   throws-like
     { $b2 .= new(:widget($button1)) },
-    X::Gui, "Wrong type for init",
+    X::GTK::V3, "Wrong type for init",
     :message('Wrong type or undefined widget, must be type N-GObject');
 
   $b2 .= new(:widget($button1()));

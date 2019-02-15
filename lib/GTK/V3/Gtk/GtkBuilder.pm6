@@ -6,7 +6,6 @@ use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GObject;
 use GTK::V3::Gdk::GdkScreen;
 use GTK::V3::Gtk::GtkMain;
-#use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Glib::GError;
 
 #-------------------------------------------------------------------------------
@@ -98,10 +97,6 @@ constant G_TYPE_OBJECT = 20 +< G_TYPE_FUNDAMENTAL_SHIFT;
 constant G_TYPE_VARIANT = 21 +< G_TYPE_FUNDAMENTAL_SHIFT;
 
 #-------------------------------------------------------------------------------
-#class N-GObject is repr('CPointer') is export { }
-#class N-GtkCssSection is repr('CPointer') is export { }
-#class N-GtkCssProvider is repr('CPointer') is export { }
-
 # GtkBuilder *gtk_builder_new (void);
 sub gtk_builder_new ()
   returns N-GObject       # GtkBuilder
@@ -144,12 +139,10 @@ sub gtk_builder_get_type_from_name ( N-GObject $builder, Str $type_name )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-#has N-GObject $!gtk-builder;
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkBuilder';
-note "Builder: ", %options;
 
   if ? %options<filename> {
     self.setWidget(gtk_builder_new_from_file(%options<filename>));
@@ -161,54 +154,18 @@ note "Builder: ", %options;
     );
   }
 
-  else {
+  elsif ? %options<create> {
     self.setWidget(gtk_builder_new());
   }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
 }
-
-#`{{
-multi submethod BUILD ( Str:D :$filename! ) {
-#  die X::Gui.new(:message('GTK is not initialized'))
-#      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
-  $!gtk-builder = gtk_builder_new_from_file($filename);
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-multi submethod BUILD ( Str:D :$string! ) {
-#  die X::Gui.new(:message('GTK is not initialized'))
-#      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
-  $!gtk-builder = gtk_builder_new_from_string( $string, $string.chars);
-}
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-multi submethod BUILD ( ) {
-#  die X::Gui.new(:message('GTK is not initialized'))
-#      unless $GTK::V3::Gtk::GtkMain::gui-initialized;
-  $!gtk-builder = gtk_builder_new;
-}
-}}
-#`{{
-#-------------------------------------------------------------------------------
-method CALL-ME ( N-GObject $builder? --> N-GObject ) {
-
-  $!gtk-builder = $builder if ?$builder;
-  $!gtk-builder
-}
-
-#-------------------------------------------------------------------------------
-method FALLBACK ( $native-sub is copy, |c ) {
-
-  CATCH { test-catch-exception( $_, $native-sub); }
-
-  $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
-
-  my Callable $s;
-  try { $s = &::($native-sub); }
-  try { $s = &::("gtk_builder_$native-sub"); }
-
-  test-call( &$s, $!gtk-builder, |c)
-}
-}}
 
 #-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {
@@ -229,7 +186,7 @@ multi method add-gui ( Str:D :$filename! ) {
 
   my $g := self;
   my Int $e-code = gtk_builder_add_from_file( $g(), $filename, Any);
-  die X::Gui.new(:message("Error adding file '$filename' to the Gui"))
+  die X::GTK::V3.new(:message("Error adding file '$filename' to the Gui"))
       if $e-code == 0;
 }
 
@@ -241,6 +198,6 @@ multi method add-gui ( Str:D :$string! ) {
     $g(), $string, $string.chars, Any
   );
 
-  die X::Gui.new(:message("Error adding xml text to the Gui"))
+  die X::GTK::V3.new(:message("Error adding xml text to the Gui"))
       if $e-code == 0;
 }

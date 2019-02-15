@@ -6,8 +6,6 @@ use GTK::V3::Gtk::GtkBuilder;
 
 use Test;
 
-#diag "\n";
-
 #-------------------------------------------------------------------------------
 my $dir = 't/ui';
 mkdir $dir unless $dir.IO ~~ :e;
@@ -39,47 +37,58 @@ $ui-file.IO.spurt(Q:q:to/EOXML/);
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 subtest 'Empty builder', {
+  my GTK::V3::Gtk::GtkBuilder $builder;
+  throws-like
+    { $builder .= new; },
+    X::GTK::V3, "No options used",
+    :message('No options used to create or set the native widget');
 
-  my GTK::V3::Gtk::GtkBuilder $builder .= new;
+  throws-like
+    { $builder .= new( :build, :load); },
+    X::GTK::V3, "Wrong options used",
+    :message(
+      /:s Unsupported options for
+          'GTK::V3::Gtk::GtkBuilder:'
+          [(build||load) ',']+/
+    );
+
+  $builder .= new(:create);
   isa-ok $builder, GTK::V3::Gtk::GtkBuilder;
   isa-ok $builder(), N-GObject;
 }
 
 #-------------------------------------------------------------------------------
 subtest 'Add ui from file to builder', {
-  my GTK::V3::Gtk::GtkBuilder $builder .= new;
+  my GTK::V3::Gtk::GtkBuilder $builder .= new(:create);
 
   my Int $e-code = $builder.add-from-file( $ui-file, Any);
   is $e-code, 1, "ui file added ok";
 
-  #my GTK::V3::Glib::GError $g-error .= new;
-  #$e-code = $builder.add-from-file( 'x', $g-error());
-#note "E: $e-code, ", $g-error().message;
   my Str $text = $ui-file.IO.slurp;
   my N-GObject $b = $builder.new-from-string( $text, $text.chars);
   ok ?$b, 'builder is set';
 
-  $builder .= new;
+  $builder .= new(:create);
   $builder.add-gui(:filename($ui-file));
   ok ?$builder(), 'builder is added';
 
-  $builder .= new;
+  $builder .= new(:create);
   throws-like
     { $builder.add-gui(:filename('x.glade')); },
-    X::Gui, "non existent file added",
+    X::GTK::V3, "non existent file added",
     :message("Error adding file 'x.glade' to the Gui");
 
-  $builder .= new;
+  $builder .= new(:create);
   # invalidate xml text
   $text ~~ s/ '<interface>' //;
   throws-like
     { $builder.add-gui(:string($text)); },
-    X::Gui, "erronenous xml file added",
+    X::GTK::V3, "erronenous xml file added",
     :message("Error adding xml text to the Gui");
 }
 
 #-------------------------------------------------------------------------------
 done-testing;
 
-#unlink $ui-file;
-#rmdir $dir;
+unlink $ui-file;
+rmdir $dir;

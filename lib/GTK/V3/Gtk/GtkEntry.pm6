@@ -10,7 +10,7 @@ use GTK::V3::Glib::GObject;
 # See /usr/include/gtk-3.0/gtk/gtkentry.h
 # https://developer.gnome.org/gtk3/stable/GtkEntry.html
 unit class GTK::V3::Gtk::GtkEntry:auth<github:MARTIMM>
-  is GTK::V3::Gtk::GtkWidget;
+  is GTK::V3::Glib::GObject;
 
 #-------------------------------------------------------------------------------
 sub gtk_entry_new ( )

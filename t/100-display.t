@@ -28,8 +28,6 @@ subtest 'Manage display', {
 
   my Str $display-name = $display.get-name();
   like $display-name, /\: \d+/, 'name has proper format: ' ~ $display-name;
-note "DN: $display-name";
-
 }
 
 #-------------------------------------------------------------------------------

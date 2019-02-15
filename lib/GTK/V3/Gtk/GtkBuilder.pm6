@@ -156,7 +156,9 @@ note "Builder: ", %options;
   }
 
   elsif ? %options<string> {
-    self.setWidget(gtk_builder_new_from_string(%options<string>));
+    self.setWidget(
+      gtk_builder_new_from_string( %options<string>, %options<string>.chars)
+    );
   }
 
   else {

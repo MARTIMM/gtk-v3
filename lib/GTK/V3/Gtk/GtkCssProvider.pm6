@@ -13,10 +13,12 @@ unit class GTK::V3::Gtk::GtkCssProvider:auth<github:MARTIMM>
   is GTK::V3::Glib::GObject;
 
 #-------------------------------------------------------------------------------
+#`{{
 class N-GtkCssProvider
   is repr('CPointer')
   is export
   { }
+}}
 
 enum GtkStyleProviderPriority is export (
   GTK_STYLE_PROVIDER_PRIORITY_FALLBACK => 1,
@@ -28,34 +30,35 @@ enum GtkStyleProviderPriority is export (
 
 #-------------------------------------------------------------------------------
 sub gtk_css_provider_new ( )
-  returns N-GtkCssProvider
+  returns N-GObject       # GtkCssProvider
   is native(&gtk-lib)
   { * }
 
 sub gtk_css_provider_get_named ( Str $name, Str $variant )
-  returns N-GtkCssProvider
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
 sub gtk_css_provider_load_from_path (
-  N-GtkCssProvider $css_provider, Str $css-file, OpaquePointer
+  N-GObject $css_provider, Str $css-file, OpaquePointer
 ) is native(&gtk-lib)
   { * }
 
 sub gtk_style_context_add_provider_for_screen (
-  N-GdkScreen $screen, int32 $provider, int32 $priority
+  N-GObject $screen, int32 $provider, int32 $priority
 ) is native(&gtk-lib)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-has N-GtkCssProvider $!gtk-css-provider;
+#has N-GtkCssProvider $!gtk-css-provider;
 
 #-------------------------------------------------------------------------------
 submethod BUILD ( ) {
-  $!gtk-css-provider = gtk_css_provider_new();
+  self.setWidget(gtk_css_provider_new());
 }
 
 #-------------------------------------------------------------------------------
+#`{{
 method CALL-ME ( --> N-GtkCssProvider ) {
   $!gtk-css-provider
 }
@@ -78,4 +81,21 @@ method FALLBACK ( $native-sub is copy, |c ) {
   else {
     &$s( $!gtk-css-provider, |c)
   }
+}
+}}
+
+#-------------------------------------------------------------------------------
+method fallback ( $native-sub is copy --> Callable ) {
+
+  $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
+
+  my Callable $s;
+#note "w s0: $native-sub, ", $s;
+  try { $s = &::($native-sub); }
+#note "w s1: gtk_widget_$native-sub, ", $s unless ?$s;
+  try { $s = &::("gtk_css_provider_$native-sub"); } unless ?$s;
+
+  $s = callsame unless ?$s;
+
+  $s
 }

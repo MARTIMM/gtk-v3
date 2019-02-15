@@ -63,7 +63,7 @@ submethod BUILD ( *%options ) {
      ?%options<window-type> and
      %options<window-type> ~~ GtkWindowType {
 
-    self.setWidget(gtk_dialog_new(%options<window-type>));
+    self.setWidget(gtk_window_new(%options<window-type>));
   }
 }
 

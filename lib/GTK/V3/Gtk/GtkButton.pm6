@@ -43,8 +43,20 @@ note "B: ", %options;
     self.setWidget(gtk_button_new_with_label(%options<text>));
   }
 
-  else {
+  elsif ? %options<widget> {
+    # provided in GObject
+  }
+
+  elsif ? %options<create> {
     self.setWidget(gtk_button_new());
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
   }
 }
 

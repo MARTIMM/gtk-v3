@@ -218,8 +218,16 @@ note "GO: {self}, ", %options;
     }
 
     else {
-      die X::Gui.new(
+      die X::GTK::V3.new(
         :message('Wrong type or undefined widget, must be type N-GObject')
+      );
+    }
+  }
+
+  else {
+    if %options.keys.elems == 0 {
+      die X::GTK::V3.new(
+        :message('No options used to create or set the native widget')
       );
     }
   }

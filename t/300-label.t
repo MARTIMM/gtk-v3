@@ -19,7 +19,7 @@ subtest 'Label create', {
 
   throws-like
     { $label1.get_nonvisible(); },
-    X::Gui, "non existent sub called",
+    X::GTK::V3, "non existent sub called",
     :message("Could not find native sub 'get_nonvisible\(...\)'");
 
   is $label1.get_visible, 0, "widget is invisible";

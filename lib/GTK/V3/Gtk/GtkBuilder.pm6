@@ -158,6 +158,10 @@ submethod BUILD ( *%options ) {
     self.setWidget(gtk_builder_new());
   }
 
+  elsif ? %options<widget> {
+    # provided in GObject
+  }
+
   elsif %options.keys.elems {
     die X::GTK::V3.new(
       :message('Unsupported options for ' ~ self.^name ~

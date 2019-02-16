@@ -4,7 +4,7 @@
 * All classes which work with GtkWidget e.g. return them on xyz_new(), are inheriting the GtkWidget class.
 
 ```plantuml
-
+scale 0.7
 hide members
 hide circle
 
@@ -19,14 +19,14 @@ class X
 class GMain
 class GList
 
-class GdkScreen
-class GdkDisplay
-class GdkWindow
+'class GdkScreen
+'class GdkDisplay
+'class GdkWindow
 
 class GtkMain
-class GtkCssProvider
-class GtkTextBuffer
-class GtkBuilder
+'class GtkCssProvider
+'class GtkTextBuffer
+'class GtkBuilder
 
 class GObject
 
@@ -69,12 +69,35 @@ GtkWidget <|-- GtkContainer
 'GdkWindow <---o GtkWidget
 
 GObject <|--- GtkWidget
+'GObject <|--- GtkBuilder
+'GObject <|--- GtkTextBuffer
+'GObject <|--- GtkCssProvider
+
+'GObject <|--- GdkScreen
+'GObject <|--- GdkWindow
+'GObject <|--- GdkDisplay
+
+GtkBin <|-- GtkMenuItem
+GtkMenuItem <|-- GtkImageMenuItem
+
+```
+
+```plantuml
+scale 0.7
+hide members
+hide circle
+
+class GObject
+
+class GdkScreen
+class GdkDisplay
+class GdkWindow
+
+GObject <|- GdkScreen
+GObject <|-- GdkWindow
+GObject <|-- GdkDisplay
+
 GObject <|--- GtkBuilder
 GObject <|--- GtkTextBuffer
-GObject <|--- GtkCssProvider
-
-GObject <|--- GdkScreen
-GObject <|--- GdkWindow
-GObject <|--- GdkDisplay
-
+GObject <|-- GtkCssProvider
 ```

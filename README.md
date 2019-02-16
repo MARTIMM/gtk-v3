@@ -41,44 +41,35 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
 
 ## Gtk library
 
-* **GTK::V3::X**
-  is **Exception**
+* class **X::GTK::V3** (use GTK::V3::X) is **Exception**
   * `test-catch-exception ( Exception $e, Str $native-sub )`
   * `test-call ( $handler, $gobject, |c )`
 
-* [GTK::V3::Gtk::GtkBin][gtkbin]
-    is **GTK::V3::Gtk::GtkContainer**
-    does **GTK::V3::Gui**
+* [GTK::V3::Gtk::GtkBin][gtkbin] is **GTK::V3::Gtk::GtkContainer**
   * `gtk_bin_get_child ( --> N-GObject )` [3][4][5]
 
-* [GTK::V3::Gtk::GtkBuilder][gtkbuilder]
-  * `new ( )`
-  * `new ( Str:D :$filename! )`
-  * `new ( Str:D :$string! )`
+* [GTK::V3::Gtk::GtkBuilder][gtkbuilder] is **GTK::V3::Glib::GObject**
+  * `new ( Bool :empty )`
+  * `new ( Str:D :$filename )`
+  * `new ( Str:D :$string )`
   * `add-gui ( Str:D :$filename! )`
   * `add-gui ( Str:D :$$string! )`
   * `gtk_builder_get_object ( Str $object-id --> N-GObject )`
   * `gtk_builder_get_type_from_name ( Str $type_name --> Int )`
 
-* [GTK::V3::Gtk::GtkButton][gtkbutton]
-  is **GTK::V3::Gtk::GtkBin**
-  does **GTK::V3::Gui**
+* [GTK::V3::Gtk::GtkButton][gtkbutton] is **GTK::V3::Gtk::GtkBin**
   * `new ( Str :$text? )`
   <!--* `new ( N-GObject $button )`-->
   * `gtk_button_get_label ( --> Str )`
   * `gtk_button_set_label ( Str $label )`
 
-* [GTK::V3::Gtk::GtkContainer][gtkcontainer]
-  is **GTK::V3::Gtk::GtkWidget**
-  does **GTK::V3::Gui**
+* [GTK::V3::Gtk::GtkContainer][gtkcontainer] is **GTK::V3::Gtk::GtkWidget**
   * `gtk_container_add ( N-GObject $widget )`
   * `gtk_container_get_border_width ( --> Int )`
   * `gtk_container_get_children ( --> N-GList )`
   * `gtk_container_set_border_width ( Int $border_width )`
 
-* [GTK::V3::Gtk::GtkGrid][gtkgrid]
-  is **GTK::V3::Gtk::GtkContainer**
-  does **GTK::V3::Gui**
+* [GTK::V3::Gtk::GtkGrid][gtkgrid] is **GTK::V3::Gtk::GtkContainer**
   * `new ( )`
   <!--* `new ( N-GObject $grid )`-->
   * `gtk_grid_attach ( N-GObject $child, Int $x, Int $y, Int $w, Int $h)`
@@ -87,9 +78,7 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
   * `gtk_grid_get_child_at ( UInt $left, UInt $top --> N-GObject )`
   * `gtk_grid_set_row_spacing ( UInt $spacing )`
 
-* [GTK::V3::Gtk::GtkLabel][gtklabel]
-  is **GTK::V3::Gtk::GtkWidget**
-  does **GTK::V3::Gui**
+* [GTK::V3::Gtk::GtkLabel][gtklabel] is **GTK::V3::Gtk::GtkWidget**
   * `new ( Str :$text? )`
   <!--* `new ( N-GObject $grid )`-->
   * `gtk_label_get_text ( --> Str )`
@@ -97,18 +86,18 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
 
 * GTK::V3::Gtk::GtkMain
 
-* GTK::V3::Gtk::GtkWidget
+* GTK::V3::Gtk::GtkWidget is **GTK::V3::Glib::GObject**
   * `class N-GObject`
   * `CALL-ME ( N-GObject $widget? --> N-GObject )` [1]
   * `FALLBACK ( $native-sub, |c )` [2]
   * `new ( N-GObject :$widget )`
-  * `setWidget ( N-GObject $widget )`
+  * `set-widget ( N-GObject $widget )`
 
 ## Gdk library
 
-* GTK::V3::Gdk::GdkDisplay
-* GTK::V3::Gdk::GdkScreen
-* GTK::V3::Gdk::GdkWindow
+* GTK::V3::Gdk::GdkDisplay is **GTK::V3::Glib::GObject**
+* GTK::V3::Gdk::GdkScreen is **GTK::V3::Glib::GObject**
+* GTK::V3::Gdk::GdkWindow is **GTK::V3::Glib::GObject**
 
 ## Glib library
 
@@ -117,7 +106,7 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
 ### Notes
   1) The `CALL-ME` method is coded in such a way that an object can be set or retrieved easily. E.g.
       ```
-      my GTK::V3::Gtk::GtkLabel $label .= new(:text('my label'));
+      my GTK::V3::Gtk::GtkLabel $label .= new(:label('my label'));
       my GTK::V3::Gtk::GtkGrid $grid .= new;
       $grid.gtk_grid_attach( $label(), 0, 0, 1, 1);
       ```

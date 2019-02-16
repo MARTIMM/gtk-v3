@@ -1,9 +1,17 @@
 ## Release notes
 
+* 2019-02-16 0.4.2
+  * Improve of widget creation
+  * Added :build-id option to widget creation. Can only be used when a builder is created with a gui description. Then, a widget can be searched in this description.
+
+* 2019-02-15 0.4.1
+  * Bugfixes
+  * Module GdkTypes for use in other classes
+
 * 2019-02-14 0.4.0
   * Module GObject placed at the top of the foodchain.
   * Automatic initialization of GTK before first access of a native sub.
-  
+
 * 2019-02-11 0.3.0
   * New modules GtkDialog, GtkAboutDialog, GtkImage, GtkEntry, GtkCheckButton, GtkToggleButton, GtkListBox, GtkWindow, GtkMenuItem, GtkImageMenuItem
 

@@ -48,7 +48,7 @@ sub g_list_free ( N-GList $list )
 has N-GList $!g-list;
 
 #-------------------------------------------------------------------------------
-#submethod BUILD ( ) { }
+submethod BUILD ( N-GList:D :$!g-list ) { }
 
 #-------------------------------------------------------------------------------
 method CALL-ME ( N-GList $glist? --> N-GList ) {

@@ -154,6 +154,10 @@ sub g_signal_handler_disconnect( N-GObject $widget, int32 $handler_id)
 has N-GObject $!g-object;
 has GTK::V3::Gtk::GtkMain $!main;
 
+# type is GTK::V3::Gtk::GtkBuilder. Cannot load module because of circular dep.
+# attribute is set by GtkBuilder via set-builder(). There might be more than one
+my Array $builders = [];
+
 #-------------------------------------------------------------------------------
 #TODO destroy when overwritten?
 method CALL-ME ( N-GObject $widget? --> N-GObject ) {
@@ -214,12 +218,32 @@ note "GO: {self}, ", %options;
 
   if ? %options<widget> {
     if %options<widget> ~~ N-GObject {
-      self.setWidget(%options<widget>);
+      self.set-widget(%options<widget>);
     }
 
     else {
       die X::GTK::V3.new(
         :message('Wrong type or undefined widget, must be type N-GObject')
+      );
+    }
+  }
+
+  elsif ? %options<build-id> {
+    my N-GObject $widget;
+    for @$builders -> $builder {
+      $widget = $builder.get-object(%options<build-id>);
+      last if ?$widget;
+    }
+
+    if ? $widget {
+      self.set-widget($widget);
+    }
+
+    else {
+      die X::GTK::V3.new(
+        :message(
+          "Builder id '%options<build-id>' not found in any of the builders"
+        )
       );
     }
   }
@@ -235,9 +259,14 @@ note "GO: {self}, ", %options;
 
 #-------------------------------------------------------------------------------
 #TODO destroy when overwritten?
-method setWidget ( N-GObject $widget, Bool :$force = False ) {
+method set-widget ( N-GObject $widget, Bool :$force = False ) {
   $!g-object = $widget if ( $force or not ?$!g-object );
 #note "set widget: ", $!g-object;
+}
+
+#-------------------------------------------------------------------------------
+method set-builder ( $builder ) {
+  $builders.push($builder);
 }
 
 #-------------------------------------------------------------------------------

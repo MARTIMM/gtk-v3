@@ -34,7 +34,7 @@ submethod BUILD ( *%options ) {
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkCheckButton';
 
-  if ? %options<label> {
+  if %options<label>.defined {
     self.set-widget(gtk_check_button_new_with_label(%options<label>));
   }
 

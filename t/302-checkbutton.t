@@ -18,7 +18,7 @@ my GTK::V3::Gtk::GtkMain $main .= new;
 #-------------------------------------------------------------------------------
 subtest 'CheckButton create', {
 
-  my GTK::V3::Gtk::GtkCheckButton $cb .= new(:text('abc'));
+  my GTK::V3::Gtk::GtkCheckButton $cb .= new(:label('abc'));
   isa-ok $cb, GTK::V3::Gtk::GtkCheckButton;
 }
 

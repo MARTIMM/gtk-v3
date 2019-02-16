@@ -52,14 +52,14 @@ subtest 'Empty builder', {
           [(build||load) ',']+/
     );
 
-  $builder .= new(:create);
+  $builder .= new(:empty);
   isa-ok $builder, GTK::V3::Gtk::GtkBuilder;
   isa-ok $builder(), N-GObject;
 }
 
 #-------------------------------------------------------------------------------
 subtest 'Add ui from file to builder', {
-  my GTK::V3::Gtk::GtkBuilder $builder .= new(:create);
+  my GTK::V3::Gtk::GtkBuilder $builder .= new(:empty);
 
   my Int $e-code = $builder.add-from-file( $ui-file, Any);
   is $e-code, 1, "ui file added ok";
@@ -68,17 +68,17 @@ subtest 'Add ui from file to builder', {
   my N-GObject $b = $builder.new-from-string( $text, $text.chars);
   ok ?$b, 'builder is set';
 
-  $builder .= new(:create);
+  $builder .= new(:empty);
   $builder.add-gui(:filename($ui-file));
   ok ?$builder(), 'builder is added';
 
-  $builder .= new(:create);
+  $builder .= new(:empty);
   throws-like
     { $builder.add-gui(:filename('x.glade')); },
     X::GTK::V3, "non existent file added",
     :message("Error adding file 'x.glade' to the Gui");
 
-  $builder .= new(:create);
+  $builder .= new(:empty);
   # invalidate xml text
   $text ~~ s/ '<interface>' //;
   throws-like

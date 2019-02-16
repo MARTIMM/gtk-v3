@@ -54,8 +54,8 @@ sub gtk_about_dialog_set_logo (
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 submethod BUILD ( *%options ) {
 
-  if ?%options<create> {
-    self.setWidget(gtk_dialog_new);
+  if ?%options<empty> {
+    self.set-widget(gtk_dialog_new);
   }
 }
 

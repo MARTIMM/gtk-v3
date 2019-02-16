@@ -40,15 +40,15 @@ submethod BUILD ( *%options ) {
 note "B: ", %options;
 
   if ? %options<text> {
-    self.setWidget(gtk_button_new_with_label(%options<text>));
+    self.set-widget(gtk_button_new_with_label(%options<text>));
+  }
+
+  elsif ? %options<empty> {
+    self.set-widget(gtk_button_new());
   }
 
   elsif ? %options<widget> {
     # provided in GObject
-  }
-
-  elsif ? %options<create> {
-    self.setWidget(gtk_button_new());
   }
 
   elsif %options.keys.elems {

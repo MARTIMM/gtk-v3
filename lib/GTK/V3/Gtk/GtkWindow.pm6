@@ -57,13 +57,13 @@ sub gtk_window_set_transient_for ( N-GObject $window, N-GObject $parent )
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 submethod BUILD ( *%options ) {
-  #self.setWidget(gtk_window_new($window-type));
+  #self.set-widget(gtk_window_new($window-type));
 
-  if ?%options<create> and
+  if ?%options<empty> and
      ?%options<window-type> and
      %options<window-type> ~~ GtkWindowType {
 
-    self.setWidget(gtk_window_new(%options<window-type>));
+    self.set-widget(gtk_window_new(%options<window-type>));
   }
 }
 

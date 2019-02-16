@@ -38,7 +38,7 @@ sub gtk_about_dialog_set_version ( N-GObject $dialog, Str $version )
 
 #TODO some more subs
 
-sub gtk_about_dialog_set_logo ( N-GObject $about, OpaquePointer $logo-pixbuf )
+sub gtk_about_dialog_set_logo ( N-GObject $dialog, OpaquePointer $logo-pixbuf )
   is native(&gtk-lib)
   { * }
 
@@ -49,7 +49,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkAboutDialog';
 
   if ? %options<empty> {
-    self.set-widget(gtk_button_new());
+    self.set-widget(gtk_about_dialog_new());
   }
 
   elsif ? %options<widget> || %options<build-id> {
@@ -74,6 +74,7 @@ method fallback ( $native-sub is copy --> Callable ) {
   try { $s = &::($native-sub); }
   try { $s = &::("gtk_about_dialog_$native-sub"); } unless ?$s;
 
+note "ad $native-sub: ", $s;
   $s = callsame unless ?$s;
 
   $s;

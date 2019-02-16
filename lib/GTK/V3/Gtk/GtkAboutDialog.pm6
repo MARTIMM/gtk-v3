@@ -13,12 +13,59 @@ unit class GTK::V3::Gtk::GtkAboutDialog:auth<github:MARTIMM>
   is GTK::V3::Gtk::GtkDialog;
 
 #-------------------------------------------------------------------------------
-sub gtk_about_dialog_set_logo (
-  N-GObject $about, OpaquePointer $logo-pixbuf
-) is native(&gtk-lib)
+sub gtk_about_dialog_new ( )
+  returns N-GObject       # GtkAboutDialog
+  is native(&gtk-lib)
+  { * }
+
+sub gtk_about_dialog_get_program_name ( N-GObject $dialog )
+  returns Str
+  is native(&gtk-lib)
+  { * }
+
+sub gtk_about_dialog_set_program_name ( N-GObject $dialog, Str $pname )
+  is native(&gtk-lib)
+  { * }
+
+sub gtk_about_dialog_get_version ( N-GObject $dialog )
+  returns Str
+  is native(&gtk-lib)
+  { * }
+
+sub gtk_about_dialog_set_version ( N-GObject $dialog, Str $version )
+  is native(&gtk-lib)
+  { * }
+
+#TODO some more subs
+
+sub gtk_about_dialog_set_logo ( N-GObject $about, OpaquePointer $logo-pixbuf )
+  is native(&gtk-lib)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+submethod BUILD ( *%options ) {
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkAboutDialog';
+
+  if ? %options<empty> {
+    self.set-widget(gtk_button_new());
+  }
+
+  elsif ? %options<widget> || %options<build-id> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
+}
+
+#-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {
 
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');

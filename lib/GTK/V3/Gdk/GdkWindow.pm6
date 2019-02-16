@@ -89,7 +89,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gdk::GdkWindow';
 
   if ? %options<default> {
-    self.setWidget(gdk_get_default_root_window());
+    self.set-widget(gdk_get_default_root_window());
   }
 
   elsif ? %options<widget> {

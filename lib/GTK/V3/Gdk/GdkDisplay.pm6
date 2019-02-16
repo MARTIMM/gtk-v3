@@ -39,11 +39,11 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gdk::GdkDisplay';
 
   if ? %options<default> {
-    self.setWidget(gdk_display_get_default());
+    self.set-widget(gdk_display_get_default());
   }
 
   elsif ? %options<open> {
-    self.setWidget(gdk_display_open(%options<string>));
+    self.set-widget(gdk_display_open(%options<string>));
   }
 
   elsif ? %options<widget> {

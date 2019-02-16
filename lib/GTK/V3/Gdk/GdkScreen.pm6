@@ -28,7 +28,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gdk::GdkScreen';
 
   if ? %options<default> {
-    self.setWidget(gdk_screen_get_default());
+    self.set-widget(gdk_screen_get_default());
   }
 
   elsif ? %options<widget> {

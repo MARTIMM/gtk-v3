@@ -56,8 +56,30 @@ sub gtk_image_get_pixbuf ( N-GObject $image )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( Str:D :$filename ) {
-  self.setWidget(gtk_image_new_from_file($filename));
+submethod BUILD ( *%options ) {
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkImage';
+
+  if %options<filename>.defined {
+    self.set-widget(gtk_image_new_from_file(%options<filename>));
+  }
+
+  elsif ? %options<empty> {
+    self.set-widget(gtk_image_new());
+  }
+
+  elsif ? %options<widget> || %options<build-id> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
 }
 
 #-------------------------------------------------------------------------------

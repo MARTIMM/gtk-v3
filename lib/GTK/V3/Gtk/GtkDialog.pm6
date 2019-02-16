@@ -5,7 +5,6 @@ use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GObject;
 use GTK::V3::Gtk::GtkWindow;
-#use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtkdialog.h
@@ -54,8 +53,23 @@ sub gtk_about_dialog_set_logo (
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 submethod BUILD ( *%options ) {
 
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkDialog';
+
   if ?%options<empty> {
     self.set-widget(gtk_dialog_new);
+  }
+
+  elsif ? %options<widget> || %options<build-id> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
   }
 }
 

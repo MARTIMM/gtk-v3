@@ -4,6 +4,7 @@ use NativeCall;
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GObject;
+use GTK::V3::Gtk::GtkTextTagTable;
 
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtktextbuffer.h
@@ -12,53 +13,62 @@ unit class GTK::V3::Gtk::GtkTextBuffer:auth<github:MARTIMM>
   is GTK::V3::Glib::GObject;
 
 #-------------------------------------------------------------------------------
-#class N-GtkTextBuffer
-#  is repr('CPointer')
-#  is export
-#  { }
+sub gtk_text_buffer_new ( N-GObject $text-tag-table )
+  returns N-GObject       # GtkTextBuffer
+  is native(&gtk-lib)
+  { * }
 
-#-------------------------------------------------------------------------------
 sub gtk_text_buffer_get_text (
-  OpaquePointer $buffer, CArray[int32] $start,
+  N-GObject $buffer, CArray[int32] $start,
   CArray[int32] $end, int32 $show_hidden
-) is native(&gtk-lib)
-  returns Str
-  { * }
-
-sub gtk_text_buffer_get_start_iter ( OpaquePointer $buffer, CArray[int32] $i )
+) returns Str
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_buffer_get_end_iter(OpaquePointer $buffer, CArray[int32] $i)
+sub gtk_text_buffer_get_start_iter ( N-GObject $buffer, CArray[int32] $i )
   is native(&gtk-lib)
   { * }
 
-sub gtk_text_buffer_set_text(OpaquePointer $buffer, Str $text, int32 $len)
+sub gtk_text_buffer_get_end_iter(N-GObject $buffer, CArray[int32] $i)
+  is native(&gtk-lib)
+  { * }
+
+sub gtk_text_buffer_set_text(N-GObject $buffer, Str $text, int32 $len)
   is native(&gtk-lib)
   { * }
 
 sub gtk_text_buffer_insert(
-  OpaquePointer $buffer, CArray[int32] $start,
+  N-GObject $buffer, CArray[int32] $start,
   Str $text, int32 $len
 ) is native(&gtk-lib)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-has OpaquePointer $!gtk-text-buffer;
+submethod BUILD ( *%options ) {
 
-#-------------------------------------------------------------------------------
-#submethod BUILD ( ) {
-#  $!gtk-text-buffer = ...
-#}
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkTextBuffer';
 
-#-------------------------------------------------------------------------------
-method CALL-ME ( OpaquePointer $text-buffer? --> OpaquePointer ) {
-  $!gtk-text-buffer = $text-buffer if ?$text-buffer;
-  $!gtk-text-buffer
+  if ? %options<empty> {
+    my GTK::V3::Gtk::GtkTextTagTable $tag-table .= new(:empty);
+    self.set-widget(gtk_text_buffer_new($tag-table()));
+  }
+
+  elsif ? %options<widget> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
 }
 
 #-------------------------------------------------------------------------------
-method FALLBACK ( $native-sub is copy, |c ) {
+method fallback ( $native-sub is copy --> Callable ) {
 
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
 
@@ -66,7 +76,7 @@ method FALLBACK ( $native-sub is copy, |c ) {
   try { $s = &::($native-sub); }
   try { $s = &::("gtk_text_buffer_$native-sub"); } unless ?$s;
 
-  CATCH { test-catch-exception( $_, $native-sub); }
+  $s = callsame unless ?$s;
 
-  &$s( $!gtk-text-buffer, |c)
+  $s
 }

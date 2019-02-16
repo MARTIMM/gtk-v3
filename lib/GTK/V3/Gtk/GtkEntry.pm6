@@ -4,13 +4,13 @@ use NativeCall;
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GObject;
-#use GTK::V3::Gtk::GtkWidget;
+use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtkentry.h
 # https://developer.gnome.org/gtk3/stable/GtkEntry.html
 unit class GTK::V3::Gtk::GtkEntry:auth<github:MARTIMM>
-  is GTK::V3::Glib::GObject;
+  is GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 sub gtk_entry_new ( )
@@ -38,8 +38,29 @@ sub gtk_entry_set_input_hints ( N-GObject $entry, uint32 $hints )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( ) {
-  self.setWidget(gtk_entry_new);
+#submethod BUILD ( ) {
+#  self.set-widget(gtk_entry_new);
+#}
+submethod BUILD ( *%options ) {
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkEntry';
+
+  if ? %options<empty> {
+    self.set-widget(gtk_entry_new());
+  }
+
+  elsif ? %options<widget> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
 }
 
 #-------------------------------------------------------------------------------

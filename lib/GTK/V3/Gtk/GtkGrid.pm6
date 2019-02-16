@@ -5,7 +5,6 @@ use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GObject;
 use GTK::V3::Gtk::GtkMain;
-#use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkContainer;
 
 #-------------------------------------------------------------------------------
@@ -49,9 +48,26 @@ sub gtk_grid_set_row_spacing ( N-GObject $grid, uint32 $spacing)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( ) {
+submethod BUILD ( *%options ) {
 
-  self.setWidget(gtk_grid_new);
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkGrid';
+
+  if ? %options<empty> {
+    self.set-widget(gtk_grid_new());
+  }
+
+  elsif ? %options<widget> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
 }
 
 #-------------------------------------------------------------------------------

@@ -13,13 +13,6 @@ unit class GTK::V3::Gtk::GtkCssProvider:auth<github:MARTIMM>
   is GTK::V3::Glib::GObject;
 
 #-------------------------------------------------------------------------------
-#`{{
-class N-GtkCssProvider
-  is repr('CPointer')
-  is export
-  { }
-}}
-
 enum GtkStyleProviderPriority is export (
   GTK_STYLE_PROVIDER_PRIORITY_FALLBACK => 1,
   GTK_STYLE_PROVIDER_PRIORITY_THEME => 200,
@@ -50,39 +43,27 @@ sub gtk_style_context_add_provider_for_screen (
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-#has N-GtkCssProvider $!gtk-css-provider;
+submethod BUILD ( *%options ) {
 
-#-------------------------------------------------------------------------------
-submethod BUILD ( ) {
-  self.setWidget(gtk_css_provider_new());
-}
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkCssProvider';
 
-#-------------------------------------------------------------------------------
-#`{{
-method CALL-ME ( --> N-GtkCssProvider ) {
-  $!gtk-css-provider
-}
-
-#-------------------------------------------------------------------------------
-method FALLBACK ( $native-sub is copy, |c ) {
-
-  $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
-
-  my Callable $s;
-  try { $s = &::($native-sub); }
-  try { $s = &::("gtk_css_provider_$native-sub"); } unless ?$s;
-
-  CATCH { test-catch-exception( $_, $native-sub); }
-
-  if $native-sub eq 'gtk_style_context_add_provider_for_screen' {
-    &$s(|c)
+  if ? %options<empty> {
+    self.set-widget(gtk_css_provider_new());
   }
 
-  else {
-    &$s( $!gtk-css-provider, |c)
+  elsif ? %options<widget> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
   }
 }
-}}
 
 #-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {
@@ -90,9 +71,7 @@ method fallback ( $native-sub is copy --> Callable ) {
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
 
   my Callable $s;
-#note "w s0: $native-sub, ", $s;
   try { $s = &::($native-sub); }
-#note "w s1: gtk_widget_$native-sub, ", $s unless ?$s;
   try { $s = &::("gtk_css_provider_$native-sub"); } unless ?$s;
 
   $s = callsame unless ?$s;

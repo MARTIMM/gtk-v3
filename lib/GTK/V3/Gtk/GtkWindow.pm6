@@ -4,7 +4,6 @@ use NativeCall;
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GObject;
-#use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkBin;
 
 #-------------------------------------------------------------------------------
@@ -57,13 +56,27 @@ sub gtk_window_set_transient_for ( N-GObject $window, N-GObject $parent )
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 submethod BUILD ( *%options ) {
-  #self.set-widget(gtk_window_new($window-type));
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkWindow';
 
   if ?%options<empty> and
      ?%options<window-type> and
      %options<window-type> ~~ GtkWindowType {
 
     self.set-widget(gtk_window_new(%options<window-type>));
+  }
+
+  elsif ? %options<widget> || %options<build-id> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
   }
 }
 

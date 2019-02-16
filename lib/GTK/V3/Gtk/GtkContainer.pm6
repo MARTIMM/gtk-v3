@@ -33,6 +33,25 @@ sub gtk_container_set_border_width (
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+submethod BUILD ( *%options ) {
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkContainer';
+
+  if ? %options<widget> || %options<build-id> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
+}
+
+#-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {
 
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');

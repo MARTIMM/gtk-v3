@@ -19,6 +19,25 @@ sub gtk_bin_get_child ( N-GObject $bin )
   is native(&gtk-lib)
   { * }
 
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+submethod BUILD ( *%options ) {
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkBin';
+
+  if ? %options<widget> || %options<build-id> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
+}
+
 #-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {
 

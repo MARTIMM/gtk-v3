@@ -45,16 +45,16 @@ sub g_list_free ( N-GList $list )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-has N-GList $!g-list;
+has N-GList $!glist;
 
 #-------------------------------------------------------------------------------
-submethod BUILD ( N-GList:D :$!g-list ) { }
+submethod BUILD ( N-GList:D :$!glist ) { }
 
 #-------------------------------------------------------------------------------
 method CALL-ME ( N-GList $glist? --> N-GList ) {
 
-  $!g-list = $glist if ?$glist;
-  $!g-list
+  $!glist = $glist if ?$glist;
+  $!glist
 }
 
 #-------------------------------------------------------------------------------
@@ -68,7 +68,7 @@ method FALLBACK ( $native-sub is copy, |c ) {
   try { $s = &::($native-sub); }
   try { $s = &::("g_list_$native-sub"); }
 
-  test-call( $s, $!g-list, |c)
+  test-call( $s, $!glist, |c)
 }
 
 #`{{

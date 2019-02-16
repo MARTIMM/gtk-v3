@@ -39,15 +39,15 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkButton';
 note "B: ", %options;
 
-  if ? %options<text> {
-    self.set-widget(gtk_button_new_with_label(%options<text>));
+  if %options<label>.defined {
+    self.set-widget(gtk_button_new_with_label(%options<label>));
   }
 
   elsif ? %options<empty> {
     self.set-widget(gtk_button_new());
   }
 
-  elsif ? %options<widget> {
+  elsif ? %options<widget> || %options<build-id> {
     # provided in GObject
   }
 

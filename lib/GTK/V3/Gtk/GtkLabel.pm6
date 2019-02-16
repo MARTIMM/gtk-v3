@@ -27,10 +27,36 @@ sub gtk_label_set_text ( N-GObject $label, Str $str )
   is native(&gtk-lib)
   { * }
 
-# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-submethod BUILD ( Str :$text = '' ) {
+sub gtk_label_new_with_mnemonic ( Str $mnem )
+  returns N-GObject
+  is native(&gtk-lib)
+  { * }
 
-  self.setWidget(gtk_label_new($text));
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+submethod BUILD ( *%options ) {
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkLabel';
+
+  if %options<label>.defined {
+    self.set-widget(gtk_label_new(%options<label>));
+  }
+
+  elsif ? %options<mnemonic> {
+    self.set-widget(gtk_label_new_with_mnemonic(%options<mnemonic>));
+  }
+
+  elsif ? %options<widget> || %options<build-id> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
 }
 
 #-------------------------------------------------------------------------------

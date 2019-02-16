@@ -5,7 +5,6 @@ use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GObject;
 use GTK::V3::Gtk::GtkButton;
-#use GTK::V3::Gtk::GtkWidget;
 
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtktogglebutton.h
@@ -39,16 +38,25 @@ submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkToggleButton';
-note "TB: ", %options;
 
-#  self.setWidget(gtk_toggle_button_new_with_label($text));
-
-  if ? %options<text> {
-    self.setWidget(gtk_toggle_button_new_with_label(%options<text>));
+  if %options<label>.defined {
+    self.set-widget(gtk_toggle_button_new_with_label(%options<text>));
   }
 
-  else {
-    self.setWidget(gtk_toggle_button_new());
+  elsif ? %options<empty> {
+    self.set-widget(gtk_toggle_button_new());
+  }
+
+  elsif ? %options<widget> || %options<build-id> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
   }
 }
 

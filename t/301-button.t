@@ -18,7 +18,7 @@ diag "\n";
 #-------------------------------------------------------------------------------
 subtest 'Button create', {
 
-  my GTK::V3::Gtk::GtkButton $button1 .= new(:text('abc def'));
+  my GTK::V3::Gtk::GtkButton $button1 .= new(:label('abc def'));
   isa-ok $button1, GTK::V3::Gtk::GtkButton;
   isa-ok $button1, GTK::V3::Gtk::GtkBin;
   isa-ok $button1, GTK::V3::Gtk::GtkContainer;
@@ -50,17 +50,16 @@ note "B2: $b2, $b2()";
 
 #-------------------------------------------------------------------------------
 subtest 'Button as container', {
-  my GTK::V3::Gtk::GtkButton $button1 .= new(:text('xyz'));
-  my GTK::V3::Gtk::GtkLabel $l .= new(:text(''));
+  my GTK::V3::Gtk::GtkButton $button1 .= new(:label('xyz'));
+  my GTK::V3::Gtk::GtkLabel $l .= new(:label(''));
 
-  my GTK::V3::Glib::GList $gl .= new;
-  $gl($button1.get-children);
+  my GTK::V3::Glib::GList $gl .= new(:glist($button1.get-children));
   $l($gl.nth-data(0));
   is $l.get-text, 'xyz', 'text label from button 1';
 
 #`{{}}
-  my GTK::V3::Gtk::GtkLabel $label .= new(:text('pqr'));
-  my GTK::V3::Gtk::GtkButton $button2 .= new;
+  my GTK::V3::Gtk::GtkLabel $label .= new(:label('pqr'));
+  my GTK::V3::Gtk::GtkButton $button2 .= new(:empty);
   $button2.add($label());
 
   $l($button2.get-child);
@@ -75,7 +74,8 @@ subtest 'Button as container', {
 }
 
 #-------------------------------------------------------------------------------
-class X is GTK::V3::Gtk::GtkWidget {
+class X is GTK::V3::Gtk::GtkButton {
+
   method click-handler ( :widget($button), Array :$user-data ) {
     isa-ok $button, GTK::V3::Gtk::GtkButton;
     is $user-data[0], 'Hello', 'data 0 ok';
@@ -87,12 +87,12 @@ class X is GTK::V3::Gtk::GtkWidget {
 subtest 'Button connect and emit signal', {
 
   # register button signal
-  my GTK::V3::Gtk::GtkButton $button .= new(:text('xyz'));
-  my Array $data .= new;
+  my GTK::V3::Gtk::GtkButton $button .= new(:label('xyz'));
+  my Array $data = [];
   $data[0] = 'Hello';
   $data[1] = 'World';
 
-  my X $x .= new;
+  my X $x .= new(:empty);
   $button.register-signal( $x, 'click-handler', 'clicked', :user-data($data));
 
   my GTK::V3::Gtk::GtkMain $main .= new(:check);

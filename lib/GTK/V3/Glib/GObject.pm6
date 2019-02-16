@@ -186,7 +186,14 @@ method FALLBACK ( $native-sub, |c ) {
   # call the fallback functions of the role user
   my Callable $s = self.fallback($native-sub);
 
-#note "test-call ", $s.gist;
+  die X::GTK::V3.new(:message("Native sub '$native-sub' not found"))
+      unless $s.defined;
+#  unless $s.defined {
+#    note "Native sub '$native-sub' not found";
+#    return;
+#  }
+
+#note "test-call of $native-sub: ", $s, ', ', $!g-object, ', ', |c.gist;
   test-call( $s, $!g-object, |c)
 }
 
@@ -218,7 +225,7 @@ note "GO: {self}, ", %options;
 
   if ? %options<widget> {
     if %options<widget> ~~ N-GObject {
-      self.set-widget(%options<widget>);
+      $!g-object = %options<widget>;
     }
 
     else {
@@ -236,7 +243,7 @@ note "GO: {self}, ", %options;
     }
 
     if ? $widget {
-      self.set-widget($widget);
+      $!g-object = $widget;
     }
 
     else {

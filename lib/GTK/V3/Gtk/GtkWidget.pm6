@@ -13,7 +13,6 @@ unit class GTK::V3::Gtk::GtkWidget:auth<github:MARTIMM>
   is GTK::V3::Glib::GObject;
 
 #-------------------------------------------------------------------------------
-# GtkWidget
 sub gtk_widget_get_display ( N-GObject $widget )
   returns N-GObject       # GdkDisplay
   is native(&gtk-lib)

@@ -158,7 +158,7 @@ submethod BUILD ( *%options ) {
     self.set-widget(gtk_builder_new());
   }
 
-  elsif ? %options<widget> {
+  elsif ? %options<widget> || %options<build-id> {
     # provided in GObject
   }
 

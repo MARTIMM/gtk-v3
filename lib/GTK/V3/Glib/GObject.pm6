@@ -188,11 +188,10 @@ method FALLBACK ( $native-sub is copy, |c ) {
 
   # check if there are underscores in the name. then the name is not too short.
   my Callable $s;
-  #if $native-sub.index('_') {
-    # call the fallback functions of this classes children starting
-    # at the bottom
-    $s = self.fallback($native-sub);
-  #}
+
+  # call the fallback functions of this classes children starting
+  # at the bottom
+  $s = self.fallback($native-sub);
 
   die X::GTK::V3.new(:message("Native sub '$native-sub' not found"))
       unless $s.defined;
@@ -201,8 +200,20 @@ method FALLBACK ( $native-sub is copy, |c ) {
 #    return;
 #  }
 
+  # prevent user mistakes to get a N-GObject instead of a GtkSomeThing object
+  my Array $params = [];
+  for c.list -> $p {
+    if $p ~~ GTK::V3::Glib::GObject {
+      $params.push($p());
+    }
+
+    else {
+      $params.push($p);
+    }
+  }
+
 #note "test-call of $native-sub: ", $s, ', ', $!g-object, ', ', |c.gist;
-  test-call( $s, $!g-object, |c)
+  test-call( $s, $!g-object, |$params)
 }
 
 #-------------------------------------------------------------------------------

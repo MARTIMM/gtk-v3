@@ -17,8 +17,8 @@ subtest 'Grid create', {
   my GTK::V3::Gtk::GtkLabel $label .= new(:label('note'));
 
   my GTK::V3::Gtk::GtkGrid $grid .= new(:empty);
-  $grid.attach( $button(), 0, 0, 1, 1);
-  $grid.attach( $label(), 0, 1, 1, 1);
+  $grid.attach( $button, 0, 0, 1, 1);
+  $grid.attach( $label, 0, 1, 1, 1);
 
   my GTK::V3::Gtk::GtkLabel $label-widget .= new(
     :widget($grid.get-child-at( 0, 1))

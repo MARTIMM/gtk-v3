@@ -6,6 +6,8 @@
 -->
 [![License](http://martimm.github.io/label/License-label.svg)](http://www.perlfoundation.org/artistic_license_2_0)
 
+I would like to thank the developers of the GTK::Simple project because of the information I got while reading the code. Also because one of the files is copied unaltered for which I did not had to think about to get that right.
+
 # Description
 
 # Synopsis
@@ -13,7 +15,7 @@
 # Motivation
 I perhaps should have used parts of `GTK::Simple` but I wanted to study the native call interface which I am now encountering more seriously. Therefore I started a new project with likewise objects as can be found in `GTK::Simple`.
 
-The other reason I want to start a new project is that after some time working with the native call interface. I came to the conclusion that Perl6 is not yet capable to return a proper message when mistakes are made by me e.g. spelling errors or using wrong types. Most of them end up in **MoarVM panic: Internal error: Unwound entire stack and missed handler**. Other times it ends in just a plain crash. I am very confident that this will be improved later but for the time being I had to improve the maintainability of this project by hiding the native stuff as much as possible. Although the error messages may be improved, some of the crashes are happening within GTK and cannot be captured by Perl6. One of those moments are the use of GTK calls without initializing GTK with `gtk_init`. This can also be covered by setting an init-flag which should be checked by almost every other module.
+The other reason I want to start a new project is that after some time working with the native call interface. I came to the conclusion that Perl6 is not yet capable to return a proper message when mistakes are made by me e.g. spelling errors or using wrong types. Most of them end up in **MoarVM panic: Internal error: Unwound entire stack and missed handler**. Other times it ends in just a plain crash. I am very confident that this will be improved later but for the time being I had to improve the maintainability of this project by hiding the native stuff as much as possible. Although the error messages may be improved, some of the crashes are happening within GTK and cannot be captured by Perl6. One of those moments are the use of GTK calls without initializing GTK with `gtk_init`. This can also be covered by setting an init-flag which should be checked by almost every other module. The panic mentioned above mostly happens when perl6 code is called from C as a callback. The stack might not be interpreted completely at that moment.
 
 There are some points I noticed in the `GTK::Simple` modules.
 * The `GTK::Simple::Raw` module where all the native subs are defined is quite large. Only a few subs can be found elsewhere. The file is also growing with each additional declaration. Using that module is always a parsing impact despite the several import selection switches one can use.
@@ -37,25 +39,36 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
 
 # Documentation
 
-## Glade engine
-
 ## Gtk library
 
 * class **X::GTK::V3** (use GTK::V3::X) is **Exception**
   * `test-catch-exception ( Exception $e, Str $native-sub )`
   * `test-call ( $handler, $gobject, |c )`
 
+* [GTK::V3::Gtk::GtkAboutDialog][gtkaboutdialog] is **GTK::V3::Gtk::GtkDialog**
+  * `new ( Bool :empty )`
+  * `new ( Bool :widget )`  [7]
+  * `new ( Bool :build-id )`  [8]
+  * `gtk_about_dialog_new ( )` [3][4][5]
+  * `[gtk_about_dialog_]get_program_name ( )`
+  * `[gtk_about_dialog_]set_program_name ( Str $pname )`
+  * `[gtk_about_dialog_]get_version ( )`
+  * `[gtk_about_dialog_]set_version ( Str $version )`
+<!--TODO some more subs-->
+  * `gtk_about_dialog_set_logo ( N-GObject $dialog, OpaquePointer $logo-pixbuf )`
+
 * [GTK::V3::Gtk::GtkBin][gtkbin] is **GTK::V3::Gtk::GtkContainer**
-  * `gtk_bin_get_child ( --> N-GObject )` [3][4][5]
+  * `[gtk_bin_]get_child ( --> N-GObject )`
 
 * [GTK::V3::Gtk::GtkBuilder][gtkbuilder] is **GTK::V3::Glib::GObject**
   * `new ( Bool :empty )`
   * `new ( Str:D :$filename )`
   * `new ( Str:D :$string )`
   * `add-gui ( Str:D :$filename! )`
-  * `add-gui ( Str:D :$$string! )`
-  * `gtk_builder_get_object ( Str $object-id --> N-GObject )`
-  * `gtk_builder_get_type_from_name ( Str $type_name --> Int )`
+  * `add-gui ( Str:D :$string! )`
+  * `gtk_builder_new ()`            [6]
+  * `[gtk_builder_]get_object ( Str $object-id --> N-GObject )`
+  * `[gtk_builder_]get_type_from_name ( Str $type_name --> Int )`
 
 * [GTK::V3::Gtk::GtkButton][gtkbutton] is **GTK::V3::Gtk::GtkBin**
   * `new ( Str :$text? )`
@@ -63,11 +76,19 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
   * `gtk_button_get_label ( --> Str )`
   * `gtk_button_set_label ( Str $label )`
 
+* [GTK::V3::Gtk::GtkCheckButton][gtkcheckbutton] is **GTK::V3::Gtk::GtkToggleButton**
+
 * [GTK::V3::Gtk::GtkContainer][gtkcontainer] is **GTK::V3::Gtk::GtkWidget**
-  * `gtk_container_add ( N-GObject $widget )`
+  * `gtk_container_add ( N-GObject $widget )` [9]
   * `gtk_container_get_border_width ( --> Int )`
   * `gtk_container_get_children ( --> N-GList )`
   * `gtk_container_set_border_width ( Int $border_width )`
+
+* [GTK::V3::Gtk::GtkCssProvider][gtkcssprovider] is **GTK::V3::Glib::GObject**
+
+* [GTK::V3::Gtk::GtkDialog][gtkdialog] is **GTK::V3::Gtk::GtkWindow**
+
+* [GTK::V3::Gtk::GtkEntry][gtkentry] is **GTK::V3::Gtk::GtkWidget**
 
 * [GTK::V3::Gtk::GtkGrid][gtkgrid] is **GTK::V3::Gtk::GtkContainer**
   * `new ( )`
@@ -78,20 +99,38 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
   * `gtk_grid_get_child_at ( UInt $left, UInt $top --> N-GObject )`
   * `gtk_grid_set_row_spacing ( UInt $spacing )`
 
+* [GTK::V3::Gtk::GtkImage][gtkimage] is **GTK::V3::Gtk::GtkWidget**
+
+* [GTK::V3::Gtk::GtkImageMenuItem][gtkimagemenuitem] is **GTK::V3::Gtk::GtkMenuItem**
+
 * [GTK::V3::Gtk::GtkLabel][gtklabel] is **GTK::V3::Gtk::GtkWidget**
   * `new ( Str :$text? )`
   <!--* `new ( N-GObject $grid )`-->
   * `gtk_label_get_text ( --> Str )`
   * `gtk_label_set_text ( Str $str )`
 
-* GTK::V3::Gtk::GtkMain
+* [GTK::V3::Gtk::GtkListBox][gtklistbox] is **GTK::V3::Gtk::GtkContainer**
 
-* GTK::V3::Gtk::GtkWidget is **GTK::V3::Glib::GObject**
+* [GTK::V3::Gtk::GtkMain][gtkmain]
+
+* [GTK::V3::Gtk::GtkMenuItem][gtkmenuitem] is **GTK::V3::Gtk::GtkBin**
+
+* [GTK::V3::Gtk::GtkTextBuffer][gtktextbuffer] is **GTK::V3::Glib::GObject**
+
+* [GTK::V3::Gtk::GtkTextTagTable][gtktexttagtable] is **GTK::V3::Glib::GObject**
+
+* [GTK::V3::Gtk::GtkTextView][gtktextview] is **GTK::V3::Gtk::GtkContainer**
+
+* [GTK::V3::Gtk::GtkToggleButton][gtktogglebutton] is **GTK::V3::Gtk::GtkButton**
+
+* [GTK::V3::Gtk::GtkWidget][gtkwidget] is **GTK::V3::Glib::GObject**
   * `class N-GObject`
   * `CALL-ME ( N-GObject $widget? --> N-GObject )` [1]
   * `FALLBACK ( $native-sub, |c )` [2]
   * `new ( N-GObject :$widget )`
   * `set-widget ( N-GObject $widget )`
+
+* [GTK::V3::Gtk::GtkWindow][gtkwindow] is **GTK::V3::Gtk::GtkBin**
 
 ## Gdk library
 
@@ -104,7 +143,7 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
 * GTK::V3::Glib::GMain
 
 ### Notes
-  1) The `CALL-ME` method is coded in such a way that an object can be set or retrieved easily. E.g.
+  1) The `CALL-ME` method is coded in such a way that a native widget can be set or retrieved easily. E.g.
       ```
       my GTK::V3::Gtk::GtkLabel $label .= new(:label('my label'));
       my GTK::V3::Gtk::GtkGrid $grid .= new;
@@ -115,6 +154,32 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
   3) `N-GObject` is a native widget which is held internally in most of the classes. Sometimes they need to be handed over in a call.
   4) Each method can at least be called with perl6 like dashes in the method name. E.g. `gtk_container_add` can be written as `gtk-container-add`.
   5) In some cases the calls can be shortened too. E.g. `gtk_button_get_label` can also be called like `get_label` or `get-label`. Sometimes, when shortened, calls can end up with a call using the wrong native widget. When in doubt use the complete method call.
+  6) Also a sub like `gtk_button_new` cannot be shortened because it will call the perl6 init method `new()`. In most cases, these calls are used when initializing classes, in this case to initialize a `GTK::V3::Gtk::GtkButton` class. Above brackets '[]' show which part can be chopped.
+  7) Most classes know about the `:widget` named attribute when instantiating a widget class. This is used when the result of another native sub returns a N-GObject. E.g. cleaning a list box;
+    ```
+    my GTK::V3::Gtk::GtkListBox $list-box .= new(:build-id<someListBox>);
+    loop {
+      # Keep the index 0, entries will shift up after removal
+      my $nw = $list-box.get-row-at-index(0);
+      last unless $nw.defined;
+      my GTK::V3::Gtk::GtkBin $lb-row .= new(:widget($nw));
+      $lb-row.gtk-widget-destroy;
+    }
+    ```
+  8) The attribute `:build-id` is used when a N-GObject is returned from builder for a search with a given object id using `$builder.gtk_builder_get_object()`. A builder must be initialised before to be useful. E.g.
+    ```
+    my GTK::V3::Gtk::GtkLabel $label .= new(:build-id<inputLabel>);
+    ```
+  9) Sometimes a `N-GObject` must be given as a parameter. As mentioned above in [1] the CALL-ME method helps to return that object. To prevent mistakes the parameters to the call are checked for the use of a GtkObject instead of the native object and are automatically converted. E.g.
+    ```
+    my GTK::V3::Gtk::GtkButton $button .= new(:label('press here'));
+    my GTK::V3::Gtk::GtkLabel $label .= new(:label('note'));
+
+    my GTK::V3::Gtk::GtkGrid $grid .= new(:empty);
+    $grid.attach( $button, 0, 0, 1, 1);
+    $grid.attach( $label, 0, 1, 1, 1);
+    ```
+    Here in the call to gtk_grid_attach $button and $label is used instead of $button() and label().
 
 ## Miscellaneous
 * [Release notes][release]
@@ -145,9 +210,25 @@ Github account name: Github account MARTIMM
 [gtkbin]: https://developer.gnome.org/gtk3/stable/GtkBin.html
 [gtkbuilder]: https://developer.gnome.org/gtk3/stable/GtkBuilder.html
 [gtkbutton]: https://developer.gnome.org/gtk3/stable/GtkButton.html
+[gtktogglebutton]: https://developer.gnome.org/gtk3/stable/GtkToggleButton.html
+[gtkcheckbutton]: https://developer.gnome.org/gtk3/stable/GtkCheckButton.html
 [gtkcontainer]: https://developer.gnome.org/gtk3/stable/GtkContainer.html
 [gtkgrid]: https://developer.gnome.org/gtk3/stable/GtkGrid.html
 [gtklabel]: https://developer.gnome.org/gtk3/stable/GtkLabel.html
+[gtkcssprovider]: https://developer.gnome.org/gtk3/stable/GtkCssProvider.html
+[gtkdialog]: https://developer.gnome.org/gtk3/stable/GtkDialog.html
+[gtkentry]: https://developer.gnome.org/gtk3/stable/GtkEntry.html
+[gtkimage]: https://developer.gnome.org/gtk3/stable/GtkImage.html
+[gtkimagemenuitem]: https://developer.gnome.org/gtk3/stable/GtkImageMenuItem.html
+[gtkmain]: https://developer.gnome.org/gtk3/stable/GtkMain.html
+[gtkwidget]: https://developer.gnome.org/gtk3/stable/GtkWidget.html
+[gtktextbuffer]: https://developer.gnome.org/gtk3/stable/GtkTextBuffer.html
+[gtkmenuitem]: https://developer.gnome.org/gtk3/stable/GtkMenuItem.html
+[gtktexttagtable]: https://developer.gnome.org/gtk3/stable/GtkTextTagTable.html
+[gtktextview]: https://developer.gnome.org/gtk3/stable/GtkTextView.html
+[gtktogglebutton]: https://developer.gnome.org/gtk3/stable/GtkToggleButton.html
+[gtkwindow]: https://developer.gnome.org/gtk3/stable/GtkWindow.html
+[gtkaboutdialog]: https://developer.gnome.org/gtk3/stable/GtkAboutDialog.html
 
 <!--
 [todo]: https://github.com/MARTIMM/Library/blob/master/doc/TODO.md

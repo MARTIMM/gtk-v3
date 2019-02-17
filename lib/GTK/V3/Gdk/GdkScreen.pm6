@@ -47,8 +47,6 @@ submethod BUILD ( *%options ) {
 #-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {
 
-  $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
-
   my Callable $s;
   try { $s = &::($native-sub); }
   try { $s = &::("gdk_screen_$native-sub"); } unless ?$s;

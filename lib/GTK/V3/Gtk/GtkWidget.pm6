@@ -113,8 +113,6 @@ sub gtk_widget_get_has_window ( N-GObject $window )
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 method fallback ( $native-sub is copy --> Callable ) {
 
-  $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
-
   my Callable $s;
 #note "w s0: $native-sub, ", $s;
   try { $s = &::($native-sub); }

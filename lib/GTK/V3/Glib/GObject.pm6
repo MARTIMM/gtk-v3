@@ -179,12 +179,20 @@ method CALL-ME ( N-GObject $widget? --> N-GObject ) {
 # like '$label.gtk_label_get_text()' or '$label.get_text()'. As an extra
 # feature dashes can be used instead of underscores, so '$label.get-text()'
 # works too.
-method FALLBACK ( $native-sub, |c ) {
+method FALLBACK ( $native-sub is copy, |c ) {
 
   CATCH { test-catch-exception( $_, $native-sub); }
 
-  # call the fallback functions of the role user
-  my Callable $s = self.fallback($native-sub);
+  # convert all dashes to underscores if there are any
+  $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
+
+  # check if there are underscores in the name. then the name is not too short.
+  my Callable $s;
+  #if $native-sub.index('_') {
+    # call the fallback functions of this classes children starting
+    # at the bottom
+    $s = self.fallback($native-sub);
+  #}
 
   die X::GTK::V3.new(:message("Native sub '$native-sub' not found"))
       unless $s.defined;
@@ -199,8 +207,6 @@ method FALLBACK ( $native-sub, |c ) {
 
 #-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {
-
-  $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
 
   my Callable $s;
 #note "w s0: $native-sub, ", $s;

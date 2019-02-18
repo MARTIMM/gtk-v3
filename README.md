@@ -41,18 +41,12 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
 
 ## Gtk library
 
-* class **X::GTK::V3** (use GTK::V3::X) is **Exception**
-  * `test-catch-exception ( Exception $e, Str $native-sub )`
-  * `test-call ( $handler, $gobject, |c )`
-
 * [GTK::V3::Gtk::GtkAboutDialog][gtkaboutdialog] is **GTK::V3::Gtk::GtkDialog**
-  * `new ( Bool :empty )`
-  * `new ( Bool :widget )`  [7]
-  * `new ( Bool :build-id )`  [8]
-  * `gtk_about_dialog_new ( )` [3][4][5]
-  * `[gtk_about_dialog_]get_program_name ( )`
+  * `new ( Bool :$empty )`
+  * `gtk_about_dialog_new ( --> N-GObject )` [3] [4]
+  * `[gtk_about_dialog_]get_program_name ( --> Str )` [5]
   * `[gtk_about_dialog_]set_program_name ( Str $pname )`
-  * `[gtk_about_dialog_]get_version ( )`
+  * `[gtk_about_dialog_]get_version ( --> Str )`
   * `[gtk_about_dialog_]set_version ( Str $version )`
 <!--TODO some more subs-->
   * `gtk_about_dialog_set_logo ( N-GObject $dialog, OpaquePointer $logo-pixbuf )`
@@ -61,30 +55,49 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
   * `[gtk_bin_]get_child ( --> N-GObject )`
 
 * [GTK::V3::Gtk::GtkBuilder][gtkbuilder] is **GTK::V3::Glib::GObject**
-  * `new ( Bool :empty )`
+  * `new ( Bool :$empty )`
   * `new ( Str:D :$filename )`
   * `new ( Str:D :$string )`
   * `add-gui ( Str:D :$filename! )`
   * `add-gui ( Str:D :$string! )`
-  * `gtk_builder_new ()`            [6]
+  * `gtk_builder_new ( --> N-GObject )` [6]
+  * `[gtk_builder_]new_from_file ( Str $glade-ui --> N-GObject )`
+  * `[gtk_builder_]new_from_string ( Str $glade-ui, uint32 $length --> N-GObject )`
+  * `[gtk_builder_]add_from_file( Str $glade-ui, OpaquePointer $error --> int32 )`
+  * `[gtk_builder_]add_from_string ( Str $glade-ui, uint32 $size, OpaquePointer $error --> int32 )`
   * `[gtk_builder_]get_object ( Str $object-id --> N-GObject )`
-  * `[gtk_builder_]get_type_from_name ( Str $type_name --> Int )`
+  * `[gtk_builder_]get_type_from_name ( Str $type_name --> int32 )`
 
 * [GTK::V3::Gtk::GtkButton][gtkbutton] is **GTK::V3::Gtk::GtkBin**
-  * `new ( Str :$text? )`
-  <!--* `new ( N-GObject $button )`-->
-  * `gtk_button_get_label ( --> Str )`
-  * `gtk_button_set_label ( Str $label )`
+  * `new ( Str :$empty )`
+  * `new ( Str :$label )`
+  * `gtk_button_new ( --> N-GObject )`
+  * `[gtk_button_]new_with_label ( Str $label --> N-GObject )`
+  * `[gtk_button_]get_label ( --> Str )`
+  * `[gtk_button_]set_label ( Str $label )`
 
 * [GTK::V3::Gtk::GtkCheckButton][gtkcheckbutton] is **GTK::V3::Gtk::GtkToggleButton**
+  * `new ( Str :$empty )`
+  * `new ( Str :$label )`
+  * `gtk_toggle_button_new ( --> N-GObject )`
+  * `[gtk_toggle_button_]new_with_label ( Str $label --> N-GObject )`
+  * `[gtk_toggle_button_]get_active ( --> int32 )`
+  * `[gtk_toggle_button_]set_active ( int32 $active )`
 
 * [GTK::V3::Gtk::GtkContainer][gtkcontainer] is **GTK::V3::Gtk::GtkWidget**
   * `gtk_container_add ( N-GObject $widget )` [9]
-  * `gtk_container_get_border_width ( --> Int )`
+  * `gtk_container_get_border_width ( --> int32 )`
   * `gtk_container_get_children ( --> N-GList )`
-  * `gtk_container_set_border_width ( Int $border_width )`
+  * `gtk_container_set_border_width ( int32 $border_width )`
 
 * [GTK::V3::Gtk::GtkCssProvider][gtkcssprovider] is **GTK::V3::Glib::GObject**
+  * `gtk_css_provider_new ( --> N-GObject )`
+  * `[gtk_css_provider_]get_named ( Str $name, Str $variant --> N-GObject )`
+  * `[gtk_css_provider_]load_from_path ( Str $css-file, OpaquePointer)`
+
+* [GTK::V3::Gtk::GtkStyleContext][gtkstylecontext] is **GTK::V3::Glib::GObject**
+
+  * `[gtk_style_context_]add_provider_for_screen ( N-GObject $screen, int32 $provider, int32 $priority )`
 
 * [GTK::V3::Gtk::GtkDialog][gtkdialog] is **GTK::V3::Gtk::GtkWindow**
 
@@ -124,23 +137,44 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
 * [GTK::V3::Gtk::GtkToggleButton][gtktogglebutton] is **GTK::V3::Gtk::GtkButton**
 
 * [GTK::V3::Gtk::GtkWidget][gtkwidget] is **GTK::V3::Glib::GObject**
-  * `class N-GObject`
-  * `CALL-ME ( N-GObject $widget? --> N-GObject )` [1]
-  * `FALLBACK ( $native-sub, |c )` [2]
-  * `new ( N-GObject :$widget )`
-  * `native-gobject ( N-GObject $widget )`
 
 * [GTK::V3::Gtk::GtkWindow][gtkwindow] is **GTK::V3::Gtk::GtkBin**
 
 ## Gdk library
 
 * GTK::V3::Gdk::GdkDisplay is **GTK::V3::Glib::GObject**
+
 * GTK::V3::Gdk::GdkScreen is **GTK::V3::Glib::GObject**
+
 * GTK::V3::Gdk::GdkWindow is **GTK::V3::Glib::GObject**
 
 ## Glib library
 
-* GTK::V3::Glib::GMain
+<!-- * [GTK::V3::Glib::GError][gerror] -->
+
+* [GTK::V3::Glib::GList][glist]
+
+* [GTK::V3::Glib::GMain][gmain]
+
+* [GTK::V3::Glib::GObject][gobject]
+  * `class N-GObject`
+  * `CALL-ME ( N-GObject $widget? --> N-GObject )` [1]
+  * `FALLBACK ( $native-sub, |c )` [2]
+  * `new ( N-GObject :$widget )` [7]
+  * `new ( Str :$build-id )` [8]
+  * `native-gobject ( N-GObject $widget )`
+
+* [GTK::V3::Glib::GType][gtype]
+  * `[g_type_]name ( int32 $type --> Str )`
+  * `[g_type_]from_name ( Str --> int32 )`
+  * `[g_type_]parent ( int32 $type --> int32 )`
+  * `[g_type_]depth ( int32 $type --> uint32 )`
+
+## Miscellaneous
+
+* class **X::GTK::V3** (use GTK::V3::X) is **Exception**
+  * `test-catch-exception ( Exception $e, Str $native-sub )`
+  * `test-call ( $handler, $gobject, |c )`
 
 ### Notes
   1) The `CALL-ME` method is coded in such a way that a native widget can be set or retrieved easily. E.g.
@@ -151,11 +185,11 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
       ```
       Notice how the native widget is retrieved with `$label()`.
   2) The `FALLBACK` method is used to test for the defined native functions as if the functions where methods. It calls the `fallback` methods in the class which in turn call the parent fallback using `callsame`. The resulting function addres is returned and processed with the `test-call` functions from **GTK::V3::X**. Thrown exceptions are handled by the function `test-catch-exception` from the same module.
-  3) `N-GObject` is a native widget which is held internally in most of the classes. Sometimes they need to be handed over in a call.
+  3) `N-GObject` is a native widget which is held internally in most of the classes. Sometimes they need to be handed over in a call or stored when it is returned.
   4) Each method can at least be called with perl6 like dashes in the method name. E.g. `gtk_container_add` can be written as `gtk-container-add`.
   5) In some cases the calls can be shortened too. E.g. `gtk_button_get_label` can also be called like `get_label` or `get-label`. Sometimes, when shortened, calls can end up with a call using the wrong native widget. When in doubt use the complete method call.
   6) Also a sub like `gtk_button_new` cannot be shortened because it will call the perl6 init method `new()`. In most cases, these calls are used when initializing classes, in this case to initialize a `GTK::V3::Gtk::GtkButton` class. Above brackets '[]' show which part can be chopped.
-  7) Most classes know about the `:widget` named attribute when instantiating a widget class. This is used when the result of another native sub returns a N-GObject. E.g. cleaning a list box;
+  7) Most classes know about the `:widget` named attribute when instantiating a widget class. This is used when the result of another native sub returns a N-GObject. This option works for all child classes too. E.g. cleaning a list box;
     ```
     my GTK::V3::Gtk::GtkListBox $list-box .= new(:build-id<someListBox>);
     loop {
@@ -166,11 +200,11 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
       $lb-row.gtk-widget-destroy;
     }
     ```
-  8) The attribute `:build-id` is used when a N-GObject is returned from builder for a search with a given object id using `$builder.gtk_builder_get_object()`. A builder must be initialised before to be useful. E.g.
+  8) The attribute `:build-id` is used when a N-GObject is returned from builder for a search with a given object id using `$builder.gtk_builder_get_object()`. A builder must be initialized before to be useful. This option works for all child classes too. E.g.
     ```
     my GTK::V3::Gtk::GtkLabel $label .= new(:build-id<inputLabel>);
     ```
-  9) Sometimes a `N-GObject` must be given as a parameter. As mentioned above in [1] the CALL-ME method helps to return that object. To prevent mistakes the parameters to the call are checked for the use of a GtkObject instead of the native object and are automatically converted. E.g.
+  9) Sometimes a `N-GObject` must be given as a parameter. As mentioned above in [1] the CALL-ME method helps to return that object. To prevent mistakes (forgetting the '()' after the object), the parameters to the call are checked for the use of a GtkObject instead of the native object. When encountered, the parameters are automatically converted. E.g.
     ```
     my GTK::V3::Gtk::GtkButton $button .= new(:label('press here'));
     my GTK::V3::Gtk::GtkLabel $label .= new(:label('note'));
@@ -229,6 +263,12 @@ Github account name: Github account MARTIMM
 [gtktogglebutton]: https://developer.gnome.org/gtk3/stable/GtkToggleButton.html
 [gtkwindow]: https://developer.gnome.org/gtk3/stable/GtkWindow.html
 [gtkaboutdialog]: https://developer.gnome.org/gtk3/stable/GtkAboutDialog.html
+
+[gerror]:
+[glist]:
+[gmain]:
+[gobject]:
+[gtype]:
 
 <!--
 [todo]: https://github.com/MARTIMM/Library/blob/master/doc/TODO.md

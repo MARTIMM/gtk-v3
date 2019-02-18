@@ -87,6 +87,7 @@ method FALLBACK ( $native-sub is copy, |c ) {
 
   my Callable $s;
   try { $s = &::($native-sub); }
+  try { $s = &::("gtk_main_$native-sub"); }
 
   test-call( &$s, Any, |c)
 }

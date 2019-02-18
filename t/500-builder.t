@@ -1,10 +1,8 @@
 use v6;
+use Test;
 
 use GTK::V3::Glib::GObject;
-use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkBuilder;
-
-use Test;
 
 #-------------------------------------------------------------------------------
 my $dir = 't/ui';

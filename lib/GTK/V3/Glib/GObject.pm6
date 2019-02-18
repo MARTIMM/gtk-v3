@@ -254,16 +254,19 @@ submethod BUILD ( *%options ) {
 
   elsif ? %options<build-id> {
     my N-GObject $widget;
+#note "Builders: ", $builders;
     for @$builders -> $builder {
       $widget = $builder.get-object(%options<build-id>);
       last if ?$widget;
     }
 
     if ? $widget {
+#note "store widget: ", $widget;
       $!g-object = $widget;
     }
 
     else {
+      #note "Builder id '%options<build-id>' not found in any of the builders";
       die X::GTK::V3.new(
         :message(
           "Builder id '%options<build-id>' not found in any of the builders"
@@ -279,6 +282,8 @@ submethod BUILD ( *%options ) {
       );
     }
   }
+
+#note "done";
 }
 
 #-------------------------------------------------------------------------------

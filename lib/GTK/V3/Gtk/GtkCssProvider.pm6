@@ -13,15 +13,6 @@ unit class GTK::V3::Gtk::GtkCssProvider:auth<github:MARTIMM>
   is GTK::V3::Glib::GObject;
 
 #-------------------------------------------------------------------------------
-enum GtkStyleProviderPriority is export (
-  GTK_STYLE_PROVIDER_PRIORITY_FALLBACK => 1,
-  GTK_STYLE_PROVIDER_PRIORITY_THEME => 200,
-  GTK_STYLE_PROVIDER_PRIORITY_SETTINGS => 400,
-  GTK_STYLE_PROVIDER_PRIORITY_APPLICATION => 600,
-  GTK_STYLE_PROVIDER_PRIORITY_USER => 800,
-);
-
-#-------------------------------------------------------------------------------
 sub gtk_css_provider_new ( )
   returns N-GObject       # GtkCssProvider
   is native(&gtk-lib)
@@ -37,11 +28,6 @@ sub gtk_css_provider_load_from_path (
 ) is native(&gtk-lib)
   { * }
 
-sub gtk_style_context_add_provider_for_screen (
-  N-GObject $screen, int32 $provider, int32 $priority
-) is native(&gtk-lib)
-  { * }
-
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 submethod BUILD ( *%options ) {
 
@@ -52,7 +38,7 @@ submethod BUILD ( *%options ) {
     self.native-gobject(gtk_css_provider_new());
   }
 
-  elsif ? %options<widget> {
+  elsif ? %options<widget> || ? %options<build-id> {
     # provided in GObject
   }
 

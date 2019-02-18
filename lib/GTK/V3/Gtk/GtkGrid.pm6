@@ -17,34 +17,28 @@ unit class GTK::V3::Gtk::GtkGrid:auth<github:MARTIMM>
 sub gtk_grid_new()
   returns N-GObject
   is native(&gtk-lib)
-  is export
   { * }
 
 sub gtk_grid_attach ( N-GObject $grid, N-GObject $child, int32 $x, int32 $y,
   int32 $w, int32 $h
 ) is native(&gtk-lib)
-  is export
   { * }
 
 sub gtk_grid_insert_row ( N-GObject $grid, int32 $position)
   is native(&gtk-lib)
-  is export
   { * }
 
 sub gtk_grid_insert_column ( N-GObject $grid, int32 $position)
   is native(&gtk-lib)
-  is export
   { * }
 
 sub gtk_grid_get_child_at ( N-GObject $grid, uint32 $left, uint32 $top)
   returns N-GObject
   is native(&gtk-lib)
-  is export
   { * }
 
 sub gtk_grid_set_row_spacing ( N-GObject $grid, uint32 $spacing)
   is native(&gtk-lib)
-  is export
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =

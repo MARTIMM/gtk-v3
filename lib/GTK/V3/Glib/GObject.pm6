@@ -238,7 +238,7 @@ submethod BUILD ( *%options ) {
   # Test if GTK is initialized
   $!main .= new unless $GTK::V3::Gtk::GtkMain::gui-initialized;
 
-note "GO: {self}, ", %options;
+#note "GO: {self}, ", %options;
 
   if ? %options<widget> {
     if %options<widget> ~~ N-GObject {
@@ -315,15 +315,13 @@ method register-signal (
     %options<target-widget-name> = $target-widget-name if $target-widget-name;
 
     if $handler-type eq 'wd' {
-note "set $handler-name ($handler-type), options: %user-options";
+#note "set $handler-name ($handler-type), options: %user-options";
       self.g-signal-connect-object-wd(
         $signal-name,
         -> $w, $d {
-#          if $handler-object.^can($handler-name) {
-note "in callback, calling $handler-name ($handler-type), ", $handler-object;
-note "widget: ", self;
+#note "in callback, calling $handler-name ($handler-type), ", $handler-object;
+#note "widget: ", self;
             $handler-object."$handler-name"( |%options, |%user-options);
-#          }
         },
         OpaquePointer, $connect-flags
       );
@@ -333,12 +331,10 @@ note "widget: ", self;
       self.g-signal-connect-object-wwd(
         $signal-name,
         -> $w1, $w2, $d {
-#          if $handler-object.^can($handler-name) {
 #note "in callback, calling $handler-name ($handler-type), ", $handler-object;
             $handler-object."$handler-name"(
              :widget2($w2), |%options, |%user-options
             );
-#          }
         },
         OpaquePointer, $connect-flags
       );
@@ -348,12 +344,10 @@ note "widget: ", self;
       self.g-signal-connect-object-wsd(
         $signal-name,
         -> $w, $s, $d {
-#          if $handler-object.^can($handler-name) {
 #note "in callback, calling $handler-name ($handler-type), ", $handler-object;
             $handler-object."$handler-name"(
              :string($s), |%options, |%user-options
             );
-#          }
         },
         OpaquePointer, $connect-flags
       );

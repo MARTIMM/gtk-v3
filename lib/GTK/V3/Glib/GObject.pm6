@@ -204,7 +204,7 @@ method FALLBACK ( $native-sub is copy, |c ) {
   my Array $params = [];
   for c.list -> $p {
     if $p ~~ GTK::V3::Glib::GObject {
-      $params.push($p());
+      $params.push($p.native-gobject());
     }
 
     else {
@@ -286,7 +286,6 @@ note "GO: {self}, ", %options;
 method native-gobject (
   N-GObject $widget?, Bool :$force = False --> N-GObject
 ) {
-
   if ?$widget and ( $force or !?$!g-object ) {
     $!g-object = $widget;
   }

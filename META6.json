@@ -1,7 +1,7 @@
 {
   "description": "Interfacing Glade XML to Perl6",
   "name": "GTK::V3",
-  "version": "0.4.0",
+  "version": "0.4.2",
   "authors": [ "Marcel Timmerman"],
   "tags": [ "Gui", "Gtk"],
 
@@ -20,6 +20,7 @@
     "GTK::V3::Glib::GList": "lib/GTK/V3/Glib/GList.pm6",
     "GTK::V3::Glib::GMain": "lib/GTK/V3/Glib/GMain.pm6",
     "GTK::V3::Glib::GObject": "lib/GTK/V3/Glib/GObject.pm6",
+    "GTK::V3::Glib::GType": "lib/GTK/V3/Glib/GType.pm6",
 
     "GTK::V3::Gtk::GtkAboutDialog": "lib/GTK/V3/Gtk/GtkAboutDialog.pm6",
     "GTK::V3::Gtk::GtkBin": "lib/GTK/V3/Gtk/GtkBin.pm6",
@@ -32,15 +33,18 @@
     "GTK::V3::Gtk::GtkEntry": "lib/GTK/V3/Gtk/GtkEntry.pm6",
     "GTK::V3::Gtk::GtkGrid": "lib/GTK/V3/Gtk/GtkGrid.pm6",
     "GTK::V3::Gtk::GtkImage": "lib/GTK/V3/Gtk/GtkImage.pm6",
-    "GTK::V3::Gtk::GtkImageMenu": "lib/GTK/V3/Gtk/GtkImageMenu.pm6",
+    "GTK::V3::Gtk::GtkImageMenuItem": "lib/GTK/V3/Gtk/GtkImageMenuItem.pm6",
     "GTK::V3::Gtk::GtkLabel": "lib/GTK/V3/Gtk/GtkLabel.pm6",
+    "GTK::V3::Gtk::GtkListBox": "lib/GTK/V3/Gtk/GtkListBox.pm6",
     "GTK::V3::Gtk::GtkMain": "lib/GTK/V3/Gtk/GtkMain.pm6",
     "GTK::V3::Gtk::GtkMenuItem": "lib/GTK/V3/Gtk/GtkMenuItem.pm6",
+    "GTK::V3::Gtk::GtkStyleContext": "lib/GTK/V3/Gtk/GtkStyleContext.pm6",
     "GTK::V3::Gtk::GtkTextBuffer": "lib/GTK/V3/Gtk/GtkTextBuffer.pm6",
+    "GTK::V3::Gtk::GtkTextTagTable": "lib/GTK/V3/Gtk/GtkTextTagTable.pm6",
     "GTK::V3::Gtk::GtkTextView": "lib/GTK/V3/Gtk/GtkTextView.pm6",
     "GTK::V3::Gtk::GtkToggleButton": "lib/GTK/V3/Gtk/GtkToggleButton.pm6",
-    "GTK::V3::Gtk::GtkWidget": "lib/GTK/V3/Gtk/GtkWidget.pm6"
-    "GTK::V3::Gtk::GtkWindow": "lib/GTK/V3/Gtk/GtkWindow.pm6",
+    "GTK::V3::Gtk::GtkWidget": "lib/GTK/V3/Gtk/GtkWidget.pm6",
+    "GTK::V3::Gtk::GtkWindow": "lib/GTK/V3/Gtk/GtkWindow.pm6"
   },
 
   "source-url": "git://github.com/MARTIMM/gtk-v3.git",

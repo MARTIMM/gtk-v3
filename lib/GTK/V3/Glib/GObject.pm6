@@ -283,9 +283,15 @@ note "GO: {self}, ", %options;
 
 #-------------------------------------------------------------------------------
 #TODO destroy when overwritten?
-method native-gobject ( N-GObject $widget, Bool :$force = False ) {
-  $!g-object = $widget if ( $force or not ?$!g-object );
-#note "set widget: ", $!g-object;
+method native-gobject (
+  N-GObject $widget?, Bool :$force = False --> N-GObject
+) {
+
+  if ?$widget and ( $force or !?$!g-object ) {
+    $!g-object = $widget;
+  }
+
+  $!g-object
 }
 
 #-------------------------------------------------------------------------------

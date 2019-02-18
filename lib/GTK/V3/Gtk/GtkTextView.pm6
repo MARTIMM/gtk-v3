@@ -14,12 +14,12 @@ unit class GTK::V3::Gtk::GtkTextView:auth<github:MARTIMM>
 
 #-------------------------------------------------------------------------------
 sub gtk_text_view_new ( )
-  returns N-GObject
+  returns N-GObject # buffer
   is native(&gtk-lib)
   { * }
 
 sub gtk_text_view_get_buffer ( N-GObject $view )
-  returns OpaquePointer
+  returns N-GObject
   is native(&gtk-lib)
   { * }
 
@@ -60,7 +60,7 @@ submethod BUILD ( *%options ) {
     self.native-gobject(gtk_text_view_new());
   }
 
-  elsif ? %options<widget> {
+  elsif ? %options<widget> || ? %options<build-id> {
     # provided in GObject
   }
 

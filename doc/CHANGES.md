@@ -1,5 +1,8 @@
 ## Release notes
 
+* 2019-02-18 0.4.3
+  * Bugfixes
+
 * 2019-02-16 0.4.2
   * Improve of widget creation
   * Added :build-id option to widget creation. Can only be used when a builder is created with a gui description. Then, a widget can be searched in this description.

@@ -39,7 +39,7 @@ submethod BUILD ( *%options ) {
     self.native-gobject(gtk_list_box_new());
   }
 
-  elsif ? %options<widget> {
+  elsif ? %options<widget> || ? %options<build-id> {
     # provided in GObject
   }
 

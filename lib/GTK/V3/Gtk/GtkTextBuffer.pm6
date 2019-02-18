@@ -54,7 +54,7 @@ submethod BUILD ( *%options ) {
     self.native-gobject(gtk_text_buffer_new($tag-table()));
   }
 
-  elsif ? %options<widget> {
+  elsif ? %options<widget> || ? %options<build-id> {
     # provided in GObject
   }
 

@@ -46,7 +46,7 @@ submethod BUILD ( *%options ) {
     self.native-gobject(gdk_display_open(%options<string>));
   }
 
-  elsif ? %options<widget> {
+  elsif ? %options<widget> || ? %options<build-id> {
     # provided in GObject
   }
 

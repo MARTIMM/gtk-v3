@@ -51,7 +51,7 @@ submethod BUILD ( *%options ) {
     self.native-gobject(gtk_grid_new());
   }
 
-  elsif ? %options<widget> {
+  elsif ? %options<widget> || ? %options<build-id> {
     # provided in GObject
   }
 

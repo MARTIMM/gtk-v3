@@ -92,7 +92,7 @@ submethod BUILD ( *%options ) {
     self.native-gobject(gdk_get_default_root_window());
   }
 
-  elsif ? %options<widget> {
+  elsif ? %options<widget> || ? %options<build-id> {
     # provided in GObject
   }
 

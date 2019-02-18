@@ -31,7 +31,7 @@ submethod BUILD ( *%options ) {
     self.native-gobject(gdk_screen_get_default());
   }
 
-  elsif ? %options<widget> {
+  elsif ? %options<widget> || ? %options<build-id> {
     # provided in GObject
   }
 

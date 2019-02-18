@@ -51,7 +51,7 @@ submethod BUILD ( *%options ) {
 
   if ? %options<empty> {
     my GTK::V3::Gtk::GtkTextTagTable $tag-table .= new(:empty);
-    self.set-widget(gtk_text_buffer_new($tag-table()));
+    self.native-gobject(gtk_text_buffer_new($tag-table()));
   }
 
   elsif ? %options<widget> {

@@ -54,7 +54,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkGrid';
 
   if ? %options<empty> {
-    self.set-widget(gtk_grid_new());
+    self.native-gobject(gtk_grid_new());
   }
 
   elsif ? %options<widget> {

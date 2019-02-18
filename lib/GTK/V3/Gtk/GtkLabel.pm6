@@ -39,11 +39,11 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkLabel';
 
   if %options<label>.defined {
-    self.set-widget(gtk_label_new(%options<label>));
+    self.native-gobject(gtk_label_new(%options<label>));
   }
 
   elsif ? %options<mnemonic> {
-    self.set-widget(gtk_label_new_with_mnemonic(%options<mnemonic>));
+    self.native-gobject(gtk_label_new_with_mnemonic(%options<mnemonic>));
   }
 
   elsif ? %options<widget> || %options<build-id> {

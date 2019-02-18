@@ -62,11 +62,11 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkImage';
 
   if %options<filename>.defined {
-    self.set-widget(gtk_image_new_from_file(%options<filename>));
+    self.native-gobject(gtk_image_new_from_file(%options<filename>));
   }
 
   elsif ? %options<empty> {
-    self.set-widget(gtk_image_new());
+    self.native-gobject(gtk_image_new());
   }
 
   elsif ? %options<widget> || %options<build-id> {

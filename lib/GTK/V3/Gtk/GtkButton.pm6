@@ -39,11 +39,11 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkButton';
 
   if %options<label>.defined {
-    self.set-widget(gtk_button_new_with_label(%options<label>));
+    self.native-gobject(gtk_button_new_with_label(%options<label>));
   }
 
   elsif ? %options<empty> {
-    self.set-widget(gtk_button_new());
+    self.native-gobject(gtk_button_new());
   }
 
   elsif ? %options<widget> || %options<build-id> {

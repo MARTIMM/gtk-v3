@@ -128,7 +128,7 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
   * `CALL-ME ( N-GObject $widget? --> N-GObject )` [1]
   * `FALLBACK ( $native-sub, |c )` [2]
   * `new ( N-GObject :$widget )`
-  * `set-widget ( N-GObject $widget )`
+  * `native-gobject ( N-GObject $widget )`
 
 * [GTK::V3::Gtk::GtkWindow][gtkwindow] is **GTK::V3::Gtk::GtkBin**
 

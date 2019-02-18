@@ -36,7 +36,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkListBox';
 
   if ? %options<empty> {
-    self.set-widget(gtk_list_box_new());
+    self.native-gobject(gtk_list_box_new());
   }
 
   elsif ? %options<widget> {

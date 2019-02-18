@@ -49,7 +49,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkCssProvider';
 
   if ? %options<empty> {
-    self.set-widget(gtk_css_provider_new());
+    self.native-gobject(gtk_css_provider_new());
   }
 
   elsif ? %options<widget> {

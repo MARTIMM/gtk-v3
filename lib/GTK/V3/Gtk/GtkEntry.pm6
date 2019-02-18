@@ -39,7 +39,7 @@ sub gtk_entry_set_input_hints ( N-GObject $entry, uint32 $hints )
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 #submethod BUILD ( ) {
-#  self.set-widget(gtk_entry_new);
+#  self.native-gobject(gtk_entry_new);
 #}
 submethod BUILD ( *%options ) {
 
@@ -47,7 +47,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkEntry';
 
   if ? %options<empty> {
-    self.set-widget(gtk_entry_new());
+    self.native-gobject(gtk_entry_new());
   }
 
   elsif ? %options<widget> {

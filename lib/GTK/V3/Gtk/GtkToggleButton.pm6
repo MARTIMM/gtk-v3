@@ -40,11 +40,11 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkToggleButton';
 
   if %options<label>.defined {
-    self.set-widget(gtk_toggle_button_new_with_label(%options<text>));
+    self.native-gobject(gtk_toggle_button_new_with_label(%options<text>));
   }
 
   elsif ? %options<empty> {
-    self.set-widget(gtk_toggle_button_new());
+    self.native-gobject(gtk_toggle_button_new());
   }
 
   elsif ? %options<widget> || %options<build-id> {

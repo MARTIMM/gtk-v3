@@ -25,7 +25,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkMenuItem';
 
   if ? %options<empty> {
-    self.set-widget(gtk_menu_item_new());
+    self.native-gobject(gtk_menu_item_new());
   }
 
   elsif ? %options<widget> || %options<build-id> {

@@ -57,7 +57,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkDialog';
 
   if ?%options<empty> {
-    self.set-widget(gtk_dialog_new);
+    self.native-gobject(gtk_dialog_new);
   }
 
   elsif ? %options<widget> || %options<build-id> {

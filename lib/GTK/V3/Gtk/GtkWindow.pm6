@@ -64,7 +64,7 @@ submethod BUILD ( *%options ) {
      ?%options<window-type> and
      %options<window-type> ~~ GtkWindowType {
 
-    self.set-widget(gtk_window_new(%options<window-type>));
+    self.native-gobject(gtk_window_new(%options<window-type>));
   }
 
   elsif ? %options<widget> || %options<build-id> {

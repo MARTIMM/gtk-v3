@@ -145,17 +145,17 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkBuilder';
 
   if ? %options<filename> {
-    self.set-widget(gtk_builder_new_from_file(%options<filename>));
+    self.native-gobject(gtk_builder_new_from_file(%options<filename>));
   }
 
   elsif ? %options<string> {
-    self.set-widget(
+    self.native-gobject(
       gtk_builder_new_from_string( %options<string>, %options<string>.chars)
     );
   }
 
   elsif ? %options<empty> {
-    self.set-widget(gtk_builder_new());
+    self.native-gobject(gtk_builder_new());
   }
 
   elsif ? %options<widget> || %options<build-id> {

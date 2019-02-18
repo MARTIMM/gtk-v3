@@ -57,7 +57,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkTextView';
 
   if ? %options<empty> {
-    self.set-widget(gtk_text_view_new());
+    self.native-gobject(gtk_text_view_new());
   }
 
   elsif ? %options<widget> {

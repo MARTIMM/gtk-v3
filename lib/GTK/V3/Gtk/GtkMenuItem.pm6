@@ -7,8 +7,8 @@ use GTK::V3::Glib::GObject;
 use GTK::V3::Gtk::GtkBin;
 
 #-------------------------------------------------------------------------------
-# See /usr/include/gtk-3.0/gtk/gtkimagemenuitem.h
-# https://developer.gnome.org/gtk3/stable/GtkImageMenuItem.html
+# See /usr/include/gtk-3.0/gtk/gtkmenuitem.h
+# https://developer.gnome.org/gtk3/stable/GtkMenuItem.html
 unit class GTK::V3::Gtk::GtkMenuItem:auth<github:MARTIMM>
   is GTK::V3::Gtk::GtkBin;
 

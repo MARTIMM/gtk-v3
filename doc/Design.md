@@ -14,20 +14,6 @@ hide circle
 'X <-* Gui
 
 
-class X
-
-class GMain
-class GList
-
-'class GdkScreen
-'class GdkDisplay
-'class GdkWindow
-
-class GtkMain
-'class GtkCssProvider
-'class GtkTextBuffer
-'class GtkBuilder
-
 class GObject
 
 class GtkWidget
@@ -86,6 +72,13 @@ GtkMenuItem <|-- GtkImageMenuItem
 scale 0.7
 hide members
 hide circle
+
+class X
+
+class GMain
+class GList
+class GSList
+class GtkMain
 
 class GObject
 

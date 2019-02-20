@@ -1,5 +1,9 @@
 ## Release notes
 
+* 2019-02-20 0.5.0
+  * Added GSList and GtkRadioButton
+  * Documented GtkAboutDialog
+
 * 2019-02-18 0.4.3
   * Bugfixes
 

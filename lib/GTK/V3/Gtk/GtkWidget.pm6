@@ -3,12 +3,13 @@ use NativeCall;
 
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GObject;
+use GTK::V3::Glib::GInitiallyUnowned;
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 # /usr/include/gtk-3.0/gtk/gtkwidget.h
 # https://developer.gnome.org/gtk3/stable/GtkWidget.html
 unit class GTK::V3::Gtk::GtkWidget:auth<github:MARTIMM>
-  is GTK::V3::Glib::GObject;
+  is GTK::V3::Glib::GInitiallyUnowned;
 
 #-------------------------------------------------------------------------------
 sub gtk_widget_get_display ( N-GObject $widget )

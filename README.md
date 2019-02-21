@@ -138,7 +138,7 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
 
 * [GTK::V3::Gtk::GtkToggleButton][gtktogglebutton] is **GTK::V3::Gtk::GtkButton**
 
-* [GTK::V3::Gtk::GtkWidget][gtkwidget] is **GTK::V3::Glib::GObject**
+* [GTK::V3::Gtk::GtkWidget][gtkwidget] is **GTK::V3::Glib::GInitiallyUnowned**
 
 * [GTK::V3::Gtk::GtkWindow][gtkwindow] is **GTK::V3::Gtk::GtkBin**
 
@@ -153,6 +153,8 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
 ## Glib library
 
 <!-- * [GTK::V3::Glib::GError][gerror] -->
+
+* GTK::V3::Glib::GInitiallyUnowned is **GTK::V3::Glib::GObject**
 
 * [GTK::V3::Glib::GList][glist]
 

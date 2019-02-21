@@ -15,10 +15,10 @@ use v6;
   $about.set-program-name('My-First-GTK-Program');
 
   # show the dialog
-  $about.run;
+  $about.gtk-dialog-run;
 
   # when dialog buttons are pressed hide it again
-  $about.hide
+  $about.gtk-widget-hide
 
 =head1 Methods
 

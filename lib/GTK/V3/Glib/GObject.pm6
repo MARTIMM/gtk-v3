@@ -150,6 +150,11 @@ sub g_signal_handler_disconnect( N-GObject $widget, int32 $handler_id)
   is native(&gobject-lib)
   { * }
 
+#-------------------------------------------------------------------------------
+sub g_object_unref ( N-GObject $object )
+  is native(&gobject-lib)
+  { * }
+
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 has N-GObject $!g-object;
 #has GTK::V3::Gtk::GtkMain $!main;

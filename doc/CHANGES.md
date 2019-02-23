@@ -4,6 +4,7 @@
   * Added GInitiallyUnowned to make hierarchy better.
   * Added GtkFileChooserDialog, GtkFileChooser, GtkFileFilter and GFile.
   * Added GInterface to hook GtkFileChooser.
+  * Added more subs to GtkAboutDialog
 
 * 2019-02-20 0.5.0
   * Added GSList and GtkRadioButton

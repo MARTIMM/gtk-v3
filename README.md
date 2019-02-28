@@ -6,11 +6,29 @@
 -->
 [![License](http://martimm.github.io/label/License-label.svg)](http://www.perlfoundation.org/artistic_license_2_0)
 
-I would like to thank the developers of the GTK::Simple project because of the information I got while reading the code. Also because one of the files is copied unaltered for which I did not had to think about to get that right.
-
 # Description
+First of all, I would like to thank the developers of the GTK::Simple project because of the information I got while reading the code. Also because one of the files is copied unaltered for which I did not had to think about to get that right.
 
-# Synopsis
+The purpose of this project is to create an interface to the **GTK** version 3 library. Here I want to follow the interface as closely as possible by keeping the names of the native functions the same as provided with the following exceptions;
+* The native subroutines are defined in their classes. They are setup in such a way that they have become methods in those classes. Many subs also have as their first argument the native object. This object is held in the class and is automatically inserted when needed. E.g. a definition like the following in the GtkButton class
+  ```
+  sub gtk_button_set_label ( N-GObject $widget, Str $label )
+    is native(&gtk-lib)
+    { * }
+  ```
+  can be used as
+  ```
+  my GTK::V3::Gtk::GtkButton $button .= new(:empty);
+  $button.gtk_button_set_label('Start Program');
+  ```
+
+* The names are sometimes long and prefixed with words which are used in the class name. Therefore, those names can be shortened by removing those prefixes. An example method in the `GtkButton` class is `gtk_button_get_label()`. This can be shortened to `get_label()`.
+  ```
+  my GTK::V3::Gtk::GtkButton $button .= new(:label<Stop>);
+  my $button-label = $button.get_label;
+  ```
+
+ names are written with an underscore. Perl6
 
 # Motivation
 I perhaps should have used parts of `GTK::Simple` but I wanted to study the native call interface which I am now encountering more seriously. Therefore I started a new project with likewise objects as can be found in `GTK::Simple`.
@@ -27,8 +45,9 @@ There are some points I noticed in the `GTK::Simple` modules.
 -->
 <!--
 * When callbacks are defined in GTK, they can accept most of the time some user data to do something with it in the callback. GTK::Simple gives them the OpaquePointer type which renders them useless. Most of the time small Routines are used in place of the handler entry. The code used there can close over the variables you want to use and in that situation there is no problem. This changes when the Routines are defined in a separate sub because of the length or complexity of the code. The data can only be handed over to the Routine using the call interface. What type should I take then. I found out that all kinds can be used so I decided to take `CArray[Str]` to have the most flexible choice.
--->
+
 * Next thought of mine is wrong: **Define original `g_signal_connect_object` function instead of changing the name into `g_signal_connect_wd`.** The problem is that in Perl6 the handlers signature is fixed when defining a callback for signals and that there are several types of callbacks possible in GTK widgets. Most of the handlers are having the same signature for a handler. E.g. a `clicked` event handler receives a widget and data. That's why the sub is called like that: `g_signal_connect_wd`. There are other signals using a different signature such as the gtk container `add` event. That one has 2 widgets and then data. So I added `g_signal_connect_wwd` to handle that one. Similar setups may follow.
+-->
 
 These arguments will present some problems
 * How to store the native widget. This is a central object representing the widget for the class wherein it is created. It is used where widgets like labels, dialogs, frames, listboxes etc are used. Because it is just a pointer to a C object we do not need to build inheritance around this. Like in `GTK::Simple` I used a role for that, only not named after a GTK like class.
@@ -37,6 +56,8 @@ These arguments will present some problems
 * Not all calls have the widget on their first argument. That is solved by investigating the subroutines signature of which the first argument is a N-GObject or not.
 
 Not all of the GTK, GDK or Glib subroutines from the libraries will be covered because not everything is needed. Other reasons are that classes and many subs are deprecated. This package will support the 3.* version of GTK. There is already a 4.* version out but that is food for later thoughts. The root of the library will be GTK::V3 and can be separated later into a another package.
+
+# Synopsis
 
 # Documentation
 

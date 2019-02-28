@@ -12,9 +12,6 @@ use GTK::V3::Gtk::GtkButton;
 use GTK::V3::Gtk::GtkContainer;
 use GTK::V3::Gtk::GtkLabel;
 
-diag "\n";
-
-
 #-------------------------------------------------------------------------------
 subtest 'Button create', {
 
@@ -57,10 +54,9 @@ subtest 'Button as container', {
   $l($gl.nth-data(0));
   is $l.get-text, 'xyz', 'text label from button 1';
 
-#`{{}}
   my GTK::V3::Gtk::GtkLabel $label .= new(:label('pqr'));
   my GTK::V3::Gtk::GtkButton $button2 .= new(:empty);
-  $button2.add($label());
+  $button2.gtk-container-add($label);
 
   $l($button2.get-child);
   is $l.get-text, 'pqr', 'text label from button 2';
@@ -69,7 +65,7 @@ subtest 'Button as container', {
   # when gtk-container-add is used.
   is $button2.get-label, Str, 'text cannot be returned like this anymore';
 
-  $gl.free;
+  $gl.g-list-free;
   $gl = GTK::V3::Glib::GList;
 }
 

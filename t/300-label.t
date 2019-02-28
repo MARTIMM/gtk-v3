@@ -8,8 +8,6 @@ use GTK::V3::Gtk::GtkWidget;
 use GTK::V3::Gtk::GtkBuilder;
 use GTK::V3::Gtk::GtkLabel;
 
-diag "\n";
-
 #-------------------------------------------------------------------------------
 subtest 'Label create', {
 

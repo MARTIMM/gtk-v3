@@ -41,7 +41,7 @@ Not all of the GTK, GDK or Glib subroutines from the libraries will be covered b
 
 ## Gtk library
 
-* GTK::V3::Gtk::GtkAboutDialog at [Gnome developer][gtkaboutdialog] and [V3 pod doc](doc/GtkAboutDialog.html)
+* GTK::V3::Gtk::GtkAboutDialog at [Gnome developer][gtkaboutdialog] and [V3 pod doc](doc/GtkAboutDialog.pdf)
 
 * [GTK::V3::Gtk::GtkBin][gtkbin] is **GTK::V3::Gtk::GtkContainer**
   * `[gtk_bin_]get_child ( --> N-GObject )`

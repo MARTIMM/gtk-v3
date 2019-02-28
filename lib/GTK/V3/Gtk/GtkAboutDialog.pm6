@@ -32,8 +32,8 @@ use GTK::V3::Gtk::GtkDialog;
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtkaboutdialog.h
 # https://developer.gnome.org/gtk3/stable/GtkAboutDialog.html
-unit class GTK::V3::Gtk::GtkAboutDialog:auth<github:MARTIMM>
-  is GTK::V3::Gtk::GtkDialog;
+unit class GTK::V3::Gtk::GtkAboutDialog:auth<github:MARTIMM>;
+also is GTK::V3::Gtk::GtkDialog;
 
 #-------------------------------------------------------------------------------
 =begin pod

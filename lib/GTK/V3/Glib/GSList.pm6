@@ -73,7 +73,8 @@ method FALLBACK ( $native-sub is copy, |c ) {
   try { $s = &::($native-sub); }
   try { $s = &::("g_slist_$native-sub"); }
 
-  test-call( $s, $!gslist, |c)
+  #test-call( $s, $!gslist, |c)
+  $s( $!gslist, |c)
 }
 
 #`{{

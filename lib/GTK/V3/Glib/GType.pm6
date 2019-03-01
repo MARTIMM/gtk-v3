@@ -125,5 +125,5 @@ method FALLBACK ( $native-sub is copy, |c ) {
   try { $s = &::($native-sub); }
   try { $s = &::("g_type_$native-sub"); }
 
-  $s(|c);
+  $s(|c)
 }

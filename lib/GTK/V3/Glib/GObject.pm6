@@ -260,14 +260,13 @@ method fallback ( $native-sub is copy --> Callable ) {
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
-#note "GO: {self}, ", %options;
+  note "GObject: {self}, ", %options if $gobject-debug;
 
   # Test if GTK is initialized
-  my GTK::V3::Gtk::GtkMain $main .= new
-     unless $GTK::V3::Gtk::GtkMain::gui-initialized;
+  my GTK::V3::Gtk::GtkMain $main .= new;
 
   if ? %options<widget> {
-    note "go widget: ", %options<widget> if $gobject-debug;
+    note "GObject widget: ", %options<widget> if $gobject-debug;
     my $w = %options<widget>;
     $w = $w() if $w ~~ GTK::V3::Glib::GObject;
     note "go widget converted: ", $w if $gobject-debug;
@@ -284,14 +283,14 @@ submethod BUILD ( *%options ) {
 
   elsif ? %options<build-id> {
     my N-GObject $widget;
-    note "Builders: ", $builders if $gobject-debug;
+    note "GObject build-id: %options<build-id>" if $gobject-debug;
     for @$builders -> $builder {
       $widget = $builder.get-object(%options<build-id>);
       last if ?$widget;
     }
 
     if ? $widget {
-      note "store widget: ", $widget if $gobject-debug;
+      note "store widget: ", self.^name, ', ', $widget if $gobject-debug;
       $!g-object = $widget;
     }
 

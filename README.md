@@ -9,8 +9,10 @@
 # Description
 First of all, I would like to thank the developers of the GTK::Simple project because of the information I got while reading the code. Also because one of the files is copied unaltered for which I did not had to think about to get that right.
 
-The purpose of this project is to create an interface to the **GTK** version 3 library. Here I want to follow the interface as closely as possible by keeping the names of the native functions the same as provided with the following exceptions;
-* The native subroutines are defined in their classes. They are setup in such a way that they have become methods in those classes. Many subs also have as their first argument the native object. This object is held in the class and is automatically inserted when needed. E.g. a definition like the following in the GtkButton class
+The purpose of this project is to create an interface to the **GTK** version 3 library. Previously I had this library in GTK::Glade but because of its growth I decided to create a separate project.
+
+I want to follow the interface of Gtk, Gdk and Glib as closely as possible by keeping the names of the native functions the same as provided with the following exceptions;
+* The native subroutines are defined in their classes. They are setup in such a way that they have become methods in those classes. Many subs also have as their first argument a the native object. This object is held in the class and is automatically inserted when needed. E.g. a definition like the following in the GtkButton class
   ```
   sub gtk_button_set_label ( N-GObject $widget, Str $label )
     is native(&gtk-lib)
@@ -25,10 +27,33 @@ The purpose of this project is to create an interface to the **GTK** version 3 l
 * The names are sometimes long and prefixed with words which are used in the class name. Therefore, those names can be shortened by removing those prefixes. An example method in the `GtkButton` class is `gtk_button_get_label()`. This can be shortened to `get_label()`.
   ```
   my GTK::V3::Gtk::GtkButton $button .= new(:label<Stop>);
-  my $button-label = $button.get_label;
+  my Str $button-label = $button.get_label;
   ```
 
- names are written with an underscore. Perl6
+* Names can not be shortened too much. E.g. `gtk_button_new` and `gtk_label_new` yield `new` which is a perl method from class `Mu`. I am thinking about chopping off the `g_`, `gdk_` and `gtk_` prefixes.
+
+* All the method names are written with an underscore. Following a perl6 tradition; dashed versions is also possible.
+  ```
+  my Str $button-label = $button.gtk-button-get-label;
+  ```
+
+* Sometimes I had to stray away from the native function names because of the way one has define it in perl6. This is caused by the possibility of returning or specifying different types of values depending on how the function is used. E.g. `g_slist_nth_data()` can return several types of data. This had to be solved like here which yields the methods `g_slist_nth_data_str` and `g_slist_nth_data_gobject`.
+
+  ```
+  sub g_slist_nth_data_str ( N-GSList $list, uint32 $n --> Str )
+    is native(&gtk-lib)
+    is symbol('g_slist_nth_data')
+    { * }
+
+  sub g_slist_nth_data_gobject ( N-GSList $list, uint32 $n --> N-GObject )
+    is native(&gtk-lib)
+    is symbol('g_slist_nth_data')
+    { * }
+  ```
+
+* Not all native subs or even classes will be implemented caused by the following reasons;
+  * Many subs and some classes  are obsolete.
+  * The original idea was to have the interface build by the glade interface designer. This lib was in the GTK::Glade project before refactoring. So e.g. a GtkButton does not have to have all subs to create a button. On the other hand a GtkListBox is a widget which is changed dynamically and therefore need more subs to manipulate the widget and its contents.
 
 # Motivation
 I perhaps should have used parts of `GTK::Simple` but I wanted to study the native call interface which I am now encountering more seriously. Therefore I started a new project with likewise objects as can be found in `GTK::Simple`.

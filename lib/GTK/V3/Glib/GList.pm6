@@ -34,9 +34,16 @@ sub g_list_nth ( N-GList $list, int32 $n)
   is native(&gtk-lib)
   { * }
 
-sub g_list_nth_data ( N-GList $list, int32 $n)
+sub g_list_nth_data_str ( N-GList $list, int32 $n)
+  returns Str
+  is native(&gtk-lib)
+  is symbol('g_list_nth_data')
+  { * }
+
+sub g_list_nth_data_gobject ( N-GList $list, int32 $n)
   returns N-GObject
   is native(&gtk-lib)
+  is symbol('g_list_nth_data')
   { * }
 
 #TODO free $!glist too?

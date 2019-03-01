@@ -91,7 +91,6 @@ subtest 'Button connect and emit signal', {
   my X $x .= new(:empty);
   $button.register-signal( $x, 'click-handler', 'clicked', :user-data($data));
 
-  my GTK::V3::Gtk::GtkMain $main .= new(:check);
   my Promise $p = start {
     # wait for loop to start
     sleep(1.1);

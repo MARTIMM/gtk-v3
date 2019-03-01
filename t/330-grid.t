@@ -29,7 +29,7 @@ subtest 'Grid create', {
   is $gl.g-list-length, 2, 'two list items';
 
 #note $gl.nth-data(1);
-  $label-widget($gl.nth-data(0));
+  $label-widget($gl.nth-data-gobject(0));
   is $label-widget.get-text, 'note', 'text from label';
 
   $gl.g-list-free;

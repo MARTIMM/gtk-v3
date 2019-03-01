@@ -51,7 +51,7 @@ subtest 'Button as container', {
   my GTK::V3::Gtk::GtkLabel $l .= new(:label(''));
 
   my GTK::V3::Glib::GList $gl .= new(:glist($button1.get-children));
-  $l($gl.nth-data(0));
+  $l($gl.nth-data-gobject(0));
   is $l.get-text, 'xyz', 'text label from button 1';
 
   my GTK::V3::Gtk::GtkLabel $label .= new(:label('pqr'));

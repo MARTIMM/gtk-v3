@@ -1,5 +1,5 @@
 use v6;
-#===============================================================================
+# ==============================================================================
 =begin pod
 
 =TITLE class GTK::V3::Gtk::GtkFileChooserDialog
@@ -11,16 +11,22 @@ use v6;
 
 =head1 Synopsis
 
-  use GTK::V3::Gtk::GtkFileChooserDialog $fchoose .= new(:build-id<save-dialog>);
+  use GTK::V3::Gtk::GtkDialog;
+  use GTK::V3::Gtk::GtkFileChooserDialog;
+
+  my GTK::V3::Gtk::GtkFileChooserDialog $fchoose .= new(:build-id<save-dialog>);
 
   # show the dialog
-  $fchoose.gtk-dialog-run;
+  my Int $response = $fchoose.gtk-dialog-run;
+  if $response == GTK_RESPONSE_ACCEPT {
+    ...
+  }
 
   # when dialog buttons are pressed hide it again
-  $fchoose.hide
+  $fchoose.hide;
 
 =end pod
-#===============================================================================
+# ==============================================================================
 
 use NativeCall;
 
@@ -33,10 +39,10 @@ use GTK::V3::Gtk::GtkFileChooser;
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtkfilechooserdialog.h
 # https://developer.gnome.org/gtk3/stable/GtkFileChooserDialog.html
-unit class GTK::V3::Gtk::GtkFileChooserDialog:auth<github:MARTIMM>
-  is GTK::V3::Gtk::GtkDialog;
+unit class GTK::V3::Gtk::GtkFileChooserDialog:auth<github:MARTIMM>;
+also is GTK::V3::Gtk::GtkDialog;
 
-#-------------------------------------------------------------------------------
+# ==============================================================================
 =begin pod
 
 =head1 Methods

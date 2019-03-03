@@ -104,7 +104,7 @@ A few measures are implemented to help a bit preventing problems;
 | GTK::V3::Gtk::GtkContainer |  [GtkContainer.html][gtkcontainer]
 | GTK::V3::Gtk::GtkCssProvider |  [GtkCssProvider.html][gtkcssprovider]
 | GTK::V3::Gtk::GtkStyleContext |  [GtkStyleContext.html][gtkstylecontext]
-| GTK::V3::Gtk::GtkDialog |  [GtkDialog.html][gtkdialog]
+| [GTK::V3::Gtk::GtkDialog](doc/GtkDialog) |  [GtkDialog.html][gtkdialog]
 | GTK::V3::Gtk::GtkEntry |  [GtkEntry.html][gtkentry]
 | GTK::V3::Gtk::GtkFileChooser |  [GtkFileChooser.html][GtkFileChooser]
 | [GTK::V3::Gtk::GtkFileChooserDialog](doc/GtkFileChooserDialog.pdf) |  [GtkFileChooserDialog.html][GtkFileChooserDialog]

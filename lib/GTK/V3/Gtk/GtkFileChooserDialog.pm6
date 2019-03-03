@@ -41,7 +41,7 @@ unit class GTK::V3::Gtk::GtkFileChooserDialog:auth<github:MARTIMM>
 
 =head1 Methods
 
-=head2 gtk_file_chooser_dialog_new_two_buttons
+=head2 [gtk_file_chooser_] dialog_new_two_buttons
 
   method gtk_file_chooser_dialog_new_two_buttons (
     Str $title, N-GObject $parent-window, int32 $file-chooser-action,

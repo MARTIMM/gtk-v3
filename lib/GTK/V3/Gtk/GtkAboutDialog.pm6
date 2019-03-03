@@ -90,8 +90,6 @@ enum GtkLicense is export <
 
 =head1 Methods
 
-All methods can be written with dashes or shortened by cutting the C<gtk_about_dialog_> part. After shortening, at least one dash or underscore must be left. See the synopsis above for an example. Below, this is shown with brackets in the headers.
-
 =head2 gtk_about_dialog_new
 
   method gtk_about_dialog_new ( --> N-GObject )

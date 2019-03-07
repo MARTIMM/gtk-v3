@@ -2,6 +2,7 @@
 
 * 2019-03-06 0.8.0
   * Added GtkComboBox and GtkComboBoxText and documentation.
+  * improved debugging messages.
 
 * 2019-03-02 0.7.3
   * Documentation added and README changed

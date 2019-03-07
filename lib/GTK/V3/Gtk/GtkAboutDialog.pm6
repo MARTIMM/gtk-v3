@@ -557,7 +557,7 @@ method fallback ( $native-sub is copy --> Callable ) {
   try { $s = &::($native-sub); }
   try { $s = &::("gtk_about_dialog_$native-sub"); } unless ?$s;
 
-note "ad $native-sub: ", $s;
+#note "ad $native-sub: ", $s;
   $s = callsame unless ?$s;
 
   $s;

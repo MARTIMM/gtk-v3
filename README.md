@@ -89,6 +89,7 @@ A few measures are implemented to help a bit preventing problems;
 
   * The failure to initialize GTK on time is solved by using an initialization flag which is checked in the `GtkMain` module. The module is referred to by `GObject` which almost all modules inherit from.
   * A debug flag in `GObject` can be set to show some more messages which might help to solve your problems.
+  * Throwing an exception while in code called from C (in a callback), perl6 will crash with the '*internal error*' message without being able to process the exception. To at least show why it happens, all messages which are set in the exception are printed first before calling `die()` which will perl6 force to wander off aimlessly.
 
 # Documentation
 
@@ -101,6 +102,8 @@ A few measures are implemented to help a bit preventing problems;
 | GTK::V3::Gtk::GtkBuilder |  [GtkBuilder.html][gtkbuilder]
 | GTK::V3::Gtk::GtkButton |  [GtkButton.html][gtkbutton]
 | GTK::V3::Gtk::GtkCheckButton |  [GtkCheckButton.html][gtkcheckbutton]
+| [GTK::V3::Gtk::GtkComboBox](doc/GtkComboBox.pdf) |  [GtkComboBox.html][GtkComboBox]
+| [GTK::V3::Gtk::GtkComboBoxText](doc/GtkComboBoxText.pdf) |  [GtkComboBoxText.html][GtkComboBoxText]
 | GTK::V3::Gtk::GtkContainer |  [GtkContainer.html][gtkcontainer]
 | GTK::V3::Gtk::GtkCssProvider |  [GtkCssProvider.html][gtkcssprovider]
 | GTK::V3::Gtk::GtkStyleContext |  [GtkStyleContext.html][gtkstylecontext]
@@ -225,6 +228,8 @@ Github account name: Github account MARTIMM
 [gtkbuilder]: https://developer.gnome.org/gtk3/stable/GtkBuilder.html
 [gtkbutton]: https://developer.gnome.org/gtk3/stable/GtkButton.html
 [gtkcheckbutton]: https://developer.gnome.org/gtk3/stable/GtkCheckButton.html
+[GtkComboBox]: https://developer.gnome.org/gtk3/stable/GtkComboBox.html
+[GtkComboBoxText]: https://developer.gnome.org/gtk3/stable/GtkComboBoxText.html#gtk-combo-box-text-append
 [gtkcontainer]: https://developer.gnome.org/gtk3/stable/GtkContainer.html
 [gtkcssprovider]: https://developer.gnome.org/gtk3/stable/GtkCssProvider.html
 [gtkdialog]: https://developer.gnome.org/gtk3/stable/GtkDialog.html

@@ -1,5 +1,8 @@
 ## Release notes
 
+* 2019-03-06 0.8.1
+  * Readme not completely right for display on internet
+
 * 2019-03-06 0.8.0
   * Added GtkComboBox and GtkComboBoxText and documentation.
   * improved debugging messages.

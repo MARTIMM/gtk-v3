@@ -151,7 +151,7 @@ has N-GObject $!g-object;
 submethod BUILD ( N-GObject:D :$!g-object ) { }
 
 #-------------------------------------------------------------------------------
-method FALLBACK ( $native-sub is copy, |c ) {
+method FALLBACK ( $native-sub is copy, Bool :$return-sub-only = False, |c ) {
 
   CATCH { test-catch-exception( $_, $native-sub); }
 
@@ -166,7 +166,7 @@ method FALLBACK ( $native-sub is copy, |c ) {
   try { $s = &::("g_signal_$native-sub"); } unless ?$s;
 
   #test-call( $s, Any, |c)
-  $s( $!g-object, |c)
+  $return-sub-only ?? $s !! $s( $!g-object, |c)
 }
 
 #`{{

@@ -109,13 +109,20 @@ method FALLBACK ( $native-sub is copy, |c ) {
 }
 
 #-------------------------------------------------------------------------------
-method fallback ( $native-sub is copy --> Callable ) {
+method fallback ( $native-sub --> Callable ) {
 
   my Callable $s;
 
   try { $s = &::($native-sub); }
-  try { $s = &::("g_signal_$native-sub"); } unless ?$s;
   try { $s = &::("g_object_$native-sub"); } unless ?$s;
+
+  # Try to solve sub names from the GSignal class
+  unless ?$s {
+    $!g-signal .= new(:$!g-object);
+    note "GSignal look for $native-sub: ", $!g-signal if $gobject-debug;
+
+    $s = $!g-signal.FALLBACK( $native-sub, :return-sub-only);
+  }
 
   $s = callsame unless ?$s;
 

@@ -104,7 +104,8 @@ method FALLBACK ( $native-sub is copy, |c ) {
     }
   }
 
-#note "test-call of $native-sub: ", $s, ', ', $!g-object, ', ', |c.gist;
+  note "\ntest-call of $native-sub: ", $s.gist, ', ', $!g-object, ', ', |c.gist
+    if $gobject-debug;
   test-call( $s, $!g-object, |$params)
 }
 

@@ -1,7 +1,7 @@
 [toc]
 
-# Classes and relations
-* Below are diagrams of what is implemented. See also the [object hierarchy in GTK docs](https://developer.gnome.org/gtk3/stable/ch02.html). 
+# Class hierargy
+* Below are diagrams of what is implemented. See also the [object hierarchy in GTK docs](https://developer.gnome.org/gtk3/stable/ch02.html).
 
 
 ```plantuml
@@ -94,6 +94,7 @@ title Standalone classes
  * GtkMain
 @endmindmap
 ```
+
 
 
 

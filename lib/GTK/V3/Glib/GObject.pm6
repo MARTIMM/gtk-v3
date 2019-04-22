@@ -35,6 +35,7 @@ use NativeCall;
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 use GTK::V3::N::N-GObject;
+use GTK::V3::Gdk::GdkEventTypes;
 use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Glib::GSignal;
 use GTK::V3::Glib::GValue;
@@ -109,7 +110,7 @@ Clears a reference to a GObject. The reference count of the object is decreased 
 =end pod
 }}
 sub g_clear_object ( N-GObject $object is rw ) {
-  hidden_g_clear_object(N-GObject $object);
+  hidden_g_clear_object($object);
   #GOBject.g_object_unref($object)
   $object = N-GObject;
 }
@@ -494,7 +495,7 @@ method register-signal (
   $handler-object, Str:D $handler-name, Str:D $signal-name,
   Int :$connect-flags = 0,
   #Int :$connect-flags = 0, Str :$target-widget-name,
-  Str :$handler-type where * ~~ any(<wd wwd wsd>) = 'wd',
+#  Str :$handler-type where * ~~ any(<wd wwd wsd>) = 'wd',
   *%user-options
   --> Bool
 ) {
@@ -502,20 +503,20 @@ method register-signal (
 #note $handler-object.^methods;
 #note "register $handler-object $handler-name ($handler-type), options: ", %user-options;
 
-  return False unless ?$handler-object && $handler-type ~~ any(<wd wwd wsd>);
+#  return False unless ?$handler-object && $handler-type ~~ any(<wd wwd wsd>);
 
 
   my %options = :widget(self), |%user-options;
   #%options<target-widget-name> = $target-widget-name if $target-widget-name;
 
   my Callable $handler;
-  if $handler-type eq 'wd' {
-    $handler = -> $w, $d {
+  #if $handler-type eq 'wd' {
+    $handler = -> N-GObject $w, OpaquePointer $d {
       $handler-object.?"$handler-name"(|%options);
       #$handler-object.?"$handler-name"( |%options, |%user-options);
     }
-  }
-
+  #}
+#`{{
   elsif $handler-type eq 'wwd' {
     $handler = -> $w1, $w2, $d {
       $handler-object.?"$handler-name"(
@@ -533,9 +534,78 @@ method register-signal (
       );
     }
   }
+}}
 
   $!g-signal .= new(:$!g-object);
-  $!g-signal."connect-object-$handler-type"(
+#  $!g-signal."connect-object-$handler-type"(
+  $!g-signal.connect-object(
+    $signal-name, $handler, OpaquePointer, $connect-flags
+  );
+
+  True
+}
+#-------------------------------------------------------------------------------
+#`{{
+=begin pod
+=head2 register-signal
+
+  method register-signal (
+    $handler-object, Str:D $handler-name, Str:D $signal-name,
+    Str :$handler-type where * ~~ any(<wd wwd wsd>) = 'wd',
+    Int :$connect-flags = 0, *%user-options
+    --> Bool
+  )
+
+Register a handler to process a signal event.
+
+=item $handler-object is the object wherein the handler is defined.
+=item $handler-name is name of the method.
+=item $signal-name is the name of the event to be handled. Each gtk widget has its own series of signals, please look for it in the documentation of gtk.
+=item $connect-flags can be on of C<G_CONNECT_AFTER> or C<G_CONNECT_SWAPPED>. See L<documentation here|https://developer.gnome.org/gobject/stable/gobject-Signals.html#GConnectFlags>.
+=item $handler-type is by default 'wd' to use C<g_signal_connect_wd> from L<GSignal>. Other types are not yet defined.
+=item %user-options. Any other user data in whatever type. These arguments are provided to the user handler when an event for the handler is fired. There will always be one named argument C<:$widget> which holds the class object on which the signal was registered. The name 'widget' is therefore reserved.
+
+
+  # create a class holding a handler method to process a click event
+  # of a button.
+  class X {
+    method click-handler ( :widget($button), Array :$user-data ) {
+      say $user-data.join(' ');
+    }
+  }
+
+  # create a button and some data to send with the signal
+  my GTK::V3::Gtk::GtkButton $button .= new(:label('xyz'));
+  my Array $data = [<Hello World>];
+
+  # register button signal
+  my X $x .= new(:empty);
+  $button.register-signal( $x, 'click-handler', 'clicked', :user-data($data));
+
+=end pod
+}}
+method register-event (
+  $handler-object, Str:D $handler-name, Str:D $signal-name,
+  Int :$connect-flags = 0, *%user-options
+  --> Bool
+) {
+
+#note $handler-object.^methods;
+#note "register $handler-object $handler-name ($handler-type), options: ", %user-options;
+
+
+
+#  my %options = :widget(self), |%user-options;
+
+  my Callable $handler;
+  $handler = -> N-GObject $w, GdkEvent $e, OpaquePointer $d {
+    $handler-object.?"$handler-name"(
+      :widget(self), :event($e), |%user-options
+    );
+  }
+
+  $!g-signal .= new(:$!g-object);
+  $!g-signal.connect-object(
     $signal-name, $handler, OpaquePointer, $connect-flags
   );
 

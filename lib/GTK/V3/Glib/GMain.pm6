@@ -96,7 +96,7 @@ sub g_source_destroy ( OpaquePointer $source )
 
 # remove when on default main loop
 sub g_source_remove ( uint32 $tag )
-  returns Bool
+  returns int32
   is native(&gtk-lib)
   { * }
 

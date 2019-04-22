@@ -55,14 +55,14 @@ You should typically call this function on top level widgets, and rarely on chil
 
 See also: gtk_container_remove()
 =end pod
-sub gtk_widget_destroy ( N-GObject $widget is rw ) {
+sub gtk_widget_destroy ( N-GObject $widget is rw ) is inlinable {
   hidden_gtk_widget_destroy( $widget );
   #GOBject.g_clear_object($widget)
   $widget = N-GObject; # not needed after clearing!
 }
 sub hidden_gtk_widget_destroy ( N-GObject $widget )
   is native(&gtk-lib)
-  is symbol('')
+  is symbol('gtk_widget_destroy')
   { * }
 
 # ==============================================================================
@@ -89,7 +89,7 @@ sub gtk_widget_show ( N-GObject $widget )
 
 Reverses the effects of gtk_widget_show().
 =end pod
-sub gtk_widget_hide ( N-GObject $widgetw )
+sub gtk_widget_hide ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
@@ -151,11 +151,11 @@ sub gtk_widget_get_name ( N-GObject $widget )
 =begin pod
 =head2 [gtk_widget_] set_sensitive
 
-  method gtk_widget_set_sensitive ( Bool $sensitive )
+  method gtk_widget_set_sensitive ( Int $sensitive )
 
 Sets the sensitivity of a widget. A widget is sensitive if the user can interact with it. Insensitive widgets are “grayed out” and the user can’t interact with them. Insensitive widgets are known as “inactive”, “disabled”, or “ghosted” in some other toolkits.
 =end pod
-sub gtk_widget_set_sensitive ( N-GObject $widget, Bool $sensitive ) {
+sub gtk_widget_set_sensitive ( N-GObject $widget, int32 $sensitive )
   is native(&gtk-lib)
   { * }
 
@@ -163,19 +163,15 @@ sub gtk_widget_set_sensitive ( N-GObject $widget, Bool $sensitive ) {
 =begin pod
 =head2 [gtk_widget_] get_sensitive
 
-  method gtk_widget_get_sensitive ( --> Bool )
+  method gtk_widget_get_sensitive ( --> Int )
 
 Returns the widget’s sensitivity (in the sense of returning the value that has been set using gtk_widget_set_sensitive()).
 
 The effective sensitivity of a widget is however determined by both its own and its parent widget’s sensitivity. See gtk_widget_is_sensitive().
 =end pod
-sub gtk_widget_get_sensitive ( N-GObject $widget --> Bool ) {
-  ? hidden_gtk_widget_get_sensitive($widget)
-}
-sub hidden_gtk_widget_get_sensitive ( N-GObject $widget )
+sub gtk_widget_get_sensitive ( N-GObject $widget )
   returns int32
   is native(&gtk-lib)
-  is symbol('gtk_widget_get_sensitive')
   { * }
 
 # ==============================================================================
@@ -204,14 +200,14 @@ sub gtk_widget_set_size_request ( N-GObject $widget, int32 $w, int32 $h )
 =begin pod
 =head2 [gtk_widget_] set_no_show_all
 
-  method gtk_widget_set_no_show_all ( Bool $no_show_all )
+  method gtk_widget_set_no_show_all ( Int $no_show_all )
 
 Sets the “no-show-all” property, which determines whether calls to gtk_widget_show_all() will affect this widget.
 
 This is mostly for use in constructing widget hierarchies with externally controlled visibility.
 =end pod
 #TODO ref to GtkUIManager when implemented.
-sub gtk_widget_set_no_show_all ( N-GObject $widget, Bool $no_show_all ) {
+sub gtk_widget_set_no_show_all ( N-GObject $widget, int32 $no_show_all )
   is native(&gtk-lib)
   { * }
 
@@ -219,17 +215,13 @@ sub gtk_widget_set_no_show_all ( N-GObject $widget, Bool $no_show_all ) {
 =begin pod
 =head2 [gtk_widget_] get_no_show_all
 
-  method gtk_widget_get_no_show_all ( --> Bool )
+  method gtk_widget_get_no_show_all ( --> Int )
 
 Returns the current value of the “no-show-all” property, which determines whether calls to gtk_widget_show_all() will affect this widget.
 =end pod
-sub gtk_widget_get_no_show_all ( N-GObject $widget --> Bool ) {
-  ? hidden_gtk_widget_get_no_show_all($widget)
-}
-sub hidden_gtk_widget_get_no_show_all ( N-GObject $widget )
+sub gtk_widget_get_no_show_all ( N-GObject $widget )
   returns int32
   is native(&gtk-lib)
-  is symbol('gtk_widget_get_no_show_all')
   { * }
 
 # ==============================================================================
@@ -270,6 +262,7 @@ sub gtk_widget_queue_draw ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
+#`{{
 # ==============================================================================
 =begin pod
 =head2 [gtk_widget_] get_tooltip_text
@@ -282,6 +275,7 @@ sub gtk_widget_get_tooltip_text ( N-GObject $widget )
   returns Str
   is native(&gtk-lib)
   { * }
+}}
 
 # ==============================================================================
 =begin pod
@@ -328,13 +322,13 @@ sub gtk_widget_get_window ( N-GObject $widget )
 =begin pod
 =head2 [gtk_widget_] set_visible
 
-  method gtk_widget_set_visible ( Bool $visible )
+  method gtk_widget_set_visible ( Int $visible )
 
 Sets the visibility state of widget. Note that setting this to TRUE doesn’t mean the widget is actually viewable, see gtk_widget_get_visible().
 
 This function simply calls gtk_widget_show() or gtk_widget_hide() but is nicer to use when the visibility of the widget depends on some condition.
 =end pod
-sub gtk_widget_set_visible ( N-GObject $widget, Bool $visible) {
+sub gtk_widget_set_visible ( N-GObject $widget, int32 $visible)
   is native(&gtk-lib)
   { * }
 
@@ -342,38 +336,30 @@ sub gtk_widget_set_visible ( N-GObject $widget, Bool $visible) {
 =begin pod
 =head2 [gtk_widget_] get_visible
 
-  method gtk_widget_get_visible ( --> Bool )
+  method gtk_widget_get_visible ( --> Int )
 
 Determines whether the widget is visible. If you want to take into account whether the widget’s parent is also marked as visible, use gtk_widget_is_visible() instead.
 
 This function does not check if the widget is obscured in any way.
 =end pod
-sub gtk_widget_get_visible ( N-GObject $widget --> Bool ) {
-  ? hidden_gtk_widget_get_visible($widget)
-}
-sub hidden_gtk_widget_get_visible ( N-GObject $widget )
+sub gtk_widget_get_visible ( N-GObject $widget )
   returns int32       # Bool 1=true
   is native(&gtk-lib)
-  is symbol('gtk_widget_get_visible')
   { * }
 
 # ==============================================================================
 =begin pod
 =head2 [gtk_widget_] get_has_window
 
-  method gtk_widget_get_has_window ( )
+  method gtk_widget_get_has_window ( --> Int )
 
 Specifies whether widget has a GdkWindow of its own. Note that all realized widgets have a non-NULL “window” pointer (gtk_widget_get_window() never returns a NULL window when a widget is realized), but for many of them it’s actually the GdkWindow of one of its parent widgets. Widgets that do not create a window for themselves in “realize” must announce this by calling this function with has_window = FALSE.
 
 This function should only be called by widget implementations, and they should call it in their init() function.
 =end pod
-sub gtk_widget_get_has_window ( N-GObject $window --> Bool ) {
-  ? hidden_gtk_widget_get_has_window($window)
-}
-sub hidden_gtk_widget_get_has_window ( N-GObject $window )
+sub gtk_widget_get_has_window ( N-GObject $window )
   returns int32
   is native(&gtk-lib)
-  is symbol('gtk_widget_get_has_window')
   { * }
 
 
@@ -408,10 +394,11 @@ submethod BUILD ( *%options ) {
 method fallback ( $native-sub is copy --> Callable ) {
 
   my Callable $s;
-#note "w s0: $native-sub, ", $s;
+note "w s0: $native-sub, ", $s;
   try { $s = &::($native-sub); }
-#note "w s1: gtk_widget_$native-sub, ", $s unless ?$s;
+note "w s1: gtk_widget_$native-sub, ", $s unless ?$s;
   try { $s = &::("gtk_widget_$native-sub"); } unless ?$s;
+note "w s2: parent test for $native-sub, ", $s unless ?$s;
 
   $s = callsame unless ?$s;
 

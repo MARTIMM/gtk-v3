@@ -21,8 +21,8 @@ subtest 'Label create', {
     X::GTK::V3, "non existent sub called",
     :message("Could not find native sub 'get_nonvisible\(...\)'");
 
-  is $label1.get_visible, 0, "widget is invisible";
-  $label1.gtk_widget_set-visible(True);
+  is $label1.get-visible, 0, "widget is invisible";
+  $label1.set-visible(1);
   is $label1.get-visible, 1, "widget set visible";
 
   is $label1.gtk_label_get_text, 'abc def',

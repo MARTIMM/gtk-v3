@@ -2,9 +2,9 @@ use v6;
 # ==============================================================================
 =begin pod
 
-=TITLE class GTK::V3::Gdk::GdkEvent
+=TITLE class GTK::V3::Gdk::GdkEventTypes
 
-=SUBTITLE
+#=SUBTITLE
 
 
 =head2 Event Structures — Data structures specific to each type of event
@@ -43,13 +43,13 @@ use NativeCall;
 
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
-use GTK::V3::Gdk::GdkWindow;
-use GTK::V3::Gdk::GdkDevice;
+use GTK::V3::N::N-GObject;
+#use GTK::V3::Glib::GTypes;
 
 # ==============================================================================
 # https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html
 # https://developer.gnome.org/gdk3/stable/gdk3-Events.html
-#unit class GTK::V3::Gdk::GdkEvent:auth<github:MARTIMM>;
+unit class GTK::V3::Gdk::GdkEventTypes:auth<github:MARTIMM>;
 
 # ==============================================================================
 =begin pod
@@ -115,21 +115,25 @@ In some language bindings, the values GDK_2BUTTON_PRESS and GDK_3BUTTON_PRESS wo
 =item GDK_EVENT_LAST; Marks the end of the GdkEventType enumeration. Added in 2.18
 =end pod
 #TODO look in include file if GDK_2BUTTON_PRESS has same int as GDK_DOUBLE_BUTTON_PRESS
-enum GdkEventType is export <
-  GDK_NOTHING GDK_DELETE GDK_DESTROY GDK_EXPOSE GDK_MOTION_NOTIFY
-  GDK_BUTTON_PRESS GDK_2BUTTON_PRESS GDK_DOUBLE_BUTTON_PRESS
-  GDK_3BUTTON_PRESS GDK_TRIPLE_BUTTON_PRESS GDK_BUTTON_RELEASE
+# enum size = int because of use of -1.
+enum GdkEventType is export <<
+  :GDK_NOTHING(-1) GDK_DELETE GDK_DESTROY GDK_EXPOSE GDK_MOTION_NOTIFY
+  GDK_BUTTON_PRESS GDK_2BUTTON_PRESS GDK_3BUTTON_PRESS GDK_BUTTON_RELEASE
   GDK_KEY_PRESS GDK_KEY_RELEASE GDK_ENTER_NOTIFY GDK_LEAVE_NOTIFY
   GDK_FOCUS_CHANGE GDK_CONFIGURE GDK_MAP GDK_UNMAP GDK_PROPERTY_NOTIFY
   GDK_SELECTION_CLEAR GDK_SELECTION_REQUEST GDK_SELECTION_NOTIFY
   GDK_PROXIMITY_IN GDK_PROXIMITY_OUT GDK_DRAG_ENTER GDK_DRAG_LEAVE
   GDK_DRAG_MOTION GDK_DRAG_STATUS GDK_DROP_START GDK_DROP_FINISHED
-  GDK_CLIENT_EVENT GDK_VISIBILITY_NOTIFY GDK_SCROLL GDK_WINDOW_STATE
+  GDK_CLIENT_EVENT GDK_VISIBILITY_NOTIFY
+  :GDK_SCROLL(31) GDK_WINDOW_STATE
   GDK_SETTING GDK_OWNER_CHANGE GDK_GRAB_BROKEN GDK_DAMAGE GDK_TOUCH_BEGIN
   GDK_TOUCH_UPDATE GDK_TOUCH_END GDK_TOUCH_CANCEL GDK_TOUCHPAD_SWIPE
   GDK_TOUCHPAD_PINCH GDK_PAD_BUTTON_PRESS GDK_PAD_BUTTON_RELEASE
   GDK_PAD_RING GDK_PAD_STRIP GDK_PAD_GROUP_MODE GDK_EVENT_LAST
->;
+
+  :GDK_DOUBLE_BUTTON_PRESS(5)
+  :GDK_TRIPLE_BUTTON_PRESS(6)
+  >>;
 
 # ==============================================================================
 =begin pod
@@ -138,14 +142,14 @@ enum GdkEventType is export <
 Contains the fields which are common to all event classes. This comes in handy to check its type for instance.
 
 =item GdkEventType $.type; the type of the event.
-=item GTK::V3::Gdk::GdkWindow $.window; the window which received the event.
+=item N-GObject $.window; the window which received the event.
 =item Int $.send_event; TRUE if the event was sent explicitly.
 
 =end pod
 class GdkEventAny is repr('CStruct') is export {
-  has GdkEventType $.type;
-  has GTK::V3::Gdk::GdkWindow $.window;
-  has int8 $.send-event;
+  has uint32 $.type; #GdkEventType
+  has N-GObject $.window;
+  has int8 $.send_event;
 }
 
 # ==============================================================================
@@ -155,29 +159,29 @@ class GdkEventAny is repr('CStruct') is export {
 Describes a key press or key release event. The type of the event will be one of GDK_KEY_PRESS or GDK_KEY_RELEASE.
 
 =item GdkEventType $.type
-=item GTK::V3::Gdk::GdkWindow $.window
+=item N-GObject $.window
 =item Int $.send_event
 =item UInt $.time; the time of the event in milliseconds.
 =item UInt $.state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.	[type GdkModifierType].
 =item UInt $.keyval; the key that was pressed or released. See the gdk/gdkkeysyms.h header file for a complete list of GDK key codes.
 =item Int $.length; the length of string.
-=item Str $.string;  deprecated.
+=item Str $.string; deprecated.
 =item UInt $.hardware_keycode; the raw code of the key that was pressed or released.
 =item UInt $.group; the keyboard group.
 =item UInt $.is_modifier; a flag that indicates if hardware_keycode is mapped to a modifier. Since 2.10
 =end pod
 class GdkEventKey is repr('CStruct') is export {
-  has GdkEventType $.event-type;
-  has GTK::V3::Gdk::GdkWindow $.window;
-  has int8 $.send-event;
+  has uint32 $.type;
+  has N-GObject $.window;
+  has int8 $.send_event;
   has uint32 $.time;
-  has uint $.state;
-  has uint $.keyval;
+  has uint32 $.state;
+  has uint32 $.keyval;
   has int $.length;
   has Str $.string;
   has uint16 $.hardware_keycode;
   has uint8 $.group;
-  has uint $.is_modifier;
+  has uint32 $.is_modifier;
 }
 
 # ==============================================================================
@@ -204,7 +208,7 @@ To handle e.g. a triple mouse button presses, all events can be ignored except G
   }
 
 =item GdkEventType $.type;
-=item GTK::V3::Gdk::GdkWindow $.window;
+=item N-GObject $.window;
 =item Int $.send_event;
 =item UInt $.time; the time of the event in milliseconds.
 =item Num $.x; the x coordinate of the pointer relative to the window.
@@ -212,22 +216,22 @@ To handle e.g. a triple mouse button presses, all events can be ignored except G
 =item Pointer[Num] $.axes; x , y translated to the axes of device , or NULL if device is the mouse.
 =item UInt $.state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType. [type GdkModifierType]
 =item UInt $.button; the button which was pressed or released, numbered from 1 to 5. Normally button 1 is the left mouse button, 2 is the middle button, and 3 is the right button. On 2-button mice, the middle button can often be simulated by pressing both mouse buttons together.
-=item GTK::V3::Gdk::GdkDevice $.device; the master device that the event originated from. Use gdk_event_get_source_device() to get the slave device.
+=item N-GObject $.device; the master device that the event originated from. Use gdk_event_get_source_device() to get the slave device.
 =item Num $.x_root; the x coordinate of the pointer relative to the root of the screen.
 =item Num $.y_root; the y coordinate of the pointer relative to the root of the screen.
 
 =end pod
 class GdkEventButton is repr('CStruct') is export {
-  has GdkEventType $.event-type;
-  has GTK::V3::Gdk::GdkWindow $.window;
-  has int8 $.send-event;
+  has uint32 $.type;
+  has N-GObject $.window;
+  has int8 $.send_event;
   has uint32 $.time;
   has num64 $.x;
   has num64 $.y;
   has Pointer[num64] $.axes;
-  has uint $.state;
-  has uint $.button;
-  has GTK::V3::Gdk::GdkDevice  $.device;
+  has uint32 $.state;
+  has uint32 $.button;
+  has N-GObject $.device;
   has num64 $.x_root;
   has num64 $.y_root;
 }
@@ -239,9 +243,9 @@ class GdkEventButton is repr('CStruct') is export {
 The event structures contain data specific to each type of event in GDK. The type is a union of all structures explained above.
 =end pod
 class GdkEvent is repr('CUnion') is export {
-  has GdkEventAny $.event-any;
-  has GdkEventKey $.event-key;
-  has GdkEventButton $.event-button;
+  HAS GdkEventAny $.event-any;
+  HAS GdkEventKey $.event-key;
+  HAS GdkEventButton $.event-button;
 }
 
 # ==============================================================================

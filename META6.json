@@ -1,7 +1,7 @@
 {
   "description": "Perl6 GTK Api Version 3",
   "name": "GTK::V3",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "authors": [ "Marcel Timmerman"],
   "tags": [ "Gui", "Gtk"],
 
@@ -9,8 +9,9 @@
   "license": "Artistic-2.0",
 
   "provides": {
+    "GTK::V3::Gdk::GdkDevice": "lib/GTK/V3/Gdk/GdkDevice.pm6",
     "GTK::V3::Gdk::GdkDisplay": "lib/GTK/V3/Gdk/GdkDisplay.pm6",
-    "GTK::V3::Gdk::GdkEvent": "lib/GTK/V3/Gdk/GdkEvent.pm6",
+    "GTK::V3::Gdk::GdkEventTypes": "lib/GTK/V3/Gdk/GdkEventTypes.pm6",
     "GTK::V3::Gdk::GdkScreen": "lib/GTK/V3/Gdk/GdkScreen.pm6",
     "GTK::V3::Gdk::GdkTypes": "lib/GTK/V3/Gdk/GdkTypes.pm6",
     "GTK::V3::Gdk::GdkWindow": "lib/GTK/V3/Gdk/GdkWindow.pm6",

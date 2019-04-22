@@ -1,5 +1,14 @@
 ## Release notes
 
+* 2019-04-18 0.10.0
+  * Add `GTK::V3::Gdk::GdkDevice`.
+  * Add `GTK::V3::Gdk::GdkEventTypes`.
+  * Native sub `g_signal_connect_object_wd()` from `GTK::V3::Glib::GSignal` changed into `g_signal_connect_object()` as is found in the GTK documentation.
+
+* 2019-04-17 0.9.2
+  * Native sub `g_signal_emit_by_name_wd()` from `GTK::V3::Glib::GSignal` modified into `g_signal_emit_by_name()` as is found in the GTK documentation.
+  * Native sub `g_signal_emit_by_name_wwd()` from `GTK::V3::Glib::GSignal` removed.
+
 * 2019-04-15 0.9.1
   * Some subs are added to GOBject.
   * Pod doc added for GObject, GtkBuilder, GtkButton, GtkCheckButton, GtkToggleButton, GtkWidget, GtkWindow.

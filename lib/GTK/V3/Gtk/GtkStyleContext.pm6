@@ -30,10 +30,10 @@ sub gtk_style_context_new ( --> N-GObject )
 # its type, thinking that would be a GtkStyleContext type but it is a GdkScreen
 # type. Sometimes smart thinking goes the wrong way. By having the argument list
 # as '|c' the first argument is not recognized and will be kept the same.
-sub gtk_style_context_add_provider_for_screen( |c ) {
-  __hidden__gtk_style_context_add_provider_for_screen(|c);
+sub gtk_style_context_add_provider_for_screen( |c ) is inlinable {
+  hidden__gtk_style_context_add_provider_for_screen(|c);
 }
-sub __hidden__gtk_style_context_add_provider_for_screen (
+sub hidden__gtk_style_context_add_provider_for_screen (
   N-GObject $screen, int32 $provider, int32 $priority
 ) is native(&gtk-lib)
   is symbol('gtk_style_context_add_provider_for_screen')

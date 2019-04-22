@@ -88,34 +88,26 @@ sub gtk_toggle_button_new_with_mnemonic ( Str $label )
 =begin pod
 =head2 [gtk_toggle_button_] get_active
 
-  method gtk_toggle_button_get_active ( --> Bool )
+  method gtk_toggle_button_get_active ( --> Int )
 
 Get the button state.
 =end pod
-sub gtk_toggle_button_get_active ( N-GObject $w --> Bool ) {
-  ? hidden_gtk_toggle_button_get_active($w);
-}
-sub hidden_gtk_toggle_button_get_active ( N-GObject $w )
+sub gtk_toggle_button_get_active ( N-GObject $w )
   returns int32
   is native(&gtk-lib)
-  is symbol('gtk_toggle_button_get_active')
   { * }
 
 # ==============================================================================
 =begin pod
 =head2 [gtk_toggle_button_] set_active
 
-  method gtk_toggle_button_set_active ( Bool $active --> N-GObject )
+  method gtk_toggle_button_set_active ( Int $active --> N-GObject )
 
 Set the button state.
 =end pod
-sub gtk_toggle_button_set_active ( N-GObject $w, Bool $active ) {
-  hidden-gtk_toggle_button_set_active( $w, $active ?? 1 !! 0);
-}
-sub hidden-gtk_toggle_button_set_active ( N-GObject $w, int32 $active )
+sub gtk_toggle_button_set_active ( N-GObject $w, int32 $active )
   returns int32
   is native(&gtk-lib)
-  is symbol('gtk_toggle_button_set_active')
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =

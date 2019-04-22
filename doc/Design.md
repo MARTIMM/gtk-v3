@@ -13,8 +13,10 @@
 | glong    | long    | int64        | Int        | +/- n % 2**63 - 1
 | gint8    | char    | int8         | Int        | +/- n % 2**7 -1
 | gint16   | short   | int16        | Int        | +/- n % 2**15 - 1
-| gint32   | int     | int32, int   | Int        | +/- n % 2**31 - 1
+| gint32   | int     | int32        | Int        | +/- n % 2**31 - 1
 | gint64   | long    | int64        | Int        | +/- n % 2**63 - 1
+|
+| gint     | int     | int32        | Int        | +/- n % 2**31 - 1
 |
 | guchar   | un. char  | uint8, byte  | Int      | n % 2**8 - 1
 | gushort  | un. short | uint16       | Int      | n % 2**16 - 1
@@ -23,6 +25,8 @@
 | guint16  | un. short | uint16       | Int      | n % 2**16 - 1
 | guint32  | un. int   | uint32, uint | Int      | n % 2**32 - 1
 | guint64  | un. long  | uint64       | Int      | n % 2**64 - 1
+|
+| guint    | un. int   | uint32       | Int      | +/- n % 2**31 - 1
 |
 | gssize   | long      | int64        | Int      |
 | gsize    | un. long  | uint64       | Int      |
@@ -55,6 +59,7 @@ title GTK Class hierary
  * GdkScreen
  * GdkWindow
  * GdkDisplay
+ * GdkDevice
 
  * GtkBuilder
  * GtkTextBuffer

@@ -11,7 +11,7 @@ unit class GTK::V3::Gtk::GtkMain:auth<github:MARTIMM>;
 
 #-------------------------------------------------------------------------------
 sub gtk_events_pending ( )
-    returns Bool
+    returns int32
     is native(&gtk-lib)
     { * }
 
@@ -32,8 +32,8 @@ sub gtk_main_iteration ( )
     is native(&gtk-lib)
     { * }
 
-sub gtk_main_iteration_do ( Bool $blocking )
-    returns Bool
+sub gtk_main_iteration_do ( int32 $blocking )
+    returns int32
     is native(&gtk-lib)
     { * }
 

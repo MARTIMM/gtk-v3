@@ -113,11 +113,11 @@ sub gtk_window_set_default_size (
 =begin pod
 =head2 [gtk_window_] set_modal
 
-  method gtk_window_set_modal ( Bool $modal )
+  method gtk_window_set_modal ( Int $modal )
 
 Sets a window modal or non-modal. Modal windows prevent interaction with other windows in the same application. To keep modal dialogs on top of main application windows, use gtk_window_set_transient_for() to make the dialog transient for the parent; most window managers will then disallow lowering the dialog below the parent.
 =end pod
-sub gtk_window_set_modal ( N-GObject $window, Bool $modal )
+sub gtk_window_set_modal ( N-GObject $window, int32 $modal )
   is native(&gtk-lib)
   { * }
 
@@ -175,7 +175,7 @@ submethod BUILD ( *%options ) {
     }
 
     else {
-      self.native-gobject(gtk_window_new(GTK_WINDOW_TOPLEVEL);
+      self.native-gobject(gtk_window_new(GTK_WINDOW_TOPLEVEL));
     }
   }
 

@@ -27,7 +27,7 @@ sub gtk_entry_set_text ( N-GObject $entry, Str $text )
   is native(&gtk-lib)
   { * }
 
-sub gtk_entry_set_visibility ( N-GObject $entry, Bool $visible )
+sub gtk_entry_set_visibility ( N-GObject $entry, int32 $visible )
   is native(&gtk-lib)
   { * }
 

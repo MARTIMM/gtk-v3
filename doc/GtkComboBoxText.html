@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>class GTK::V3::Gtk::GtkComboBoxText</title>
+        <meta charset="UTF-8" />
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
+        <style>
+        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
+        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
+        u { text-decoration: none }
+        .nested {
+            margin-left: 3em;
+        }
+        aside, u { opacity: 0.7 }
+        a[id^="fn-"]:target { background: #ff0 }
+        </style>
+        
+        
+    </head>
+ <body class="pod" onload="prettyPrint()">
+    <div id="___top"></div>
+    
+    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Gtk::GtkComboBoxText</h1>
+    
+    <nav class="indexgroup">
+<table id="TOC">
+<caption><h2 id="TOC_Title">Table of Contents</h2></caption>
+   <tr class="toc-level-2"><td class="toc-number">0.1</td><td class="toc-text"><a href="#GtkComboBoxText_—_A_simple,_text-only_combo_box">GtkComboBoxText — A simple, text-only combo box</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
+  <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#gtk_combo_box_text_append">gtk_combo_box_text_append</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#gtk_combo_box_text_prepend">gtk_combo_box_text_prepend</a></td></tr>
+      <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#gtk_combo_box_text_insert">gtk_combo_box_text_insert</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.4</td><td class="toc-text"><a href="#[gtk_combo_box_text_]_append_text">[gtk_combo_box_text_] append_text</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.5</td><td class="toc-text"><a href="#[gtk_combo_box_text_]_prepend_text">[gtk_combo_box_text_] prepend_text</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.6</td><td class="toc-text"><a href="#[gtk_combo_box_text_]_insert_text">[gtk_combo_box_text_] insert_text</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.7</td><td class="toc-text"><a href="#gtk_combo_box_text_remove">gtk_combo_box_text_remove</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.8</td><td class="toc-text"><a href="#[gtk_combo_box_text_]_remove_all">[gtk_combo_box_text_] remove_all</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.9</td><td class="toc-text"><a href="#gtk_combo_box_text_get_active_text">gtk_combo_box_text_get_active_text</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.10</td><td class="toc-text"><a href="#new">new</a></td></tr>
+    
+</table>
+</nav>
+
+    <div class="pod-body">
+    
+                   <pre class="prettyprint lang-perl6 linenums">unit class GTK::V3::Gtk::GtkComboBoxText;
+also is GTK::V3::Gtk::GtkComboBox;</pre>
+<h2 id="GtkComboBoxText_—_A_simple,_text-only_combo_box"><a class="u" href="#___top" title="go to top of document">GtkComboBoxText — A simple, text-only combo box</a></h2>
+<h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+
+                   <pre class="prettyprint lang-perl6 linenums"># Get a fully designed text combobox
+my GTK::V3::Gtk::GtkComboBoxText $server-cb .= new(:build-id&lt;serverComboBox&gt;);
+my Str $server = $server-cb.get-active-id;</pre>
+<h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
+<h2 id="gtk_combo_box_text_append"><a class="u" href="#___top" title="go to top of document">gtk_combo_box_text_append</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_text_append ( Str $id, Str $text )</pre>
+<p>Appends text. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBoxText.html#gtk-combo-box-text-append">gnome developer docs</a>.</p>
+<h2 id="gtk_combo_box_text_prepend"><a class="u" href="#___top" title="go to top of document">gtk_combo_box_text_prepend</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_text_prepend ( Str $id, Str $text )</pre>
+<p>Prepends text. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBoxText.html#gtk-combo-box-text-prepend">gnome developer docs</a>.</p>
+<p>This is the same as calling gtk_combo_box_text_insert() with a position of 0.</p>
+<h2 id="gtk_combo_box_text_insert"><a class="u" href="#___top" title="go to top of document">gtk_combo_box_text_insert</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_text_insert ( Int $position, Str $id, Str $text )</pre>
+<p>Insert text at position. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBoxText.html#gtk-combo-box-text-insert">gnome developer docs</a>.</p>
+<h2 id="[gtk_combo_box_text_]_append_text"><a class="u" href="#___top" title="go to top of document">[gtk_combo_box_text_] append_text</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_text_append_text ( Str $text )</pre>
+<p>Append text. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBoxText.html#gtk-combo-box-text-append-text">gnome developer docs</a>.</p>
+<h2 id="[gtk_combo_box_text_]_prepend_text"><a class="u" href="#___top" title="go to top of document">[gtk_combo_box_text_] prepend_text</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_text_prepend_text ( Str $text )</pre>
+<p>Prepend text. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBoxText.html#gtk-combo-box-text-prepend-text">gnome developer docs</a>.</p>
+<h2 id="[gtk_combo_box_text_]_insert_text"><a class="u" href="#___top" title="go to top of document">[gtk_combo_box_text_] insert_text</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_text_insert_text ( int32 $position, Str $text )</pre>
+<p>Insert text at position. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBoxText.html#gtk-combo-box-text-insert-text">gnome developer docs</a>.</p>
+<h2 id="gtk_combo_box_text_remove"><a class="u" href="#___top" title="go to top of document">gtk_combo_box_text_remove</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_text_remove ( Int $position )</pre>
+<p>Remove text at position. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBoxText.html#gtk-combo-box-text-remove">gnome developer docs</a>.</p>
+<h2 id="[gtk_combo_box_text_]_remove_all"><a class="u" href="#___top" title="go to top of document">[gtk_combo_box_text_] remove_all</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_text_remove_all ( )</pre>
+<p>Remove all text entries. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBoxText.html#gtk-combo-box-text-remove-all">gnome developer docs</a>.</p>
+<h2 id="gtk_combo_box_text_get_active_text"><a class="u" href="#___top" title="go to top of document">gtk_combo_box_text_get_active_text</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_text_get_active_text ( )</pre>
+<p>Get selected entry. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBoxText.html#gtk-combo-box-text-get-active-text">gnome developer docs</a>.</p>
+<h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( :$widget! )</pre>
+<p>Create a simple text combobox using a native object from elsewhere. See also Gtk::V3::Glib::GObject.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$build-id! )</pre>
+<p>Create a simple text combobox using a native object from a builder. See also Gtk::V3::Glib::GObject.</p>
+
+    </div>
+    
+    
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+</html>
+

@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>class GTK::V3::Gtk::GtkComboBox</title>
+        <meta charset="UTF-8" />
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
+        <style>
+        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
+        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
+        u { text-decoration: none }
+        .nested {
+            margin-left: 3em;
+        }
+        aside, u { opacity: 0.7 }
+        a[id^="fn-"]:target { background: #ff0 }
+        </style>
+        
+        
+    </head>
+ <body class="pod" onload="prettyPrint()">
+    <div id="___top"></div>
+    
+    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Gtk::GtkComboBox</h1>
+    
+    <nav class="indexgroup">
+<table id="TOC">
+<caption><h2 id="TOC_Title">Table of Contents</h2></caption>
+   <tr class="toc-level-2"><td class="toc-number">0.1</td><td class="toc-text"><a href="#GtkComboBox_—_A_widget_used_to_choose_from_a_list_of_items">GtkComboBox — A widget used to choose from a list of items</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
+  <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#[gtk_combo_box_]_get_active">[gtk_combo_box_] get_active</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#[gtk_combo_box_]_set_active">[gtk_combo_box_] set_active</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#[gtk_combo_box_]_get_active_id">[gtk_combo_box_] get_active_id</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.4</td><td class="toc-text"><a href="#[gtk_combo_box_]_set_active_id">[gtk_combo_box_] set_active_id</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.5</td><td class="toc-text"><a href="#new">new</a></td></tr>
+    
+</table>
+</nav>
+
+    <div class="pod-body">
+    
+                   <pre class="prettyprint lang-perl6 linenums">unit class GTK::V3::Gtk::GtkComboBox;
+also is GTK::V3::Gtk::GtkBin;</pre>
+<h2 id="GtkComboBox_—_A_widget_used_to_choose_from_a_list_of_items"><a class="u" href="#___top" title="go to top of document">GtkComboBox — A widget used to choose from a list of items</a></h2>
+<h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+
+                   <pre class="prettyprint lang-perl6 linenums"># Get a fully designed combobox
+my GTK::V3::Gtk::GtkComboBox $server-cb .= new(:build-id&lt;serverComboBox&gt;);
+my Str $server = $server-cb.get-active-id;</pre>
+<h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
+<h2 id="[gtk_combo_box_]_get_active"><a class="u" href="#___top" title="go to top of document">[gtk_combo_box_] get_active</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_get_active ( --&gt; int32 )</pre>
+<p>Returns the index of the currently active item, or -1 if there’s no active item. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-get-active">gnome developer docs</a>.</p>
+<h2 id="[gtk_combo_box_]_set_active"><a class="u" href="#___top" title="go to top of document">[gtk_combo_box_] set_active</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_set_active ( int32 $index )</pre>
+<p>Sets the active item of combo_box to be the item at index. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-set-active">gnome developer docs</a>.</p>
+<h2 id="[gtk_combo_box_]_get_active_id"><a class="u" href="#___top" title="go to top of document">[gtk_combo_box_] get_active_id</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_get_active_id ( --&gt; Str )</pre>
+<p>Returns the ID of the active row of combo_box. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-get-active-id">gnome developer docs</a>.</p>
+<h2 id="[gtk_combo_box_]_set_active_id"><a class="u" href="#___top" title="go to top of document">[gtk_combo_box_] set_active_id</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_combo_box_set_active_id ( Str $active_id )</pre>
+<p>Changes the active row of combo_box. See also <a href="https://developer.gnome.org/gtk3/stable/GtkComboBox.html#gtk-combo-box-set-active-id">gnome developer docs</a>.</p>
+<h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( :$widget! )</pre>
+<p>Create a combobox using a native object from elsewhere. See also Gtk::V3::Glib::GObject.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$build-id! )</pre>
+<p>Create a combobox using a native object from a builder. See also Gtk::V3::Glib::GObject.</p>
+
+    </div>
+    
+    
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+</html>
+

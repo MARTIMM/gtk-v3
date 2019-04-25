@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>class GTK::V3::Gtk::GtkCheckButton</title>
+        <meta charset="UTF-8" />
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
+        <style>
+        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
+        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
+        u { text-decoration: none }
+        .nested {
+            margin-left: 3em;
+        }
+        aside, u { opacity: 0.7 }
+        a[id^="fn-"]:target { background: #ff0 }
+        </style>
+        
+        
+    </head>
+ <body class="pod" onload="prettyPrint()">
+    <div id="___top"></div>
+    
+    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Gtk::GtkCheckButton</h1>
+    
+    <nav class="indexgroup">
+<table id="TOC">
+<caption><h2 id="TOC_Title">Table of Contents</h2></caption>
+   <tr class="toc-level-2"><td class="toc-number">0.1</td><td class="toc-text"><a href="#GtkCheckButton_—_Create_widgets_with_a_discrete_toggle_button">GtkCheckButton — Create widgets with a discrete toggle button</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
+  <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#gtk_check_button_new">gtk_check_button_new</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#[gtk_check_button_]_new_with_label">[gtk_check_button_] new_with_label</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#[gtk_check_button_]_new_with_mnemonic">[gtk_check_button_] new_with_mnemonic</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.4</td><td class="toc-text"><a href="#new">new</a></td></tr>
+        
+</table>
+</nav>
+
+    <div class="pod-body">
+    
+                   <pre class="prettyprint lang-perl6 linenums">unit class GTK::V3::Gtk::GtkCheckButton;
+also is GTK::V3::Gtk::GtkToggleButton;</pre>
+<h2 id="GtkCheckButton_—_Create_widgets_with_a_discrete_toggle_button"><a class="u" href="#___top" title="go to top of document">GtkCheckButton — Create widgets with a discrete toggle button</a></h2>
+<h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+
+                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkCheckButton $bold-option .= new(:label&lt;Bold&gt;);
+
+# later ...
+if $bold-option.get-active {
+  # Insert text in bold
+}</pre>
+<h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
+<h2 id="gtk_check_button_new"><a class="u" href="#___top" title="go to top of document">gtk_check_button_new</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_check_button_new ( --&gt; N-GObject )</pre>
+<p>Creates a new native checkbutton object</p>
+<h2 id="[gtk_check_button_]_new_with_label"><a class="u" href="#___top" title="go to top of document">[gtk_check_button_] new_with_label</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_check_button_new_with_label ( Str $label --&gt; N-GObject )</pre>
+<p>Creates a new native checkbutton object with a label</p>
+<h2 id="[gtk_check_button_]_new_with_mnemonic"><a class="u" href="#___top" title="go to top of document">[gtk_check_button_] new_with_mnemonic</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_check_button_new_with_mnemonic ( Str $label --&gt; N-GObject )</pre>
+<p>Creates a new check button containing a label. The label will be created using gtk_label_new_with_mnemonic(), so underscores in label indicate the mnemonic for the check button.</p>
+<h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$label )</pre>
+<p>Create GtkCheckButton object with a label.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Bool :$empty )</pre>
+<p>Create an empty GtkCheckButton.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( :$widget! )</pre>
+<p>Create a check button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$build-id! )</pre>
+<p>Create a check button using a native object from a builder. See also Gtk::V3::Glib::GObject.</p>
+
+    </div>
+    
+    
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+</html>
+

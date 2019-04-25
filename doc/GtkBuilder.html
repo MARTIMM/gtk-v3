@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>class GTK::V3::Gtk::GtkBuilder</title>
+        <meta charset="UTF-8" />
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
+        <style>
+        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
+        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
+        u { text-decoration: none }
+        .nested {
+            margin-left: 3em;
+        }
+        aside, u { opacity: 0.7 }
+        a[id^="fn-"]:target { background: #ff0 }
+        </style>
+        
+        
+    </head>
+ <body class="pod" onload="prettyPrint()">
+    <div id="___top"></div>
+    
+    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Gtk::GtkBuilder</h1>
+    
+    <nav class="indexgroup">
+<table id="TOC">
+<caption><h2 id="TOC_Title">Table of Contents</h2></caption>
+   <tr class="toc-level-2"><td class="toc-number">0.1</td><td class="toc-text"><a href="#GtkBuilder_—_Build_an_interface_from_an_XML_UI_definition">GtkBuilder — Build an interface from an XML UI definition</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
+     <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#gtk_builder_new">gtk_builder_new</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#[gtk_builder_]_new_from_file">[gtk_builder_] new_from_file</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#[gtk_builder_]_new_from_string">[gtk_builder_] new_from_string</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.4</td><td class="toc-text"><a href="#[gtk_builder_]_add_from_file">[gtk_builder_] add_from_file</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.5</td><td class="toc-text"><a href="#[gtk_builder_]_add_from_string">[gtk_builder_] add_from_string</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.6</td><td class="toc-text"><a href="#[gtk_builder_]_get_object">[gtk_builder_] get_object</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.7</td><td class="toc-text"><a href="#[gtk_builder_]_get-type-from-name">[gtk_builder_] get-type-from-name</a></td></tr>
+      <tr class="toc-level-2"><td class="toc-number">2.8</td><td class="toc-text"><a href="#new">new</a></td></tr>
+      
+</table>
+</nav>
+
+    <div class="pod-body">
+    
+                   <pre class="prettyprint lang-perl6 linenums">unit class GTK::V3::Gtk::GtkBuilder;
+also is GTK::V3::Glib::GObject;</pre>
+<h2 id="GtkBuilder_—_Build_an_interface_from_an_XML_UI_definition"><a class="u" href="#___top" title="go to top of document">GtkBuilder — Build an interface from an XML UI definition</a></h2>
+<h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+
+                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkBuilder $builder .= new(:filename($ui-file));
+my GTK::V3::Gtk::GtkButton $start-button .= new(:build-id&lt;startButton&gt;);</pre>
+<p>Note: <code>GTK::Glade</code> is a package build around this builder class. That package is able to automatically register the signals defined in the UI file and connect them to the handlers defined in a users supplied class.</p>
+<h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
+<h2 id="gtk_builder_new"><a class="u" href="#___top" title="go to top of document">gtk_builder_new</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_builder_new ( --&gt; N-GObject )</pre>
+<p>Creates a new builder object</p>
+<h2 id="[gtk_builder_]_new_from_file"><a class="u" href="#___top" title="go to top of document">[gtk_builder_] new_from_file</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_builder_new_from_file ( Str $glade-ui-file --&gt; N-GObject )</pre>
+<p>Creates a new builder object and loads the gui design into the builder</p>
+<h2 id="[gtk_builder_]_new_from_string"><a class="u" href="#___top" title="go to top of document">[gtk_builder_] new_from_string</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_builder_new_from_string (
+  Str $glade-ui-text, uint32 $length
+  --&gt; N-GObject
+)</pre>
+<p>Creates a new builder object and takes the gui design from the text argument</p>
+<h2 id="[gtk_builder_]_add_from_file"><a class="u" href="#___top" title="go to top of document">[gtk_builder_] add_from_file</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_builder_add_from_file ( Str $glade-ui-file --&gt; int32 )</pre>
+<p>Add another gui design from a file. The result 0 or 1 is returned. 1 means ok.</p>
+<h2 id="[gtk_builder_]_add_from_string"><a class="u" href="#___top" title="go to top of document">[gtk_builder_] add_from_string</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_builder_add_from_string (
+  Str $glade-ui-text, uint32 $length
+  --&gt; int32
+)</pre>
+<p>Add another gui design from the text argument. The result 0 or 1 is returned. 1 means ok.</p>
+<h2 id="[gtk_builder_]_get_object"><a class="u" href="#___top" title="go to top of document">[gtk_builder_] get_object</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_builder_get_object ( Str $object-id --&gt; N-GObject )</pre>
+<p>Returns a native widget searched for by its id. See also <a href="GOBject :build-id">GOBject :build-id</a>.</p>
+<h2 id="[gtk_builder_]_get-type-from-name"><a class="u" href="#___top" title="go to top of document">[gtk_builder_] get-type-from-name</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_builder_get_type_from_name ( Str $type-name --&gt; int32 )</pre>
+<p>Looks up a type by name. I below example it is shown that this is also accomplished using <code>GType</code>. Furthermore, the codes are not constants! Every new run produces a different gtype code.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkBuilder $builder .= new(:filename&lt;my-ui.glade&gt;);
+my Int $gtype = $builder.get-type-from-name(&#39;GtkButton&#39;);
+my GTK::V3::Glib::GType $t .= new;
+say $t.g-type-name($gtype);                     # GtkButton
+say $t.from-name(&#39;GtkButton&#39;);                  # $gtype
+say $t.g-type-name($t.g-type-parent($gtype));   # GtkBin
+
+#&quot;Depth = 6: Button, Bin, Container, Widget, GInitiallyUnowned, GObject&quot;;
+say $t.g-type-depth($gtype);                    # 6</pre>
+<h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$filename )</pre>
+<p>Create builder object and load gui design.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$string )</pre>
+<p>Same as above but read the design from the string.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Bool :$empty )</pre>
+<p>Create an empty builder.</p>
+
+    </div>
+    
+    
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+</html>
+

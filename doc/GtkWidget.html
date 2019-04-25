@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>class GTK::V3::Gtk::GtkWidget</title>
+        <meta charset="UTF-8" />
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
+        <style>
+        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
+        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
+        u { text-decoration: none }
+        .nested {
+            margin-left: 3em;
+        }
+        aside, u { opacity: 0.7 }
+        a[id^="fn-"]:target { background: #ff0 }
+        </style>
+        
+        
+    </head>
+ <body class="pod" onload="prettyPrint()">
+    <div id="___top"></div>
+    
+    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Gtk::GtkWidget</h1>
+    
+    <nav class="indexgroup">
+<table id="TOC">
+<caption><h2 id="TOC_Title">Table of Contents</h2></caption>
+   <tr class="toc-level-2"><td class="toc-number">0.1</td><td class="toc-text"><a href="#GtkWidget_—_Base_class_for_all_widgets">GtkWidget — Base class for all widgets</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
+  <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#gtk_widget_destroy">gtk_widget_destroy</a></td></tr>
+          <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#gtk_widget_show">gtk_widget_show</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#gtk_widget_hide">gtk_widget_hide</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.4</td><td class="toc-text"><a href="#[gtk_widget_]_show_all">[gtk_widget_] show_all</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.5</td><td class="toc-text"><a href="#[gtk_widget_]_get_display">[gtk_widget_] get_display</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.6</td><td class="toc-text"><a href="#[gtk_widget_]_set_name">[gtk_widget_] set_name</a></td></tr>
+      <tr class="toc-level-2"><td class="toc-number">2.7</td><td class="toc-text"><a href="#[gtk_widget_]_get_name">[gtk_widget_] get_name</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.8</td><td class="toc-text"><a href="#[gtk_widget_]_set_sensitive">[gtk_widget_] set_sensitive</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.9</td><td class="toc-text"><a href="#[gtk_widget_]_get_sensitive">[gtk_widget_] get_sensitive</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.10</td><td class="toc-text"><a href="#[gtk_widget_]_set_size_request">[gtk_widget_] set_size_request</a></td></tr>
+        <tr class="toc-level-2"><td class="toc-number">2.11</td><td class="toc-text"><a href="#[gtk_widget_]_set_no_show_all">[gtk_widget_] set_no_show_all</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.12</td><td class="toc-text"><a href="#[gtk_widget_]_get_no_show_all">[gtk_widget_] get_no_show_all</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.13</td><td class="toc-text"><a href="#[gtk_widget_]_get_allocated_width">[gtk_widget_] get_allocated_width</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.14</td><td class="toc-text"><a href="#[gtk_widget_]_get_allocated_height">[gtk_widget_] get_allocated_height</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.15</td><td class="toc-text"><a href="#[gtk_widget_]_queue_draw">[gtk_widget_] queue_draw</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.16</td><td class="toc-text"><a href="#[gtk_widget_]_set_tooltip_text">[gtk_widget_] set_tooltip_text</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.17</td><td class="toc-text"><a href="#[gtk_widget_]_get_tooltip_text">[gtk_widget_] get_tooltip_text</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.18</td><td class="toc-text"><a href="#[gtk_widget_]_get_window">[gtk_widget_] get_window</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.19</td><td class="toc-text"><a href="#[gtk_widget_]_set_visible">[gtk_widget_] set_visible</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.20</td><td class="toc-text"><a href="#[gtk_widget_]_get_visible">[gtk_widget_] get_visible</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.21</td><td class="toc-text"><a href="#[gtk_widget_]_get_has_window">[gtk_widget_] get_has_window</a></td></tr>
+   
+</table>
+</nav>
+
+    <div class="pod-body">
+    
+                   <pre class="prettyprint lang-perl6 linenums">unit class GTK::V3::Gtk::GtkWidget;
+also is GTK::V3::Gtk::GInitiallyUnowned;</pre>
+<h2 id="GtkWidget_—_Base_class_for_all_widgets"><a class="u" href="#___top" title="go to top of document">GtkWidget — Base class for all widgets</a></h2>
+<h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+
+                   <pre class="prettyprint lang-perl6 linenums"># create a button and set a tooltip
+my GTK::V3::Gtk::GtkButton $start-button .= new(:label&lt;Start&gt;);
+$start-button.set-tooltip-text(&#39;Nooooo don\&#39;t touch that button!!!!!!!&#39;);</pre>
+<h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
+<h2 id="gtk_widget_destroy"><a class="u" href="#___top" title="go to top of document">gtk_widget_destroy</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_destroy ( )</pre>
+<p>Destroys a native widget. When a widget is destroyed all references it holds on other objects will be released:</p>
+<ul><li><p>if the widget is inside a container, it will be removed from its parent</p>
+</li>
+<li><p>if the widget is a container, all its children will be destroyed, recursively</p>
+</li>
+<li><p>if the widget is a top level, it will be removed from the list of top level widgets that GTK+ maintains internally</p>
+</li>
+</ul>
+<p>It&#39;s expected that all references held on the widget will also be released; you should connect to the “destroy” signal if you hold a reference to widget and you wish to remove it when this function is called. It is not necessary to do so if you are implementing a GtkContainer, as you&#39;ll be able to use the GtkContainerClass.remove() virtual function for that.</p>
+<p>It&#39;s important to notice that gtk_widget_destroy() will only cause the widget to be finalized if no additional references, acquired using g_object_ref(), are held on it. In case additional references are in place, the widget will be in an &quot;inert&quot; state after calling this function; widget will still point to valid memory, allowing you to release the references you hold, but you may not query the widget&#39;s own state.</p>
+<p>You should typically call this function on top level widgets, and rarely on child widgets.</p>
+<p>See also: gtk_container_remove()</p>
+<h2 id="gtk_widget_show"><a class="u" href="#___top" title="go to top of document">gtk_widget_show</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_show ( )</pre>
+<p>Flags a widget to be displayed. Any widget that isn’t shown will not appear on the screen. If you want to show all the widgets in a container, it’s easier to call gtk_widget_show_all() on the container, instead of individually showing the widgets.</p>
+<p>Remember that you have to show the containers containing a widget, in addition to the widget itself, before it will appear onscreen.</p>
+<p>When a toplevel container is shown, it is immediately realized and mapped; other shown widgets are realized and mapped when their toplevel container is realized and mapped.</p>
+<h2 id="gtk_widget_hide"><a class="u" href="#___top" title="go to top of document">gtk_widget_hide</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_hide ( )</pre>
+<p>Reverses the effects of gtk_widget_show().</p>
+<h2 id="[gtk_widget_]_show_all"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] show_all</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_show_all ( )</pre>
+<p>Recursively shows a widget, and any child widgets (if the widget is a container).</p>
+<h2 id="[gtk_widget_]_get_display"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] get_display</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_get_display ( )</pre>
+<p>Get the GdkDisplay for the toplevel window associated with this widget. This function can only be called after the widget has been added to a widget hierarchy with a GtkWindow at the top.</p>
+<p>In general, you should only create display specific resources when a widget has been realized, and you should free those resources when the widget is unrealized.</p>
+<h2 id="[gtk_widget_]_set_name"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] set_name</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_set_name ( Str $name )</pre>
+<p>Widgets can be named, which allows you to refer to them from a CSS file. You can apply a style to widgets with a particular name in the CSS file. See the documentation for the CSS syntax (on the same page as the <a href="https://developer.gnome.org/gtk3/stable/GtkStyleContext.html">docs for GtkStyleContext</a>).</p>
+<p>Note that the CSS syntax has certain special characters to delimit and represent elements in a selector (period, #, &gt;, *...), so using these will make your widget impossible to match by name. Any combination of alphanumeric symbols, dashes and underscores will suffice.</p>
+<h2 id="[gtk_widget_]_get_name"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] get_name</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_get_name ( )</pre>
+<p>Retrieves the name of a widget. See gtk_widget_set_name() for the significance of widget names.</p>
+<h2 id="[gtk_widget_]_set_sensitive"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] set_sensitive</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_set_sensitive ( Int $sensitive )</pre>
+<p>Sets the sensitivity of a widget. A widget is sensitive if the user can interact with it. Insensitive widgets are “grayed out” and the user can’t interact with them. Insensitive widgets are known as “inactive”, “disabled”, or “ghosted” in some other toolkits.</p>
+<h2 id="[gtk_widget_]_get_sensitive"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] get_sensitive</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_get_sensitive ( --&gt; Int )</pre>
+<p>Returns the widget’s sensitivity (in the sense of returning the value that has been set using gtk_widget_set_sensitive()).</p>
+<p>The effective sensitivity of a widget is however determined by both its own and its parent widget’s sensitivity. See gtk_widget_is_sensitive().</p>
+<h2 id="[gtk_widget_]_set_size_request"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] set_size_request</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_set_size_request ( Int $w, Int $h )</pre>
+<p>Sets the minimum size of a widget; that is, the widget’s size request will be at least width by height . You can use this function to force a widget to be larger than it normally would be.</p>
+<p>In most cases, gtk_window_set_default_size() is a better choice for toplevel windows than this function; setting the default size will still allow users to shrink the window. Setting the size request will force them to leave the window at least as large as the size request. When dealing with window sizes, gtk_window_set_geometry_hints() can be a useful function as well.</p>
+<p>Note the inherent danger of setting any fixed size - themes, translations into other languages, different fonts, and user action can all change the appropriate size for a given widget. So, it&#39;s basically impossible to hardcode a size that will always be correct.</p>
+<p>The size request of a widget is the smallest size a widget can accept while still functioning well and drawing itself correctly. However in some strange cases a widget may be allocated less than its requested size, and in many cases a widget may be allocated more space than it requested.</p>
+<p>If the size request in a given direction is -1 (unset), then the “natural” size request of the widget will be used instead.</p>
+<p>The size request set here does not include any margin from the GtkWidget properties margin-left, margin-right, margin-top, and margin-bottom, but it does include pretty much all other padding or border properties set by any subclass of GtkWidget.</p>
+<h2 id="[gtk_widget_]_set_no_show_all"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] set_no_show_all</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_set_no_show_all ( Int $no_show_all )</pre>
+<p>Sets the “no-show-all” property, which determines whether calls to gtk_widget_show_all() will affect this widget.</p>
+<p>This is mostly for use in constructing widget hierarchies with externally controlled visibility.</p>
+<h2 id="[gtk_widget_]_get_no_show_all"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] get_no_show_all</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_get_no_show_all ( --&gt; Int )</pre>
+<p>Returns the current value of the “no-show-all” property, which determines whether calls to gtk_widget_show_all() will affect this widget.</p>
+<h2 id="[gtk_widget_]_get_allocated_width"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] get_allocated_width</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_get_allocated_width ( --&gt; Int )</pre>
+<p>Returns the width that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function.</p>
+<h2 id="[gtk_widget_]_get_allocated_height"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] get_allocated_height</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_get_allocated_height ( --&gt; Int )</pre>
+<p>Returns the height that has currently been allocated to widget . This function is intended to be used when implementing handlers for the “draw” function.</p>
+<h2 id="[gtk_widget_]_queue_draw"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] queue_draw</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_queue_draw ( )</pre>
+<p>Equivalent to calling gtk_widget_queue_draw_area() for the entire area of a widget.</p>
+<h2 id="[gtk_widget_]_set_tooltip_text"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] set_tooltip_text</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_set_tooltip_text ( Str $text )</pre>
+<p>Sets text as the contents of the tooltip. This function will take care of setting “has-tooltip” to TRUE and of the default handler for the “query-tooltip” signal.</p>
+<h2 id="[gtk_widget_]_get_tooltip_text"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] get_tooltip_text</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_get_tooltip_text ( --&gt; Str )</pre>
+<p>Sets text as the contents of the tooltip. This function will take care of setting “has-tooltip” to TRUE and of the default handler for the “query-tooltip” signal.</p>
+<h2 id="[gtk_widget_]_get_window"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] get_window</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_get_window ( --&gt; N-GObject )</pre>
+<p>Returns the widget’s window (is a GtkWindow) if it is realized, NULL otherwise.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">my Gtk::V3::Gtk::GtkButton $b .= new(:build-id&lt;startButton&gt;);
+my Gtk::V3::Gdk::GdkWindow $w .= new(:widget($b.get-window));</pre>
+<h2 id="[gtk_widget_]_set_visible"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] set_visible</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_set_visible ( Int $visible )</pre>
+<p>Sets the visibility state of widget. Note that setting this to TRUE doesn’t mean the widget is actually viewable, see gtk_widget_get_visible().</p>
+<p>This function simply calls gtk_widget_show() or gtk_widget_hide() but is nicer to use when the visibility of the widget depends on some condition.</p>
+<h2 id="[gtk_widget_]_get_visible"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] get_visible</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_get_visible ( --&gt; Int )</pre>
+<p>Determines whether the widget is visible. If you want to take into account whether the widget’s parent is also marked as visible, use gtk_widget_is_visible() instead.</p>
+<p>This function does not check if the widget is obscured in any way.</p>
+<h2 id="[gtk_widget_]_get_has_window"><a class="u" href="#___top" title="go to top of document">[gtk_widget_] get_has_window</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_widget_get_has_window ( --&gt; Int )</pre>
+<p>Specifies whether widget has a GdkWindow of its own. Note that all realized widgets have a non-NULL “window” pointer (gtk_widget_get_window() never returns a NULL window when a widget is realized), but for many of them it’s actually the GdkWindow of one of its parent widgets. Widgets that do not create a window for themselves in “realize” must announce this by calling this function with has_window = FALSE.</p>
+<p>This function should only be called by widget implementations, and they should call it in their init() function.</p>
+
+    </div>
+    
+    
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+</html>
+

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>class GTK::V3::Glib::GObject</title>
+        <meta charset="UTF-8" />
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
+        <style>
+        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
+        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
+        u { text-decoration: none }
+        .nested {
+            margin-left: 3em;
+        }
+        aside, u { opacity: 0.7 }
+        a[id^="fn-"]:target { background: #ff0 }
+        </style>
+        
+        
+    </head>
+ <body class="pod" onload="prettyPrint()">
+    <div id="___top"></div>
+    
+    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Glib::GObject</h1>
+    <p class='subtitle'>GObject — The base object type</p>
+    <nav class="indexgroup">
+<table id="TOC">
+<caption><h2 id="TOC_Title">Table of Contents</h2></caption>
+  <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
+          <tr class="toc-level-2"><td class="toc-number">1.1</td><td class="toc-text"><a href="#[g_object_]_set_property">[g_object_] set_property</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">1.2</td><td class="toc-text"><a href="#[g_object_]_get_property">[g_object_] get_property</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">1.3</td><td class="toc-text"><a href="#new">new</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">1.3.1</td><td class="toc-text"><a href="#multi_submethod_BUILD_(_:$widget_)">multi submethod BUILD ( :$widget )</a></td></tr>
+       <tr class="toc-level-3"><td class="toc-number">1.3.2</td><td class="toc-text"><a href="#multi_submethod_BUILD_(_Str_:$build-id_)">multi submethod BUILD ( Str :$build-id )</a></td></tr>
+         <tr class="toc-level-2"><td class="toc-number">1.4</td><td class="toc-text"><a href="#debug">debug</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">1.5</td><td class="toc-text"><a href="#register-signal">register-signal</a></td></tr>
+                     
+</table>
+</nav>
+
+    <div class="pod-body">
+    <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+<p>Top level class of almost all classes in the GTK, GDK and Glib libraries.</p>
+<p>This object is almost never used directly. Most of the classes inherit from this class. The below example can be made much simpler by setting the label directly in the init of <code>GtKLabel</code>. The purpose of this example, however, is that there are other properties which can only be set this way. Also not all types are covered yet by <code>GValue</code> and <code>GType</code>.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">use GTK::V3::Glib::GObject;
+use GTK::V3::Glib::GValue;
+use GTK::V3::Glib::GType;
+use GTK::V3::Gtk::GtkLabel;
+
+my GTK::V3::Glib::GType $gt .= new;
+my GTK::V3::Glib::GValue $gv .= new(:init(G_TYPE_STRING));
+
+my GTK::V3::Gtk::GtkLabel $label1 .= new(:label(&#39;&#39;));
+$gv.g-value-set-string(&#39;label string&#39;);
+$label1.g-object-set-property( &#39;label&#39;, $gv);</pre>
+<h2 id="[g_object_]_set_property"><a class="u" href="#___top" title="go to top of document">[g_object_] set_property</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method g_object_set_property (
+  Str $property_name, GTK::V3::Glib::GValue $value
+)</pre>
+<p>Sets a property on an object.</p>
+<h2 id="[g_object_]_get_property"><a class="u" href="#___top" title="go to top of document">[g_object_] get_property</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method g_object_get_property (
+  Str $property_name, GTK::V3::Glib::GValue $value is rw
+)</pre>
+<p>Gets a property of an object. value must have been initialized to the expected type of the property (or a type to which the expected type can be transformed) using g_value_init().</p>
+<p>In general, a copy is made of the property contents and the caller is responsible for freeing the memory by calling g_value_unset().</p>
+<h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
+<h3 id="multi_submethod_BUILD_(_:$widget_)"><a class="u" href="#___top" title="go to top of document">multi submethod BUILD ( :$widget )</a></h3>
+<p>Create a Perl6 widget object using a native widget from elsewhere. $widget can be a N-GOBject or a Perl6 widget like <code>GTK::V3::Gtk::GtkButton</code>.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums"># some set of radio buttons grouped together
+my GTK::V3::Gtk::GtkRadioButton $rb1 .= new(:label(&#39;Download everything&#39;));
+my GTK::V3::Gtk::GtkRadioButton $rb2 .= new(
+  :group-from($rb1), :label(&#39;Download core only&#39;)
+);
+
+# get all radio buttons of group of button $rb2
+my GTK::V3::Glib::GSList $rb-list .= new(:gslist($rb2.get-group));
+loop ( Int $i = 0; $i &lt; $rb-list.g_slist_length; $i++ ) {
+  # get button from the list
+  my GTK::V3::Gtk::GtkRadioButton $rb .= new(
+    :widget($rb-list.nth-data-gobject($i))
+  );
+
+  if $rb.get-active == 1 {
+    # execute task for this radio button
+
+    last;
+  }
+}</pre>
+<p>Another example is a difficult way to get a button.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkButton $start-button .= new(
+  :widget(GTK::V3::Gtk::GtkButton.gtk_button_new_with_label(&#39;Start&#39;))
+);</pre>
+<h3 id="multi_submethod_BUILD_(_Str_:$build-id_)"><a class="u" href="#___top" title="go to top of document">multi submethod BUILD ( Str :$build-id )</a></h3>
+<p>Create a Perl6 widget object using a <code>GtkBuilder</code>. The <code>GtkBuilder</code> class will handover its object address to the <code>GObject</code> and can then be used to search for id&#39;s defined in the GUI glade design.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkBuilder $builder .= new(:filename&lt;my-gui.glade&gt;);
+my GTK::V3::Gtk::GtkButton $button .= new(:build-id&lt;my-gui-button&gt;);</pre>
+<h2 id="debug"><a class="u" href="#___top" title="go to top of document">debug</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method debug ( Bool :$on )</pre>
+<p>There are many situations when exceptions are retrown within code of a callback method, Perl6 is not able to display the error properly (yet). In those cases you need another way to display errors and show extra messages leading up to it.</p>
+<h2 id="register-signal"><a class="u" href="#___top" title="go to top of document">register-signal</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method register-signal (
+  $handler-object, Str:D $handler-name, Str:D $signal-name,
+  Str :$handler-type where * ~~ any(&lt;wd wwd wsd&gt;) = &#39;wd&#39;,
+  Int :$connect-flags = 0, *%user-options
+  --&gt; Bool
+)</pre>
+<p>Register a handler to process a signal event.</p>
+<ul><li><p>$handler-object is the object wherein the handler is defined.</p>
+</li>
+<li><p>$handler-name is name of the method.</p>
+</li>
+<li><p>$signal-name is the name of the event to be handled. Each gtk widget has its own series of signals, please look for it in the documentation of gtk.</p>
+</li>
+<li><p>$connect-flags can be on of <code>G_CONNECT_AFTER</code> or <code>G_CONNECT_SWAPPED</code>. See <a href="https://developer.gnome.org/gobject/stable/gobject-Signals.html#GConnectFlags">documentation here</a>.</p>
+</li>
+<li><p>$handler-type is by default &#39;wd&#39; to use <code>g_signal_connect_wd</code> from <a href="GSignal">GSignal</a>. Other types are not yet defined.</p>
+</li>
+<li><p>%user-options. Any other user data in whatever type. These arguments are provided to the user handler when an event for the handler is fired. There will always be one named argument <code>:$widget</code> which holds the class object on which the signal was registered. The name &#39;widget&#39; is therefore reserved.</p>
+</li>
+</ul>
+
+                   <pre class="prettyprint lang-perl6 linenums"># create a class holding a handler method to process a click event
+# of a button.
+class X {
+  method click-handler ( :widget($button), Array :$user-data ) {
+    say $user-data.join(&#39; &#39;);
+  }
+}
+
+# create a button and some data to send with the signal
+my GTK::V3::Gtk::GtkButton $button .= new(:label(&#39;xyz&#39;));
+my Array $data = [&lt;Hello World&gt;];
+
+# register button signal
+my X $x .= new(:empty);
+$button.register-signal( $x, &#39;click-handler&#39;, &#39;clicked&#39;, :user-data($data));</pre>
+
+    </div>
+    
+    
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+</html>
+

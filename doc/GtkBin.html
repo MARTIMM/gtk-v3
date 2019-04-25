@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>class GTK::V3::Gtk::GtkBin</title>
+        <meta charset="UTF-8" />
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
+        <style>
+        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
+        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
+        u { text-decoration: none }
+        .nested {
+            margin-left: 3em;
+        }
+        aside, u { opacity: 0.7 }
+        a[id^="fn-"]:target { background: #ff0 }
+        </style>
+        
+        
+    </head>
+ <body class="pod" onload="prettyPrint()">
+    <div id="___top"></div>
+    
+    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Gtk::GtkBin</h1>
+    
+    <nav class="indexgroup">
+<table id="TOC">
+<caption><h2 id="TOC_Title">Table of Contents</h2></caption>
+   <tr class="toc-level-2"><td class="toc-number">0.1</td><td class="toc-text"><a href="#GtkBin_—_A_container_with_just_one_child">GtkBin — A container with just one child</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
+                 <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#[gtk_bin_]_get_child">[gtk_bin_] get_child</a></td></tr>
+    
+</table>
+</nav>
+
+    <div class="pod-body">
+    
+                   <pre class="prettyprint lang-perl6 linenums">unit class GTK::V3::Gtk::GtkBin;
+also is GTK::V3::Gtk::GtkContainer;</pre>
+<h2 id="GtkBin_—_A_container_with_just_one_child"><a class="u" href="#___top" title="go to top of document">GtkBin — A container with just one child</a></h2>
+<h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+<p>The module GtkBin is not used directly but its methods can be used by its child modules. Below is an example using a <code>GtkButton</code> which is a direct descendant of <code>GtkBin</code>. Here it is also clear that a button is also a container which in principle can hold anything but by default it holds a label. The method <code>gtk-container-add()</code> comes from <code>GtkContainer</code> and <code>get-child()</code> comes from <code>GtkBin</code>.</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkLabel $label .= new(:label&lt;pqr&gt;);
+my GTK::V3::Gtk::GtkButton $button .= new(:empty);
+$button.gtk-container-add($label);
+
+$l($button2.get-child);
+is $l.get-text, &#39;pqr&#39;, &#39;text label from button 2&#39;;</pre>
+<p>Of course, it is easier to do the next</p>
+
+                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkButton $button .= new(:label&lt;pqr&gt;);</pre>
+<h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
+<h2 id="[gtk_bin_]_get_child"><a class="u" href="#___top" title="go to top of document">[gtk_bin_] get_child</a></h2>
+
+                   <pre class="prettyprint lang-perl6 linenums">method gtk_bin_get_child ( --&gt; N-GObject )</pre>
+<p>Gets the child of the GtkBin, or <code>Any</code> if the bin contains no child widget.</p>
+
+    </div>
+    
+    
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+</html>
+

@@ -3,8 +3,10 @@ use v6;
 #------------------------------------------------------------------------------
 unit class Build;
 
+has Str $!dist-path;
+
 #-------------------------------------------------------------------------------
-method build ( $!dist-path --> Int ) {
+method build ( Str $!dist-path --> Int ) {
 
 
   # return success

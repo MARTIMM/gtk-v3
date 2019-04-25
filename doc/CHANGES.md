@@ -1,5 +1,9 @@
 ## Release notes
 
+* 2019-04-25 0.10.1
+  * Pod doc changes
+  * Readme changes
+
 * 2019-04-18 0.10.0
   * Add `GTK::V3::Gdk::GdkDevice`.
   * Add `GTK::V3::Gdk::GdkEventTypes`.

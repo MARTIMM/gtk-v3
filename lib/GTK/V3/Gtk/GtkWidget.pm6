@@ -394,11 +394,11 @@ submethod BUILD ( *%options ) {
 method fallback ( $native-sub is copy --> Callable ) {
 
   my Callable $s;
-note "w s0: $native-sub, ", $s;
+#note "w s0: $native-sub, ", $s;
   try { $s = &::($native-sub); }
-note "w s1: gtk_widget_$native-sub, ", $s unless ?$s;
+#note "w s1: gtk_widget_$native-sub, ", $s unless ?$s;
   try { $s = &::("gtk_widget_$native-sub"); } unless ?$s;
-note "w s2: parent test for $native-sub, ", $s unless ?$s;
+#note "w s2: parent test for $native-sub, ", $s unless ?$s;
 
   $s = callsame unless ?$s;
 

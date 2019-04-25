@@ -1,4 +1,20 @@
 use v6;
+# ==============================================================================
+=begin pod
+
+=TITLE class GTK::V3::Glib::GSignal
+
+=SUBTITLE
+
+  unit class GTK::V3::Glib::GSignal;
+
+=head2 GSignal — A means for customization of object behaviour and a general purpose notification mechanism
+
+=head1 Synopsis
+
+
+=end pod
+# ==============================================================================
 use NativeCall;
 
 use GTK::V3::X;
@@ -31,91 +47,30 @@ enum GConnectFlags is export (
 # widget is inserted when second call to method is made and data is only
 # definable as an OpaquePointer so it can not give any data. This is also
 # inserted in second call. See GtkWidget.
-sub g_signal_connect_wd (
-  N-GObject $widget, Str $signal,
-  &handler ( N-GObject, OpaquePointer ), OpaquePointer
-) {
-  g_signal_connect_data_wd(
-    $widget, $signal, &handler, OpaquePointer, Any, 0
-  );
-}
 
-sub g_signal_connect_after_wd (
-  N-GObject $widget, Str $signal,
-  &handler ( N-GObject, OpaquePointer ), OpaquePointer
-) {
-  g_signal_connect_data_wd(
-    $widget, $signal, &handler, OpaquePointer, Any, G_CONNECT_AFTER
-  );
-}
-
-sub g_signal_connect_swapped_wd (
-  N-GObject $widget, Str $signal,
-  &handler ( N-GObject, OpaquePointer ), OpaquePointer
-) {
-  g_signal_connect_data_wd(
-    $widget, $signal, &handler, OpaquePointer, Any, G_CONNECT_SWAPPED
-  );
-}
-
-#-------------------------------------------------------------------------------
-# safe in threaded programs
-sub g_signal_connect_data_wd(
-  N-GObject $widget, Str $signal,
-  &handler ( N-GObject, OpaquePointer ), OpaquePointer $data,
-  OpaquePointer $destroy_data, int32 $connect_flags
-) returns int32
-  is native(&gobject-lib)
-  is symbol('g_signal_connect_data')
-  { * }
-
-sub g_signal_connect_data_wwd(
-  N-GObject $widget, Str $signal,
-  &handler ( N-GObject, N-GObject, OpaquePointer ), OpaquePointer $data,
-  OpaquePointer $destroy_data, int32 $connect_flags
-) returns int32
-  is native(&gobject-lib)
-  is symbol('g_signal_connect_data')
-  { * }
-# signal-type: widget, data
-#`{{
-my Signature $signal-type = :( N-GObject, OpaquePointer );
-my @handler-types = $signal-type,;
 }}
 
 sub g_signal_connect (
-  N-GObject $widget, Str $signal,
-  #Callable $handler where .signature ~~ any(@handler-types),
-  Callable $handler, OpaquePointer
+  N-GObject $widget, Str $signal, Callable $handler, OpaquePointer
+  --> uint64
 ) {
-  g_signal_connect_data( $widget, $signal, $handler, OpaquePointer);
+  g_signal_connect_data( $widget, $signal, $handler, OpaquePointer, Callable, 0)
 }
 
-# can be called the same as g_signal_connect because of its defaults
-sub g_signal_connect_data (
-  N-GObject $widget, Str $signal,
-#  Callable $handler where .signature ~~ any(@handler-types),
-  Callable $handler, OpaquePointer $data,
-#  Callable $destroy_data
-#           where .signature ~~ :( OpaquePointer, OpaquePointer ) = Any,
-  Callable $destroy_data = Any, int32 $connect_flags = 0
-) returns int32
-  is native(&gobject-lib)
-  { * }
-}}
+
 
 # unsafe in threaded programs
 sub g_signal_connect_object(
   N-GObject $widget, Str $signal, Callable $handler,
   OpaquePointer $d, int32 $connect_flags = 0
-  --> uint32
+  --> uint64
 ) {
 
-  my @args = $widget, $signal, $handler, OpaquePointer, $connect_flags;
+  my @args = $widget, $signal, $handler, $d, $connect_flags;
 
   given $handler.signature {
-    when $signal-type { g_signal_connect_object_signal(|@args) }
-    when $event-type { g_signal_connect_object_event(|@args) }
+    when $signal-type { _g_signal_connect_object_signal(|@args) }
+    when $event-type { _g_signal_connect_object_event(|@args) }
 
     default {
       die X::GTK::V3.new(:message('Handler doesn\'t have proper signature'));
@@ -123,65 +78,81 @@ sub g_signal_connect_object(
   }
 }
 
-# unsafe in threaded programs
-sub g_signal_connect_object_signal(
+sub _g_signal_connect_object_signal(
   N-GObject $widget, Str $signal,
   Callable $handler ( N-GObject, OpaquePointer ),
   OpaquePointer $data, int32 $connect_flags
-) returns uint32
+) returns uint64
   is native(&gobject-lib)
   is symbol('g_signal_connect_object')
   { * }
 
-sub g_signal_connect_object_event(
+sub _g_signal_connect_object_event(
   N-GObject $widget, Str $signal,
   Callable $handler ( N-GObject, GdkEvent, OpaquePointer ),
   OpaquePointer $data, int32 $connect_flags
-) returns uint32
+) returns uint64
   is native(&gobject-lib)
   is symbol('g_signal_connect_object')
   { * }
 
-#`{{
 
-# unsafe in threaded programs
-sub g_signal_connect_object_wd(
-  N-GObject $widget, Str $signal, &handler ( N-GObject, OpaquePointer ),
-  OpaquePointer $data, int32 $connect_flags
-) returns uint32
-  is native(&gobject-lib)
-  is symbol('g_signal_connect_object')
-  { * }
 
-# unsafe in threaded programs
-sub g_signal_connect_object(
+# can be called the same as g_signal_connect because of its defaults
+sub g_signal_connect_data(
+  N-GObject $widget, Str $signal, Callable $handler,
+  OpaquePointer $d, Callable $destroy_data, int32 $connect_flags = 0
+  --> uint64
+) {
+
+  my @args = $widget, $signal, $handler, $d, $destroy_data, $connect_flags;
+
+  given $handler.signature {
+    when $signal-type { _g_signal_connect_data_signal(|@args) }
+    when $event-type { _g_signal_connect_data_event(|@args) }
+
+    default {
+      die X::GTK::V3.new(:message('Handler doesn\'t have proper signature'));
+    }
+  }
+}
+
+sub _g_signal_connect_data_signal (
   N-GObject $widget, Str $signal,
-  Callable $handler where .signature ~~ any(@handler-types),
-  OpaquePointer $data, int32 $connect_flags = 0
-) returns uint32
+  Callable $handler ( N-GObject, OpaquePointer ), OpaquePointer $data,
+  Callable $destroy_data ( OpaquePointer, OpaquePointer ),
+  int32 $connect_flags = 0
+) returns int64
   is native(&gobject-lib)
   { * }
 
-sub g_signal_connect_object_wwd(
-  N-GObject $widget, Str $signal, &handler (
-    N-GObject, N-GObject, OpaquePointer
-  ),
-  OpaquePointer, int32 $connect_flags
-) returns uint32
+sub _g_signal_connect_data_event (
+  N-GObject $widget, Str $signal,
+  Callable $handler ( N-GObject, GdkEvent, OpaquePointer ),
+  OpaquePointer $data,
+  Callable $destroy_data ( OpaquePointer, OpaquePointer ),
+  int32 $connect_flags = 0
+) returns int64
   is native(&gobject-lib)
-  is symbol('g_signal_connect_object')
   { * }
 
-sub g_signal_connect_object_wsd(
-  N-GObject $widget, Str $signal, &handler (
-    N-GObject, Str, OpaquePointer
-  ),
-  OpaquePointer, int32 $connect_flags
-) returns uint32
-  is native(&gobject-lib)
-  is symbol('g_signal_connect_object')
-  { * }
-}}
+
+sub g_signal_connect_after (
+  N-GObject $widget, Str $signal, Callable $handler, OpaquePointer
+) {
+  g_signal_connect_data(
+    $widget, $signal, $handler, OpaquePointer, Any, G_CONNECT_AFTER
+  );
+}
+
+sub g_signal_connect_swapped (
+  N-GObject $widget, Str $signal, Callable $handler, OpaquePointer
+) {
+  g_signal_connect_data(
+    $widget, $signal, $handler, OpaquePointer, Any, G_CONNECT_SWAPPED
+  );
+}
+
 
 #`{{
 # a GQuark is a guint32, $detail is a quark
@@ -203,7 +174,6 @@ sub g_signal_emit_by_name (
   # There is no return value from the handler
   N-GObject $widget, OpaquePointer
 ) is native(&gobject-lib)
-#  is symbol('g_signal_emit_by_name')
   { * }
 
 sub g_signal_handler_disconnect( N-GObject $widget, int32 $handler_id)
@@ -229,11 +199,11 @@ method FALLBACK ( $native-sub is copy, Bool :$return-sub-only = False, |c ) {
   ) unless $native-sub.index('_');
 
   my Callable $s;
-note "s s0: $native-sub, ", $s;
+#note "s s0: $native-sub, ", $s;
   try { $s = &::($native-sub); }
-note "s s1: g_signal_$native-sub, ", $s unless ?$s;
+#note "s s1: g_signal_$native-sub, ", $s unless ?$s;
   try { $s = &::("g_signal_$native-sub"); } unless ?$s;
-note "s s2: ==> ", $s;
+#note "s s2: ==> ", $s;
 
   #test-call( $s, Any, |c)
   $return-sub-only ?? $s !! $s( $!g-object, |c)

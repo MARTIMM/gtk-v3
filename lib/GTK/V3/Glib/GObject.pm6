@@ -4,11 +4,7 @@ use v6;
 
 =TITLE class GTK::V3::Glib::GObject
 
-=SUBTITLE
-
-  unit class GTK::V3::Glib::GObject;
-
-=head2 GObject — The base object type
+=SUBTITLE GObject — The base object type
 
 =head1 Synopsis
 

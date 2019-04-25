@@ -2,14 +2,10 @@ use v6;
 # ==============================================================================
 =begin pod
 
-=TITLE class GTK::V3::Gdk::GdkEventTypes
+=TITLE GTK::V3::Gdk::GdkEventTypes
 
-#=SUBTITLE
+=SUBTITLE Event Structures — Data structures specific to each type of event
 
-
-=head2 Event Structures — Data structures specific to each type of event
-
-#TODO must provide different args to handler call depending on handler
 =head1 Synopsis
 
   my GTK::V3::Gtk::GtkWindow $top-window .= new(:empty);
@@ -49,6 +45,10 @@ use GTK::V3::N::N-GObject;
 # ==============================================================================
 # https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html
 # https://developer.gnome.org/gdk3/stable/gdk3-Events.html
+=begin pod
+=head1 class GTK::V3::Gdk::GdkEventTypes
+=end pod
+
 unit class GTK::V3::Gdk::GdkEventTypes:auth<github:MARTIMM>;
 
 # ==============================================================================

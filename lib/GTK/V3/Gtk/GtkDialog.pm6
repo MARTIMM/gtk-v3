@@ -9,7 +9,7 @@ use v6;
   unit class GTK::V3::Gtk::GtkDialog;
   also is GTK::V3::Gtk::GtkWindow;
 
-=head2 GtkDialog — Create popup windows
+#=head2 GtkDialog — Create popup windows
 
 =head1 Synopsis
 
@@ -23,7 +23,6 @@ use v6;
 
 =end pod
 # ==============================================================================
-
 use NativeCall;
 
 use GTK::V3::X;
@@ -34,6 +33,10 @@ use GTK::V3::Gtk::GtkWindow;
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtkdialog.h
 # https://developer.gnome.org/gtk3/stable/GtkDialog.html
+=begin pod
+=head1 unit class GTK::V3::Gdk::GdkEventTypes;git
+  also is GTK::V3::Gtk::GtkWindow;
+=end pod
 unit class GTK::V3::Gtk::GtkDialog:auth<github:MARTIMM>;
 also is GTK::V3::Gtk::GtkWindow;
 

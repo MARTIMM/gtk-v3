@@ -9,3 +9,4 @@ Old/*
 ~*
 t/Travis-ci/*.tgz
 tests/Pencil*
+markdown-refs.md

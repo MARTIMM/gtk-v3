@@ -23,7 +23,7 @@
 | gulong   | un. long  | uint64       | Int      | n % 2**64 - 1
 | guint8   | un. char  | uint8        | Int      | n % 2**8 - 1
 | guint16  | un. short | uint16       | Int      | n % 2**16 - 1
-| guint32  | un. int   | uint32, uint | Int      | n % 2**32 - 1
+| guint32  | un. int   | uint32       | Int      | n % 2**32 - 1
 | guint64  | un. long  | uint64       | Int      | n % 2**64 - 1
 |
 | guint    | un. int   | uint32       | Int      | +/- n % 2**31 - 1

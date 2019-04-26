@@ -55,12 +55,13 @@ You should typically call this function on top level widgets, and rarely on chil
 
 See also: gtk_container_remove()
 =end pod
-sub gtk_widget_destroy ( N-GObject $widget is rw ) is inlinable {
-  hidden_gtk_widget_destroy( $widget );
-  #GOBject.g_clear_object($widget)
-  $widget = N-GObject; # not needed after clearing!
-}
-sub hidden_gtk_widget_destroy ( N-GObject $widget )
+#sub gtk_widget_destroy ( N-GObject $widget ) is inlinable {
+#  hidden_gtk_widget_destroy( $widget );
+#  #GOBject.g_clear_object($widget)
+#  #$widget = N-GObject; # not needed after clearing!
+#}
+#sub hidden_gtk_widget_destroy ( N-GObject $widget )
+sub gtk_widget_destroy ( N-GObject $widget )
   is native(&gtk-lib)
   is symbol('gtk_widget_destroy')
   { * }

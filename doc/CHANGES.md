@@ -1,5 +1,8 @@
 ## Release notes
 
+* 2019-04-26 0.10.2
+  * Bugfix; gtk_widget-destroy was implemented wrong.
+  
 * 2019-04-25 0.10.1
   * Pod doc changes
   * Readme changes

@@ -498,7 +498,7 @@ method register-signal (
   --> Bool
 ) {
 
-note "register $handler-object, $handler-name, options: ", %user-options;
+#note "register $handler-object, $handler-name, options: ", %user-options;
 
   my %options = :widget(self), |%user-options;
 

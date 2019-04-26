@@ -348,12 +348,16 @@ submethod BUILD ( *%options ) {
 
   if ? %options<widget> {
     note "gobject widget: ", %options<widget> if $gobject-debug;
+
     my $w = %options<widget>;
-    $w = $w() if $w ~~ GTK::V3::Glib::GObject;
-    note "gobject widget converted: ", $w if $gobject-debug;
-    if $w ~~ N-GObject {
-      note "gobject widget stored" if $gobject-debug;
+    if $w ~~ GTK::V3::Glib::GObject {
+      $w = $w();
+      note "gobject widget converted: ", $w if $gobject-debug;
+    }
+
+    if ?$w and $w ~~ N-GObject {
       $!g-object = $w;
+      note "gobject widget stored" if $gobject-debug;
     }
 
     else {
@@ -490,56 +494,28 @@ Register a handler to process a signal event.
 method register-signal (
   $handler-object, Str:D $handler-name, Str:D $signal-name,
   Int :$connect-flags = 0,
-  #Int :$connect-flags = 0, Str :$target-widget-name,
-#  Str :$handler-type where * ~~ any(<wd wwd wsd>) = 'wd',
   *%user-options
   --> Bool
 ) {
 
-#note $handler-object.^methods;
-#note "register $handler-object $handler-name ($handler-type), options: ", %user-options;
-
-#  return False unless ?$handler-object && $handler-type ~~ any(<wd wwd wsd>);
-
+note "register $handler-object, $handler-name, options: ", %user-options;
 
   my %options = :widget(self), |%user-options;
-  #%options<target-widget-name> = $target-widget-name if $target-widget-name;
 
   my Callable $handler;
-  #if $handler-type eq 'wd' {
-    $handler = -> N-GObject $w, OpaquePointer $d {
-      $handler-object.?"$handler-name"(|%options);
-      #$handler-object.?"$handler-name"( |%options, |%user-options);
-    }
-  #}
-#`{{
-  elsif $handler-type eq 'wwd' {
-    $handler = -> $w1, $w2, $d {
-      $handler-object.?"$handler-name"(
-        :widget2($w2), |%options
-        #:widget2($w2), |%options, |%user-options
-      );
-    }
-  }
 
-  else {
-    $handler = -> $w, $s, $d {
-      $handler-object.?"$handler-name"(
-        :string($s), |%options
-        #:string($s), |%options, |%user-options
-      );
-    }
+  $handler = -> N-GObject $w, OpaquePointer $d {
+    $handler-object.?"$handler-name"(|%options);
   }
-}}
 
   $!g-signal .= new(:$!g-object);
-#  $!g-signal."connect-object-$handler-type"(
   $!g-signal.connect-object(
     $signal-name, $handler, OpaquePointer, $connect-flags
   );
 
-  True
+  ?$handler-object.^can("$handler-name"); #True
 }
+
 #-------------------------------------------------------------------------------
 #`{{
 =begin pod
@@ -594,7 +570,9 @@ method register-event (
 #  my %options = :widget(self), |%user-options;
 
   my Callable $handler;
-  $handler = -> N-GObject $w, GdkEvent $e, OpaquePointer $d {
+
+  $handler = -> N-GObject $w, GdkEvent $e,
+                OpaquePointer $d {
     $handler-object.?"$handler-name"(
       :widget(self), :event($e), |%user-options
     );
@@ -605,7 +583,7 @@ method register-event (
     $signal-name, $handler, OpaquePointer, $connect-flags
   );
 
-  True
+  ?$handler-object.^can("$handler-name"); #True
 }
 
 #`{{

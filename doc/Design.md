@@ -4,7 +4,7 @@
 
 | GTK Type | typedef | Native Perl6 | Perl6 Type | Note |
 | -------- | ------- | ------------ | ---------- | ---- |
-| gboolean | gint    | int          | Int        | convert from/to Bool
+| gboolean | gint    | int32        | Int        |
 |
 | gchar *  | char *  | str          | Str        |
 |

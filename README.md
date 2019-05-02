@@ -173,20 +173,20 @@ A few measures are implemented to help a bit preventing problems;
 
 | Pdf from pod | Link to Gnome Developer |
 |-------|--------------|
-| [GTK::V3::Gtk::GtkAboutDialog][GTK::V3::Gtk::GtkAboutDialog html] | [GtkAboutDialog.html][gtkaboutdialog]
-| [GTK::V3::Gtk::GtkBin][GTK::V3::Gtk::GtkBin html] | [GtkBin.html][gtkbin]
-| [GTK::V3::Gtk::GtkBuilder][GTK::V3::Gtk::GtkBuilder html] |  [GtkBuilder.html][gtkbuilder]
-| [GTK::V3::Gtk::GtkButton][GTK::V3::Gtk::GtkButton html] |  [GtkButton.html][gtkbutton]
-| [GTK::V3::Gtk::GtkCheckButton][GTK::V3::Gtk::GtkCheckButton html] |  [GtkCheckButton.html][gtkcheckbutton]
-| [GTK::V3::Gtk::GtkComboBox][GTK::V3::Gtk::GtkComboBox html] |  [GtkComboBox.html][GtkComboBox]
-| [GTK::V3::Gtk::GtkComboBoxText][GTK::V3::Gtk::GtkComboBoxText html] |  [GtkComboBoxText.html][GtkComboBoxText]
+| [GTK::V3::Gtk::GtkAboutDialog][GTK::V3::Gtk::GtkAboutDialog pdf] | [GtkAboutDialog.html][gtkaboutdialog]
+| [GTK::V3::Gtk::GtkBin][GTK::V3::Gtk::GtkBin pdf] | [GtkBin.html][gtkbin]
+| [GTK::V3::Gtk::GtkBuilder][GTK::V3::Gtk::GtkBuilder pdf] |  [GtkBuilder.html][gtkbuilder]
+| [GTK::V3::Gtk::GtkButton][GTK::V3::Gtk::GtkButton pdf] |  [GtkButton.html][gtkbutton]
+| [GTK::V3::Gtk::GtkCheckButton][GTK::V3::Gtk::GtkCheckButton pdf] |  [GtkCheckButton.html][gtkcheckbutton]
+| [GTK::V3::Gtk::GtkComboBox][GTK::V3::Gtk::GtkComboBox pdf] |  [GtkComboBox.html][GtkComboBox]
+| [GTK::V3::Gtk::GtkComboBoxText][GTK::V3::Gtk::GtkComboBoxText pdf] |  [GtkComboBoxText.html][GtkComboBoxText]
 | GTK::V3::Gtk::GtkContainer |  [GtkContainer.html][gtkcontainer]
 | GTK::V3::Gtk::GtkCssProvider |  [GtkCssProvider.html][gtkcssprovider]
 | GTK::V3::Gtk::GtkStyleContext |  [GtkStyleContext.html][gtkstylecontext]
-| [GTK::V3::Gtk::GtkDialog][GTK::V3::Gtk::GtkDialog html] |  [GtkDialog.html][gtkdialog]
+| [GTK::V3::Gtk::GtkDialog][GTK::V3::Gtk::GtkDialog pdf] |  [GtkDialog.html][gtkdialog]
 | GTK::V3::Gtk::GtkEntry |  [GtkEntry.html][gtkentry]
 | GTK::V3::Gtk::GtkFileChooser |  [GtkFileChooser.html][GtkFileChooser]
-| [GTK::V3::Gtk::GtkFileChooserDialog][GTK::V3::Gtk::GtkFileChooserDialog html] |  [GtkFileChooserDialog.html][GtkFileChooserDialog]
+| [GTK::V3::Gtk::GtkFileChooserDialog][GTK::V3::Gtk::GtkFileChooserDialog pdf] |  [GtkFileChooserDialog.html][GtkFileChooserDialog]
 | GTK::V3::Gtk::GtkFileFilter |  [GtkFileFilter.html][GtkFileFilter]
 | GTK::V3::Gtk::GtkGrid |  [GtkGrid.html][gtkgrid]
 | GTK::V3::Gtk::GtkImage |  [GtkImage.html][gtkimage]
@@ -200,16 +200,16 @@ A few measures are implemented to help a bit preventing problems;
 | GTK::V3::Gtk::GtkTextBuffer |  [GtkTextBuffer.html][gtktextbuffer]
 | GTK::V3::Gtk::GtkTextTagTable |  [GtkTextTagTable.html][gtktexttagtable] |
 | GTK::V3::Gtk::GtkTextView |  [GtkTextView.html][gtktextview]
-| [GTK::V3::Gtk::GtkToggleButton][GTK::V3::Gtk::GtkToggleButton html] |  [GtkToggleButton.html][gtktogglebutton]
-| [GTK::V3::Gtk::GtkWidget][GTK::V3::Gtk::GtkWidget html] |  [GtkWidget.html][gtkwidget]
-| [GTK::V3::Gtk::GtkWindow][GTK::V3::Gtk::GtkWindow html] |  [GtkWindow.html][gtkwindow]
+| [GTK::V3::Gtk::GtkToggleButton][GTK::V3::Gtk::GtkToggleButton pdf] |  [GtkToggleButton.html][gtktogglebutton]
+| [GTK::V3::Gtk::GtkWidget][GTK::V3::Gtk::GtkWidget pdf] |  [GtkWidget.html][gtkwidget]
+| [GTK::V3::Gtk::GtkWindow][GTK::V3::Gtk::GtkWindow pdf] |  [GtkWindow.html][gtkwindow]
 
 ## Gdk library
 
 | Pdf from pod | Link to Gnome Developer |
 |-------|--------------|
 | GTK::V3::Gdk::GdkDisplay |  [Controls a set of GdkScreens and their associated input devices][GdkDisplay]
-| [GTK::V3::Gdk::GdkEventTypes][GTK::V3::Gdk::GdkEventTypes html] |  [Device events][GdkEventTypes]
+| [GTK::V3::Gdk::GdkEventTypes][GTK::V3::Gdk::GdkEventTypes pdf] |  [Device events][GdkEventTypes]
 | GTK::V3::Gdk::GdkScreen |  [Object representing a physical screen][GdkScreen]
 | GTK::V3::Gdk::GdkTypes |
 | GTK::V3::Gdk::GdkWindow |  [Windows][GdkWindow]
@@ -224,8 +224,8 @@ A few measures are implemented to help a bit preventing problems;
 | GTK::V3::Glib::GInterface |
 | GTK::V3::Glib::GList |  [Doubly-Linked Lists][glist]
 | GTK::V3::Glib::GMain |  [The Main Event Loop][gmain]
-| [GTK::V3::Glib::GObject][GTK::V3::Glib::GObject html] | [The base object type][GObject]
-| [GTK::V3::Glib::GSignal][GTK::V3::Glib::GSignal html]  | [Signal handling][GSignal]
+| [GTK::V3::Glib::GObject][GTK::V3::Glib::GObject pdf] | [The base object type][GObject]
+| [GTK::V3::Glib::GSignal][GTK::V3::Glib::GSignal pdf]  | [Signal handling][GSignal]
 | GTK::V3::Glib::GSList |  [Singly-Linked Lists][gslist]
 | GTK::V3::Glib::GType |  [1) Type Information][GType1], [2) Basic Types][GType2]
 | GTK::V3::Glib::GValue |  [1) Generic values][GValue1], [2) Parameters and Values][GValue2]
@@ -286,7 +286,7 @@ $grid.attach( $label, 0, 1, 1, 1);
 # Versions of involved software
 
 * Program is tested against the latest version of **perl6** on **rakudo** en **moarvm**.
-* Generated user interface file is for **Gtk >= 3.10**
+* Gtk library used **Gtk >= 3.10**
 
 
 # Installation of GTK::V3
@@ -298,6 +298,12 @@ $grid.attach( $label, 0, 1, 1, 1);
 
 Name: **Marcel Timmerman**
 Github account name: **MARTIMM**
+
+
+# Documentation
+
+Documentation is generated with
+`pod-render.pl6 --pdf --style=pod6 --g=github.com/MARTIMM/gtk-v3 lib`
 
 
 <!---- [refs] ----------------------------------------------------------------->
@@ -356,20 +362,35 @@ Github account name: **MARTIMM**
 [GdkEventTypes]: https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html
 
 [//]: # (Pod documentation rendered with)
-[//]: # (pod-render.pl6 --style=pod6 --g=github.com/MARTIMM/gtk-v3 lib)
+[//]: # (pod-render.pl6 --pdf --style=pod6 --g=github.com/MARTIMM/gtk-v3 lib)
 
 [GTK::V3::Gdk::GdkEventTypes html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GdkEventTypes.html
+[GTK::V3::Gdk::GdkEventTypes pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GdkEventTypes.pdf
 [GTK::V3::Glib::GObject html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GObject.html
+[GTK::V3::Glib::GObject pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GObject.pdf
 [GTK::V3::Glib::GSignal html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GSignal.html
+[GTK::V3::Glib::GSignal pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GSignal.pdf
 [GTK::V3::Gtk::GtkAboutDialog html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkAboutDialog.html
+[GTK::V3::Gtk::GtkAboutDialog pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkAboutDialog.pdf
 [GTK::V3::Gtk::GtkBin html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkBin.html
+[GTK::V3::Gtk::GtkBin pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkBin.pdf
 [GTK::V3::Gtk::GtkBuilder html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkBuilder.html
+[GTK::V3::Gtk::GtkBuilder pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkBuilder.pdf
 [GTK::V3::Gtk::GtkButton html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkButton.html
+[GTK::V3::Gtk::GtkButton pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkButton.pdf
 [GTK::V3::Gtk::GtkCheckButton html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkCheckButton.html
+[GTK::V3::Gtk::GtkCheckButton pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkCheckButton.pdf
 [GTK::V3::Gtk::GtkComboBox html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkComboBox.html
+[GTK::V3::Gtk::GtkComboBox pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkComboBox.pdf
 [GTK::V3::Gtk::GtkComboBoxText html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkComboBoxText.html
+[GTK::V3::Gtk::GtkComboBoxText pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkComboBoxText.pdf
 [GTK::V3::Gtk::GtkDialog html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkDialog.html
+[GTK::V3::Gtk::GtkDialog pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkDialog.pdf
 [GTK::V3::Gtk::GtkFileChooserDialog html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkFileChooserDialog.html
+[GTK::V3::Gtk::GtkFileChooserDialog pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkFileChooserDialog.pdf
 [GTK::V3::Gtk::GtkToggleButton html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkToggleButton.html
+[GTK::V3::Gtk::GtkToggleButton pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkToggleButton.pdf
 [GTK::V3::Gtk::GtkWidget html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkWidget.html
+[GTK::V3::Gtk::GtkWidget pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkWidget.pdf
 [GTK::V3::Gtk::GtkWindow html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.html
+[GTK::V3::Gtk::GtkWindow pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.pdf

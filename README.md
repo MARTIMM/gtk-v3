@@ -172,7 +172,7 @@ A few measures are implemented to help a bit preventing problems;
 ## Gtk library
 
 | Pdf from pod | Link to Gnome Developer |
-|-------|--------------|-------------------------|
+|-------|--------------|
 | [GTK::V3::Gtk::GtkAboutDialog][GTK::V3::Gtk::GtkAboutDialog html] | [GtkAboutDialog.html][gtkaboutdialog]
 | [GTK::V3::Gtk::GtkBin][GTK::V3::Gtk::GtkBin html] | [GtkBin.html][gtkbin]
 | [GTK::V3::Gtk::GtkBuilder][GTK::V3::Gtk::GtkBuilder html] |  [GtkBuilder.html][gtkbuilder]
@@ -207,7 +207,7 @@ A few measures are implemented to help a bit preventing problems;
 ## Gdk library
 
 | Pdf from pod | Link to Gnome Developer |
-|-------|--------------|-------------------------|
+|-------|--------------|
 | GTK::V3::Gdk::GdkDisplay |  [Controls a set of GdkScreens and their associated input devices][GdkDisplay]
 | [GTK::V3::Gdk::GdkEventTypes][GTK::V3::Gdk::GdkEventTypes html] |  [Device events][GdkEventTypes]
 | GTK::V3::Gdk::GdkScreen |  [Object representing a physical screen][GdkScreen]
@@ -217,7 +217,7 @@ A few measures are implemented to help a bit preventing problems;
 ## Glib library
 
 | Pdf from pod | Link to Gnome Developer |
-|-------|--------------|-------------------------|
+|-------|--------------|
 | GTK::V3::Glib::GError |
 | GTK::V3::Glib::GFile |  [File and Directory Handling][GFile]
 | GTK::V3::Glib::GInitiallyUnowned |

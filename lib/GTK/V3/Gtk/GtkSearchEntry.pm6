@@ -5,12 +5,12 @@ use NativeCall;
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 use GTK::V3::Glib::GObject;
-use GTK::V3::Gtk::GtkContainer;
+use GTK::V3::Gtk::GtkEntry;
 
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtksearchentry.h
 # https://developer.gnome.org/gtk3/stable/GtkSearchEntry.html
-unit class GTK::V3::Gtk::GtkBin:auth<github:MARTIMM>;
+unit class GTK::V3::Gtk::GtkSearchEntry:auth<github:MARTIMM>;
 also is GTK::V3::Gtk::GtkEntry;
 
 # ==============================================================================

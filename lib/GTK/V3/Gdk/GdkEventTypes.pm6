@@ -147,8 +147,8 @@ Contains the fields which are common to all event classes. This comes in handy t
 
 =end pod
 class GdkEventAny is repr('CStruct') is export {
-  has uint32 $.type; #GdkEventType
-  has N-GObject $.window;
+  has uint32 $.type;              # GdkEventType
+  has N-GObject $.window;         # GdkWindow
   has int8 $.send_event;
 }
 
@@ -171,8 +171,8 @@ Describes a key press or key release event. The type of the event will be one of
 =item UInt $.is_modifier; a flag that indicates if hardware_keycode is mapped to a modifier. Since 2.10
 =end pod
 class GdkEventKey is repr('CStruct') is export {
-  has uint32 $.type;
-  has N-GObject $.window;
+  has uint32 $.type;              # GdkEventType
+  has N-GObject $.window;         # GdkWindow
   has int8 $.send_event;
   has uint32 $.time;
   has uint32 $.state;
@@ -214,7 +214,7 @@ To handle e.g. a triple mouse button presses, all events can be ignored except G
 =item Num $.x; the x coordinate of the pointer relative to the window.
 =item Num $.y; the y coordinate of the pointer relative to the window.
 =item Pointer[Num] $.axes; x , y translated to the axes of device , or NULL if device is the mouse.
-=item UInt $.state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType. [type GdkModifierType]
+=item UInt $.state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
 =item UInt $.button; the button which was pressed or released, numbered from 1 to 5. Normally button 1 is the left mouse button, 2 is the middle button, and 3 is the right button. On 2-button mice, the middle button can often be simulated by pressing both mouse buttons together.
 =item N-GObject $.device; the master device that the event originated from. Use gdk_event_get_source_device() to get the slave device.
 =item Num $.x_root; the x coordinate of the pointer relative to the root of the screen.
@@ -222,8 +222,8 @@ To handle e.g. a triple mouse button presses, all events can be ignored except G
 
 =end pod
 class GdkEventButton is repr('CStruct') is export {
-  has uint32 $.type;
-  has N-GObject $.window;
+  has uint32 $.type;              # GdkEventType
+  has N-GObject $.window;         # GdkWindow
   has int8 $.send_event;
   has uint32 $.time;
   has num64 $.x;
@@ -238,6 +238,45 @@ class GdkEventButton is repr('CStruct') is export {
 
 # ==============================================================================
 =begin pod
+=head2 class GdkEventTouch
+Used for touch events. type field will be one of GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END or GDK_TOUCH_CANCEL.
+
+Touch events are grouped into sequences by means of the sequence field, which can also be obtained with gdk_event_get_event_sequence(). Each sequence begins with a GDK_TOUCH_BEGIN event, followed by any number of GDK_TOUCH_UPDATE events, and ends with a GDK_TOUCH_END (or GDK_TOUCH_CANCEL) event. With multitouch devices, there may be several active sequences at the same time.
+
+=item GdkEventType $.type; the type of the event (GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END, GDK_TOUCH_CANCEL)
+=item N-GObject $.window;
+=item Int $.send_event;
+
+=item uint32 $.time; the time of the event in milliseconds.
+=item num64 $.x; the x coordinate of the pointer relative to the window
+=item num64 $.y; the y coordinate of the pointer relative to the window
+=item Pointer[num64] $.axes; x , y translated to the axes of device , or NULL if device is the mouse
+=item uint32 state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
+=item Pointer $.sequence; the event sequence that the event belongs to
+=item int32 emulating_pointer; whether the event should be used for emulating pointer event (0 or 1)
+=item N-GObject $.device; the master device that the event originated from. Use gdk_event_get_source_device() to get the slave device.
+=item num64 $.x_root; the x coordinate of the pointer relative to the root of the screen
+=item num64 $.y_root; the y coordinate of the pointer relative to the root of the screen
+
+=end pod
+class GdkEventTouch is repr('CStruct') is export {
+  has uint32 $.type;              # GdkEventType
+  has N-GObject $.window;         # GdkWindow
+  has uint8 $.send_event;
+  has uint32 $.time;
+  has num64 $.x;
+  has num64 $.y;
+  has Pointer[num64] $.axes;
+  has uint32 $.state;
+  has Pointer $.sequence;         # GdkEventSequence
+  has int32 $.emulating_pointer;
+  has N-GObject $.device;         # GdkDevice
+  has num64 $.x_root;
+  has num64 $.y_root;
+}
+
+# ==============================================================================
+=begin pod
 =head2 GdkEvent
 
 The event structures contain data specific to each type of event in GDK. The type is a union of all structures explained above.
@@ -246,6 +285,7 @@ class GdkEvent is repr('CUnion') is export {
   HAS GdkEventAny $.event-any;
   HAS GdkEventKey $.event-key;
   HAS GdkEventButton $.event-button;
+  HAS GdkEventTouch $.event-touch;
 }
 
 # ==============================================================================

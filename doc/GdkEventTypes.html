@@ -32,7 +32,8 @@
                                                       <tr class="toc-level-2"><td class="toc-number">3.2</td><td class="toc-text"><a href="#class_GdkEventAny">class GdkEventAny</a></td></tr>
      <tr class="toc-level-2"><td class="toc-number">3.3</td><td class="toc-text"><a href="#class_GdkEventKey">class GdkEventKey</a></td></tr>
              <tr class="toc-level-2"><td class="toc-number">3.4</td><td class="toc-text"><a href="#class_GdkEventButton">class GdkEventButton</a></td></tr>
-                    <tr class="toc-level-2"><td class="toc-number">3.5</td><td class="toc-text"><a href="#GdkEvent">GdkEvent</a></td></tr>
+                    <tr class="toc-level-2"><td class="toc-number">3.5</td><td class="toc-text"><a href="#class_GdkEventTouch_Used_for_touch_events._type_field_will_be_one_of_GDK_TOUCH_BEGIN,_GDK_TOUCH_UPDATE,_GDK_TOUCH_END_or_GDK_TOUCH_CANCEL.">class GdkEventTouch Used for touch events. type field will be one of GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END or GDK_TOUCH_CANCEL.</a></td></tr>
+               <tr class="toc-level-2"><td class="toc-number">3.6</td><td class="toc-text"><a href="#GdkEvent">GdkEvent</a></td></tr>
  
 </table>
 </nav>
@@ -232,7 +233,7 @@ method handle-keypress ( :$widget, GdkEvent :$event ) {
 </li>
 <li><p>Pointer[Num] $.axes; x , y translated to the axes of device , or NULL if device is the mouse.</p>
 </li>
-<li><p>UInt $.state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType. [type GdkModifierType]</p>
+<li><p>UInt $.state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.</p>
 </li>
 <li><p>UInt $.button; the button which was pressed or released, numbered from 1 to 5. Normally button 1 is the left mouse button, 2 is the middle button, and 3 is the right button. On 2-button mice, the middle button can often be simulated by pressing both mouse buttons together.</p>
 </li>
@@ -241,6 +242,35 @@ method handle-keypress ( :$widget, GdkEvent :$event ) {
 <li><p>Num $.x_root; the x coordinate of the pointer relative to the root of the screen.</p>
 </li>
 <li><p>Num $.y_root; the y coordinate of the pointer relative to the root of the screen.</p>
+</li>
+</ul>
+<h2 id="class_GdkEventTouch_Used_for_touch_events._type_field_will_be_one_of_GDK_TOUCH_BEGIN,_GDK_TOUCH_UPDATE,_GDK_TOUCH_END_or_GDK_TOUCH_CANCEL."><a class="u" href="#___top" title="go to top of document">class GdkEventTouch Used for touch events. type field will be one of GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END or GDK_TOUCH_CANCEL.</a></h2>
+<p>Touch events are grouped into sequences by means of the sequence field, which can also be obtained with gdk_event_get_event_sequence(). Each sequence begins with a GDK_TOUCH_BEGIN event, followed by any number of GDK_TOUCH_UPDATE events, and ends with a GDK_TOUCH_END (or GDK_TOUCH_CANCEL) event. With multitouch devices, there may be several active sequences at the same time.</p>
+<ul><li><p>GdkEventType $.type; the type of the event (GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END, GDK_TOUCH_CANCEL)</p>
+</li>
+<li><p>N-GObject $.window;</p>
+</li>
+<li><p>Int $.send_event;</p>
+</li>
+<li><p>uint32 $.time; the time of the event in milliseconds.</p>
+</li>
+<li><p>num64 $.x; the x coordinate of the pointer relative to the window</p>
+</li>
+<li><p>num64 $.y; the y coordinate of the pointer relative to the window</p>
+</li>
+<li><p>Pointer[num64] $.axes; x , y translated to the axes of device , or NULL if device is the mouse</p>
+</li>
+<li><p>uint32 state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.</p>
+</li>
+<li><p>Pointer $.sequence; the event sequence that the event belongs to</p>
+</li>
+<li><p>int32 emulating_pointer; whether the event should be used for emulating pointer event (0 or 1)</p>
+</li>
+<li><p>N-GObject $.device; the master device that the event originated from. Use gdk_event_get_source_device() to get the slave device.</p>
+</li>
+<li><p>num64 $.x_root; the x coordinate of the pointer relative to the root of the screen</p>
+</li>
+<li><p>num64 $.y_root; the y coordinate of the pointer relative to the root of the screen</p>
 </li>
 </ul>
 <h2 id="GdkEvent"><a class="u" href="#___top" title="go to top of document">GdkEvent</a></h2>

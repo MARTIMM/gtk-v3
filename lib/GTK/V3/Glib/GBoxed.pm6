@@ -42,7 +42,7 @@ method FALLBACK ( $native-sub is copy, |c ) {
   die X::GTK::V3.new(:message(
       "Native sub name '$native-sub' made too short. Keep atleast one '-' or '_'."
     )
-  ) unless $native-sub.index('_');
+  ) unless $native-sub.index('_') >= 0;
 
   # check if there are underscores in the name. then the name is not too short.
   my Callable $s;

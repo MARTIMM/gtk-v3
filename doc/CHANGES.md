@@ -2,7 +2,8 @@
 
 * 2019-04-26 0.10.2
   * Bugfix; gtk_widget-destroy was implemented wrong.
-  
+  * Improved register-signal() from GObject. It accepts handlers for signals as well as events. The latter is recognized to have a **named argument** with the name **$event** in its signature.
+
 * 2019-04-25 0.10.1
   * Pod doc changes
   * Readme changes

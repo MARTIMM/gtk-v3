@@ -1,5 +1,9 @@
 ## Release notes
 
+* 2019-04-26 0.10.3
+  * Added file for keyboard symbols. Please look into the file `lib/GTK/V3/Gdk/GdkKeysyms.pm6` for information about which keys are defined.
+  * Added module GtkSearchEntry.
+
 * 2019-04-26 0.10.2
   * Bugfix; gtk_widget-destroy was implemented wrong.
   * Improved register-signal() from GObject. It accepts handlers for signals as well as events. The latter is recognized to have a **named argument** with the name **$event** in its signature.

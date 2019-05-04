@@ -179,6 +179,8 @@ sub g_object_get_property (
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 our $gobject-debug = False; # Type Bool;
+my Hash $signal-types = {};
+my Bool $signals-added = False;
 
 has N-GObject $!g-object;
 has GTK::V3::Glib::GSignal $!g-signal;
@@ -301,6 +303,8 @@ method fallback ( $native-sub --> Callable ) {
 
 =head3  multi submethod BUILD ( :$widget! )
 
+Please note that this class is mostly not instantiated directly but is used indirectly when a child class is instantiated.
+
 Create a Perl6 widget object using a native widget from elsewhere. $widget can be a N-GOBject or a Perl6 widget like C< GTK::V3::Gtk::GtkButton>.
 
   # some set of radio buttons grouped together
@@ -343,6 +347,9 @@ submethod BUILD ( *%options ) {
 
   note "\ngobject: {self}, ", %options if $gobject-debug;
 
+  $signals-added = self.add-signal-types(:GParamSpec<notify>)
+    unless $signals-added;
+
   # Test if GTK is initialized
   my GTK::V3::Gtk::GtkMain $main .= new;
 
@@ -358,6 +365,11 @@ submethod BUILD ( *%options ) {
     if ?$w and $w ~~ N-GObject {
       $!g-object = $w;
       note "gobject widget stored" if $gobject-debug;
+    }
+
+    elsif ?$w and $w ~~ NativeCall::Types::Pointer {
+      $!g-object = nativecast( N-GObject, $w);
+      note "gobject widget cast to GObject" if $gobject-debug;
     }
 
     else {
@@ -422,17 +434,6 @@ method debug ( Bool :$on ) {
 }
 
 #-------------------------------------------------------------------------------
-#`{{
-=begin pod
-=head2 native-gobject
-
-  method native-gobject (
-    N-GObject $widget?, Bool :$force = False --> N-GObject
-  )
-
-This method has the same purpose as C<CALL-ME> explained above. Here, however, it will not automatically overwrite a native object when there is already one there. Use C<:force> to get the same effect. It will always return a native object.
-=end pod
-}}
 #TODO destroy when overwritten?
 method native-gobject (
   N-GObject $widget?, Bool :$force = False --> N-GObject
@@ -463,7 +464,10 @@ method set-builder ( $builder ) {
     --> Bool
   )
 
-Register a handler to process a signal or an event. When the handler has a B<named argument> named B<$event> it is assumed that the handler code is made is to handle events like key presses. Otherwise it is assumed that the code handles signals like button clicks. Information about signal names available to widgets can be found at the GTK developers site, e.g. L<for GtkButton click signals here | https://developer.gnome.org/gtk3/stable/GtkButton.html#GtkButton.signal-details> and L<for a mouse button press event here | https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-button-press-event>. Notice that in the latter case you can see that one of the arguments has an argument type of B<GdkEvent>.
+Register a handler to process a signal or an event. There are several types of callbacks which can be handled by this regstration. They can be controlled by using a named argument with a special name.
+=item Events. The GTK will call a function with a structure holding the event information. When the user handler has a B<named argument> named B<event> it is assumed that the handler code is made is to handle events like key presses.
+=item There are also callbacks which get extra native widgets. An example of this is the C<row-selected> signal from C<GtkListBox>. The callback gets a native GtkListBoxRow widget. To handle these signals, the user can define a handler with a B<named argument> that is named B<nativewidget>.
+=item Otherwise it is assumed that the code handles signals like button clicks. Information about signal names available to widgets can be found at the GTK developers site, e.g. L<for GtkButton click signals here | https://developer.gnome.org/gtk3/stable/GtkButton.html#GtkButton.signal-details> and L<for a mouse button press event here | https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-button-press-event>. Notice that in the latter case you can see that one of the arguments has an argument type of B<GdkEvent>.
 
 =item $handler-object is the object wherein the handler is defined.
 =item $handler-name is name of the method. Its signature is one of
@@ -473,6 +477,10 @@ Register a handler to process a signal or an event. When the handler has a B<nam
 or
 
   handler ( object: :$widget, :$event, :$user-option1, ..., :$user-optionN )
+
+or
+
+  handler ( object: :$widget, :$nativewidget, :$user-option1, ..., :$user-optionN )
 
 The arguments are all optional but to register an event handler, the B<:$event> argument must be present.
 
@@ -504,7 +512,8 @@ method register-signal (
   --> Bool
 ) {
 
-#note "register $handler-object, $handler-name, options: ", %user-options;
+  note "\nregister $handler-object, $handler-name, options: ", %user-options
+     if $gobject-debug and $handler-object.^lookup("$handler-name");
 
   my %options = :widget(self), |%user-options;
 
@@ -517,10 +526,15 @@ method register-signal (
     # search for an GdkEvent named argument. If found, setup an event handler.
     # otherwise setup a signal handler.
     my Bool $setup-event-handler = False;
+    my Bool $setup-nativewidget-handler = False;
     for $sh.signature.params -> Parameter $p {
-      if $p.named and $p.name eq '$event' {
+      note "Named, name: ", $p.named, ', ', $p.named_names if $gobject-debug;
+      if $p.named and $p.named_names eq 'event' {
         $setup-event-handler = True;
-        last;
+      }
+
+      elsif $p.named and $p.named_names eq 'nativewidget' {
+        $setup-nativewidget-handler = True;
       }
     }
 
@@ -533,6 +547,18 @@ method register-signal (
       }
 
       $!g-signal._g_signal_connect_object_event(
+        $signal-name, $handler, OpaquePointer, $connect-flags
+      );
+    }
+
+    elsif $setup-nativewidget-handler {
+      $handler = -> N-GObject $w, OpaquePointer $d1, OpaquePointer $d2 {
+        $handler-object."$handler-name"(
+           :widget(self), :nativewidget($d1), |%user-options
+        );
+      }
+
+      $!g-signal._g_signal_connect_object_nativewidget(
         $signal-name, $handler, OpaquePointer, $connect-flags
       );
     }
@@ -553,4 +579,42 @@ method register-signal (
   else {
     False
   }
+}
+
+#-------------------------------------------------------------------------------
+method add-signal-types ( *%signal-descriptions --> Bool ) {
+
+  # must store signal names under the class name because I found the use of
+  # the same signal name with different handler signatures.
+  my Str $module-name = self.^name;
+  $signal-types{$module-name} //= {};
+
+  for %signal-descriptions.kv -> $signal-type, $signal-names {
+    if $signal-type ~~ any(
+       <notsupported deprecated signal event nativewidget
+       >
+    ) {
+      my @names = $signal-names ~~ List ?? @$signal-names !! ($signal-names,);
+      for @names -> $signal-name {
+        $signal-types{$module-name}{$signal-name} = $signal-type;
+      }
+    }
+
+    else {
+      note "Signal type $signal-type is not supported (yet)" if $gobject-debug;
+    }
+  }
+
+  if $gobject-debug {
+    note "\nSignal names in {self.^name}:";
+    map {
+      "$_:\n  " ~ (
+        map {
+          [~] $^k , ' -> ', $^v
+        }, $signal-types{$_}.kv
+      ).join(', ')
+    }, $signal-types.keys;
+  }
+
+  True
 }

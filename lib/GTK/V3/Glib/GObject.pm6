@@ -180,6 +180,7 @@ sub g_object_get_property (
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 our $gobject-debug = False; # Type Bool;
 my Hash $signal-types = {};
+my Hash $signal-sub-names = {};
 my Bool $signals-added = False;
 
 has N-GObject $!g-object;
@@ -347,8 +348,29 @@ submethod BUILD ( *%options ) {
 
   note "\ngobject: {self}, ", %options if $gobject-debug;
 
-  $signals-added = self.add-signal-types(:GParamSpec<notify>)
-    unless $signals-added;
+  unless $signals-added {
+    $signals-added = self.add-signal-types(:GParamSpec<notify>)
+    $signal-sub-names{signal} = [
+      '_g_signal_connect_object_signal',    # connect-object
+      '_g_signal_connect_data_signal',      # connect-data
+      :( N-GObject, OpaquePointer ),        # native handler signature
+      [],                                   # obligated handler arguments
+    ];
+
+    $signal-sub-names{event} = [
+      '_g_signal_connect_object_event',
+      '_g_signal_connect_data_event',
+      :( N-GObject, GdkEvent,OpaquePointer ),
+      [<event>],
+    ];
+
+    $signal-sub-names{nativewidget} = [
+      '_g_signal_connect_object_nativewidget',
+      '_g_signal_connect_data_nativewidget',
+      :( N-GObject, OpaquePointer, OpaquePointer ),
+      [<nativewidget>],
+    ];
+  }
 
   # Test if GTK is initialized
   my GTK::V3::Gtk::GtkMain $main .= new;

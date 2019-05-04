@@ -31,6 +31,8 @@ unit class GTK::V3::Glib::GSignal:auth<github:MARTIMM>;
 #-------------------------------------------------------------------------------
 # signal-type: widget, data
 my Signature $signal-type = :( N-GObject, OpaquePointer );
+# other-signal-type: widget, OpaquePointer, data
+my Signature $nativewidget-type = :( N-GObject, OpaquePointer, OpaquePointer );
 # event-type: widget, event, data
 my Signature $event-type = :( N-GObject, GdkEvent, OpaquePointer );
 
@@ -41,24 +43,10 @@ enum GConnectFlags is export (
 );
 
 #-------------------------------------------------------------------------------
-#`{{
-# original handler signature:
-#   &handler ( N-GObject $h_widget, OpaquePointer $h_data )
-# widget is inserted when second call to method is made and data is only
-# definable as an OpaquePointer so it can not give any data. This is also
-# inserted in second call. See GtkWidget.
-
-}}
-
-sub g_signal_connect (
-  N-GObject $widget, Str $signal, Callable $handler, OpaquePointer
-  --> uint64
-) {
-  g_signal_connect_data( $widget, $signal, $handler, OpaquePointer, Callable, 0)
-}
 
 
 
+#-------------------------------------------------------------------------------
 # unsafe in threaded programs
 sub g_signal_connect_object(
   N-GObject $widget, Str $signal, Callable $handler,
@@ -71,6 +59,7 @@ sub g_signal_connect_object(
   given $handler.signature {
     when $signal-type { _g_signal_connect_object_signal(|@args) }
     when $event-type { _g_signal_connect_object_event(|@args) }
+    when $nativewidget-type { _g_signal_connect_object_nativewidget(|@args) }
 
     default {
       die X::GTK::V3.new(:message('Handler doesn\'t have proper signature'));
@@ -96,8 +85,24 @@ sub _g_signal_connect_object_event(
   is symbol('g_signal_connect_object')
   { * }
 
+sub _g_signal_connect_object_nativewidget(
+  N-GObject $widget, Str $signal,
+  Callable $handler ( N-GObject, OpaquePointer, OpaquePointer ),
+  OpaquePointer $data, int32 $connect_flags
+) returns uint64
+  is native(&gobject-lib)
+  is symbol('g_signal_connect_object')
+  { * }
 
+#-------------------------------------------------------------------------------
+sub g_signal_connect (
+  N-GObject $widget, Str $signal, Callable $handler, OpaquePointer
+  --> uint64
+) {
+  g_signal_connect_data( $widget, $signal, $handler, OpaquePointer, Callable, 0)
+}
 
+#-------------------------------------------------------------------------------
 # can be called the same as g_signal_connect because of its defaults
 sub g_signal_connect_data(
   N-GObject $widget, Str $signal, Callable $handler,
@@ -110,6 +115,7 @@ sub g_signal_connect_data(
   given $handler.signature {
     when $signal-type { _g_signal_connect_data_signal(|@args) }
     when $event-type { _g_signal_connect_data_event(|@args) }
+    when $nativewidget-type { _g_signal_connect_data_nativewidget(|@args) }
 
     default {
       die X::GTK::V3.new(:message('Handler doesn\'t have proper signature'));
@@ -136,7 +142,17 @@ sub _g_signal_connect_data_event (
   is native(&gobject-lib)
   { * }
 
+sub _g_signal_connect_data_nativewidget (
+  N-GObject $widget, Str $signal,
+  Callable $handler ( N-GObject, OpaquePointer, OpaquePointer ),
+  OpaquePointer $data,
+  Callable $destroy_data ( OpaquePointer, OpaquePointer ),
+  int32 $connect_flags = 0
+) returns int64
+  is native(&gobject-lib)
+  { * }
 
+#-------------------------------------------------------------------------------
 sub g_signal_connect_after (
   N-GObject $widget, Str $signal, Callable $handler, OpaquePointer
 ) {
@@ -145,6 +161,7 @@ sub g_signal_connect_after (
   );
 }
 
+#-------------------------------------------------------------------------------
 sub g_signal_connect_swapped (
   N-GObject $widget, Str $signal, Callable $handler, OpaquePointer
 ) {
@@ -153,7 +170,7 @@ sub g_signal_connect_swapped (
   );
 }
 
-
+#-------------------------------------------------------------------------------
 #`{{
 # a GQuark is a guint32, $detail is a quark
 # See https://developer.gnome.org/glib/stable/glib-Quarks.html
@@ -164,6 +181,7 @@ sub g_signal_emit (
   { * }
 }}
 
+#-------------------------------------------------------------------------------
 # Handlers above provided to the signal connect calls are having 2 arguments
 # a widget and data. So the provided extra arguments are then those 2
 # plus a return value
@@ -176,6 +194,7 @@ sub g_signal_emit_by_name (
 ) is native(&gobject-lib)
   { * }
 
+#-------------------------------------------------------------------------------
 sub g_signal_handler_disconnect( N-GObject $widget, int32 $handler_id)
   is native(&gobject-lib)
   { * }

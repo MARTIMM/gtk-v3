@@ -30,10 +30,20 @@ sub gtk_list_box_get_row_at_index ( N-GObject $box, int32 $index)
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkListBox';
+
+  $signals-added = self.add-signal-types(
+    :signal<activate-cursor-row select-all selected-rows-changed
+            toggle-cursor-row unselect-all activate
+           >,
+    :int2<move-cursor>,
+    :nativewidget<row-activated row-selected>,
+  ) unless $signals-added;
 
   if ? %options<empty> {
     self.native-gobject(gtk_list_box_new());

@@ -111,6 +111,8 @@ sub gtk_toggle_button_set_active ( N-GObject $w, int32 $active )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 new
 
@@ -134,6 +136,10 @@ submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkToggleButton';
+
+  $signals-added = self.add-signal-types(
+    :signal<toggled>,
+  ) unless $signals-added;
 
   if %options<label>.defined {
     self.native-gobject(gtk_toggle_button_new_with_label(%options<text>));

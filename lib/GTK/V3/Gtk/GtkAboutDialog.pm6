@@ -516,6 +516,8 @@ sub gtk_about_dialog_add_credit_section (
 
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 new
 
@@ -536,6 +538,10 @@ submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkAboutDialog';
+
+  $signals-added = self.add-signal-types(
+    :strretbool<activate-link>,    # returns bool
+  ) unless $signals-added;
 
   if ? %options<empty> {
     self.native-gobject(gtk_about_dialog_new());

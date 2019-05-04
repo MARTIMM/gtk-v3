@@ -90,6 +90,8 @@ sub gtk_combo_box_set_active_id ( N-GObject $combo_box, Str $active_id )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 new
 
@@ -106,6 +108,12 @@ submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkComboBox';
+
+  $signals-added = self.add-signal-types(
+    :signal<changed popdown popup>,
+    :strretstr<format-entry-text>,
+    :GtkScrollType<move-active>,
+  ) unless $signals-added;
 
   #TODO %options.keys ~~ any(<widget build-id id name>) { ... }
   if ? %options<widget> || ? %options<build-id> {

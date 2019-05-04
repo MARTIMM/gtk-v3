@@ -83,10 +83,19 @@ sub gdk_get_default_root_window ( )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gdk::GdkWindow';
+
+  $signals-added = self.add-signal-types(
+    :int2<create-surface>,
+    :num2ptr2<from-embedder to-embedder>,
+    :ptr2bln2<moved-to-rect>,
+    :num2<pick-embedded-child>,
+  ) unless $signals-added;
 
   if ? %options<default> {
     self.native-gobject(gdk_get_default_root_window());

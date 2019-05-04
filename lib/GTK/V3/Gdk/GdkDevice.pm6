@@ -19,10 +19,17 @@ sub gdk_device_get_name ( N-GObject $device )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gdk::GdkDevice';
+
+  $signals-added = self.add-signal-types(
+    :signal<changed>,
+    :GdkDeviceTool<tool-changed>,
+  ) unless $signals-added;
 
   if ? %options<widget> || ? %options<build-id> {
     # provided in GObject

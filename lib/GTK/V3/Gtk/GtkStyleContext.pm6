@@ -40,10 +40,16 @@ sub hidden__gtk_style_context_add_provider_for_screen (
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkStyleContext';
+
+  $signals-added = self.add-signal-types(
+    :signal<changed>,
+  ) unless $signals-added;
 
   if ? %options<empty> {
     self.native-gobject(gtk_style_context_new());

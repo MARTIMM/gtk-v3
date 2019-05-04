@@ -334,10 +334,19 @@ sub gtk_file_chooser_unselect_file ( N-GObject $chooser, N-GObject $file )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkFileChooser';
+
+  $signals-added = self.add-signal-types(
+    :signal<current-folder-changed file-activated selection-changed
+            update-preview
+           >,
+    :notsupported<confirm-overwrite>,
+  ) unless $signals-added;
 
   if ? %options<widget> || %options<build-id> {
     # provided in GObject

@@ -19,10 +19,18 @@ sub gtk_menu_item_new ( )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkMenuItem';
+
+  $signals-added = self.add-signal-types(
+    :signal<activate activate-item deselect select >,
+    :nativewidget<>,
+    :int<toggle-size-allocate>,
+  ) unless $signals-added;
 
   if ? %options<empty> {
     self.native-gobject(gtk_menu_item_new());

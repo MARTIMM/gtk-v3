@@ -49,10 +49,16 @@ sub gtk_radio_button_join_group (
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkRadioButton';
+
+  $signals-added = self.add-signal-types(
+    :signal<group-changed>,
+  ) unless $signals-added;
 
   if ? %options<empty> {
     self.native-gobject(gtk_radio_button_new(Any));

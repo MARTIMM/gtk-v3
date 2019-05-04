@@ -18,10 +18,17 @@ sub gtk_text_tag_table_new ( )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkTextTagTable';
+
+  $signals-added = self.add-signal-types(
+    :nativewidget<tag-added tag-removed>,
+    :tagbool<tag-changed>,
+  ) unless $signals-added;
 
   if ? %options<empty> {
     self.native-gobject(gtk_text_tag_table_new());

@@ -146,6 +146,8 @@ sub gtk_window_set_transient_for ( N-GObject $window, N-GObject $parent )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 new
 
@@ -168,6 +170,12 @@ submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkWindow';
+
+  $signals-added = self.add-signal-types(
+    :signal<activate-default activate-focus keys-changed>,
+    :nativewidget<set-focus>,
+    :bool<enable-debugging>,
+  ) unless $signals-added;
 
   if ?%options<empty> {
     if ? %options<window-type> and %options<window-type> ~~ GtkWindowType {

@@ -55,7 +55,6 @@ sub gtk_text_iter_set_offset ( N-GTextIter $iter, int32 $char_offset )
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 submethod BUILD ( *%options ) {
 
-
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkTextIter';
 

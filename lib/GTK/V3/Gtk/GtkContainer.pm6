@@ -33,10 +33,17 @@ sub gtk_container_set_border_width (
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkContainer';
+
+  $signals-added = self.add-signal-types(
+    :signal<check-resize>,
+    :nativewidget<add remove set-focus-child>,
+  ) unless $signals-added;
 
   if ? %options<widget> || %options<build-id> {
     # provided in GObject

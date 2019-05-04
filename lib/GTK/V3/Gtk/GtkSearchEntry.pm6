@@ -20,10 +20,16 @@ sub gtk_search_entry_new ( )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkSearchEntry';
+
+  $signals-added = self.add-signal-types(
+    :signal<next-match previous-match search-changed stop-search>,
+  ) unless $signals-added;
 
   if ? %options<empty> {
     self.native-gobject(gtk_search_entry_new());

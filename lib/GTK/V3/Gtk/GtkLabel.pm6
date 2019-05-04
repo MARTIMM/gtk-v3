@@ -33,10 +33,19 @@ sub gtk_label_new_with_mnemonic ( Str $mnem )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkLabel';
+
+  $signals-added = self.add-signal-types(
+    :signal<activate-current-link copy-clipboard>,
+    :nativewidget<populate-popup>,
+    :strretbool<activate-link>,
+    :intbool<move-cursor>,
+  ) unless $signals-added;
 
   if %options<label>.defined {
     self.native-gobject(gtk_label_new(%options<label>));

@@ -38,6 +38,8 @@ sub gtk_entry_set_input_hints ( N-GObject $entry, uint32 $hints )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 #submethod BUILD ( ) {
 #  self.native-gobject(gtk_entry_new);
 #}
@@ -45,6 +47,17 @@ submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkEntry';
+
+  $signals-added = self.add-signal-types(
+    :signal<activate backspace copy-clipboard cut-clipboard insert-emoji
+            paste-clipboard toggle-overwrite
+           >,
+    :nativewidget<populate-popup>,
+    :GtkDeleteType<delete-from-cursor>,
+    :iconEvent<icon-press icon-release>,
+    :str<insert-at-cursor preedit-changed>,
+    :intbool<move-cursor>,
+  ) unless $signals-added;
 
   if ? %options<empty> {
     self.native-gobject(gtk_entry_new());

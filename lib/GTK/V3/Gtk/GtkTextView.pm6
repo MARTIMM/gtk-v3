@@ -51,10 +51,27 @@ sub gtk_text_view_set_monospace ( N-GObject $widget, int32 $setting )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkTextView';
+
+  $signals-added = self.add-signal-types(
+    :signal<backspace copy-clipboard cut-clipboard insert-emoji
+            paste-clipboard set-anchor toggle-cursor-visible
+            toggle-overwrite
+           >,
+    :nativewidget<populate-popup>,
+    :GtkDeleteType<delete-from-cursor>,
+    :GtkTextExtendSelection<extend-selection>,
+    :str<insert-at-cursor preedit-changed>,
+    :mvintbool<move-cursor>,
+    :scroll<move-viewport>,
+    :bool<select-all>,
+
+  ) unless $signals-added;
 
   if ? %options<empty> {
     self.native-gobject(gtk_text_view_new());

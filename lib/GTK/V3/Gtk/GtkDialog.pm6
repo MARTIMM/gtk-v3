@@ -117,6 +117,8 @@ sub gtk_dialog_response ( N-GObject $dialog, int32 $response_id )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 new
 
@@ -137,6 +139,11 @@ submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkDialog';
+
+  $signals-added = self.add-signal-types(
+    :signal<close>,
+    :int<response>,
+  ) unless $signals-added;
 
   if ?%options<empty> {
     self.native-gobject(gtk_dialog_new);

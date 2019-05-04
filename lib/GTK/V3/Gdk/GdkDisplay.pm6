@@ -33,11 +33,19 @@ sub gdk_display_get_name ( N-GObject $display )
   is native(&gdk-lib)
   { * }
 
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gdk::GdkDisplay';
+
+  $signals-added = self.add-signal-types(
+    :signal<opened>,
+    :nativewidget<monitor-added monitor-removed seat-added seat-removed>,
+    :bool<closed>,
+  ) unless $signals-added;
 
   if ? %options<default> {
     self.native-gobject(gdk_display_get_default());

@@ -366,16 +366,48 @@ sub gtk_widget_get_has_window ( N-GObject $window )
 
 #TODO add a few subs more
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-#`{{
-=begin pod
-=head2 new
-
-This method is not to be used.
-=end pod
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkWidget';
+
+  $signals-added = self.add-signal-types(
+    :signal<accel-closures-changed destroy grab-focus hide map popup-menu
+            realize show style-updated unmap unrealize
+           >,
+    :event<button-press-event button-release-event configure-event
+           damage-event delete-event destroy-event enter-notify-event
+           event-after focus-in-event grab-broken-event key-press-event
+           key-release-event leave-notify-event map-event motion-notify-event
+           property-notify-event proximity-in-event proximity-out-event
+           scroll-event selection-clear-event selection-notify-event
+           selection-request-event touch-event unmap-event window-state-event
+          >,
+    :deprecated<composited-changed state-changed style-set
+                visibility-notify-event
+               >,
+    :nativewidget<drag-begin drag-data-delete drag-end hierarchy-changed
+                  parent-set screen-changed size-allocate
+                 >,
+    :uint<can-activate-accel>,
+    :GParamSpec<child-notify>,
+    :enum<direction-changed focus keynav-failed move-focus show-help
+          state-flags-changed 
+         >,
+    :dragdatauint2<drag-data-get>,
+    :dragint2datauint2<drag-data-received>,
+    :dragint2uint<drag-drop drag-motion>,
+    :drag2<drag-failed>,
+    :draguint<drag-leave>,
+    :notsupported<draw>,
+    :bool<grab-notify mnemonic-activate>,
+    :int2boolnw<query-tooltip>,
+    :seluint2<selection-get>,
+    :seluint<selection-received>,
+
+  ) unless $signals-added;
 
   if ? %options<widget> || %options<build-id> {
     # provided in GObject
@@ -389,7 +421,6 @@ submethod BUILD ( *%options ) {
     );
   }
 }
-}}
 
 #-------------------------------------------------------------------------------
 method fallback ( $native-sub is copy --> Callable ) {

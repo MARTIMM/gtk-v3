@@ -46,10 +46,23 @@ sub gtk_text_buffer_insert(
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkTextBuffer';
+
+  $signals-added = self.add-signal-types(
+    :signal<begin-user-action changed end-user-action modified-changed>,
+    :nativewidget<mark-deleted paste-done>,
+    :tagiter2<apply-tag remove-tag>,
+    :iter2<delete-range>,
+    :iteranchor<insert-child-anchor>,
+    :iterpix<insert-pixbuf>,
+    :iterstrint<insert-text>,
+    :itermark<mark-set>,
+  ) unless $signals-added;
 
   if ? %options<empty> {
     my GTK::V3::Gtk::GtkTextTagTable $tag-table .= new(:empty);

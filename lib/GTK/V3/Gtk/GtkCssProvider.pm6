@@ -29,10 +29,16 @@ sub gtk_css_provider_load_from_path (
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gtk::GtkCssProvider';
+
+  $signals-added = self.add-signal-types(
+    :parseerr<parsing-error>,
+  ) unless $signals-added;
 
   if ? %options<empty> {
     self.native-gobject(gtk_css_provider_new());

@@ -23,10 +23,16 @@ sub gdk_screen_get_display ( N-GObject $screen )
   { * }
 
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
   return unless self.^name eq 'GTK::V3::Gdk::GdkScreen';
+
+  $signals-added = self.add-signal-types(
+    :signal<composited-changed monitors-changed size-changed>,
+  ) unless $signals-added;
 
   if ? %options<default> {
     self.native-gobject(gdk_screen_get_default());

@@ -1,5 +1,9 @@
 ## Release notes
 
+* 2019-05-05 0.10.4
+  * Added signal name/signal type registration to cope with other types of callback handlers. For the moment simple signals and events are possible, next to handlers of which the 2nd argument is a native widget. Modules must be documented yet to show what handlers the user must provide to handle a particular signal.
+  * Changed the way registration of a signal handler is processed. This is transparent to the user.
+
 * 2019-04-26 0.10.3
   * Added file for keyboard symbols. Please look into the file `lib/GTK/V3/Gdk/GdkKeysyms.pm6` for information about which keys are defined.
   * Added module GtkSearchEntry.

@@ -37,15 +37,15 @@ my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkLabel';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name, 
     :signal<activate-current-link copy-clipboard>,
     :nativewidget<populate-popup>,
     :strretbool<activate-link>,
     :intbool<move-cursor>,
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkLabel';
 
   if %options<label>.defined {
     self.native-gobject(gtk_label_new(%options<label>));

@@ -338,15 +338,15 @@ my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkFileChooser';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name, 
     :signal<current-folder-changed file-activated selection-changed
             update-preview
            >,
     :notsupported<confirm-overwrite>,
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkFileChooser';
 
   if ? %options<widget> || %options<build-id> {
     # provided in GObject

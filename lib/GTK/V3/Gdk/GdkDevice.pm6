@@ -23,13 +23,13 @@ my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gdk::GdkDevice';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name, 
     :signal<changed>,
     :GdkDeviceTool<tool-changed>,
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gdk::GdkDevice';
 
   if ? %options<widget> || ? %options<build-id> {
     # provided in GObject

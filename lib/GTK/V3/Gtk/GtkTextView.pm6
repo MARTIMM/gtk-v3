@@ -55,10 +55,7 @@ my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkTextView';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name, 
     :signal<backspace copy-clipboard cut-clipboard insert-emoji
             paste-clipboard set-anchor toggle-cursor-visible
             toggle-overwrite
@@ -70,8 +67,10 @@ submethod BUILD ( *%options ) {
     :mvintbool<move-cursor>,
     :scroll<move-viewport>,
     :bool<select-all>,
-
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkTextView';
 
   if ? %options<empty> {
     self.native-gobject(gtk_text_view_new());

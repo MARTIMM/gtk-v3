@@ -34,16 +34,16 @@ my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkListBox';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name,
     :signal<activate-cursor-row select-all selected-rows-changed
             toggle-cursor-row unselect-all activate
            >,
     :int2<move-cursor>,
     :nativewidget<row-activated row-selected>,
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkListBox';
 
   if ? %options<empty> {
     self.native-gobject(gtk_list_box_new());

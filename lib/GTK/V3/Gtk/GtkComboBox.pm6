@@ -106,14 +106,14 @@ Create a combobox using a native object from a builder. See also Gtk::V3::Glib::
 =end pod
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkComboBox';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name, 
     :signal<changed popdown popup>,
     :strretstr<format-entry-text>,
     :GtkScrollType<move-active>,
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkComboBox';
 
   #TODO %options.keys ~~ any(<widget build-id id name>) { ... }
   if ? %options<widget> || ? %options<build-id> {

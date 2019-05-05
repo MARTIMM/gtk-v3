@@ -38,14 +38,14 @@ my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gdk::GdkDisplay';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name, 
     :signal<opened>,
     :nativewidget<monitor-added monitor-removed seat-added seat-removed>,
     :bool<closed>,
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gdk::GdkDisplay';
 
   if ? %options<default> {
     self.native-gobject(gdk_display_get_default());

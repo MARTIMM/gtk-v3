@@ -22,13 +22,13 @@ my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkTextTagTable';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name, 
     :nativewidget<tag-added tag-removed>,
     :tagbool<tag-changed>,
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkTextTagTable';
 
   if ? %options<empty> {
     self.native-gobject(gtk_text_tag_table_new());

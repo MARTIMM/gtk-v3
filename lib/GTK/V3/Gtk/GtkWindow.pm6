@@ -168,14 +168,14 @@ Create a button using a native object from a builder. See also Gtk::V3::Glib::GO
 =end pod
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkWindow';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name, 
     :signal<activate-default activate-focus keys-changed>,
     :nativewidget<set-focus>,
     :bool<enable-debugging>,
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkWindow';
 
   if ?%options<empty> {
     if ? %options<window-type> and %options<window-type> ~~ GtkWindowType {

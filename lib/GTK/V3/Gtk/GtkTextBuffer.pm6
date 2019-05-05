@@ -51,9 +51,7 @@ my Bool $signals-added = False;
 submethod BUILD ( *%options ) {
 
   # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkTextBuffer';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name, 
     :signal<begin-user-action changed end-user-action modified-changed>,
     :nativewidget<mark-deleted paste-done>,
     :tagiter2<apply-tag remove-tag>,
@@ -63,6 +61,8 @@ submethod BUILD ( *%options ) {
     :iterstrint<insert-text>,
     :itermark<mark-set>,
   ) unless $signals-added;
+
+  return unless self.^name eq 'GTK::V3::Gtk::GtkTextBuffer';
 
   if ? %options<empty> {
     my GTK::V3::Gtk::GtkTextTagTable $tag-table .= new(:empty);

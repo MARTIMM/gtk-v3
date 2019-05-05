@@ -107,14 +107,14 @@ Create a button using a native object from a builder. See also Gtk::V3::Glib::GO
 =end pod
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkButton';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name,
     :signal<clicked>,
     :notsupported<activate>,
     :deprecated<enter leave pressed released>,
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkButton';
 
   if %options<label>.defined {
     self.native-gobject(gtk_button_new_with_label(%options<label>));

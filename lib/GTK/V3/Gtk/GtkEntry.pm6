@@ -45,10 +45,7 @@ my Bool $signals-added = False;
 #}
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkEntry';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name, 
     :signal<activate backspace copy-clipboard cut-clipboard insert-emoji
             paste-clipboard toggle-overwrite
            >,
@@ -58,6 +55,9 @@ submethod BUILD ( *%options ) {
     :str<insert-at-cursor preedit-changed>,
     :intbool<move-cursor>,
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkEntry';
 
   if ? %options<empty> {
     self.native-gobject(gtk_entry_new());

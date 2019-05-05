@@ -370,10 +370,7 @@ my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
 submethod BUILD ( *%options ) {
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkWidget';
-
-  $signals-added = self.add-signal-types(
+  $signals-added = self.add-signal-types( $?CLASS.^name,
     :signal<accel-closures-changed destroy grab-focus hide map popup-menu
             realize show style-updated unmap unrealize
            >,
@@ -394,7 +391,7 @@ submethod BUILD ( *%options ) {
     :uint<can-activate-accel>,
     :GParamSpec<child-notify>,
     :enum<direction-changed focus keynav-failed move-focus show-help
-          state-flags-changed 
+          state-flags-changed
          >,
     :dragdatauint2<drag-data-get>,
     :dragint2datauint2<drag-data-received>,
@@ -406,8 +403,10 @@ submethod BUILD ( *%options ) {
     :int2boolnw<query-tooltip>,
     :seluint2<selection-get>,
     :seluint<selection-received>,
-
   ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkWidget';
 
   if ? %options<widget> || %options<build-id> {
     # provided in GObject

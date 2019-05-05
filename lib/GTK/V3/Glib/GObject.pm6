@@ -241,7 +241,8 @@ method FALLBACK ( $native-sub is copy, |c ) {
   # name is not too short.
   $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
   die X::GTK::V3.new(:message(
-      "Native sub name '$native-sub' made too short. Keep at least one '-' or '_'."
+      "Native sub name '$native-sub' made too short." ~
+      " Keep at least one '-' or '_'."
     )
   ) unless $native-sub.index('_') >= 0;
 
@@ -349,22 +350,22 @@ submethod BUILD ( *%options ) {
   note "\ngobject: {self}, ", %options if $gobject-debug;
 
   unless $signals-added {
-    $signals-added = self.add-signal-types(:GParamSpec<notify>)
-    $signal-sub-names{signal} = [
+    $signals-added = self.add-signal-types( $?CLASS.^name, :GParamSpec<notify>);
+    $signal-sub-names<signal> = [
       '_g_signal_connect_object_signal',    # connect-object
       '_g_signal_connect_data_signal',      # connect-data
       :( N-GObject, OpaquePointer ),        # native handler signature
       [],                                   # obligated handler arguments
     ];
 
-    $signal-sub-names{event} = [
+    $signal-sub-names<event> = [
       '_g_signal_connect_object_event',
       '_g_signal_connect_data_event',
       :( N-GObject, GdkEvent,OpaquePointer ),
       [<event>],
     ];
 
-    $signal-sub-names{nativewidget} = [
+    $signal-sub-names<nativewidget> = [
       '_g_signal_connect_object_nativewidget',
       '_g_signal_connect_data_nativewidget',
       :( N-GObject, OpaquePointer, OpaquePointer ),
@@ -534,17 +535,32 @@ method register-signal (
   --> Bool
 ) {
 
-  note "\nregister $handler-object, $handler-name, options: ", %user-options
-     if $gobject-debug and $handler-object.^lookup("$handler-name");
-
   my %options = :widget(self), |%user-options;
 
   my Callable $handler;
 
   # don't register if handler is not available
-  my Method $sh = $handler-object.^lookup("$handler-name") // Method;
+  my Method $sh = $handler-object.^lookup($handler-name) // Method;
   if ? $sh {
+    note "\nregister $handler-object, $handler-name, options: ", %user-options
+       if $gobject-debug;
 
+    # search for signal name defined by this class as well as its parent classes
+    my Str $signal-type;
+    my Str $module-name;
+    my @module-names = self.^name, |(map( {.^name}, self.^parents));
+    for @module-names -> $mn {
+      note "  search in class: $mn, $signal-name" if $gobject-debug;
+      if $signal-types{$mn}:exists and ?$signal-types{$mn}{$signal-name} {
+        $signal-type = $signal-types{$mn}{$signal-name};
+        $module-name = $mn;
+        note "  found type $signal-type for $mn" if $gobject-debug;
+        last;
+      }
+    }
+#    my @handler-signature = :();
+
+#`{{
     # search for an GdkEvent named argument. If found, setup an event handler.
     # otherwise setup a signal handler.
     my Bool $setup-event-handler = False;
@@ -559,8 +575,63 @@ method register-signal (
         $setup-nativewidget-handler = True;
       }
     }
+}}
+#    # There are always two arguments provided to a callback
+
+    return False unless ?$signal-type;
+    given $signal-type {
+      when 'signal' {
+        $handler = -> N-GObject $w, OpaquePointer $d {
+          $handler-object."$handler-name"( :widget(self), |%user-options);
+        }
+      }
+
+      when 'event' {
+        $handler = -> N-GObject $w, GdkEvent $event, OpaquePointer $d {
+          $handler-object."$handler-name"(
+             :widget(self), :$event, |%user-options
+          );
+        }
+      }
+
+      when 'nativewidget' {
+        $handler = -> N-GObject $w, OpaquePointer $d1, OpaquePointer $d2 {
+          $handler-object."$handler-name"(
+             :widget(self), :nativewidget($d1), |%user-options
+          );
+        }
+      }
+
+      when 'notsupported' {
+        my Str $message = "Signal $signal-name used on $module-name" ~
+          " is explicitly not supported by GTK or this package";
+        note $message;
+#        die X::GTK::V3.new(:$message);
+        return False;
+      }
+
+      when 'deprecated' {
+        my Str $message = "Signal $signal-name used on $module-name" ~
+          " is explicitly deprecated by GTK";
+        note $message;
+#        die X::GTK::V3.new(:$message);
+        return False;
+      }
+
+      default {
+        my Str $message = "Signal $signal-name used on $module-name" ~
+          " is not yet implemented";
+        note $message;
+        return False;
+      }
+    }
 
     $!g-signal .= new(:$!g-object);
+    $!g-signal."_g_signal_connect_object_$signal-type"(
+      $signal-name, $handler, OpaquePointer, $connect-flags
+    );
+
+#`{{
     if $setup-event-handler {
       $handler = -> N-GObject $w, GdkEvent $event, OpaquePointer $d {
         $handler-object."$handler-name"(
@@ -594,7 +665,7 @@ method register-signal (
         $signal-name, $handler, OpaquePointer, $connect-flags
       );
     }
-
+}}
     True
   }
 
@@ -604,38 +675,29 @@ method register-signal (
 }
 
 #-------------------------------------------------------------------------------
-method add-signal-types ( *%signal-descriptions --> Bool ) {
+method add-signal-types ( Str $module-name, *%signal-descriptions --> Bool ) {
 
   # must store signal names under the class name because I found the use of
   # the same signal name with different handler signatures.
-  my Str $module-name = self.^name;
+  #my Str $module-name = self.^name;
   $signal-types{$module-name} //= {};
 
   for %signal-descriptions.kv -> $signal-type, $signal-names {
-    if $signal-type ~~ any(
-       <notsupported deprecated signal event nativewidget
-       >
-    ) {
-      my @names = $signal-names ~~ List ?? @$signal-names !! ($signal-names,);
-      for @names -> $signal-name {
+    note "add $signal-type, $signal-names.perl()" if $gobject-debug;
+    my @names = $signal-names ~~ List ?? @$signal-names !! ($signal-names,);
+    for @names -> $signal-name {
+      if $signal-type ~~ any(
+        <notsupported deprecated signal event nativewidget>
+      ) {
+        note "  $module-name, $signal-name --> $signal-type"
+          if $gobject-debug;
         $signal-types{$module-name}{$signal-name} = $signal-type;
       }
-    }
 
-    else {
-      note "Signal type $signal-type is not supported (yet)" if $gobject-debug;
+      else {
+        note "  Signal $signal-name is not yet supported" if $gobject-debug;
+      }
     }
-  }
-
-  if $gobject-debug {
-    note "\nSignal names in {self.^name}:";
-    map {
-      "$_:\n  " ~ (
-        map {
-          [~] $^k , ' -> ', $^v
-        }, $signal-types{$_}.kv
-      ).join(', ')
-    }, $signal-types.keys;
   }
 
   True

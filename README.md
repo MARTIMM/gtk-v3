@@ -219,7 +219,6 @@ A few measures are implemented to help a bit preventing problems;
 | Pdf from pod | Link to Gnome Developer |
 |-------|--------------|
 | GTK::V3::Glib::GError |
-| GTK::V3::Glib::GFile |  [File and Directory Handling][GFile]
 | GTK::V3::Glib::GInitiallyUnowned |
 | GTK::V3::Glib::GInterface |
 | GTK::V3::Glib::GList |  [Doubly-Linked Lists][glist]

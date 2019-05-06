@@ -148,3 +148,51 @@ method fallback ( $native-sub is copy --> Callable ) {
 
   $s
 }
+
+=begin pod
+=head1 Signals
+
+Registering example
+
+  class MyHandlers {
+    method my-click-handler ( :$widget, :$my-data ) { ... }
+  }
+
+  # elsewhere
+  my MyHandlers $mh .= new;
+  $button.register-signal( $mh, 'click-handler', 'clicked', :$my-data);
+
+See also method C<register-signal> in GTK::V3::Glib::GObject.
+
+=head2 Supported signals
+=head3 clicked
+
+Emitted when the button has been activated (pressed and released).
+
+Handler signature;
+
+=code handler ( instance: :$widget, :$user-option1, ..., :$user-optionN )
+
+=head2 Unsupported signals
+=head3 activated
+
+Signal C<activated> is not supported because GTK advises against the use of it.
+
+=head2 Deprecated signals
+=head3 enter
+
+Signal C<enter> has been deprecated since version 2.8 and should not be used in newly-written code. Use the “enter-notify-event” signal.
+
+=head3 leave
+
+Signal C<leave> has been deprecated since version 2.8 and should not be used in newly-written code. Use the C<leave-notify-event> signal.
+
+=head3 pressed
+
+Signal C<pressed> has been deprecated since version 2.8 and should not be used in newly-written code. Use the C<button-press-event> signal.
+
+=head3 released
+
+Signal C<released> has been deprecated since version 2.8 and should not be used in newly-written code. Use the C<button-release-event> signal.
+
+=end pod

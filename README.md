@@ -10,19 +10,21 @@ The purpose of this project is to create an interface to the **GTK** version 3 l
 
 # Example
 
-This example does the same as the example from `GTK::Simple` to show you the differences between the implementations. What immediately is clear is that this example is somewhat bigger. To sum up;
+This example does the same as the example from `GTK::Simple` to show you the differences between the implementations. What immediately is clear is that this example is somewhat longer. To sum up;
 ### Pros
   * The defaults of GTK are kept. Therefore the buttons are in the proper size compared to GTK::Simple.
   * Separation of callbacks from other code. Closures are not needed to get data into the callback code. Data can be provided with named arguments to the `register-signal()` method.
-  * The package is designed with the usage of glade interface designer in mind. So to build the interface by hand is not necessary. Use of `GTK::Glade` is then preferable.
-  * No fancy stuff of tapping into channels.
-  * There is a registration of signals you want to handle. This makes it possible to just lookup a signal from the GTK documentation and register your handler with the signal name and some extra data to handle by the callback. This is not available in `GTK::Simple`. The provided way to handle a signal there, is fixed into a method. E.g. the button has a 'clicked' method and the container has none while an observer might want to know if an object is inserted into a grid using the 'add' signal.
+  * The package is designed with the usage of glade interface designer in mind. So to build the interface by hand like below, is not necessary. Use of `GTK::Glade` is preferable when building larger user interfaces.
+  * No fancy stuff like tapping into channels.
+  * There is a registration of callback methods to process signals like button clicks as well as events like keyboard input and mouse clicks.. This is not available in `GTK::Simple`. The provided way to handle a signal there, is fixed into a method. E.g. the button has a 'clicked' method and the container has none while an observer might want to know if an object is inserted into a grid using the 'add' signal.
   * There is also a registration of events to handle e.g. keyboard input and mouse clicks.
 
 ### Cons
   * The code is larger.
   * Code is somewhat slower.
-
+  * Not all types of signals are supported yet.
+  * Not all documentation is written.
+  * Not all classes and/or methods are supplied.
 
 ```
 use v6;
@@ -360,6 +362,8 @@ Documentation is generated with
 
 [GdkEventTypes]: https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html
 
+
+[//]: # (https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GObject.pdf)
 [//]: # (Pod documentation rendered with)
 [//]: # (pod-render.pl6 --pdf --style=pod6 --g=github.com/MARTIMM/gtk-v3 lib)
 

@@ -1,5 +1,10 @@
 ## Release notes
 
+* 2019-05-05 0.10.5
+  * GtkButton signal documentation added
+  * GObject has new methods
+  * GSignal start of pod doc
+
 * 2019-05-05 0.10.4
   * Added signal name/signal type registration to cope with other types of callback handlers. For the moment simple signals and events are possible, next to handlers of which the 2nd argument is a native widget. Modules must be documented yet to show what handlers the user must provide to handle a particular signal.
   * Changed the way registration of a signal handler is processed. This is transparent to the user.

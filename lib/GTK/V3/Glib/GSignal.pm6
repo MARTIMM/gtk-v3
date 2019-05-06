@@ -12,6 +12,32 @@ use v6;
 
 =head1 Synopsis
 
+  # define method
+  method mouse-event ( :widget($w), :event($e)) { ... }
+
+  # get the window object
+  my GTK::V3::Gtk::GtkWindow $w .= new( ... );
+
+  # define proper handler. you must study the GTK develper guides. you will
+  # then notice that C<connect-object> is a bit different than the real mcCoy.
+  my Callable $handler;
+  $handler = -> N-GObject $ignore-w, GdkEvent $e, OpaquePointer $ignore-d {
+    self.mouse-event( :widget($w), :event($e) );
+  }
+
+  # connect signal to the handler
+  $w.connect-object( 'button-press-event', $handler);
+
+It will be easier to use the register-signal method
+
+  # define method
+  method mouse-event ( :widget($w), :event($e)) { ... }
+
+  # get the window object
+  my GTK::V3::Gtk::GtkWindow $w .= new( ... );
+
+  # then register
+  $w.register-signal( self, 'mouse-event', 'button-press-event', :time(now));
 
 =end pod
 # ==============================================================================
@@ -37,24 +63,45 @@ my Signature $nativewidget-type = :( N-GObject, OpaquePointer, OpaquePointer );
 my Signature $event-type = :( N-GObject, GdkEvent, OpaquePointer );
 
 #-------------------------------------------------------------------------------
+=begin pod
+=head1 Enumerations
+=head2 GConnectFlags
+=item G_CONNECT_AFTER; whether the handler should be called before or after the default handler of the signal.
+=item G_CONNECT_SWAPPED; whether the instance and data should be swapped when calling the handler; see g_signal_connect_swapped() for an example.
+=end pod
+
 enum GConnectFlags is export (
   G_CONNECT_AFTER	        => 1,
   G_CONNECT_SWAPPED	      => 1 +< 1
 );
 
 #-------------------------------------------------------------------------------
+=begin pod
+=head1 Methods
 
+=head2 g_signal_connect_object
 
+  method g_signal_connect_object(
+    Str $signal, Callable $handler, int32 $connect_flags = 0
+    --> uint64
+  }
 
-#-------------------------------------------------------------------------------
-# unsafe in threaded programs
+This is similar to C<g_signal_connect_data()>, but uses a closure which ensures that the gobject stays alive during the call to c_handler by temporarily adding a reference count to gobject .
+
+When the gobject is destroyed the signal handler will be automatically disconnected. Note that this is not currently threadsafe (ie: emitting a signal while gobject is being destroyed in another thread is not safe).
+
+=item $signal; a string of the form C<signal-name::detail>.
+=item $handler; the callback to connect.
+=item $connect_flags; a combination of GConnectFlags.
+
+=end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 sub g_signal_connect_object(
-  N-GObject $widget, Str $signal, Callable $handler,
-  OpaquePointer $d, int32 $connect_flags = 0
+  N-GObject $widget, Str $signal, Callable $handler, int32 $connect_flags = 0
   --> uint64
 ) {
 
-  my @args = $widget, $signal, $handler, $d, $connect_flags;
+  my @args = $widget, $signal, $handler, OpaquePointer, $connect_flags;
 
   given $handler.signature {
     when $signal-type { _g_signal_connect_object_signal(|@args) }
@@ -95,8 +142,20 @@ sub _g_signal_connect_object_nativewidget(
   { * }
 
 #-------------------------------------------------------------------------------
+=begin pod
+=head2 g_signal_connect
+
+  sub g_signal_connect ( Str $signal, Callable $handler --> uint64 )
+
+Connects a callback function to a signal for a particular object.
+
+=item $signal; a string of the form "signal-name::detail".
+=item $handler; callback function to connect.
+
+=end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 sub g_signal_connect (
-  N-GObject $widget, Str $signal, Callable $handler, OpaquePointer
+  N-GObject $widget, Str $signal, Callable $handler
   --> uint64
 ) {
   g_signal_connect_data( $widget, $signal, $handler, OpaquePointer, Callable, 0)
@@ -227,18 +286,3 @@ method FALLBACK ( $native-sub is copy, Bool :$return-sub-only = False, |c ) {
   #test-call( $s, Any, |c)
   $return-sub-only ?? $s !! $s( $!g-object, |c)
 }
-
-#`{{
-method fallback ( $native-sub is copy --> Callable ) {
-
-  $native-sub ~~ s:g/ '-' /_/ if $native-sub.index('-');
-
-  my Callable $s;
-  try { $s = &::($native-sub); }
-  try { $s = &::("g_signal_$native-sub"); } unless ?$s;
-
-  #$s = callsame unless ?$s;
-
-  $s
-}
-}}

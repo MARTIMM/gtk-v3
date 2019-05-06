@@ -45,102 +45,49 @@ sub EXPORT { {
 unit class GTK::V3::Glib::GObject:auth<github:MARTIMM>;
 
 # ==============================================================================
-#`{{
-=begin pod
-
-=head1 Methods
-
-=head2 g_object_ref
-
-  method g_object_ref ( )
-
-Increases the reference count of $object. The new() methods will increase the reference count of the native object automatically and when destroyed or overwritten decreased.
-
-=end pod
-}}
+# Increases the reference count of $object. The new() methods will increase the
+# reference count of the native object automatically and when destroyed or
+# overwritten decreased.
 sub g_object_ref ( N-GObject $object )
   returns N-GObject
   is native(&gobject-lib)
   { * }
 
 # ==============================================================================
-#`{{
-=begin pod
-
-=head2 g_object_unref
-
-  method g_object_unref ( )
-
-Decreases the reference count of object. When its reference count drops to 0, the object is finalized (i.e. its memory is freed). The widget classes will automatically decrease the reference count to the native object when destroyed or when overwritten.
-
-=end pod
-}}
+# Decreases the reference count of object. When its reference count drops to 0,
+# the object is finalized (i.e. its memory is freed). The widget classes will
+# automatically decrease the reference count to the native object when
+# destroyed or when overwritten.
 sub g_object_unref ( N-GObject $object )
   is native(&gobject-lib)
   { * }
 
 # ==============================================================================
-#`{{
-=begin pod
-
-=head2 [g_object_] ref_sink
-
-  method g_object_ref_sink ( )
-
-Increase the reference count of object , and possibly remove the floating reference. See also L<gtk developer docs|https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-ref-sink>.
-=end pod
-}}
+# Increase the reference count of object , and possibly remove the floating
+# reference. See also https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-ref-sink.
 sub g_object_ref_sink ( N-GObject $object )
   is native(&gobject-lib)
   { * }
 
 # ==============================================================================
-#`{{
-=begin pod
-
-=head2 g_clear_object
-
-  method g_clear_object ( )
-
-Clears a reference to a GObject. The reference count of the object is decreased and the pointer is set to NULL.
-=end pod
-}}
-sub g_clear_object ( N-GObject $object is rw ) {
-  hidden_g_clear_object($object);
-  #GOBject.g_object_unref($object)
-  $object = N-GObject;
-}
-sub hidden_g_clear_object ( N-GObject $object is rw )
+# Clears a reference to a GObject. The reference count of the object is
+# decreased and the pointer is set to NULL.
+sub g_clear_object ( N-GObject $object )
   is native(&gobject-lib)
-  is symbol('g_clear_object')
   { * }
 
 # ==============================================================================
-#`{{
-=begin pod
-
-=head2 [g_object_] is_floating
-
-  method g_object_is_floating ( )
-
-Checks whether object has a floating reference.
-=end pod
-}}
+# Checks whether object has a floating reference.
 sub g_object_is_floating ( N-GObject $object )
   returns int32
   is native(&gobject-lib)
   { * }
 
 # ==============================================================================
-#`{{
-=begin pod
-
-=head2 [g_object_] force_floating
-
-  method g_object_force_floating ( )
-
-=end pod
-}}
+# This function is intended for GObject implementations to re-enforce a
+# floating object reference. Doing this is seldom required: all
+# GInitiallyUnowneds are created with a floating reference which usually just
+# needs to be sunken by calling g_object_ref_sink().
 sub g_object_force_floating ( N-GObject $object )
   is native(&gobject-lib)
   { * }
@@ -154,7 +101,12 @@ sub g_object_force_floating ( N-GObject $object )
   )
 
 Sets a property on an object.
+
+=item $property_name; the name of the property to set.
+=item $value; the value.
+
 =end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 sub g_object_set_property (
   N-GObject $object, Str $property_name, N-GValue $value
 ) is native(&gobject-lib)
@@ -171,16 +123,73 @@ sub g_object_set_property (
 Gets a property of an object. value must have been initialized to the expected type of the property (or a type to which the expected type can be transformed) using g_value_init().
 
 In general, a copy is made of the property contents and the caller is responsible for freeing the memory by calling g_value_unset().
+
+=item $property_name; the name of the property to get.
+=item $value; return location for the property value.
+
 =end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 sub g_object_get_property (
   N-GObject $object, Str $property_name, N-GValue $gvalue is rw
 ) is native(&gobject-lib)
   { * }
 
+# ==============================================================================
+=begin pod
+=head2 g_object_notify
+
+  method g_object_notify ( Str $property_name )
+
+Emits a C<notify> signal for the property C<property_name> on object .
+
+When possible, e.g. when signaling a property change from within the class that registered the property, you should use C<g_object_notify_by_pspec()>(not supported yet) instead.
+
+Note that emission of the notify signal may be blocked with C<g_object_freeze_notify()>. In this case, the signal emissions are queued and will be emitted (in reverse order) when C<g_object_thaw_notify()> is called.
+
+=item $property_name; the name of a property installed on the class of object.
+
+=end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+sub g_object_notify ( N-GObject $object, Str $property_name)
+  is native(&gobject-lib)
+  { * }
+
+# ==============================================================================
+=begin pod
+=head2 [g_object_] freeze_notify
+
+  method g_object_freeze_notify ( )
+
+Increases the freeze count on object . If the freeze count is non-zero, the emission of C<notify> signals on object is stopped. The signals are queued until the freeze count is decreased to zero. Duplicate notifications are squashed so that at most one C<notify> signal is emitted for each property modified while the object is frozen.
+
+This is necessary for accessors that modify multiple properties to prevent premature notification while the object is still being modified.
+
+=end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+sub g_object_freeze_notify ( N-GObject $object )
+  is native(&gobject-lib)
+  { * }
+
+# ==============================================================================
+=begin pod
+=head2 [g_object_] thaw_notify
+
+  method g_object_thaw_notify ( )
+
+Reverts the effect of a previous call to C<g_object_freeze_notify()>. The freeze count is decreased on object and when it reaches zero, queued C<notify> signals are emitted.
+
+Duplicate notifications for each property are squashed so that at most one C<notify> signal is emitted for each property, in the reverse order in which they have been queued.
+
+It is an error to call this function when the freeze count is zero.
+=end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+sub g_object_thaw_notify ( N-GObject $object )
+  is native(&gobject-lib)
+  { * }
+
 # = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
 our $gobject-debug = False; # Type Bool;
 my Hash $signal-types = {};
-my Hash $signal-sub-names = {};
 my Bool $signals-added = False;
 
 has N-GObject $!g-object;
@@ -255,10 +264,6 @@ method FALLBACK ( $native-sub is copy, |c ) {
 
   die X::GTK::V3.new(:message("Native sub '$native-sub' not found"))
       unless $s.defined;
-#  unless $s.defined {
-#    note "Native sub '$native-sub' not found";
-#    return;
-#  }
 
   # User convenience substitutions to get a native object instead of
   # a GtkSomeThing or GlibSomeThing object
@@ -273,8 +278,6 @@ method FALLBACK ( $native-sub is copy, |c ) {
     }
   }
 
-  #note "\ntest-call of $native-sub: ", $s.gist, ', ', $!g-object, ', ', |c.gist
-  #  if $gobject-debug;
   test-call( $s, $!g-object, |$params)
 }
 
@@ -338,39 +341,55 @@ Another example is a difficult way to get a button.
 
 =head3  multi submethod BUILD ( Str :$build-id! )
 
-Create a Perl6 widget object using a C<GtkBuilder>. The C<GtkBuilder> class will handover its object address to the C<GObject> and can then be used to search for id's defined in the GUI glade design.
+Create a Perl6 widg
+#`{{
+    if $setup-event-handler {
+      $handler = -> N-GObject $w, GdkEvent $event, OpaquePointer $d {
+        $handler-object."$handler-name"(
+           :widget(self), :$event, |%user-options
+        );
+      }
+
+      $!g-signal._g_signal_connect_object_event(
+        $signal-name, $handler, OpaquePointer, $connect-flags
+      );
+    }
+
+    elsif $setup-nativewidget-handler {
+      $handler = -> N-GObject $w, OpaquePointer $d1, OpaquePointer $d2 {
+        $handler-object."$handler-name"(
+           :widget(self), :nativewidget($d1), |%user-options
+        );
+      }
+
+      $!g-signal._g_signal_connect_object_nativewidget(
+        $signal-name, $handler, OpaquePointer, $connect-flags
+      );
+    }
+
+    else {
+      $handler = -> N-GObject $w, OpaquePointer $d {
+        $handler-object."$handler-name"( :widget(self), |%user-options);
+      }
+
+      $!g-signal._g_signal_connect_object_signal(
+        $signal-name, $handler, OpaquePointer, $connect-flags
+      );
+    }
+}}
+et object using a C<GtkBuilder>. The C<GtkBuilder> class will handover its object address to the C<GObject> and can then be used to search for id's defined in the GUI glade design.
 
   my GTK::V3::Gtk::GtkBuilder $builder .= new(:filename<my-gui.glade>);
   my GTK::V3::Gtk::GtkButton $button .= new(:build-id<my-gui-button>);
 
 =end pod
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 submethod BUILD ( *%options ) {
 
   note "\ngobject: {self}, ", %options if $gobject-debug;
 
   unless $signals-added {
     $signals-added = self.add-signal-types( $?CLASS.^name, :GParamSpec<notify>);
-    $signal-sub-names<signal> = [
-      '_g_signal_connect_object_signal',    # connect-object
-      '_g_signal_connect_data_signal',      # connect-data
-      :( N-GObject, OpaquePointer ),        # native handler signature
-      [],                                   # obligated handler arguments
-    ];
-
-    $signal-sub-names<event> = [
-      '_g_signal_connect_object_event',
-      '_g_signal_connect_data_event',
-      :( N-GObject, GdkEvent,OpaquePointer ),
-      [<event>],
-    ];
-
-    $signal-sub-names<nativewidget> = [
-      '_g_signal_connect_object_nativewidget',
-      '_g_signal_connect_data_nativewidget',
-      :( N-GObject, OpaquePointer, OpaquePointer ),
-      [<nativewidget>],
-    ];
   }
 
   # Test if GTK is initialized
@@ -450,7 +469,7 @@ submethod BUILD ( *%options ) {
 
 There are many situations when exceptions are retrown within code of a callback method, Perl6 is not able to display the error properly (yet). In those cases you need another way to display errors and show extra messages leading up to it.
 =end pod
-
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 method debug ( Bool :$on ) {
   $gobject-debug = $on;
   $X::GTK::V3::x-debug = $on;
@@ -529,6 +548,7 @@ The arguments are all optional but to register an event handler, the B<:$event> 
   $button.register-signal( $x, 'click-handler', 'clicked', :user-data($data));
 
 =end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 method register-signal (
   $handler-object, Str:D $handler-name, Str:D $signal-name,
   Int :$connect-flags = 0, *%user-options
@@ -558,25 +578,6 @@ method register-signal (
         last;
       }
     }
-#    my @handler-signature = :();
-
-#`{{
-    # search for an GdkEvent named argument. If found, setup an event handler.
-    # otherwise setup a signal handler.
-    my Bool $setup-event-handler = False;
-    my Bool $setup-nativewidget-handler = False;
-    for $sh.signature.params -> Parameter $p {
-      note "Named, name: ", $p.named, ', ', $p.named_names if $gobject-debug;
-      if $p.named and $p.named_names eq 'event' {
-        $setup-event-handler = True;
-      }
-
-      elsif $p.named and $p.named_names eq 'nativewidget' {
-        $setup-nativewidget-handler = True;
-      }
-    }
-}}
-#    # There are always two arguments provided to a callback
 
     return False unless ?$signal-type;
     given $signal-type {
@@ -631,41 +632,6 @@ method register-signal (
       $signal-name, $handler, OpaquePointer, $connect-flags
     );
 
-#`{{
-    if $setup-event-handler {
-      $handler = -> N-GObject $w, GdkEvent $event, OpaquePointer $d {
-        $handler-object."$handler-name"(
-           :widget(self), :$event, |%user-options
-        );
-      }
-
-      $!g-signal._g_signal_connect_object_event(
-        $signal-name, $handler, OpaquePointer, $connect-flags
-      );
-    }
-
-    elsif $setup-nativewidget-handler {
-      $handler = -> N-GObject $w, OpaquePointer $d1, OpaquePointer $d2 {
-        $handler-object."$handler-name"(
-           :widget(self), :nativewidget($d1), |%user-options
-        );
-      }
-
-      $!g-signal._g_signal_connect_object_nativewidget(
-        $signal-name, $handler, OpaquePointer, $connect-flags
-      );
-    }
-
-    else {
-      $handler = -> N-GObject $w, OpaquePointer $d {
-        $handler-object."$handler-name"( :widget(self), |%user-options);
-      }
-
-      $!g-signal._g_signal_connect_object_signal(
-        $signal-name, $handler, OpaquePointer, $connect-flags
-      );
-    }
-}}
     True
   }
 
@@ -702,3 +668,33 @@ method add-signal-types ( Str $module-name, *%signal-descriptions --> Bool ) {
 
   True
 }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head1 Signals
+
+Registering example
+
+  class MyHandlers {
+    method my-click-handler ( :$widget, :$my-data ) { ... }
+  }
+
+  # elsewhere
+  my MyHandlers $mh .= new;
+  $button.register-signal( $mh, 'click-handler', 'clicked', :$my-data);
+
+See also method C<register-signal> in GTK::V3::Glib::GObject.
+
+=head2 Not yet supported signals
+=head3 notify
+
+The notify signal is emitted on an object when one of its properties has its value set through g_object_set_property(), g_object_set(), et al.
+
+Note that getting this signal doesn’t itself guarantee that the value of the property has actually changed. When it is emitted is determined by the derived GObject class. If the implementor did not create the property with C<G_PARAM_EXPLICIT_NOTIFY>, then any call to g_object_set_property() results in C<notify> being emitted, even if the new value is the same as the old. If they did pass C<G_PARAM_EXPLICIT_NOTIFY>, then this signal is emitted only when they explicitly call C<g_object_notify()> or C<g_object_notify_by_pspec()>, and common practice is to do that only when the value has actually changed.
+
+This signal is typically used to obtain change notification for a single property, by specifying the property name as a detail in the C<g_signal_connect()> call, like this:
+
+Signal C<notify> is not yet supported.
+
+
+=end pod

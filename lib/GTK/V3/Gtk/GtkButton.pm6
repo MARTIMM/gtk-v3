@@ -38,6 +38,7 @@ also is GTK::V3::Gtk::GtkBin;
 
 Creates a new native button object
 =end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 sub gtk_button_new ( )
   returns N-GObject
   is native(&gtk-lib)
@@ -51,6 +52,7 @@ sub gtk_button_new ( )
 
 Creates a new native button object with a label
 =end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 sub gtk_button_new_with_label ( Str $label )
   returns N-GObject
   is native(&gtk-lib)
@@ -64,6 +66,7 @@ sub gtk_button_new_with_label ( Str $label )
 
 Get text label of button
 =end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 sub gtk_button_get_label ( N-GObject $widget )
   returns Str
   is native(&gtk-lib)
@@ -77,6 +80,7 @@ sub gtk_button_get_label ( N-GObject $widget )
 
 Set a label ob the button
 =end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 sub gtk_button_set_label ( N-GObject $widget, Str $label )
   is native(&gtk-lib)
   { * }
@@ -105,6 +109,7 @@ Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GO
 
 Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.
 =end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 submethod BUILD ( *%options ) {
 
   $signals-added = self.add-signal-types( $?CLASS.^name,
@@ -149,6 +154,7 @@ method fallback ( $native-sub is copy --> Callable ) {
   $s
 }
 
+#-------------------------------------------------------------------------------
 =begin pod
 =head1 Signals
 

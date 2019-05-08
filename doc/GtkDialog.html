@@ -3,24 +3,14 @@
     <head>
         <title>class GTK::V3::Gtk::GtkDialog</title>
         <meta charset="UTF-8" />
-  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
-        <style>
-        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
-        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
-        u { text-decoration: none }
-        .nested {
-            margin-left: 3em;
-        }
-        aside, u { opacity: 0.7 }
-        a[id^="fn-"]:target { background: #ff0 }
-        </style>
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/8E2223EC8A82AFADF6C944FF8969408E59014865.css">
         
         
     </head>
  <body class="pod" onload="prettyPrint()">
     <div id="___top"></div>
     
-    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Gtk::GtkDialog</h1>
+    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />class GTK::V3::Gtk::GtkDialog</div>
     
     <nav class="indexgroup">
 <table id="TOC">
@@ -39,13 +29,11 @@
 </nav>
 
     <div class="pod-body">
-    
-                   <pre class="prettyprint lang-perl6 linenums">unit class GTK::V3::Gtk::GtkDialog;
+    <pre class="pod-block-code">unit class GTK::V3::Gtk::GtkDialog;
 also is GTK::V3::Gtk::GtkWindow;</pre>
 <p>#=head2 GtkDialog — Create popup windows</p>
 <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
-
-                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkDialog $dialog .= new(:build-id&lt;simple-dialog&gt;);
+<pre class="pod-block-code">my GTK::V3::Gtk::GtkDialog $dialog .= new(:build-id&lt;simple-dialog&gt;);
 
 # show the dialog
 my Int $response = $dialog.gtk-dialog-run;
@@ -71,19 +59,16 @@ if $response == GTK_RESPONSE_ACCEPT {
 <h2 id="gtk_dialog_response"><a class="u" href="#___top" title="go to top of document">gtk_dialog_response</a></h2>
 <p>Emits the “response” signal with the given response ID. Used to indicate that the user has responded to the dialog in some way; typically either you or gtk_dialog_run() will be monitoring the ::response signal and take appropriate action.</p>
 <h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Bool :$empty! )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( Bool :$empty! )</pre>
 <p>Create an empty dialog</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( :$widget! )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( :$widget! )</pre>
 <p>Create a dialog using a native object from elsewhere. See also Gtk::V3::Glib::GObject.</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$build-id! )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( Str :$build-id! )</pre>
 <p>Create a dialog using a native object from a builder. See also Gtk::V3::Glib::GObject.</p>
 
     </div>
     
     
-<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
 </html>
 

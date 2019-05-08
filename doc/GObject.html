@@ -3,37 +3,33 @@
     <head>
         <title>class GTK::V3::Glib::GObject</title>
         <meta charset="UTF-8" />
-  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
-        <style>
-        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
-        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
-        u { text-decoration: none }
-        .nested {
-            margin-left: 3em;
-        }
-        aside, u { opacity: 0.7 }
-        a[id^="fn-"]:target { background: #ff0 }
-        </style>
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/8E2223EC8A82AFADF6C944FF8969408E59014865.css">
         
         
     </head>
  <body class="pod" onload="prettyPrint()">
     <div id="___top"></div>
     
-    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Glib::GObject</h1>
+    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />class GTK::V3::Glib::GObject</div>
     <p class='subtitle'>GObject — The base object type</p>
     <nav class="indexgroup">
 <table id="TOC">
 <caption><h2 id="TOC_Title">Table of Contents</h2></caption>
   <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
           <tr class="toc-level-2"><td class="toc-number">1.1</td><td class="toc-text"><a href="#[g_object_]_set_property">[g_object_] set_property</a></td></tr>
-   <tr class="toc-level-2"><td class="toc-number">1.2</td><td class="toc-text"><a href="#[g_object_]_get_property">[g_object_] get_property</a></td></tr>
-    <tr class="toc-level-2"><td class="toc-number">1.3</td><td class="toc-text"><a href="#new">new</a></td></tr>
- <tr class="toc-level-3"><td class="toc-number">1.3.1</td><td class="toc-text"><a href="#multi_submethod_BUILD_(_:$widget!_)">multi submethod BUILD ( :$widget! )</a></td></tr>
-       <tr class="toc-level-3"><td class="toc-number">1.3.2</td><td class="toc-text"><a href="#multi_submethod_BUILD_(_Str_:$build-id!_)">multi submethod BUILD ( Str :$build-id! )</a></td></tr>
-         <tr class="toc-level-2"><td class="toc-number">1.4</td><td class="toc-text"><a href="#debug">debug</a></td></tr>
-   <tr class="toc-level-2"><td class="toc-number">1.5</td><td class="toc-text"><a href="#register-signal">register-signal</a></td></tr>
-                                  
+     <tr class="toc-level-2"><td class="toc-number">1.2</td><td class="toc-text"><a href="#[g_object_]_get_property">[g_object_] get_property</a></td></tr>
+      <tr class="toc-level-2"><td class="toc-number">1.3</td><td class="toc-text"><a href="#g_object_notify">g_object_notify</a></td></tr>
+                <tr class="toc-level-2"><td class="toc-number">1.4</td><td class="toc-text"><a href="#[g_object_]_freeze_notify">[g_object_] freeze_notify</a></td></tr>
+        <tr class="toc-level-2"><td class="toc-number">1.5</td><td class="toc-text"><a href="#[g_object_]_thaw_notify">[g_object_] thaw_notify</a></td></tr>
+           <tr class="toc-level-2"><td class="toc-number">1.6</td><td class="toc-text"><a href="#new">new</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">1.6.1</td><td class="toc-text"><a href="#multi_submethod_BUILD_(_:$widget!_)">multi submethod BUILD ( :$widget! )</a></td></tr>
+        <tr class="toc-level-3"><td class="toc-number">1.6.2</td><td class="toc-text"><a href="#multi_submethod_BUILD_(_Str_:$build-id!_)">multi submethod BUILD ( Str :$build-id! )</a></td></tr>
+            <tr class="toc-level-2"><td class="toc-number">1.7</td><td class="toc-text"><a href="#debug">debug</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">1.8</td><td class="toc-text"><a href="#register-signal">register-signal</a></td></tr>
+                                                <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Signals">Signals</a></td></tr>
+      <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#Not_yet_supported_signals">Not yet supported signals</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">2.1.1</td><td class="toc-text"><a href="#notify">notify</a></td></tr>
+                  
 </table>
 </nav>
 
@@ -41,8 +37,7 @@
     <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
 <p>Top level class of almost all classes in the GTK, GDK and Glib libraries.</p>
 <p>This object is almost never used directly. Most of the classes inherit from this class. The below example can be made much simpler by setting the label directly in the init of <code>GtKLabel</code>. The purpose of this example, however, is that there are other properties which can only be set this way. Also not all types are covered yet by <code>GValue</code> and <code>GType</code>.</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">use GTK::V3::Glib::GObject;
+<pre class="pod-block-code">use GTK::V3::Glib::GObject;
 use GTK::V3::Glib::GValue;
 use GTK::V3::Glib::GType;
 use GTK::V3::Gtk::GtkLabel;
@@ -54,23 +49,48 @@ my GTK::V3::Gtk::GtkLabel $label1 .= new(:label(&#39;&#39;));
 $gv.g-value-set-string(&#39;label string&#39;);
 $label1.g-object-set-property( &#39;label&#39;, $gv);</pre>
 <h2 id="[g_object_]_set_property"><a class="u" href="#___top" title="go to top of document">[g_object_] set_property</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method g_object_set_property (
+<pre class="pod-block-code">method g_object_set_property (
   Str $property_name, GTK::V3::Glib::GValue $value
 )</pre>
 <p>Sets a property on an object.</p>
+<ul><li><p>$property_name; the name of the property to set.</p>
+</li>
+<li><p>$value; the value.</p>
+</li>
+</ul>
 <h2 id="[g_object_]_get_property"><a class="u" href="#___top" title="go to top of document">[g_object_] get_property</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method g_object_get_property (
+<pre class="pod-block-code">method g_object_get_property (
   Str $property_name, GTK::V3::Glib::GValue $value is rw
 )</pre>
 <p>Gets a property of an object. value must have been initialized to the expected type of the property (or a type to which the expected type can be transformed) using g_value_init().</p>
 <p>In general, a copy is made of the property contents and the caller is responsible for freeing the memory by calling g_value_unset().</p>
+<ul><li><p>$property_name; the name of the property to get.</p>
+</li>
+<li><p>$value; return location for the property value.</p>
+</li>
+</ul>
+<h2 id="g_object_notify"><a class="u" href="#___top" title="go to top of document">g_object_notify</a></h2>
+<pre class="pod-block-code">method g_object_notify ( Str $property_name )</pre>
+<p>Emits a <code>notify</code> signal for the property <code>property_name</code> on object .</p>
+<p>When possible, e.g. when signaling a property change from within the class that registered the property, you should use <code>g_object_notify_by_pspec()</code>(not supported yet) instead.</p>
+<p>Note that emission of the notify signal may be blocked with <code>g_object_freeze_notify()</code>. In this case, the signal emissions are queued and will be emitted (in reverse order) when <code>g_object_thaw_notify()</code> is called.</p>
+<ul><li><p>$property_name; the name of a property installed on the class of object.</p>
+</li>
+</ul>
+<h2 id="[g_object_]_freeze_notify"><a class="u" href="#___top" title="go to top of document">[g_object_] freeze_notify</a></h2>
+<pre class="pod-block-code">method g_object_freeze_notify ( )</pre>
+<p>Increases the freeze count on object . If the freeze count is non-zero, the emission of <code>notify</code> signals on object is stopped. The signals are queued until the freeze count is decreased to zero. Duplicate notifications are squashed so that at most one <code>notify</code> signal is emitted for each property modified while the object is frozen.</p>
+<p>This is necessary for accessors that modify multiple properties to prevent premature notification while the object is still being modified.</p>
+<h2 id="[g_object_]_thaw_notify"><a class="u" href="#___top" title="go to top of document">[g_object_] thaw_notify</a></h2>
+<pre class="pod-block-code">method g_object_thaw_notify ( )</pre>
+<p>Reverts the effect of a previous call to <code>g_object_freeze_notify()</code>. The freeze count is decreased on object and when it reaches zero, queued <code>notify</code> signals are emitted.</p>
+<p>Duplicate notifications for each property are squashed so that at most one <code>notify</code> signal is emitted for each property, in the reverse order in which they have been queued.</p>
+<p>It is an error to call this function when the freeze count is zero.</p>
 <h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
 <h3 id="multi_submethod_BUILD_(_:$widget!_)"><a class="u" href="#___top" title="go to top of document">multi submethod BUILD ( :$widget! )</a></h3>
+<p>Please note that this class is mostly not instantiated directly but is used indirectly when a child class is instantiated.</p>
 <p>Create a Perl6 widget object using a native widget from elsewhere. $widget can be a N-GOBject or a Perl6 widget like <code>GTK::V3::Gtk::GtkButton</code>.</p>
-
-                   <pre class="prettyprint lang-perl6 linenums"># some set of radio buttons grouped together
+<pre class="pod-block-code"># some set of radio buttons grouped together
 my GTK::V3::Gtk::GtkRadioButton $rb1 .= new(:label(&#39;Download everything&#39;));
 my GTK::V3::Gtk::GtkRadioButton $rb2 .= new(
   :group-from($rb1), :label(&#39;Download core only&#39;)
@@ -91,37 +111,66 @@ loop ( Int $i = 0; $i &lt; $rb-list.g_slist_length; $i++ ) {
   }
 }</pre>
 <p>Another example is a difficult way to get a button.</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkButton $start-button .= new(
+<pre class="pod-block-code">my GTK::V3::Gtk::GtkButton $start-button .= new(
   :widget(GTK::V3::Gtk::GtkButton.gtk_button_new_with_label(&#39;Start&#39;))
 );</pre>
 <h3 id="multi_submethod_BUILD_(_Str_:$build-id!_)"><a class="u" href="#___top" title="go to top of document">multi submethod BUILD ( Str :$build-id! )</a></h3>
-<p>Create a Perl6 widget object using a <code>GtkBuilder</code>. The <code>GtkBuilder</code> class will handover its object address to the <code>GObject</code> and can then be used to search for id&#39;s defined in the GUI glade design.</p>
+<p>Create a Perl6 widg #`{{ if $setup-event-handler { $handler = -&gt; N-GObject $w, GdkEvent $event, OpaquePointer $d { $handler-object.&quot;$handler-name&quot;( :widget(self), :$event, |%user-options ); }</p>
+<pre class="pod-block-code">$!g-signal._g_signal_connect_object_event(
+  $signal-name, $handler, OpaquePointer, $connect-flags
+);</pre>
+<pre class="pod-block-code">}
 
-                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkBuilder $builder .= new(:filename&lt;my-gui.glade&gt;);
+elsif $setup-nativewidget-handler {
+  $handler = -&gt; N-GObject $w, OpaquePointer $d1, OpaquePointer $d2 {
+    $handler-object.&quot;$handler-name&quot;(
+       :widget(self), :nativewidget($d1), |%user-options
+    );
+  }
+
+  $!g-signal._g_signal_connect_object_nativewidget(
+    $signal-name, $handler, OpaquePointer, $connect-flags
+  );
+}
+
+else {
+  $handler = -&gt; N-GObject $w, OpaquePointer $d {
+    $handler-object.&quot;$handler-name&quot;( :widget(self), |%user-options);
+  }
+
+  $!g-signal._g_signal_connect_object_signal(
+    $signal-name, $handler, OpaquePointer, $connect-flags
+  );
+}</pre>
+<p>}} et object using a <code>GtkBuilder</code>. The <code>GtkBuilder</code> class will handover its object address to the <code>GObject</code> and can then be used to search for id&#39;s defined in the GUI glade design.</p>
+<pre class="pod-block-code">my GTK::V3::Gtk::GtkBuilder $builder .= new(:filename&lt;my-gui.glade&gt;);
 my GTK::V3::Gtk::GtkButton $button .= new(:build-id&lt;my-gui-button&gt;);</pre>
 <h2 id="debug"><a class="u" href="#___top" title="go to top of document">debug</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method debug ( Bool :$on )</pre>
+<pre class="pod-block-code">method debug ( Bool :$on )</pre>
 <p>There are many situations when exceptions are retrown within code of a callback method, Perl6 is not able to display the error properly (yet). In those cases you need another way to display errors and show extra messages leading up to it.</p>
 <h2 id="register-signal"><a class="u" href="#___top" title="go to top of document">register-signal</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method register-signal (
+<pre class="pod-block-code">method register-signal (
   $handler-object, Str:D $handler-name, Str:D $signal-name,
   Int :$connect-flags = 0, *%user-options
   --&gt; Bool
 )</pre>
-<p>Register a handler to process a signal or an event. When the handler has a <strong>named argument</strong> named <strong>$event</strong> it is assumed that the handler code is made is to handle events like key presses. Otherwise it is assumed that the code handles signals like button clicks. Information about signal names available to widgets can be found at the GTK developers site, e.g. <a href="https://developer.gnome.org/gtk3/stable/GtkButton.html#GtkButton.signal-details">for GtkButton click signals here</a> and <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-button-press-event">for a mouse button press event here</a>. Notice that in the latter case you can see that one of the arguments has an argument type of <strong>GdkEvent</strong>.</p>
-<ul><li><p>$handler-object is the object wherein the handler is defined.</p>
+<p>Register a handler to process a signal or an event. There are several types of callbacks which can be handled by this regstration. They can be controlled by using a named argument with a special name.</p>
+<ul><li><p>Events. The GTK will call a function with a structure holding the event information. When the user handler has a <strong>named argument</strong> named <strong>event</strong> it is assumed that the handler code is made is to handle events like key presses.</p>
+</li>
+<li><p>There are also callbacks which get extra native widgets. An example of this is the <code>row-selected</code> signal from <code>GtkListBox</code>. The callback gets a native GtkListBoxRow widget. To handle these signals, the user can define a handler with a <strong>named argument</strong> that is named <strong>nativewidget</strong>.</p>
+</li>
+<li><p>Otherwise it is assumed that the code handles signals like button clicks. Information about signal names available to widgets can be found at the GTK developers site, e.g. <a href="https://developer.gnome.org/gtk3/stable/GtkButton.html#GtkButton.signal-details">for GtkButton click signals here</a> and <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-button-press-event">for a mouse button press event here</a>. Notice that in the latter case you can see that one of the arguments has an argument type of <strong>GdkEvent</strong>.</p>
+</li>
+<li><p>$handler-object is the object wherein the handler is defined.</p>
 </li>
 <li><p>$handler-name is name of the method. Its signature is one of</p>
 </li>
 </ul>
-
-                   <pre class="prettyprint lang-perl6 linenums">handler ( object: :$widget, :$user-option1, ..., :$user-optionN )</pre>
+<pre class="pod-block-code">handler ( object: :$widget, :$user-option1, ..., :$user-optionN )</pre>
 <p>or</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">handler ( object: :$widget, :$event, :$user-option1, ..., :$user-optionN )</pre>
+<pre class="pod-block-code">handler ( object: :$widget, :$event, :$user-option1, ..., :$user-optionN )</pre>
+<p>or</p>
+<pre class="pod-block-code">handler ( object: :$widget, :$nativewidget, :$user-option1, ..., :$user-optionN )</pre>
 <p>The arguments are all optional but to register an event handler, the <strong>:$event</strong> argument must be present.</p>
 <ul><li><p>$signal-name is the name of the event to be handled. Each gtk widget has its own series of signals, please look for it in the documentation of gtk.</p>
 </li>
@@ -130,8 +179,7 @@ my GTK::V3::Gtk::GtkButton $button .= new(:build-id&lt;my-gui-button&gt;);</pre>
 <li><p>%user-options. Any other user data in whatever type. These arguments are provided to the user handler when an event for the handler is fired. There will always be one named argument <code>:$widget</code> which holds the class object on which the signal was registered. The name &#39;widget&#39; is therefore reserved. An other reserved named argument is of course <code>:$event</code>.</p>
 </li>
 </ul>
-
-                   <pre class="prettyprint lang-perl6 linenums"># create a class holding a handler method to process a click event
+<pre class="pod-block-code"># create a class holding a handler method to process a click event
 # of a button.
 class X {
   method click-handler ( :widget($button), Array :$user-data ) {
@@ -146,10 +194,26 @@ my Array $data = [&lt;Hello World&gt;];
 # register button signal
 my X $x .= new(:empty);
 $button.register-signal( $x, &#39;click-handler&#39;, &#39;clicked&#39;, :user-data($data));</pre>
+<h1 id="Signals"><a class="u" href="#___top" title="go to top of document">Signals</a></h1>
+<p>Registering example</p>
+<pre class="pod-block-code">class MyHandlers {
+  method my-click-handler ( :$widget, :$my-data ) { ... }
+}
+
+# elsewhere
+my MyHandlers $mh .= new;
+$button.register-signal( $mh, &#39;click-handler&#39;, &#39;clicked&#39;, :$my-data);</pre>
+<p>See also method <code>register-signal</code> in GTK::V3::Glib::GObject.</p>
+<h2 id="Not_yet_supported_signals"><a class="u" href="#___top" title="go to top of document">Not yet supported signals</a></h2>
+<h3 id="notify"><a class="u" href="#___top" title="go to top of document">notify</a></h3>
+<p>The notify signal is emitted on an object when one of its properties has its value set through g_object_set_property(), g_object_set(), et al.</p>
+<p>Note that getting this signal doesn’t itself guarantee that the value of the property has actually changed. When it is emitted is determined by the derived GObject class. If the implementor did not create the property with <code>G_PARAM_EXPLICIT_NOTIFY</code>, then any call to g_object_set_property() results in <code>notify</code> being emitted, even if the new value is the same as the old. If they did pass <code>G_PARAM_EXPLICIT_NOTIFY</code>, then this signal is emitted only when they explicitly call <code>g_object_notify()</code> or <code>g_object_notify_by_pspec()</code>, and common practice is to do that only when the value has actually changed.</p>
+<p>This signal is typically used to obtain change notification for a single property, by specifying the property name as a detail in the <code>g_signal_connect()</code> call, like this:</p>
+<p>Signal <code>notify</code> is not yet supported.</p>
 
     </div>
     
     
-<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
 </html>
 

@@ -3,24 +3,14 @@
     <head>
         <title>GTK::V3::Gdk::GdkEventTypes</title>
         <meta charset="UTF-8" />
-  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
-        <style>
-        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
-        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
-        u { text-decoration: none }
-        .nested {
-            margin-left: 3em;
-        }
-        aside, u { opacity: 0.7 }
-        a[id^="fn-"]:target { background: #ff0 }
-        </style>
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/8E2223EC8A82AFADF6C944FF8969408E59014865.css">
         
         
     </head>
  <body class="pod" onload="prettyPrint()">
     <div id="___top"></div>
     
-    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>GTK::V3::Gdk::GdkEventTypes</h1>
+    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />GTK::V3::Gdk::GdkEventTypes</div>
     <p class='subtitle'>Event Structures — Data structures specific to each type of event</p>
     <nav class="indexgroup">
 <table id="TOC">
@@ -40,8 +30,7 @@
 
     <div class="pod-body">
     <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
-
-                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkWindow $top-window .= new(:empty);
+<pre class="pod-block-code">my GTK::V3::Gtk::GtkWindow $top-window .= new(:empty);
 $top-window.set-title(&#39;Hello GTK!&#39;);
 # ... etcetera ...
 
@@ -56,8 +45,7 @@ method handle-keypress ( :$widget, GdkEvent :$event ) {
   }
 }</pre>
 <p>The handler signature can also be defined as</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">method handle-keypress ( :$widget, GdkEventKey :$event ) {
+<pre class="pod-block-code">method handle-keypress ( :$widget, GdkEventKey :$event ) {
   if $event.type ~~ GDK_KEY_PRESS and $event.keyval eq &#39;s&#39; {
 
     # key &#39;s&#39; pressed, stop process ...
@@ -212,8 +200,7 @@ method handle-keypress ( :$widget, GdkEvent :$event ) {
 <p>Triple-clicks are very similar to double-clicks, except that GDK_3BUTTON_PRESS is inserted after the third click. The order of the events is: GDK_BUTTON_PRESS, GDK_BUTTON_RELEASE, GDK_BUTTON_PRESS, GDK_2BUTTON_PRESS, GDK_BUTTON_RELEASE, GDK_BUTTON_PRESS, GDK_3BUTTON_PRESS and GDK_BUTTON_RELEASE.</p>
 <p>For a double click to occur, the second button press must occur within 1/4 of a second of the first. For a triple click to occur, the third button press must also occur within 1/2 second of the first button press.</p>
 <p>To handle e.g. a triple mouse button presses, all events can be ignored except GDK_3BUTTON_PRESS</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">method handle-keypress ( :$widget, GdkEventButton :$event ) {
+<pre class="pod-block-code">method handle-keypress ( :$widget, GdkEventButton :$event ) {
   # check if left mouse button was pressed three times
   if $event.type ~~ GDK_3BUTTON_PRESS and $event.button == 1 {
     ...
@@ -279,6 +266,6 @@ method handle-keypress ( :$widget, GdkEvent :$event ) {
     </div>
     
     
-<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
 </html>
 

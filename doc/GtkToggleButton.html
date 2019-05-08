@@ -3,24 +3,14 @@
     <head>
         <title>class GTK::V3::Gtk::GtkToggleButton</title>
         <meta charset="UTF-8" />
-  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
-        <style>
-        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
-        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
-        u { text-decoration: none }
-        .nested {
-            margin-left: 3em;
-        }
-        aside, u { opacity: 0.7 }
-        a[id^="fn-"]:target { background: #ff0 }
-        </style>
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/8E2223EC8A82AFADF6C944FF8969408E59014865.css">
         
         
     </head>
  <body class="pod" onload="prettyPrint()">
     <div id="___top"></div>
     
-    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Gtk::GtkToggleButton</h1>
+    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />class GTK::V3::Gtk::GtkToggleButton</div>
     
     <nav class="indexgroup">
 <table id="TOC">
@@ -39,13 +29,11 @@
 </nav>
 
     <div class="pod-body">
-    
-                   <pre class="prettyprint lang-perl6 linenums">unit class GTK::V3::Gtk::GtkToggleButton;
+    <pre class="pod-block-code">unit class GTK::V3::Gtk::GtkToggleButton;
 also is GTK::V3::Gtk::GtkButton;</pre>
 <h2 id="GtkToggleButton_—_Create_buttons_which_retain_their_state"><a class="u" href="#___top" title="go to top of document">GtkToggleButton — Create buttons which retain their state</a></h2>
 <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
-
-                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkToggleButton $start-tggl .= new(:label(&#39;Start Process&#39;));
+<pre class="pod-block-code">my GTK::V3::Gtk::GtkToggleButton $start-tggl .= new(:label(&#39;Start Process&#39;));
 
 # later in another class ...
 method start-stop-process-handle( :widget($start-tggl) ) {
@@ -61,42 +49,33 @@ method start-stop-process-handle( :widget($start-tggl) ) {
 }</pre>
 <h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
 <h2 id="gtk_toggle_button_new"><a class="u" href="#___top" title="go to top of document">gtk_toggle_button_new</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_toggle_button_new ( --&gt; N-GObject )</pre>
+<pre class="pod-block-code">method gtk_toggle_button_new ( --&gt; N-GObject )</pre>
 <p>Creates a new native toggle button object</p>
 <h2 id="[gtk_toggle_button_]_new_with_label"><a class="u" href="#___top" title="go to top of document">[gtk_toggle_button_] new_with_label</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_toggle_button_new_with_label ( Str $label --&gt; N-GObject )</pre>
+<pre class="pod-block-code">method gtk_toggle_button_new_with_label ( Str $label --&gt; N-GObject )</pre>
 <p>Creates a new native toggle button object with a label</p>
 <h2 id="[gtk_toggle_button_]_new_with_mnemonic"><a class="u" href="#___top" title="go to top of document">[gtk_toggle_button_] new_with_mnemonic</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_toggle_button_new_with_mnemonic ( Str $label --&gt; N-GObject )</pre>
+<pre class="pod-block-code">method gtk_toggle_button_new_with_mnemonic ( Str $label --&gt; N-GObject )</pre>
 <p>Creates a new GtkToggleButton containing a label. The label will be created using gtk_label_new_with_mnemonic(), so underscores in label indicate the mnemonic for the button.</p>
 <h2 id="[gtk_toggle_button_]_get_active"><a class="u" href="#___top" title="go to top of document">[gtk_toggle_button_] get_active</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_toggle_button_get_active ( --&gt; Int )</pre>
+<pre class="pod-block-code">method gtk_toggle_button_get_active ( --&gt; Int )</pre>
 <p>Get the button state.</p>
 <h2 id="[gtk_toggle_button_]_set_active"><a class="u" href="#___top" title="go to top of document">[gtk_toggle_button_] set_active</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_toggle_button_set_active ( Int $active --&gt; N-GObject )</pre>
+<pre class="pod-block-code">method gtk_toggle_button_set_active ( Int $active --&gt; N-GObject )</pre>
 <p>Set the button state.</p>
 <h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$label )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( Str :$label )</pre>
 <p>Create a GtkToggleButton with a label.</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Bool :$empty )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( Bool :$empty )</pre>
 <p>Create an empty GtkToggleButton.</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( :$widget! )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( :$widget! )</pre>
 <p>Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$build-id! )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( Str :$build-id! )</pre>
 <p>Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.</p>
 
     </div>
     
     
-<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
 </html>
 

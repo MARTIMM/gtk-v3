@@ -3,24 +3,14 @@
     <head>
         <title>class GTK::V3::Gtk::GtkButton</title>
         <meta charset="UTF-8" />
-  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
-        <style>
-        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
-        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
-        u { text-decoration: none }
-        .nested {
-            margin-left: 3em;
-        }
-        aside, u { opacity: 0.7 }
-        a[id^="fn-"]:target { background: #ff0 }
-        </style>
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/8E2223EC8A82AFADF6C944FF8969408E59014865.css">
         
         
     </head>
  <body class="pod" onload="prettyPrint()">
     <div id="___top"></div>
     
-    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Gtk::GtkButton</h1>
+    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />class GTK::V3::Gtk::GtkButton</div>
     
     <nav class="indexgroup">
 <table id="TOC">
@@ -33,52 +23,80 @@
    <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#[gtk_button_]_get_label">[gtk_button_] get_label</a></td></tr>
    <tr class="toc-level-2"><td class="toc-number">2.4</td><td class="toc-text"><a href="#[gtk_button_]_set_label">[gtk_button_] set_label</a></td></tr>
    <tr class="toc-level-2"><td class="toc-number">2.5</td><td class="toc-text"><a href="#new">new</a></td></tr>
-        
+         <tr class="toc-level-1"><td class="toc-number">3</td><td class="toc-text"><a href="#Signals">Signals</a></td></tr>
+      <tr class="toc-level-2"><td class="toc-number">3.1</td><td class="toc-text"><a href="#Supported_signals">Supported signals</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">3.1.1</td><td class="toc-text"><a href="#clicked">clicked</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">3.2</td><td class="toc-text"><a href="#Unsupported_signals">Unsupported signals</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">3.2.1</td><td class="toc-text"><a href="#activated">activated</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">3.3</td><td class="toc-text"><a href="#Deprecated_signals">Deprecated signals</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">3.3.1</td><td class="toc-text"><a href="#enter">enter</a></td></tr>
+    <tr class="toc-level-3"><td class="toc-number">3.3.2</td><td class="toc-text"><a href="#leave">leave</a></td></tr>
+      <tr class="toc-level-3"><td class="toc-number">3.3.3</td><td class="toc-text"><a href="#pressed">pressed</a></td></tr>
+      <tr class="toc-level-3"><td class="toc-number">3.3.4</td><td class="toc-text"><a href="#released">released</a></td></tr>
+     
 </table>
 </nav>
 
     <div class="pod-body">
-    
-                   <pre class="prettyprint lang-perl6 linenums">unit class GTK::V3::Gtk::GtkButton;
+    <pre class="pod-block-code">unit class GTK::V3::Gtk::GtkButton;
 also is GTK::V3::Gtk::GtkBin;</pre>
 <h2 id="GtkButton_—_A_widget_that_emits_a_signal_when_clicked_on"><a class="u" href="#___top" title="go to top of document">GtkButton — A widget that emits a signal when clicked on</a></h2>
 <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
-
-                   <pre class="prettyprint lang-perl6 linenums">my GTK::V3::Gtk::GtkButton $start-button .= new(:label&lt;Start&gt;);</pre>
+<pre class="pod-block-code">my GTK::V3::Gtk::GtkButton $start-button .= new(:label&lt;Start&gt;);</pre>
 <h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
 <h2 id="gtk_button_new"><a class="u" href="#___top" title="go to top of document">gtk_button_new</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_button_new ( --&gt; N-GObject )</pre>
+<pre class="pod-block-code">method gtk_button_new ( --&gt; N-GObject )</pre>
 <p>Creates a new native button object</p>
 <h2 id="[gtk_button_]_new_with_label"><a class="u" href="#___top" title="go to top of document">[gtk_button_] new_with_label</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_button_new_with_label ( Str $label --&gt; N-GObject )</pre>
+<pre class="pod-block-code">method gtk_button_new_with_label ( Str $label --&gt; N-GObject )</pre>
 <p>Creates a new native button object with a label</p>
 <h2 id="[gtk_button_]_get_label"><a class="u" href="#___top" title="go to top of document">[gtk_button_] get_label</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_button_get_label ( --&gt; Str )</pre>
+<pre class="pod-block-code">method gtk_button_get_label ( --&gt; Str )</pre>
 <p>Get text label of button</p>
 <h2 id="[gtk_button_]_set_label"><a class="u" href="#___top" title="go to top of document">[gtk_button_] set_label</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_button_set_label ( Str $label )</pre>
+<pre class="pod-block-code">method gtk_button_set_label ( Str $label )</pre>
 <p>Set a label ob the button</p>
 <h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$label )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( Str :$label )</pre>
 <p>Creates a new button object with a label</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Bool :$empty )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( Bool :$empty )</pre>
 <p>Create an empty button</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( :$widget! )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( :$widget! )</pre>
 <p>Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$build-id! )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( Str :$build-id! )</pre>
 <p>Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.</p>
+<h1 id="Signals"><a class="u" href="#___top" title="go to top of document">Signals</a></h1>
+<p>Registering example</p>
+<pre class="pod-block-code">class MyHandlers {
+  method my-click-handler ( :$widget, :$my-data ) { ... }
+}
+
+# elsewhere
+my MyHandlers $mh .= new;
+$button.register-signal( $mh, &#39;click-handler&#39;, &#39;clicked&#39;, :$my-data);</pre>
+<p>See also method <code>register-signal</code> in GTK::V3::Glib::GObject.</p>
+<h2 id="Supported_signals"><a class="u" href="#___top" title="go to top of document">Supported signals</a></h2>
+<h3 id="clicked"><a class="u" href="#___top" title="go to top of document">clicked</a></h3>
+<p>Emitted when the button has been activated (pressed and released).</p>
+<p>Handler signature;</p>
+<pre class="pod-block-code">handler ( instance: :$widget, :$user-option1, ..., :$user-optionN )
+</pre>
+<h2 id="Unsupported_signals"><a class="u" href="#___top" title="go to top of document">Unsupported signals</a></h2>
+<h3 id="activated"><a class="u" href="#___top" title="go to top of document">activated</a></h3>
+<p>Signal <code>activated</code> is not supported because GTK advises against the use of it.</p>
+<h2 id="Deprecated_signals"><a class="u" href="#___top" title="go to top of document">Deprecated signals</a></h2>
+<h3 id="enter"><a class="u" href="#___top" title="go to top of document">enter</a></h3>
+<p>Signal <code>enter</code> has been deprecated since version 2.8 and should not be used in newly-written code. Use the “enter-notify-event” signal.</p>
+<h3 id="leave"><a class="u" href="#___top" title="go to top of document">leave</a></h3>
+<p>Signal <code>leave</code> has been deprecated since version 2.8 and should not be used in newly-written code. Use the <code>leave-notify-event</code> signal.</p>
+<h3 id="pressed"><a class="u" href="#___top" title="go to top of document">pressed</a></h3>
+<p>Signal <code>pressed</code> has been deprecated since version 2.8 and should not be used in newly-written code. Use the <code>button-press-event</code> signal.</p>
+<h3 id="released"><a class="u" href="#___top" title="go to top of document">released</a></h3>
+<p>Signal <code>released</code> has been deprecated since version 2.8 and should not be used in newly-written code. Use the <code>button-release-event</code> signal.</p>
 
     </div>
     
     
-<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
 </html>
 

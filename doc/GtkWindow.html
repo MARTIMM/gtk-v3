@@ -3,24 +3,14 @@
     <head>
         <title>class GTK::V3::Gtk::GtkWindow</title>
         <meta charset="UTF-8" />
-  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/F530634371761E259C47D35F4AFFB3A14A2961FB.css">
-        <style>
-        kbd { font-family: "Droid Sans Mono", "Luxi Mono", "Inconsolata", monospace }
-        samp { font-family: "Terminus", "Courier", "Lucida Console", monospace }
-        u { text-decoration: none }
-        .nested {
-            margin-left: 3em;
-        }
-        aside, u { opacity: 0.7 }
-        a[id^="fn-"]:target { background: #ff0 }
-        </style>
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/8E2223EC8A82AFADF6C944FF8969408E59014865.css">
         
         
     </head>
  <body class="pod" onload="prettyPrint()">
     <div id="___top"></div>
     
-    <h1 class='title' style='background-image:url(file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/B1BB540F0458A7E956CA1A73B5B26C4B353E0A64.svg);'>class GTK::V3::Gtk::GtkWindow</h1>
+    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />class GTK::V3::Gtk::GtkWindow</div>
     
     <nav class="indexgroup">
 <table id="TOC">
@@ -42,8 +32,7 @@
 </nav>
 
     <div class="pod-body">
-    
-                   <pre class="prettyprint lang-perl6 linenums">unit class GTK::V3::Gtk::GtkWindow;
+    <pre class="pod-block-code">unit class GTK::V3::Gtk::GtkWindow;
 also is GTK::V3::Gtk::GtkBin;</pre>
 <h2 id="GtkWindow_—_Toplevel_which_can_contain_other_widgets"><a class="u" href="#___top" title="go to top of document">GtkWindow — Toplevel which can contain other widgets</a></h2>
 <p>See readme for an example.</p>
@@ -70,48 +59,39 @@ also is GTK::V3::Gtk::GtkBin;</pre>
 </ul>
 <h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
 <h2 id="gtk_window_new"><a class="u" href="#___top" title="go to top of document">gtk_window_new</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_window_new ( GtkWindowType $type )</pre>
+<pre class="pod-block-code">method gtk_window_new ( GtkWindowType $type )</pre>
 <p>Creates a new GtkWindow, which is a toplevel window that can contain other widgets. Nearly always, the type of the window should be GTK_WINDOW_TOPLEVEL. If you’re implementing something like a popup menu from scratch (which is a bad idea, just use GtkMenu), you might use GTK_WINDOW_POPUP. GTK_WINDOW_POPUP is not for dialogs, though in some other toolkits dialogs are called “popups”. In GTK+, GTK_WINDOW_POPUP means a pop-up menu or pop-up tooltip. On X11, popup windows are not controlled by the window manager.</p>
 <p>If you simply want an undecorated window (no window borders), use gtk_window_set_decorated(), don’t use GTK_WINDOW_POPUP.</p>
 <p>All top-level windows created by gtk_window_new() are stored in an internal top-level window list. This list can be obtained from gtk_window_list_toplevels(). Due to Gtk+ keeping a reference to the window internally, gtk_window_new() does not return a reference to the caller.</p>
 <p>To delete a GtkWindow, call gtk_widget_destroy().</p>
 <h2 id="[gtk_window_]_set_title"><a class="u" href="#___top" title="go to top of document">[gtk_window_] set_title</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_window_set_title ( Str $title )</pre>
+<pre class="pod-block-code">method gtk_window_set_title ( Str $title )</pre>
 <p>Sets the title of the GtkWindow. The title of a window will be displayed in its title bar; on the X Window System, the title bar is rendered by the window manager, so exactly how the title appears to users may vary according to a user’s exact configuration. The title should help a user distinguish this window from other windows they may have open. A good title might include the application name and current document filename, for example.</p>
 <h2 id="[gtk_window_]_set_default_size"><a class="u" href="#___top" title="go to top of document">[gtk_window_] set_default_size</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_window_set_default_size ( Int $width, Int $height )</pre>
+<pre class="pod-block-code">method gtk_window_set_default_size ( Int $width, Int $height )</pre>
 <p>Sets the default size of a window. See also <a href="https://developer.gnome.org/gtk3/stable/GtkWindow.html#gtk-window-set-default-size">the developer docs</a>.</p>
 <h2 id="[gtk_window_]_set_modal"><a class="u" href="#___top" title="go to top of document">[gtk_window_] set_modal</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_window_set_modal ( Int $modal )</pre>
+<pre class="pod-block-code">method gtk_window_set_modal ( Int $modal )</pre>
 <p>Sets a window modal or non-modal. Modal windows prevent interaction with other windows in the same application. To keep modal dialogs on top of main application windows, use gtk_window_set_transient_for() to make the dialog transient for the parent; most window managers will then disallow lowering the dialog below the parent.</p>
 <h2 id="[gtk_window_]_set_position"><a class="u" href="#___top" title="go to top of document">[gtk_window_] set_position</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_window_set_position ( Int $position )</pre>
+<pre class="pod-block-code">method gtk_window_set_position ( Int $position )</pre>
 <p>Sets a position constraint for this window. If the old or new constraint is GTK_WIN_POS_CENTER_ALWAYS, this will also cause the window to be repositioned to satisfy the new constraint.</p>
 <h2 id="[gtk_window_]_set_transient_for"><a class="u" href="#___top" title="go to top of document">[gtk_window_] set_transient_for</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">method gtk_window_set_transient_for ( GTK::V3::Glib::GObject $main-window )</pre>
+<pre class="pod-block-code">method gtk_window_set_transient_for ( GTK::V3::Glib::GObject $main-window )</pre>
 <p>Dialog windows should be set transient for the main application window they were spawned from. This allows window managers to e.g. keep the dialog on top of the main window, or center the dialog over the main window.</p>
 <h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD (
+<pre class="pod-block-code">multi submethod BUILD (
   Bool :$empty!, GtkWindowType :$window-type = GTK_WINDOW_TOPLEVEL
 )</pre>
 <p>Create an empty top level window or popup.</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( :$widget! )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( :$widget! )</pre>
 <p>Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.</p>
-
-                   <pre class="prettyprint lang-perl6 linenums">multi submethod BUILD ( Str :$build-id! )</pre>
+<pre class="pod-block-code">multi submethod BUILD ( Str :$build-id! )</pre>
 <p>Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.</p>
 
     </div>
     
     
-<div class=footer>Generated using Pod::Render, Pod::To::HTML, &copy;Google prettify, Camelia™ (the butterfly)</div>    </body>
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
 </html>
 

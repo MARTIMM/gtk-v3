@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>class GTK::V3::Glib::GObject</title>
+        <title>GTK::V3::Glib::GObject</title>
         <meta charset="UTF-8" />
   <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/8E2223EC8A82AFADF6C944FF8969408E59014865.css">
         
@@ -10,7 +10,7 @@
  <body class="pod" onload="prettyPrint()">
     <div id="___top"></div>
     
-    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />class GTK::V3::Glib::GObject</div>
+    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />GTK::V3::Glib::GObject</div>
     <p class='subtitle'>GObject — The base object type</p>
     <nav class="indexgroup">
 <table id="TOC">
@@ -26,7 +26,8 @@
         <tr class="toc-level-3"><td class="toc-number">1.6.2</td><td class="toc-text"><a href="#multi_submethod_BUILD_(_Str_:$build-id!_)">multi submethod BUILD ( Str :$build-id! )</a></td></tr>
             <tr class="toc-level-2"><td class="toc-number">1.7</td><td class="toc-text"><a href="#debug">debug</a></td></tr>
    <tr class="toc-level-2"><td class="toc-number">1.8</td><td class="toc-text"><a href="#register-signal">register-signal</a></td></tr>
-                                                <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Signals">Signals</a></td></tr>
+                     <tr class="toc-level-2"><td class="toc-number">1.9</td><td class="toc-text"><a href="#start-thread">start-thread</a></td></tr>
+                      <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Signals">Signals</a></td></tr>
       <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#Not_yet_supported_signals">Not yet supported signals</a></td></tr>
  <tr class="toc-level-3"><td class="toc-number">2.1.1</td><td class="toc-text"><a href="#notify">notify</a></td></tr>
                   
@@ -149,29 +150,21 @@ my GTK::V3::Gtk::GtkButton $button .= new(:build-id&lt;my-gui-button&gt;);</pre>
 <pre class="pod-block-code">method debug ( Bool :$on )</pre>
 <p>There are many situations when exceptions are retrown within code of a callback method, Perl6 is not able to display the error properly (yet). In those cases you need another way to display errors and show extra messages leading up to it.</p>
 <h2 id="register-signal"><a class="u" href="#___top" title="go to top of document">register-signal</a></h2>
+<p>Register a handler to process a signal or an event. There are several types of callbacks which can be handled by this regstration. They can be controlled by using a named argument with a special name.</p>
 <pre class="pod-block-code">method register-signal (
   $handler-object, Str:D $handler-name, Str:D $signal-name,
   Int :$connect-flags = 0, *%user-options
   --&gt; Bool
 )</pre>
-<p>Register a handler to process a signal or an event. There are several types of callbacks which can be handled by this regstration. They can be controlled by using a named argument with a special name.</p>
-<ul><li><p>Events. The GTK will call a function with a structure holding the event information. When the user handler has a <strong>named argument</strong> named <strong>event</strong> it is assumed that the handler code is made is to handle events like key presses.</p>
+<ul><li><p>$handler-object is the object wherein the handler is defined.</p>
 </li>
-<li><p>There are also callbacks which get extra native widgets. An example of this is the <code>row-selected</code> signal from <code>GtkListBox</code>. The callback gets a native GtkListBoxRow widget. To handle these signals, the user can define a handler with a <strong>named argument</strong> that is named <strong>nativewidget</strong>.</p>
-</li>
-<li><p>Otherwise it is assumed that the code handles signals like button clicks. Information about signal names available to widgets can be found at the GTK developers site, e.g. <a href="https://developer.gnome.org/gtk3/stable/GtkButton.html#GtkButton.signal-details">for GtkButton click signals here</a> and <a href="https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-button-press-event">for a mouse button press event here</a>. Notice that in the latter case you can see that one of the arguments has an argument type of <strong>GdkEvent</strong>.</p>
-</li>
-<li><p>$handler-object is the object wherein the handler is defined.</p>
-</li>
-<li><p>$handler-name is name of the method. Its signature is one of</p>
+<li><p>$handler-name is name of the method. Commonly used signatures for those handlers are</p>
 </li>
 </ul>
-<pre class="pod-block-code">handler ( object: :$widget, :$user-option1, ..., :$user-optionN )</pre>
-<p>or</p>
-<pre class="pod-block-code">handler ( object: :$widget, :$event, :$user-option1, ..., :$user-optionN )</pre>
-<p>or</p>
-<pre class="pod-block-code">handler ( object: :$widget, :$nativewidget, :$user-option1, ..., :$user-optionN )</pre>
-<p>The arguments are all optional but to register an event handler, the <strong>:$event</strong> argument must be present.</p>
+<pre class="pod-block-code">handler ( object: :$widget, :$user-option1, ..., :$user-optionN )
+handler ( object: :$widget, :$event, :$user-option1, ..., :$user-optionN )
+handler ( object: :$widget, :$nativewidget, :$user-option1, ..., :$user-optionN )</pre>
+<p>Other forms are explained in the widget documentations when signals are provided.</p>
 <ul><li><p>$signal-name is the name of the event to be handled. Each gtk widget has its own series of signals, please look for it in the documentation of gtk.</p>
 </li>
 <li><p>$connect-flags can be one of <code>G_CONNECT_AFTER</code> or <code>G_CONNECT_SWAPPED</code>. See <a href="https://developer.gnome.org/gobject/stable/gobject-Signals.html#GConnectFlags">documentation here</a>.</p>
@@ -194,6 +187,26 @@ my Array $data = [&lt;Hello World&gt;];
 # register button signal
 my X $x .= new(:empty);
 $button.register-signal( $x, &#39;click-handler&#39;, &#39;clicked&#39;, :user-data($data));</pre>
+<h2 id="start-thread"><a class="u" href="#___top" title="go to top of document">start-thread</a></h2>
+<p>Start a thread in such a way that the function can modify the user interface in a save way and that these updates are automatically made visible without explicitly process events queued and waiting in the main loop.</p>
+<pre class="pod-block-code">method start-thread (
+  $handler-object, Str:D $handler-name, Int $priority = G_PRIORITY_DEFAULT,
+  Bool :$new-context = False, *%user-options
+  --&gt; Promise
+)</pre>
+<ul><li><p>$handler-object is the object wherein the handler is defined.</p>
+</li>
+<li><p>$handler-name is name of the method.</p>
+</li>
+<li><p>$priority; The priority to which the handler is started. The default is G_PRIORITY_DEFAULT. These are constants defined in <code>GTK::V3::Glib::GMain</code>.</p>
+</li>
+<li><p>$new-context; Whether to run the handler in a new context or to run it in the context of the main loop. Default is to run in the main loop.</p>
+</li>
+<li><p>*%user-options; Any name not used above is provided to the handler</p>
+</li>
+</ul>
+<p>Returns a <code>Promise</code> object. If the call fails, the object is undefined.</p>
+<p>The handlers signature is at least <code>:$widget</code> of the object on which the call was made. Furthermore all users named arguments to the call defined in <code>*%user-options</code>. The handler may return any value which becomes the result of the <code>Promise</code> returned from <code>start-thread</code>.</p>
 <h1 id="Signals"><a class="u" href="#___top" title="go to top of document">Signals</a></h1>
 <p>Registering example</p>
 <pre class="pod-block-code">class MyHandlers {

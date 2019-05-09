@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>class GTK::V3::Glib::GSignal</title>
+        <title>GTK::V3::Glib::GSignal</title>
         <meta charset="UTF-8" />
   <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/8E2223EC8A82AFADF6C944FF8969408E59014865.css">
         
@@ -10,18 +10,17 @@
  <body class="pod" onload="prettyPrint()">
     <div id="___top"></div>
     
-    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />class GTK::V3::Glib::GSignal</div>
+    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />GTK::V3::Glib::GSignal</div>
     
     <nav class="indexgroup">
 <table id="TOC">
 <caption><h2 id="TOC_Title">Table of Contents</h2></caption>
    <tr class="toc-level-2"><td class="toc-number">0.1</td><td class="toc-text"><a href="#GSignal_—_A_means_for_customization_of_object_behaviour_and_a_general_purpose_notification_mechanism">GSignal — A means for customization of object behaviour and a general purpose notification mechanism</a></td></tr>
  <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
-    <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Enumerations">Enumerations</a></td></tr>
- <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#GConnectFlags">GConnectFlags</a></td></tr>
-   <tr class="toc-level-1"><td class="toc-number">3</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
- <tr class="toc-level-2"><td class="toc-number">3.1</td><td class="toc-text"><a href="#g_signal_connect_object">g_signal_connect_object</a></td></tr>
-           <tr class="toc-level-2"><td class="toc-number">3.2</td><td class="toc-text"><a href="#g_signal_connect">g_signal_connect</a></td></tr>
+        <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#[g_signal_]_connect_object">[g_signal_] connect_object</a></td></tr>
+       <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#[g_signal_]_emit_by_name">[g_signal_] emit_by_name</a></td></tr>
+        <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#[g_signal_]_handler_disconnect">[g_signal_] handler_disconnect</a></td></tr>
     
 </table>
 </nav>
@@ -45,43 +44,38 @@ $handler = -&gt; N-GObject $ignore-w, GdkEvent $e, OpaquePointer $ignore-d {
 
 # connect signal to the handler
 $w.connect-object( &#39;button-press-event&#39;, $handler);</pre>
-<p>It will be easier to use the register-signal method</p>
+<p>It will be easier to use the <code>register-signal()</code> method defined in <code>GTK::V3::Glib::GObject</code>.</p>
 <pre class="pod-block-code"># define method
-method mouse-event ( :widget($w), :event($e)) { ... }
+method mouse-event ( :widget($w), :event($e), :$time) { ... }
 
 # get the window object
 my GTK::V3::Gtk::GtkWindow $w .= new( ... );
 
 # then register
 $w.register-signal( self, &#39;mouse-event&#39;, &#39;button-press-event&#39;, :time(now));</pre>
-<h1 id="Enumerations"><a class="u" href="#___top" title="go to top of document">Enumerations</a></h1>
-<h2 id="GConnectFlags"><a class="u" href="#___top" title="go to top of document">GConnectFlags</a></h2>
-<ul><li><p>G_CONNECT_AFTER; whether the handler should be called before or after the default handler of the signal.</p>
-</li>
-<li><p>G_CONNECT_SWAPPED; whether the instance and data should be swapped when calling the handler; see g_signal_connect_swapped() for an example.</p>
-</li>
-</ul>
 <h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
-<h2 id="g_signal_connect_object"><a class="u" href="#___top" title="go to top of document">g_signal_connect_object</a></h2>
-<pre class="pod-block-code">method g_signal_connect_object(
-  Str $signal, Callable $handler, int32 $connect_flags = 0
-  --&gt; uint64
-}</pre>
-<p>This is similar to <code>g_signal_connect_data()</code>, but uses a closure which ensures that the gobject stays alive during the call to c_handler by temporarily adding a reference count to gobject .</p>
-<p>When the gobject is destroyed the signal handler will be automatically disconnected. Note that this is not currently threadsafe (ie: emitting a signal while gobject is being destroyed in another thread is not safe).</p>
+<h2 id="[g_signal_]_connect_object"><a class="u" href="#___top" title="go to top of document">[g_signal_] connect_object</a></h2>
+<p>Connects a callback function to a signal for a particular object.</p>
+<pre class="pod-block-code">method g_signal_connect_object( Str $signal, Callable $handler --&gt; uint64 )</pre>
 <ul><li><p>$signal; a string of the form <code>signal-name::detail</code>.</p>
 </li>
 <li><p>$handler; the callback to connect.</p>
 </li>
-<li><p>$connect_flags; a combination of GConnectFlags.</p>
-</li>
 </ul>
-<h2 id="g_signal_connect"><a class="u" href="#___top" title="go to top of document">g_signal_connect</a></h2>
-<pre class="pod-block-code">sub g_signal_connect ( Str $signal, Callable $handler --&gt; uint64 )</pre>
-<p>Connects a callback function to a signal for a particular object.</p>
+<h2 id="[g_signal_]_emit_by_name"><a class="u" href="#___top" title="go to top of document">[g_signal_] emit_by_name</a></h2>
+<p>Emits a signal.</p>
+<p>Note that <code>g_signal_emit_by_name()</code> resets the return value to the default if no handlers are connected.</p>
+<pre class="pod-block-code">g_signal_emit_by_name ( Str $signal, N-GObject $widget )</pre>
 <ul><li><p>$signal; a string of the form &quot;signal-name::detail&quot;.</p>
 </li>
-<li><p>$handler; callback function to connect.</p>
+<li><p>$widget; widget to pass to the handler.</p>
+</li>
+</ul>
+<h2 id="[g_signal_]_handler_disconnect"><a class="u" href="#___top" title="go to top of document">[g_signal_] handler_disconnect</a></h2>
+<p>Disconnects a handler from an instance so it will not be called during any future or currently ongoing emissions of the signal it has been connected to. The handler_id becomes invalid and may be reused.</p>
+<p>The handler_id has to be a valid signal handler id, connected to a signal of instance .</p>
+<pre class="pod-block-code">g_signal_handler_disconnect( int32 $handler_id )</pre>
+<ul><li><p>$handler_id; Handler id of the handler to be disconnected.</p>
 </li>
 </ul>
 

@@ -2,7 +2,7 @@ use v6;
 # ==============================================================================
 =begin pod
 
-=TITLE class GTK::V3::Glib::GSignal
+=TITLE GTK::V3::Glib::GSignal
 
 =SUBTITLE
 
@@ -28,10 +28,10 @@ use v6;
   # connect signal to the handler
   $w.connect-object( 'button-press-event', $handler);
 
-It will be easier to use the register-signal method
+It will be easier to use the C<register-signal()> method defined in C<GTK::V3::Glib::GObject>.
 
   # define method
-  method mouse-event ( :widget($w), :event($e)) { ... }
+  method mouse-event ( :widget($w), :event($e), :$time) { ... }
 
   # get the window object
   my GTK::V3::Gtk::GtkWindow $w .= new( ... );
@@ -63,6 +63,7 @@ my Signature $nativewidget-type = :( N-GObject, OpaquePointer, OpaquePointer );
 my Signature $event-type = :( N-GObject, GdkEvent, OpaquePointer );
 
 #-------------------------------------------------------------------------------
+#`{{
 =begin pod
 =head1 Enumerations
 =head2 GConnectFlags
@@ -74,34 +75,56 @@ enum GConnectFlags is export (
   G_CONNECT_AFTER	        => 1,
   G_CONNECT_SWAPPED	      => 1 +< 1
 );
+}}
+
+#`{{
+#-------------------------------------------------------------------------------
+=begin pod
+=head1 Methods
+
+=head2 g_signal_connect
+
+In this project it uses C<g_signal_connect_object()> explained below.
+
+  method g_signal_connect( Str $signal, Callable $handler --> uint64 )
+
+=item $signal; a string of the form C<signal-name::detail>.
+=item $handler; the callback to connect.
+
+=end pod
+
+sub g_signal_connect (
+  N-GObject $widget, Str $signal, Callable $handler
+  --> uint64
+) is inlinable {
+  g_signal_connect_object( $widget, $signal, $handler)
+}
+}}
 
 #-------------------------------------------------------------------------------
 =begin pod
 =head1 Methods
 
-=head2 g_signal_connect_object
+=head2 [g_signal_] connect_object
 
-  method g_signal_connect_object(
-    Str $signal, Callable $handler, int32 $connect_flags = 0
-    --> uint64
-  }
+Connects a callback function to a signal for a particular object.
 
-This is similar to C<g_signal_connect_data()>, but uses a closure which ensures that the gobject stays alive during the call to c_handler by temporarily adding a reference count to gobject .
-
-When the gobject is destroyed the signal handler will be automatically disconnected. Note that this is not currently threadsafe (ie: emitting a signal while gobject is being destroyed in another thread is not safe).
+  method g_signal_connect_object( Str $signal, Callable $handler --> uint64 )
 
 =item $signal; a string of the form C<signal-name::detail>.
 =item $handler; the callback to connect.
-=item $connect_flags; a combination of GConnectFlags.
 
 =end pod
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 sub g_signal_connect_object(
-  N-GObject $widget, Str $signal, Callable $handler, int32 $connect_flags = 0
+  N-GObject $widget, Str $signal, Callable $handler
   --> uint64
 ) {
 
-  my @args = $widget, $signal, $handler, OpaquePointer, $connect_flags;
+  # OpaquePointer for userdata which will never be send around
+  # 0 for connect_flags which cannot be used for G_CONNECT_AFTER
+  #   nor G_CONNECT_SWAPPED
+  my @args = $widget, $signal, $handler, OpaquePointer, 0;
 
   given $handler.signature {
     when $signal-type { _g_signal_connect_object_signal(|@args) }
@@ -142,34 +165,30 @@ sub _g_signal_connect_object_nativewidget(
   { * }
 
 #-------------------------------------------------------------------------------
+#`{{
 =begin pod
-=head2 g_signal_connect
+=head2 [g_signal_] connect_data
 
-  sub g_signal_connect ( Str $signal, Callable $handler --> uint64 )
+Connects a callback function to a signal for a particular object. Similar to C<g_signal_connect()>, but allows to provide a GClosureNotify for the data which will be called when the signal handler is disconnected and no longer used.
 
-Connects a callback function to a signal for a particular object.
+  method g_signal_connect_data ( Str $signal, Callable $handler --> uint64 )
 
 =item $signal; a string of the form "signal-name::detail".
 =item $handler; callback function to connect.
 
 =end pod
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-sub g_signal_connect (
-  N-GObject $widget, Str $signal, Callable $handler
-  --> uint64
-) {
-  g_signal_connect_data( $widget, $signal, $handler, OpaquePointer, Callable, 0)
-}
-
-#-------------------------------------------------------------------------------
-# can be called the same as g_signal_connect because of its defaults
 sub g_signal_connect_data(
   N-GObject $widget, Str $signal, Callable $handler,
-  OpaquePointer $d, Callable $destroy_data, int32 $connect_flags = 0
   --> uint64
 ) {
 
-  my @args = $widget, $signal, $handler, $d, $destroy_data, $connect_flags;
+  # OpaquePointer for userdata which will never be send around
+  # 0 for connect_flags which cannot be used for G_CONNECT_AFTER
+  #   nor G_CONNECT_SWAPPED
+  # Callable for closure notify to cleanup data after disconnection.
+  #   The user data is not passed around, so, no cleanup.
+  my Callable $destroy_data = -> OpaquePointer, OpaquePointer {};
+  my @args = $widget, $signal, $handler, OpaquePointer, $destroy_data, 0;
 
   given $handler.signature {
     when $signal-type { _g_signal_connect_data_signal(|@args) }
@@ -210,7 +229,9 @@ sub _g_signal_connect_data_nativewidget (
 ) returns int64
   is native(&gobject-lib)
   { * }
+}}
 
+#`{{
 #-------------------------------------------------------------------------------
 sub g_signal_connect_after (
   N-GObject $widget, Str $signal, Callable $handler, OpaquePointer
@@ -228,6 +249,7 @@ sub g_signal_connect_swapped (
     $widget, $signal, $handler, OpaquePointer, Any, G_CONNECT_SWAPPED
   );
 }
+}}
 
 #-------------------------------------------------------------------------------
 #`{{
@@ -244,17 +266,50 @@ sub g_signal_emit (
 # Handlers above provided to the signal connect calls are having 2 arguments
 # a widget and data. So the provided extra arguments are then those 2
 # plus a return value
+=begin pod
+=head2 [g_signal_] emit_by_name
+
+Emits a signal.
+
+Note that C<g_signal_emit_by_name()> resets the return value to the default if no handlers are connected.
+
+  g_signal_emit_by_name ( Str $signal, N-GObject $widget )
+
+=item $signal; a string of the form "signal-name::detail".
+=item $widget; widget to pass to the handler.
+
+=end pod
+
 sub g_signal_emit_by_name (
+  N-GObject $instance, Str $detailed_signal, N-GObject $widget
+) is inlinable {
+  _g_signal_emit_by_name( $instance, $detailed_signal, $widget, OpaquePointer);
+}
+
+sub _g_signal_emit_by_name (
   # first two are obligatory by definition
   N-GObject $instance, Str $detailed_signal,
   # The rest depends on the handler defined when connecting
   # There is no return value from the handler
   N-GObject $widget, OpaquePointer
 ) is native(&gobject-lib)
+  is symbol('g_signal_emit_by_name')
   { * }
 
 #-------------------------------------------------------------------------------
-sub g_signal_handler_disconnect( N-GObject $widget, int32 $handler_id)
+=begin pod
+=head2 [g_signal_] handler_disconnect
+
+Disconnects a handler from an instance so it will not be called during any future or currently ongoing emissions of the signal it has been connected to. The handler_id becomes invalid and may be reused.
+
+The handler_id has to be a valid signal handler id, connected to a signal of instance .
+
+  g_signal_handler_disconnect( int32 $handler_id )
+
+=item $handler_id; Handler id of the handler to be disconnected.
+=end pod
+
+sub g_signal_handler_disconnect( N-GObject $widget, int32 $handler_id )
   is native(&gobject-lib)
   { * }
 

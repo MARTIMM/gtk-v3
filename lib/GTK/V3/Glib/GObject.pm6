@@ -2,7 +2,7 @@ use v6;
 # ==============================================================================
 =begin pod
 
-=TITLE class GTK::V3::Glib::GObject
+=TITLE GTK::V3::Glib::GObject
 
 =SUBTITLE GObject — The base object type
 
@@ -31,10 +31,13 @@ use NativeCall;
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 use GTK::V3::N::N-GObject;
+
 use GTK::V3::Gdk::GdkEventTypes;
 use GTK::V3::Gtk::GtkMain;
+
 use GTK::V3::Glib::GSignal;
 use GTK::V3::Glib::GValue;
+use GTK::V3::Glib::GMain;
 
 sub EXPORT { {
     'N-GObject' => N-GObject,
@@ -48,6 +51,8 @@ unit class GTK::V3::Glib::GObject:auth<github:MARTIMM>;
 # Increases the reference count of $object. The new() methods will increase the
 # reference count of the native object automatically and when destroyed or
 # overwritten decreased.
+
+# no pod. user does not have to know about it.
 sub g_object_ref ( N-GObject $object )
   returns N-GObject
   is native(&gobject-lib)
@@ -58,6 +63,8 @@ sub g_object_ref ( N-GObject $object )
 # the object is finalized (i.e. its memory is freed). The widget classes will
 # automatically decrease the reference count to the native object when
 # destroyed or when overwritten.
+
+# no pod. user does not have to know about it.
 sub g_object_unref ( N-GObject $object )
   is native(&gobject-lib)
   { * }
@@ -65,6 +72,8 @@ sub g_object_unref ( N-GObject $object )
 # ==============================================================================
 # Increase the reference count of object , and possibly remove the floating
 # reference. See also https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-ref-sink.
+
+# no pod. user does not have to know about it.
 sub g_object_ref_sink ( N-GObject $object )
   is native(&gobject-lib)
   { * }
@@ -72,12 +81,16 @@ sub g_object_ref_sink ( N-GObject $object )
 # ==============================================================================
 # Clears a reference to a GObject. The reference count of the object is
 # decreased and the pointer is set to NULL.
+
+# no pod. user does not have to know about it.
 sub g_clear_object ( N-GObject $object )
   is native(&gobject-lib)
   { * }
 
 # ==============================================================================
 # Checks whether object has a floating reference.
+
+# no pod. user does not have to know about it.
 sub g_object_is_floating ( N-GObject $object )
   returns int32
   is native(&gobject-lib)
@@ -88,6 +101,8 @@ sub g_object_is_floating ( N-GObject $object )
 # floating object reference. Doing this is seldom required: all
 # GInitiallyUnowneds are created with a floating reference which usually just
 # needs to be sunken by calling g_object_ref_sink().
+
+# no pod. user does not have to know about it.
 sub g_object_force_floating ( N-GObject $object )
   is native(&gobject-lib)
   { * }
@@ -282,6 +297,7 @@ method FALLBACK ( $native-sub is copy, |c ) {
 }
 
 #-------------------------------------------------------------------------------
+# no pod. user does not have to know about it.
 method fallback ( $native-sub --> Callable ) {
 
   my Callable $s;
@@ -386,14 +402,14 @@ et object using a C<GtkBuilder>. The C<GtkBuilder> class will handover its objec
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 submethod BUILD ( *%options ) {
 
+  # Test if GTK is initialized
+  my GTK::V3::Gtk::GtkMain $main .= new;
+
   note "\ngobject: {self}, ", %options if $gobject-debug;
 
   unless $signals-added {
     $signals-added = self.add-signal-types( $?CLASS.^name, :GParamSpec<notify>);
   }
-
-  # Test if GTK is initialized
-  my GTK::V3::Gtk::GtkMain $main .= new;
 
   if ? %options<widget> {
     note "gobject widget: ", %options<widget> if $gobject-debug;
@@ -476,6 +492,7 @@ method debug ( Bool :$on ) {
 }
 
 #-------------------------------------------------------------------------------
+# no pod. user does not have to know about it.
 #TODO destroy when overwritten?
 method native-gobject (
   N-GObject $widget?, Bool :$force = False --> N-GObject
@@ -492,6 +509,7 @@ method native-gobject (
 }
 
 #-------------------------------------------------------------------------------
+# no pod. user does not have to know about it.
 method set-builder ( $builder ) {
   $builders.push($builder);
 }
@@ -500,31 +518,23 @@ method set-builder ( $builder ) {
 =begin pod
 =head2 register-signal
 
+Register a handler to process a signal or an event. There are several types of callbacks which can be handled by this regstration. They can be controlled by using a named argument with a special name.
+
   method register-signal (
     $handler-object, Str:D $handler-name, Str:D $signal-name,
     Int :$connect-flags = 0, *%user-options
     --> Bool
   )
 
-Register a handler to process a signal or an event. There are several types of callbacks which can be handled by this regstration. They can be controlled by using a named argument with a special name.
-=item Events. The GTK will call a function with a structure holding the event information. When the user handler has a B<named argument> named B<event> it is assumed that the handler code is made is to handle events like key presses.
-=item There are also callbacks which get extra native widgets. An example of this is the C<row-selected> signal from C<GtkListBox>. The callback gets a native GtkListBoxRow widget. To handle these signals, the user can define a handler with a B<named argument> that is named B<nativewidget>.
-=item Otherwise it is assumed that the code handles signals like button clicks. Information about signal names available to widgets can be found at the GTK developers site, e.g. L<for GtkButton click signals here | https://developer.gnome.org/gtk3/stable/GtkButton.html#GtkButton.signal-details> and L<for a mouse button press event here | https://developer.gnome.org/gtk3/stable/GtkWidget.html#GtkWidget-button-press-event>. Notice that in the latter case you can see that one of the arguments has an argument type of B<GdkEvent>.
-
 =item $handler-object is the object wherein the handler is defined.
-=item $handler-name is name of the method. Its signature is one of
+=item $handler-name is name of the method. Commonly used signatures for those handlers are
 
   handler ( object: :$widget, :$user-option1, ..., :$user-optionN )
-
-or
-
   handler ( object: :$widget, :$event, :$user-option1, ..., :$user-optionN )
-
-or
-
   handler ( object: :$widget, :$nativewidget, :$user-option1, ..., :$user-optionN )
 
-The arguments are all optional but to register an event handler, the B<:$event> argument must be present.
+Other forms are explained in the widget documentations when signals are provided.
+
 
 =item $signal-name is the name of the event to be handled. Each gtk widget has its own series of signals, please look for it in the documentation of gtk.
 =item $connect-flags can be one of C<G_CONNECT_AFTER> or C<G_CONNECT_SWAPPED>. See L<documentation here|https://developer.gnome.org/gobject/stable/gobject-Signals.html#GConnectFlags>.
@@ -550,8 +560,7 @@ The arguments are all optional but to register an event handler, the B<:$event> 
 =end pod
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 method register-signal (
-  $handler-object, Str:D $handler-name, Str:D $signal-name,
-  Int :$connect-flags = 0, *%user-options
+  $handler-object, Str:D $handler-name, Str:D $signal-name, *%user-options
   --> Bool
 ) {
 
@@ -629,7 +638,7 @@ method register-signal (
 
     $!g-signal .= new(:$!g-object);
     $!g-signal."_g_signal_connect_object_$signal-type"(
-      $signal-name, $handler, OpaquePointer, $connect-flags
+      $signal-name, $handler, OpaquePointer, 0
     );
 
     True
@@ -641,6 +650,80 @@ method register-signal (
 }
 
 #-------------------------------------------------------------------------------
+=begin pod
+=head2 start-thread
+
+Start a thread in such a way that the function can modify the user interface in a save way and that these updates are automatically made visible without explicitly process events queued and waiting in the main loop.
+
+  method start-thread (
+    $handler-object, Str:D $handler-name, Int $priority = G_PRIORITY_DEFAULT,
+    Bool :$new-context = False, *%user-options
+    --> Promise
+  )
+
+=item $handler-object is the object wherein the handler is defined.
+=item $handler-name is name of the method.
+=item $priority; The priority to which the handler is started. The default is G_PRIORITY_DEFAULT. These are constants defined in C<GTK::V3::Glib::GMain>.
+=item $new-context; Whether to run the handler in a new context or to run it in the context of the main loop. Default is to run in the main loop.
+=item *%user-options; Any name not used above is provided to the handler
+
+Returns a C<Promise> object. If the call fails, the object is undefined.
+
+The handlers signature is at least C<:$widget> of the object on which the call was made. Furthermore all users named arguments to the call defined in C<*%user-options>. The handler may return any value which becomes the result of the C<Promise> returned from C<start-thread>.
+
+=end pod
+
+method start-thread (
+  $handler-object, Str:D $handler-name, Int $priority = G_PRIORITY_DEFAULT,
+  Bool :$new-context = False, *%user-options
+  --> Promise
+) {
+
+  # don't start thread if handler is not available
+  my Method $sh = $handler-object.^lookup($handler-name) // Method;
+  return Promise unless ? $sh;
+
+  my Promise $p = start {
+
+    my GTK::V3::Glib::GMain $gmain .= new;
+
+    # This part is important that it happens in the thread where the
+    # function is invoked in that context!
+    my $main-context;
+    if $new-context {
+      $main-context = $gmain.context-new;
+      $gmain.context-push-thread-default($main-context);
+    }
+
+    else {
+      $main-context = $gmain.context-get-thread-default;
+    }
+
+    my $return-value;
+    $gmain.context-invoke-full(
+      $main-context, $priority,
+      -> OpaquePointer $d {
+        $return-value = $handler-object."$handler-name"(
+          :widget(self), |%user-options
+        );
+
+        G_SOURCE_REMOVE
+      },
+      OpaquePointer, OpaquePointer
+    );
+
+    if $new-context {
+      $gmain.context-pop-thread-default($main-context);
+    }
+
+    $return-value
+  }
+
+  $p
+}
+
+#-------------------------------------------------------------------------------
+# no pod. user does not have to know about it.
 method add-signal-types ( Str $module-name, *%signal-descriptions --> Bool ) {
 
   # must store signal names under the class name because I found the use of

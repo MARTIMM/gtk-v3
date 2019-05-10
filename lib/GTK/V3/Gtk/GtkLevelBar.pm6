@@ -157,8 +157,6 @@ sub gtk_level_bar_set_mode ( N-GObject $levelbar, int32 $mode )
 =begin pod
 =head2 [gtk_level_bar_] get_mode
 
-Returns the value of the current mode.
-
   method gtk_level_bar_get_mode ( --> GtkLevelBarMode )
 
 Returns current mode.
@@ -172,9 +170,21 @@ sub gtk_level_bar_get_mode ( N-GObject $levelbar )
 
 #-------------------------------------------------------------------------------
 =begin pod
-=head2 [gtk_level_bar_] get_value
+=head2 [gtk_level_bar_] set_value
 
-Returns the current value.
+  method gtk_level_bar_set_value ( Num $value )
+
+=item $value; set the level bar value.
+
+=end pod
+
+sub gtk_level_bar_set_value ( N-GObject $levelbar, num64 $value )
+  is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 [gtk_level_bar_] get_value
 
   method gtk_level_bar_get_value ( --> Num )
 

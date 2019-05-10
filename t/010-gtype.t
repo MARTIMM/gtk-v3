@@ -2,10 +2,7 @@ use v6;
 use NativeCall;
 use Test;
 
-use GTK::V3::Glib::GObject;
 use GTK::V3::Glib::GType;
-use GTK::V3::Glib::GList;
-use GTK::V3::Gtk::GtkButton;
 use GTK::V3::Gtk::GtkBuilder;
 
 #-------------------------------------------------------------------------------

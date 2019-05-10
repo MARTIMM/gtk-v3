@@ -3,7 +3,6 @@ use NativeCall;
 use Test;
 
 use GTK::V3::X;
-use GTK::V3::Glib::GObject;
 use GTK::V3::Glib::GValue;
 use GTK::V3::Glib::GType;
 use GTK::V3::Gtk::GtkLabel;

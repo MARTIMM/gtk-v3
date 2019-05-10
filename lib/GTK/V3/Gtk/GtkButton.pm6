@@ -34,11 +34,17 @@ also is GTK::V3::Gtk::GtkBin;
 
 =head2 gtk_button_new
 
+Creates a new native GtkButton
+
   method gtk_button_new ( --> N-GObject )
 
-Creates a new native button object
+Returns a native widget. Can be used to initialize another object using :widget. This is very cumbersome when you know that a oneliner does the job for you: `my GTK::V3::Gtk::GtkButon $m .= new(:empty);
+
+  my GTK::V3::Gtk::GtkButon $m;
+  $m .= :new(:widget($m.gtk_button_new());
+
 =end pod
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 sub gtk_button_new ( )
   returns N-GObject
   is native(&gtk-lib)
@@ -52,7 +58,7 @@ sub gtk_button_new ( )
 
 Creates a new native button object with a label
 =end pod
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 sub gtk_button_new_with_label ( Str $label )
   returns N-GObject
   is native(&gtk-lib)
@@ -66,7 +72,7 @@ sub gtk_button_new_with_label ( Str $label )
 
 Get text label of button
 =end pod
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 sub gtk_button_get_label ( N-GObject $widget )
   returns Str
   is native(&gtk-lib)
@@ -80,7 +86,7 @@ sub gtk_button_get_label ( N-GObject $widget )
 
 Set a label ob the button
 =end pod
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
 sub gtk_button_set_label ( N-GObject $widget, Str $label )
   is native(&gtk-lib)
   { * }

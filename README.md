@@ -195,7 +195,7 @@ A few measures are implemented to help a bit preventing problems;
 | GTK::V3::Gtk::GtkImageMenuItem |  [GtkImageMenuItem.html][gtkimagemenuitem]
 | GTK::V3::Gtk::GtkLabel |  [GtkLabel.html][gtklabel]
 | GTK::V3::Gtk::GtkListBox |  [GtkListBox.html][gtklistbox]
-| GTK::V3::Gtk::GtkMain |  [GtkMain.html][gtkmain]
+| [GTK::V3::Gtk::GtkMain][GTK::V3::Gtk::GtkMain pdf] |  [GtkMain.html][gtkmain]
 | GTK::V3::Gtk::GtkMenuItem |  [GtkMenuItem.html][gtkmenuitem]
 | GTK::V3::Gtk::GtkRadioButton |  [GtkRadioButton.html][gtkradiobutton]
 | GTK::V3::Gtk::GtkStyleContext |  [GtkStyleContext.html][GtkStyleContext]
@@ -307,9 +307,9 @@ Documentation is generated with
 `pod-render.pl6 --pdf --style=pod6 --g=github.com/MARTIMM/gtk-v3 lib`
 
 
-<!---- [refs] ----------------------------------------------------------------->
+[//]: # (---- [refs] ----------------------------------------------------------)
 [release]: https://github.com/MARTIMM/gtk-glade/blob/master/doc/CHANGES.md
-[logo]: doc/gtk-logo-100.png
+[logo]: https://github.com/MARTIMM/gtk-glade/blob/master/doc/Design-docs/gtk-logo-100.png
 
 [gtkaboutdialog]: https://developer.gnome.org/gtk3/stable/GtkAboutDialog.html
 [gtkbin]: https://developer.gnome.org/gtk3/stable/GtkBin.html
@@ -367,33 +367,35 @@ Documentation is generated with
 [//]: # (Pod documentation rendered with)
 [//]: # (pod-render.pl6 --pdf --style=pod6 --g=github.com/MARTIMM/gtk-v3 lib)
 
-[GTK::V3::Gdk::GdkEventTypes html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GdkEventTypes.html
-[GTK::V3::Gdk::GdkEventTypes pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GdkEventTypes.pdf
-[GTK::V3::Glib::GObject html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GObject.html
-[GTK::V3::Glib::GObject pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GObject.pdf
-[GTK::V3::Glib::GSignal html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GSignal.html
-[GTK::V3::Glib::GSignal pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GSignal.pdf
-[GTK::V3::Gtk::GtkAboutDialog html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkAboutDialog.html
-[GTK::V3::Gtk::GtkAboutDialog pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkAboutDialog.pdf
-[GTK::V3::Gtk::GtkBin html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkBin.html
-[GTK::V3::Gtk::GtkBin pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkBin.pdf
-[GTK::V3::Gtk::GtkBuilder html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkBuilder.html
-[GTK::V3::Gtk::GtkBuilder pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkBuilder.pdf
-[GTK::V3::Gtk::GtkButton html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkButton.html
-[GTK::V3::Gtk::GtkButton pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkButton.pdf
-[GTK::V3::Gtk::GtkCheckButton html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkCheckButton.html
-[GTK::V3::Gtk::GtkCheckButton pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkCheckButton.pdf
-[GTK::V3::Gtk::GtkComboBox html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkComboBox.html
-[GTK::V3::Gtk::GtkComboBox pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkComboBox.pdf
-[GTK::V3::Gtk::GtkComboBoxText html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkComboBoxText.html
-[GTK::V3::Gtk::GtkComboBoxText pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkComboBoxText.pdf
-[GTK::V3::Gtk::GtkDialog html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkDialog.html
-[GTK::V3::Gtk::GtkDialog pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkDialog.pdf
-[GTK::V3::Gtk::GtkFileChooserDialog html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkFileChooserDialog.html
-[GTK::V3::Gtk::GtkFileChooserDialog pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkFileChooserDialog.pdf
-[GTK::V3::Gtk::GtkToggleButton html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkToggleButton.html
-[GTK::V3::Gtk::GtkToggleButton pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkToggleButton.pdf
-[GTK::V3::Gtk::GtkWidget html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkWidget.html
-[GTK::V3::Gtk::GtkWidget pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkWidget.pdf
-[GTK::V3::Gtk::GtkWindow html]: https://htmlpreview.github.io/?https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.html
-[GTK::V3::Gtk::GtkWindow pdf]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.pdf
+[GTK::V3::Gdk::GdkEventTypes html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GdkEventTypes.html
+[GTK::V3::Gdk::GdkEventTypes pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GdkEventTypes.pdf
+[GTK::V3::Glib::GObject html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GObject.html
+[GTK::V3::Glib::GObject pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GObject.pdf
+[GTK::V3::Glib::GSignal html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GSignal.html
+[GTK::V3::Glib::GSignal pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GSignal.pdf
+[GTK::V3::Gtk::GtkAboutDialog html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkAboutDialog.html
+[GTK::V3::Gtk::GtkAboutDialog pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkAboutDialog.pdf
+[GTK::V3::Gtk::GtkBin html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkBin.html
+[GTK::V3::Gtk::GtkBin pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkBin.pdf
+[GTK::V3::Gtk::GtkBuilder html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkBuilder.html
+[GTK::V3::Gtk::GtkBuilder pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkBuilder.pdf
+[GTK::V3::Gtk::GtkButton html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkButton.html
+[GTK::V3::Gtk::GtkButton pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkButton.pdf
+[GTK::V3::Gtk::GtkCheckButton html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkCheckButton.html
+[GTK::V3::Gtk::GtkCheckButton pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkCheckButton.pdf
+[GTK::V3::Gtk::GtkComboBox html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkComboBox.html
+[GTK::V3::Gtk::GtkComboBox pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkComboBox.pdf
+[GTK::V3::Gtk::GtkComboBoxText html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkComboBoxText.html
+[GTK::V3::Gtk::GtkComboBoxText pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkComboBoxText.pdf
+[GTK::V3::Gtk::GtkDialog html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkDialog.html
+[GTK::V3::Gtk::GtkDialog pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkDialog.pdf
+[GTK::V3::Gtk::GtkFileChooserDialog html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkFileChooserDialog.html
+[GTK::V3::Gtk::GtkFileChooserDialog pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkFileChooserDialog.pdf
+[GTK::V3::Gtk::GtkMain html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkMain.html
+[GTK::V3::Gtk::GtkMain pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkMain.pdf
+[GTK::V3::Gtk::GtkToggleButton html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkToggleButton.html
+[GTK::V3::Gtk::GtkToggleButton pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkToggleButton.pdf
+[GTK::V3::Gtk::GtkWidget html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWidget.html
+[GTK::V3::Gtk::GtkWidget pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWidget.pdf
+[GTK::V3::Gtk::GtkWindow html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.html
+[GTK::V3::Gtk::GtkWindow pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.pdf

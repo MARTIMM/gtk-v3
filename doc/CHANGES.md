@@ -1,5 +1,9 @@
 ## Release notes
 
+* 2019-05-09 0.10.6
+  * Documentation
+  * Added `start-thread()` to GObject and tests.
+
 * 2019-05-05 0.10.5
   * GtkButton signal documentation added
   * GObject has new methods

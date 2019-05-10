@@ -1,5 +1,8 @@
 ## Release notes
 
+* 2019-05-10 0.11.0
+  * New module GTK::V3::Gtk::GtkLevelBar.
+
 * 2019-05-09 0.10.6
   * Documentation
   * Added `start-thread()` to GObject and tests.

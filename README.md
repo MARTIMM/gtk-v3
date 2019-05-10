@@ -194,6 +194,7 @@ A few measures are implemented to help a bit preventing problems;
 | GTK::V3::Gtk::GtkImage |  [GtkImage.html][gtkimage]
 | GTK::V3::Gtk::GtkImageMenuItem |  [GtkImageMenuItem.html][gtkimagemenuitem]
 | GTK::V3::Gtk::GtkLabel |  [GtkLabel.html][gtklabel]
+| [ GTK::V3::Gtk::GtkLevelBar ][ GTK::V3::Gtk::GtkLevelBar pdf] |  [GtkListBox.html][gtklistbox]
 | GTK::V3::Gtk::GtkListBox |  [GtkListBox.html][gtklistbox]
 | [GTK::V3::Gtk::GtkMain][GTK::V3::Gtk::GtkMain pdf] |  [GtkMain.html][gtkmain]
 | GTK::V3::Gtk::GtkMenuItem |  [GtkMenuItem.html][gtkmenuitem]
@@ -391,6 +392,7 @@ Documentation is generated with
 [GTK::V3::Gtk::GtkDialog pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkDialog.pdf
 [GTK::V3::Gtk::GtkFileChooserDialog html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkFileChooserDialog.html
 [GTK::V3::Gtk::GtkFileChooserDialog pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkFileChooserDialog.pdf
+[GTK::V3::Gtk::GtkLevelBar pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkLevelBar.pdf
 [GTK::V3::Gtk::GtkMain html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkMain.html
 [GTK::V3::Gtk::GtkMain pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkMain.pdf
 [GTK::V3::Gtk::GtkToggleButton html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkToggleButton.html

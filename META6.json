@@ -1,7 +1,7 @@
 {
   "description": "Perl6 GTK Api Version 3",
   "name": "GTK::V3",
-  "version": "0.10.6",
+  "version": "0.11.0",
   "authors": [ "Marcel Timmerman"],
   "tags": [ "Gui", "Gtk"],
 
@@ -47,6 +47,7 @@
     "GTK::V3::Gtk::GtkImage": "lib/GTK/V3/Gtk/GtkImage.pm6",
     "GTK::V3::Gtk::GtkImageMenuItem": "lib/GTK/V3/Gtk/GtkImageMenuItem.pm6",
     "GTK::V3::Gtk::GtkLabel": "lib/GTK/V3/Gtk/GtkLabel.pm6",
+    "GTK::V3::Gtk::GtkLevelBar": "lib/GTK/V3/Gtk/GtkLevelBar.pm6",
     "GTK::V3::Gtk::GtkListBox": "lib/GTK/V3/Gtk/GtkListBox.pm6",
     "GTK::V3::Gtk::GtkMain": "lib/GTK/V3/Gtk/GtkMain.pm6",
     "GTK::V3::Gtk::GtkMenuItem": "lib/GTK/V3/Gtk/GtkMenuItem.pm6",

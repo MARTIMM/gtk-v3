@@ -109,7 +109,7 @@ subtest 'Button connect and emit signal', {
     $gmain.context-invoke(
       $main-context,
       -> $d {
-        $button.emit-by-name( 'clicked', $button(), OpaquePointer);
+        $button.emit-by-name( 'clicked', $button);
 
         sleep(1.0);
         $main.gtk-main-quit;

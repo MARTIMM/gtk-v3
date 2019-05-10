@@ -51,6 +51,7 @@ title GTK Class hierary
     * GtkEntry
     * GtkImage
     * GtkLabel
+   * GtkLevelBar
    * GtkContainer
     * ...
 

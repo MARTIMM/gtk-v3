@@ -134,7 +134,7 @@ Create a button using a native object from a builder. See also Gtk::V3::Glib::GO
 =end pod
 submethod BUILD ( *%options ) {
 
-  $signals-added = self.add-signal-types( $?CLASS.^name, 
+  $signals-added = self.add-signal-types( $?CLASS.^name,
     :signal<toggled>,
   ) unless $signals-added;
 
@@ -142,7 +142,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::Gtk::GtkToggleButton';
 
   if %options<label>.defined {
-    self.native-gobject(gtk_toggle_button_new_with_label(%options<text>));
+    self.native-gobject(gtk_toggle_button_new_with_label(%options<label>));
   }
 
   elsif ? %options<empty> {

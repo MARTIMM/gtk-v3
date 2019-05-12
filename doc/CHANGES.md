@@ -1,7 +1,7 @@
 ## Release notes
 
 * 2019-05-10 0.11.0
-  * New module GTK::V3::Gtk::GtkLevelBar.
+  * New modules GTK::V3::Gtk::GtkLevelBar, GTK::V3::Gtk::GtkOrientable.
 
 * 2019-05-09 0.10.6
   * Documentation

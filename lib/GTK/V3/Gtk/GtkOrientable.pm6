@@ -82,7 +82,7 @@ Sets the orientation of the orientable.
 
 =end pod
 
-sub gtk_orientable_set_orientation ( N-GObject $orientable, int32 $orintation )
+sub gtk_orientable_set_orientation ( N-GObject $orientable, int32 $orientation )
   is native(&gtk-lib)
   { * }
 

@@ -4,7 +4,7 @@
 [![License](http://martimm.github.io/label/License-label.svg)](http://www.perlfoundation.org/artistic_license_2_0)
 
 # Description
-First of all, I would like to thank the developers of the `GTK::Simple` project because of the information I got while reading the code. Also because one of the files is copied unaltered for which I did not had to think about to get that right.
+First of all, I would like to thank the developers of the `GTK::Simple` project because of the information I got while reading the code. Also because one of the files is copied unaltered for which I did not had to think about to get that right. The examples in that project are also useful to compare code with each other and to see what is or is not possible.
 
 The purpose of this project is to create an interface to the **GTK** version 3 library. Previously I had this library in the GTK::Glade project but because of its growth I decided to create a separate project.
 
@@ -198,6 +198,7 @@ A few measures are implemented to help a bit preventing problems;
 | GTK::V3::Gtk::GtkListBox |  [GtkListBox.html][gtklistbox]
 | [GTK::V3::Gtk::GtkMain][GTK::V3::Gtk::GtkMain pdf] |  [GtkMain.html][gtkmain]
 | GTK::V3::Gtk::GtkMenuItem |  [GtkMenuItem.html][gtkmenuitem]
+| [GTK::V3::Gtk::GtkOrientable][GTK::V3::Gtk::GtkOrientable pdf] |  [GtkOrientable.html][gtkmenuitem]
 | GTK::V3::Gtk::GtkRadioButton |  [GtkRadioButton.html][gtkradiobutton]
 | GTK::V3::Gtk::GtkStyleContext |  [GtkStyleContext.html][GtkStyleContext]
 | GTK::V3::Gtk::GtkTextBuffer |  [GtkTextBuffer.html][gtktextbuffer]
@@ -395,6 +396,7 @@ Documentation is generated with
 [GTK::V3::Gtk::GtkLevelBar pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkLevelBar.pdf
 [GTK::V3::Gtk::GtkMain html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkMain.html
 [GTK::V3::Gtk::GtkMain pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkMain.pdf
+[GTK::V3::Gtk::GtkOrientable pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkOrientable.pdf
 [GTK::V3::Gtk::GtkToggleButton html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkToggleButton.html
 [GTK::V3::Gtk::GtkToggleButton pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkToggleButton.pdf
 [GTK::V3::Gtk::GtkWidget html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWidget.html

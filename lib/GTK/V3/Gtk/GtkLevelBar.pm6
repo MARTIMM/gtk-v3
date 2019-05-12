@@ -67,7 +67,9 @@ submethod BUILD ( *%options ) {
   }
 
   elsif ? %options<min> and ? %options<max> {
-    self.native-gobject(gtk_level_bar_new( %options<min>, %options<max>));
+    self.native-gobject(gtk_level_bar_new_for_interval(
+      %options<min>, %options<max>)
+    );
   }
 
   elsif ? %options<widget> || %options<build-id> {
@@ -98,42 +100,14 @@ method fallback ( $native-sub is copy --> Callable ) {
 }
 
 #-------------------------------------------------------------------------------
-=begin pod
-=head2 gtk_level_bar_new
-
-Creates a new native GtkLevelBar.
-
-  method gtk_level_bar_new ( --> N-GObject )
-
-Returns a native widget. Can be used to initialize another object using :widget. This is very cumbersome when you know that a oneliner does the job for you: `my GTK::V3::Gtk::GtkLevelBar $m .= new(:empty);
-
-  my GTK::V3::LIBRARY::MODULE $m;
-  $m .= :new(:widget($m.gtk__new());
-
-=end pod
-
+# no pod. user does not have to know about it.
 sub gtk_level_bar_new ( )
   returns N-GObject
   is native(&gtk-lib)
   { * }
 
 #-------------------------------------------------------------------------------
-=begin pod
-=head2 [gtk_level_bar_] new_for_interval
-
-Utility constructor that creates a new GtkLevelBar for the specified interval.
-
-  method gtk_level_bar_new_for_interval (
-    Num $min_value,Num $max_value --> N-GObject
-  )
-
-=item $min_value; start of level bar range.
-=item $max_value; end of level bar range.
-
-Returns a native widget. See also C<.new( :$min, :$max)>.
-
-=end pod
-
+# no pod. user does not have to know about it.
 sub gtk_level_bar_new_for_interval ( num64 $min_value, num64 $max_value )
   returns N-GObject
   is native(&gtk-lib)
@@ -280,7 +254,7 @@ Returns invert mode; When 1, the bar is inverted. That is, right to left or bott
 =end pod
 
 sub gtk_level_bar_get_inverted ( N-GObject $levelbar )
-  returns num64
+  returns int32
   is native(&gtk-lib)
   { * }
 
@@ -296,9 +270,8 @@ Describes how GtkLevelBar contents should be rendered. Note that this enumeratio
 
 =end pod
 
-enum GtkLevelBarMode <
-  GTK_LEVEL_BAR_MODE_CONTINUOUS,
-  GTK_LEVEL_BAR_MODE_DISCRETE
+enum GtkLevelBarMode is export <
+  GTK_LEVEL_BAR_MODE_CONTINUOUS GTK_LEVEL_BAR_MODE_DISCRETE
 >;
 
 #-------------------------------------------------------------------------------

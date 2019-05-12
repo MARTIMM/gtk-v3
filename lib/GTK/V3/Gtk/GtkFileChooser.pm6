@@ -11,29 +11,49 @@ use GTK::V3::Glib::GSList;
 #-------------------------------------------------------------------------------
 # See /usr/include/gtk-3.0/gtk/gtkfilechooser.h
 # https://developer.gnome.org/gtk3/stable/GtkFileChooser.html
-unit class GTK::V3::Gtk::GtkFileChooser:auth<github:MARTIMM>
-  is GTK::V3::Glib::GInterface;
+unit class GTK::V3::Gtk::GtkFileChooser:auth<github:MARTIMM>;
+also is GTK::V3::Glib::GInterface;
 
 #-------------------------------------------------------------------------------
-enum GtkFileChooserAction is export <
-  GTK_FILE_CHOOSER_ACTION_OPEN
-  GTK_FILE_CHOOSER_ACTION_SAVE
-  GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER
-  GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER
->;
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
+submethod BUILD ( *%options ) {
 
-enum GtkFileChooserConfirmation is export <
-  GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM
-  GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
-  GTK_FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN
->;
+  $signals-added = self.add-signal-types( $?CLASS.^name,
+    :signal<current-folder-changed file-activated selection-changed
+            update-preview
+           >,
+    :notsupported<confirm-overwrite>,
+  ) unless $signals-added;
 
-enum GtkFileChooserError <
-  GTK_FILE_CHOOSER_ERROR_NONEXISTENT
-  GTK_FILE_CHOOSER_ERROR_BAD_FILENAME
-  GTK_FILE_CHOOSER_ERROR_ALREADY_EXISTS
-  GTK_FILE_CHOOSER_ERROR_INCOMPLETE_HOSTNAME
->;
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkFileChooser';
+
+  if ? %options<widget> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
+}
+
+#-------------------------------------------------------------------------------
+# no pod. user does not have to know about it.
+method fallback ( $native-sub is copy --> Callable ) {
+
+  my Callable $s;
+  try { $s = &::($native-sub); }
+  try { $s = &::("gtk_file_chooser_$native-sub"); } unless ?$s;
+
+  $s = callsame unless ?$s;
+
+  $s;
+}
 
 #-------------------------------------------------------------------------------
 #TODO notes free lists
@@ -333,42 +353,50 @@ sub gtk_file_chooser_unselect_file ( N-GObject $chooser, N-GObject $file )
   is native(&gtk-lib)
   { * }
 
-# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
-submethod BUILD ( *%options ) {
+=begin pod
+=head1 Types
+=head2 ...
 
-  $signals-added = self.add-signal-types( $?CLASS.^name, 
-    :signal<current-folder-changed file-activated selection-changed
-            update-preview
-           >,
-    :notsupported<confirm-overwrite>,
-  ) unless $signals-added;
+...
+=item ...
 
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkFileChooser';
+=end pod
 
-  if ? %options<widget> || %options<build-id> {
-    # provided in GObject
-  }
-
-  elsif %options.keys.elems {
-    die X::GTK::V3.new(
-      :message('Unsupported options for ' ~ self.^name ~
-               ': ' ~ %options.keys.join(', ')
-              )
-    );
-  }
-}
+enum GtkFileChooserAction is export <
+  GTK_FILE_CHOOSER_ACTION_OPEN
+  GTK_FILE_CHOOSER_ACTION_SAVE
+  GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER
+  GTK_FILE_CHOOSER_ACTION_CREATE_FOLDER
+>;
 
 #-------------------------------------------------------------------------------
-method fallback ( $native-sub is copy --> Callable ) {
+=begin pod
+=head2 ...
 
-  my Callable $s;
-  try { $s = &::($native-sub); }
-  try { $s = &::("gtk_file_chooser_$native-sub"); } unless ?$s;
+...
+=item ...
 
-  $s = callsame unless ?$s;
+=end pod
 
-  $s;
-}
+enum GtkFileChooserConfirmation is export <
+  GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM
+  GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME
+  GTK_FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN
+>;
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 ...
+
+...
+=item ...
+
+=end pod
+
+enum GtkFileChooserError <
+  GTK_FILE_CHOOSER_ERROR_NONEXISTENT
+  GTK_FILE_CHOOSER_ERROR_BAD_FILENAME
+  GTK_FILE_CHOOSER_ERROR_ALREADY_EXISTS
+  GTK_FILE_CHOOSER_ERROR_INCOMPLETE_HOSTNAME
+>;

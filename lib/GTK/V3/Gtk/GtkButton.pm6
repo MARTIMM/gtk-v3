@@ -2,7 +2,7 @@ use v6;
 # ==============================================================================
 =begin pod
 
-=TITLE class GTK::V3::Gtk::GtkButton
+=TITLE GTK::V3::Gtk::GtkButton
 
 =SUBTITLE
 

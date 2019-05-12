@@ -1,5 +1,5 @@
 use v6;
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 
 =TITLE class GTK::V3::Gtk::GtkWidget
@@ -18,7 +18,7 @@ use v6;
   $start-button.set-tooltip-text('Nooooo don\'t touch that button!!!!!!!');
 
 =end pod
-# ==============================================================================
+#-------------------------------------------------------------------------------
 use NativeCall;
 
 use GTK::V3::N::NativeLib;
@@ -31,7 +31,7 @@ use GTK::V3::Glib::GInitiallyUnowned;
 unit class GTK::V3::Gtk::GtkWidget:auth<github:MARTIMM>;
 also is GTK::V3::Glib::GInitiallyUnowned;
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head1 Methods
 
@@ -59,7 +59,7 @@ sub gtk_widget_destroy ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 gtk_widget_show
 
@@ -75,7 +75,7 @@ sub gtk_widget_show ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 gtk_widget_hide
 
@@ -87,7 +87,7 @@ sub gtk_widget_hide ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] show_all
 
@@ -99,22 +99,7 @@ sub gtk_widget_show_all ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
-=begin pod
-=head2 [gtk_widget_] get_display
-
-  method gtk_widget_get_display ( )
-
-Get the GdkDisplay for the toplevel window associated with this widget. This function can only be called after the widget has been added to a widget hierarchy with a GtkWindow at the top.
-
-In general, you should only create display specific resources when a widget has been realized, and you should free those resources when the widget is unrealized.
-=end pod
-sub gtk_widget_get_display ( N-GObject $widget )
-  returns N-GObject       # GdkDisplay
-  is native(&gtk-lib)
-  { * }
-
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] set_name
 
@@ -128,7 +113,7 @@ sub gtk_widget_set_name ( N-GObject $widget, Str $name )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] get_name
 
@@ -141,7 +126,7 @@ sub gtk_widget_get_name ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] set_sensitive
 
@@ -153,7 +138,7 @@ sub gtk_widget_set_sensitive ( N-GObject $widget, int32 $sensitive )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] get_sensitive
 
@@ -168,7 +153,7 @@ sub gtk_widget_get_sensitive ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] set_size_request
 
@@ -190,7 +175,7 @@ sub gtk_widget_set_size_request ( N-GObject $widget, int32 $w, int32 $h )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] set_no_show_all
 
@@ -205,7 +190,7 @@ sub gtk_widget_set_no_show_all ( N-GObject $widget, int32 $no_show_all )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] get_no_show_all
 
@@ -218,7 +203,7 @@ sub gtk_widget_get_no_show_all ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] get_allocated_width
 
@@ -231,7 +216,7 @@ sub gtk_widget_get_allocated_width ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] get_allocated_height
 
@@ -244,7 +229,7 @@ sub gtk_widget_get_allocated_height ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] queue_draw
 
@@ -256,22 +241,88 @@ sub gtk_widget_queue_draw ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-#`{{
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
-=head2 [gtk_widget_] get_tooltip_text
+=head2 [gtk_widget_] get_display
 
-  method gtk_widget_get_tooltip_text ( --> Str )
+  method gtk_widget_get_display ( )
 
-Returns the GtkWindow of the current tooltip. This can be the GtkWindow created by default, or the custom tooltip window set using gtk_widget_set_tooltip_window().
+Get the GdkDisplay for the toplevel window associated with this widget. This function can only be called after the widget has been added to a widget hierarchy with a GtkWindow at the top.
+
+In general, you should only create display specific resources when a widget has been realized, and you should free those resources when the widget is unrealized.
 =end pod
-sub gtk_widget_get_tooltip_text ( N-GObject $widget )
-  returns Str
+sub gtk_widget_get_display ( N-GObject $widget )
+  returns N-GObject       # GdkDisplay
   is native(&gtk-lib)
   { * }
-}}
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 [gtk_widget_] set_direction
+
+Sets the reading direction on a particular widget. This direction controls the primary direction for widgets containing text, and also the direction in which the children of a container are packed. The ability to set the direction is present in order so that correct localization into languages with right-to-left reading directions can be done. Generally, applications will let the default reading direction present, except for containers where the containers are arranged in an order that is explicitly visual rather than logical (such as buttons for text justification).
+
+If the direction is set to C<GTK_TEXT_DIR_NONE>, then the value set by C<gtk_widget_set_default_direction()> will be used.
+
+  method gtk_widget_set_direction ( GtkTextDirection $direction )
+
+=item $direction; the new direction.
+
+=end pod
+sub gtk_widget_set_direction ( N-GObject $widget, int32  $direction )
+  is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 [gtk_widget_] get_direction
+
+Gets the reading direction for a particular widget.
+
+  method gtk_widget_get_direction ( --> GtkTextDirection )
+
+Returns the current text direction.
+
+=end pod
+
+sub gtk_widget_get_direction ( )
+  returns int32
+  is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 [gtk_widget_] set_default_direction
+
+Sets the default reading direction on a particular widget.
+
+  method gtk_widget_set_default_direction ( GtkTextDirection $direction )
+
+=item $direction; the default direction.
+
+=end pod
+sub gtk_widget_set_default_direction ( int32  $direction )
+  is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 [gtk_widget_] get_default_direction
+
+Gets the default reading direction for a particular widget.
+
+  method gtk_widget_get_default_direction ( --> GtkTextDirection )
+
+Returns the default text direction.
+
+=end pod
+
+sub gtk_widget_get_default_direction ( )
+  returns int32
+  is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] set_tooltip_text
 
@@ -283,7 +334,7 @@ sub gtk_widget_set_tooltip_text ( N-GObject $widget, Str $text )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] get_tooltip_text
 
@@ -296,7 +347,7 @@ sub gtk_widget_get_tooltip_text ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] get_window
 
@@ -312,7 +363,7 @@ sub gtk_widget_get_window ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] set_visible
 
@@ -326,7 +377,7 @@ sub gtk_widget_set_visible ( N-GObject $widget, int32 $visible)
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] get_visible
 
@@ -341,7 +392,7 @@ sub gtk_widget_get_visible ( N-GObject $widget )
   is native(&gtk-lib)
   { * }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 [gtk_widget_] get_has_window
 
@@ -428,3 +479,20 @@ method fallback ( $native-sub is copy --> Callable ) {
 
   $s
 }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head1 Types
+=head2 GtkTextDirection
+
+Reading directions for text.
+
+=item GTK_TEXT_DIR_NONE; No direction.
+=item GTK_TEXT_DIR_LTR; Left to right text direction.
+=item GTK_TEXT_DIR_RTL; Right to left text direction.
+
+=end pod
+
+enum GtkTextDirection is export <
+  GTK_TEXT_DIR_NONE GTK_TEXT_DIR_LTR GTK_TEXT_DIR_RTL
+>;

@@ -260,6 +260,70 @@ sub gtk_level_bar_get_inverted ( N-GObject $levelbar )
 
 #-------------------------------------------------------------------------------
 =begin pod
+=head2 [gtk_level_bar_] add_offset_value
+
+Adds a new offset marker on self at the position specified by value . When the bar value is in the interval topped by value (or between value and “max-value” in case the offset is the last one on the bar) a style class named level-name will be applied when rendering the level bar fill. If another offset marker named name exists, its value will be replaced by value .
+
+  method gtk_level_bar_add_offset_value ( Str $name, Num $value )
+
+=item $name; the name of the new offset.
+=item $value; the value for the new offset.
+
+=end pod
+
+sub gtk_level_bar_add_offset_value (
+  N-GObject $levelbar, Str $name, num64 $value
+) is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 [gtk_level_bar_] get_offset_value
+
+Fetches the value specified for the offset marker name.
+
+  method gtk_level_bar_get_offset_value ( Str $name, Num $value --> Int )
+
+=item $name; the name of the new offset.
+=item $value; the value of the offset is returned.
+
+Returns Int where 1 means that name is found.
+
+=end pod
+
+sub gtk_level_bar_get_offset_value (
+  N-GObject $levelbar, Str $name, num64 $value is rw
+) returns int32
+  is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 [gtk_level_bar_] remove_offset_value
+
+Adds a new offset marker on self at the position specified by value . When the bar value is in the interval topped by value (or between value and “max-value” in case the offset is the last one on the bar) a style class named level-name will be applied when rendering the level bar fill. If another offset marker named name exists, its value will be replaced by value.
+This offset name can be used to change color and view of the level bar after passing this offset by setting information in a css file. For example when name is C<my-offset> one can do the following.
+
+  levelbar block.my-offset {
+     background-color: magenta;
+     border-style: solid;
+     border-color: black;
+     border-style: 1px;
+  }
+
+  method gtk_level_bar_remove_offset_value ( Str $name )
+
+=item $name; the name of the offset.
+
+=end pod
+
+sub gtk_level_bar_remove_offset_value (
+  N-GObject $levelbar, Str $name, num64 $value
+) is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
+=begin pod
 =head1 Types
 =head2 GtkLevelBarMode
 

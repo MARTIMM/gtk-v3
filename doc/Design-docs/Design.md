@@ -100,6 +100,7 @@ scale 0.7
 title Interface classes
 * GInterface
  * GtkFileChooser
+ * GtkOrientable
 
 @endmindmap
 ```

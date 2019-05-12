@@ -738,8 +738,7 @@ method add-signal-types ( Str $module-name, *%signal-descriptions --> Bool ) {
       if $signal-type ~~ any(
         <notsupported deprecated signal event nativewidget>
       ) {
-        note "  $module-name, $signal-name --> $signal-type"
-          if $gobject-debug;
+        note "  $module-name, $signal-name --> $signal-type" if $gobject-debug;
         $signal-types{$module-name}{$signal-name} = $signal-type;
       }
 

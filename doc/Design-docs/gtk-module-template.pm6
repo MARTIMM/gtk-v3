@@ -93,12 +93,12 @@ method fallback ( $native-sub is copy --> Callable ) {
 
 Creates a new native ...
 
-  method gtk_..._new ( --> N-GObject )
+  method gtk__new ( --> N-GObject )
 
 Returns a native widget. Can be used to initialize another object using :widget. This is very cumbersome when you know that a oneliner does the job for you: `my GTK::V3::LIBRARY::MODULE $m .= new(:empty);
 
   my GTK::V3::LIBRARY::MODULE $m;
-  $m .= :new(:widget($m.gtk_..._new());
+  $m .= :new(:widget($m.gtk__new());
 
 =end pod
 
@@ -111,21 +111,21 @@ sub gtk_..._new ( )
 =begin pod
 =head2
 
-  method ... ( ... --> ... )
+  method  (  -->  )
 
-=item ...; ...
+=item
 
-Returns ...
+Returns
 
 =end pod
 
 #`{{
-sub ... ( ... )
-  returns ...
+sub  (  )
+  returns
   is native(&gtk-lib)
   { * }
 
-  is symbol('...')
+  is symbol('')
   is native(&gdk-lib)
   is native(&gobject-lib)
 }}
@@ -133,10 +133,9 @@ sub ... ( ... )
 #-------------------------------------------------------------------------------
 =begin pod
 =head1 Types
-=head2 ...
+=head2
 
-...
-=item ...
+=item
 
 =end pod
 
@@ -145,15 +144,15 @@ sub ... ( ... )
 =head1 Signals
 
 =head2 Supported signals
-=head3 ...
-...
+=head3
+
 
 =head2 Unsupported signals
-=head3 ...
-...
+=head3
+
 
 =head2 Not yet supported signals
-=head3 ...
-...
+=head3
+
 
 =end pod

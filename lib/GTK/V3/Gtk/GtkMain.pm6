@@ -46,7 +46,7 @@ my Bool $gui-initialized = False;
 
 Create a GtkMain object. Initialization of GTK is automatically executed if not already done. Arguments from the command line are provided to this process.
 
-  submethod BUILD ( Bool :$check )
+  submethod BUILD ( Bool :$check = False )
 
 =item $check; Use checked initialization. Program will not fail when commandline
 arguments do not parse properly.

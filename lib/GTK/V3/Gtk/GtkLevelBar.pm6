@@ -11,6 +11,9 @@ use v6;
 
 =head1 Synopsis
 
+  my GTK::V3::Gtk::GtkLevelBar $level-bar .= new(:empty);
+  my GTK::V3::Gtk::GtkOrientable $o .= new(:widget($level-bar));
+  $o.set-orientation(GTK_ORIENTATION_VERTICAL);
 
 =end pod
 #-------------------------------------------------------------------------------

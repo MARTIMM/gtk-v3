@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="en">
     <head>
-        <title>class GTK::V3::Gtk::GtkButton</title>
+        <title>GTK::V3::Gtk::GtkButton</title>
         <meta charset="UTF-8" />
   <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/8E2223EC8A82AFADF6C944FF8969408E59014865.css">
         
@@ -10,7 +10,7 @@
  <body class="pod" onload="prettyPrint()">
     <div id="___top"></div>
     
-    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />class GTK::V3::Gtk::GtkButton</div>
+    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />GTK::V3::Gtk::GtkButton</div>
     
     <nav class="indexgroup">
 <table id="TOC">
@@ -18,12 +18,12 @@
    <tr class="toc-level-2"><td class="toc-number">0.1</td><td class="toc-text"><a href="#GtkButton_—_A_widget_that_emits_a_signal_when_clicked_on">GtkButton — A widget that emits a signal when clicked on</a></td></tr>
  <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
   <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
- <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#gtk_button_new">gtk_button_new</a></td></tr>
-   <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#[gtk_button_]_new_with_label">[gtk_button_] new_with_label</a></td></tr>
-   <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#[gtk_button_]_get_label">[gtk_button_] get_label</a></td></tr>
-   <tr class="toc-level-2"><td class="toc-number">2.4</td><td class="toc-text"><a href="#[gtk_button_]_set_label">[gtk_button_] set_label</a></td></tr>
-   <tr class="toc-level-2"><td class="toc-number">2.5</td><td class="toc-text"><a href="#new">new</a></td></tr>
-         <tr class="toc-level-1"><td class="toc-number">3</td><td class="toc-text"><a href="#Signals">Signals</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#new">new</a></td></tr>
+         <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#gtk_button_new">gtk_button_new</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#[gtk_button_]_new_with_label">[gtk_button_] new_with_label</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.4</td><td class="toc-text"><a href="#[gtk_button_]_get_label">[gtk_button_] get_label</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.5</td><td class="toc-text"><a href="#[gtk_button_]_set_label">[gtk_button_] set_label</a></td></tr>
+   <tr class="toc-level-1"><td class="toc-number">3</td><td class="toc-text"><a href="#Signals">Signals</a></td></tr>
       <tr class="toc-level-2"><td class="toc-number">3.1</td><td class="toc-text"><a href="#Supported_signals">Supported signals</a></td></tr>
  <tr class="toc-level-3"><td class="toc-number">3.1.1</td><td class="toc-text"><a href="#clicked">clicked</a></td></tr>
      <tr class="toc-level-2"><td class="toc-number">3.2</td><td class="toc-text"><a href="#Unsupported_signals">Unsupported signals</a></td></tr>
@@ -44,9 +44,21 @@ also is GTK::V3::Gtk::GtkBin;</pre>
 <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
 <pre class="pod-block-code">my GTK::V3::Gtk::GtkButton $start-button .= new(:label&lt;Start&gt;);</pre>
 <h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
+<h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
+<pre class="pod-block-code">multi submethod BUILD ( Str :$label! )</pre>
+<p>Creates a new button object with a label</p>
+<pre class="pod-block-code">multi submethod BUILD ( Bool :$empty! )</pre>
+<p>Create an empty button</p>
+<pre class="pod-block-code">multi submethod BUILD ( :$widget! )</pre>
+<p>Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.</p>
+<pre class="pod-block-code">multi submethod BUILD ( Str :$build-id! )</pre>
+<p>Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.</p>
 <h2 id="gtk_button_new"><a class="u" href="#___top" title="go to top of document">gtk_button_new</a></h2>
+<p>Creates a new native GtkButton</p>
 <pre class="pod-block-code">method gtk_button_new ( --&gt; N-GObject )</pre>
-<p>Creates a new native button object</p>
+<p>Returns a native widget. Can be used to initialize another object using :widget. This is very cumbersome when you know that a oneliner does the job for you: `my GTK::V3::Gtk::GtkButon $m .= new(:empty);</p>
+<pre class="pod-block-code">my GTK::V3::Gtk::GtkButon $m;
+$m .= :new(:widget($m.gtk_button_new());</pre>
 <h2 id="[gtk_button_]_new_with_label"><a class="u" href="#___top" title="go to top of document">[gtk_button_] new_with_label</a></h2>
 <pre class="pod-block-code">method gtk_button_new_with_label ( Str $label --&gt; N-GObject )</pre>
 <p>Creates a new native button object with a label</p>
@@ -56,15 +68,6 @@ also is GTK::V3::Gtk::GtkBin;</pre>
 <h2 id="[gtk_button_]_set_label"><a class="u" href="#___top" title="go to top of document">[gtk_button_] set_label</a></h2>
 <pre class="pod-block-code">method gtk_button_set_label ( Str $label )</pre>
 <p>Set a label ob the button</p>
-<h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
-<pre class="pod-block-code">multi submethod BUILD ( Str :$label )</pre>
-<p>Creates a new button object with a label</p>
-<pre class="pod-block-code">multi submethod BUILD ( Bool :$empty )</pre>
-<p>Create an empty button</p>
-<pre class="pod-block-code">multi submethod BUILD ( :$widget! )</pre>
-<p>Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.</p>
-<pre class="pod-block-code">multi submethod BUILD ( Str :$build-id! )</pre>
-<p>Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.</p>
 <h1 id="Signals"><a class="u" href="#___top" title="go to top of document">Signals</a></h1>
 <p>Registering example</p>
 <pre class="pod-block-code">class MyHandlers {

@@ -28,10 +28,77 @@ use GTK::V3::Gtk::GtkBin;
 unit class GTK::V3::Gtk::GtkButton:auth<github:MARTIMM>;
 also is GTK::V3::Gtk::GtkBin;
 
-# ==============================================================================
+# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 =begin pod
 =head1 Methods
+=head2 new
 
+  multi submethod BUILD ( Bool :$empty! )
+
+Create an empty button
+
+  multi submethod BUILD ( Str :$label! )
+
+Creates a new button object with a label
+
+  multi submethod BUILD ( :$widget! )
+
+Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
+
+  multi submethod BUILD ( Str :$build-id! )
+
+Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.
+=end pod
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+submethod BUILD ( *%options ) {
+
+  $signals-added = self.add-signal-types( $?CLASS.^name,
+    :signal<clicked>,
+    :notsupported<activate>,
+    :deprecated<enter leave pressed released>,
+  ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkButton';
+
+  if %options<label>.defined {
+    self.native-gobject(gtk_button_new_with_label(%options<label>));
+  }
+
+  elsif ? %options<empty> {
+    self.native-gobject(gtk_button_new());
+  }
+
+  elsif ? %options<widget> || %options<build-id> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
+}
+
+#-------------------------------------------------------------------------------
+# no pod. user does not have to know about it.
+method fallback ( $native-sub is copy --> Callable ) {
+
+  my Callable $s;
+  try { $s = &::($native-sub); }
+  try { $s = &::("gtk_button_$native-sub"); } unless ?$s;
+
+  $s = callsame unless ?$s;
+
+  $s
+}
+
+# ==============================================================================
+=begin pod
 =head2 gtk_button_new
 
 Creates a new native GtkButton
@@ -92,73 +159,6 @@ sub gtk_button_set_label ( N-GObject $widget, Str $label )
   { * }
 
 #TODO can add a few more subs
-
-# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-my Bool $signals-added = False;
-#-------------------------------------------------------------------------------
-=begin pod
-=head2 new
-
-  multi submethod BUILD ( Str :$label )
-
-Creates a new button object with a label
-
-  multi submethod BUILD ( Bool :$empty )
-
-Create an empty button
-
-  multi submethod BUILD ( :$widget! )
-
-Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
-
-  multi submethod BUILD ( Str :$build-id! )
-
-Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.
-=end pod
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-submethod BUILD ( *%options ) {
-
-  $signals-added = self.add-signal-types( $?CLASS.^name,
-    :signal<clicked>,
-    :notsupported<activate>,
-    :deprecated<enter leave pressed released>,
-  ) unless $signals-added;
-
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkButton';
-
-  if %options<label>.defined {
-    self.native-gobject(gtk_button_new_with_label(%options<label>));
-  }
-
-  elsif ? %options<empty> {
-    self.native-gobject(gtk_button_new());
-  }
-
-  elsif ? %options<widget> || %options<build-id> {
-    # provided in GObject
-  }
-
-  elsif %options.keys.elems {
-    die X::GTK::V3.new(
-      :message('Unsupported options for ' ~ self.^name ~
-               ': ' ~ %options.keys.join(', ')
-              )
-    );
-  }
-}
-
-#-------------------------------------------------------------------------------
-method fallback ( $native-sub is copy --> Callable ) {
-
-  my Callable $s;
-  try { $s = &::($native-sub); }
-  try { $s = &::("gtk_button_$native-sub"); } unless ?$s;
-
-  $s = callsame unless ?$s;
-
-  $s
-}
 
 #-------------------------------------------------------------------------------
 =begin pod

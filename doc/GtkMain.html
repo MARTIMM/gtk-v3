@@ -45,7 +45,7 @@ method exit ( ) {
 <h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
 <h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
 <p>Create a GtkMain object. Initialization of GTK is automatically executed if not already done. Arguments from the command line are provided to this process.</p>
-<pre class="pod-block-code">submethod BUILD ( Bool :$check )</pre>
+<pre class="pod-block-code">submethod BUILD ( Bool :$check = False )</pre>
 <ul><li><p>$check; Use checked initialization. Program will not fail when commandline arguments do not parse properly.</p>
 </li>
 </ul>

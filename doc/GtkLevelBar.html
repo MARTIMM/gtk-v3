@@ -16,7 +16,7 @@
 <table id="TOC">
 <caption><h2 id="TOC_Title">Table of Contents</h2></caption>
    <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
- <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
+  <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
  <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#new">new</a></td></tr>
          <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#[gtk_level_bar_]_set_mode">[gtk_level_bar_] set_mode</a></td></tr>
    <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#[gtk_level_bar_]_get_mode">[gtk_level_bar_] get_mode</a></td></tr>
@@ -44,6 +44,9 @@
     <pre class="pod-block-code">unit class GTK::V3::Gtk::GtkLevelBar;
 also is GTK::V3::Gtk::GtkWidget;</pre>
 <h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+<pre class="pod-block-code">my GTK::V3::Gtk::GtkLevelBar $level-bar .= new(:empty);
+my GTK::V3::Gtk::GtkOrientable $o .= new(:widget($level-bar));
+$o.set-orientation(GTK_ORIENTATION_VERTICAL);</pre>
 <h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
 <h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
 <pre class="pod-block-code">multi submethod BUILD ( Bool :$empty! )</pre>

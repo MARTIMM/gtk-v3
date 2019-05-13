@@ -194,7 +194,7 @@ A few measures are implemented to help a bit preventing problems;
 | GTK::V3::Gtk::GtkImage |  [GtkImage.html][gtkimage]
 | GTK::V3::Gtk::GtkImageMenuItem |  [GtkImageMenuItem.html][gtkimagemenuitem]
 | GTK::V3::Gtk::GtkLabel |  [GtkLabel.html][gtklabel]
-| [ GTK::V3::Gtk::GtkLevelBar ][ GTK::V3::Gtk::GtkLevelBar pdf] |  [GtkListBox.html][gtklistbox]
+| [ GTK::V3::Gtk::GtkLevelBar ][ GTK::V3::Gtk::GtkLevelBar pdf] |  [GtkLevelBar.html][][GtkLevelBar]
 | GTK::V3::Gtk::GtkListBox |  [GtkListBox.html][gtklistbox]
 | [GTK::V3::Gtk::GtkMain][GTK::V3::Gtk::GtkMain pdf] |  [GtkMain.html][gtkmain]
 | GTK::V3::Gtk::GtkMenuItem |  [GtkMenuItem.html][gtkmenuitem]
@@ -331,9 +331,11 @@ Documentation is generated with
 [gtkimage]: https://developer.gnome.org/gtk3/stable/GtkImage.html
 [gtkimagemenuitem]: https://developer.gnome.org/gtk3/stable/GtkImageMenuItem.html
 [gtklabel]: https://developer.gnome.org/gtk3/stable/GtkLabel.html
+[GtkLevelBar]: https://developer.gnome.org/gtk3/stable/GtkLevelBar.html
 [gtklistbox]: https://developer.gnome.org/gtk3/stable/GtkListBox.html
 [gtkmain]: https://developer.gnome.org/gtk3/stable/GtkMain.html
 [gtkmenuitem]: https://developer.gnome.org/gtk3/stable/GtkMenuItem.html
+[GtkOrientable]: https://developer.gnome.org/gtk3/stable/gtk3-Orientable.html
 [gtkradiobutton]: https://developer.gnome.org/gtk3/stable/GtkRadioButton.html
 [GtkStyleContext]: https://developer.gnome.org/gtk3/stable/GtkStyleContext.html
 [gtktextbuffer]: https://developer.gnome.org/gtk3/stable/GtkTextBuffer.html

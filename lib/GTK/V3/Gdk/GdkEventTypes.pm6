@@ -342,6 +342,42 @@ class GdkEventScroll is repr('CStruct') is export {
 
 #-------------------------------------------------------------------------------
 =begin pod
+=head2 GdkEventMotion
+
+Generated when the pointer moves.
+
+=item $.type: the type of the event.
+=item $.window: the window which received the event.
+=item $.send_event: %TRUE if the event was sent explicitly.
+=item $.time: the time of the event in milliseconds.
+=item $.x: the x coordinate of the pointer relative to the window.
+=item $.y: the y coordinate of the pointer relative to the window.
+=item $.axes: x, y translated to the axes of @device, or NULL if device is the mouse.
+=item $.state: (type GdkModifierType): a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
+=item $.is_hint: set to 1 if this event is just a hint, see the GDK_POINTER_MOTION_HINT_MASK value of GdkEventMask.
+=item $.device: the master device that the event originated from. Use C<gdk_event_get_source_device()> to get the slave device.
+=item $.x_root: the x coordinate of the pointer relative to the root of the screen.
+=item $.y_root: the y coordinate of the pointer relative to the root of the screen.
+
+=end pod
+
+class GdkEventMotion is repr('CStruct') is export {
+  has uint32 $.type;
+  has N-GObject $.window;
+  has uint8 $.send_event;
+  has uint32 $.time;
+  has num64 $.x;
+  has num64 $.y;
+  has num64 $.axes;
+  has uint $.state;
+  has int16 $.is_hint;
+  has N-GObject $.device;         # GdkDevice
+  has num64 $.x_root;
+  has num64 $.y_root;
+};
+
+#-------------------------------------------------------------------------------
+=begin pod
 =head2 GdkEvent
 
 The event structures contain data specific to each type of event in GDK. The type is a union of all structures explained above.
@@ -354,6 +390,7 @@ class GdkEvent is repr('CUnion') is export {
   HAS GdkEventButton $.event-button;
   HAS GdkEventTouch $.event-touch;
   HAS GdkEventScroll $.event-scroll;
+  HAS GdkEventMotion $.event-motion;
 }
 
 #-------------------------------------------------------------------------------

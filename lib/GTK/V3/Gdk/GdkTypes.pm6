@@ -26,7 +26,7 @@ class GdkRectangle is repr('CStruct') is export {
 };
 
 #-------------------------------------------------------------------------------
-=start pod
+=begin pod
 =head2 GdkModifierType
 
 A set of bit-flags to indicate the state of modifier keys and mouse buttons in various event types. Typical modifier keys are Shift, Control, Meta, Super, Hyper, Alt, Compose, Apple, CapsLock or ShiftLock.

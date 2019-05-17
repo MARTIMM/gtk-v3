@@ -102,19 +102,3 @@ Set the orientation of the orientable.
 sub gtk_orientable_get_orientation ( N-GObject $orientable )
   is native(&gtk-lib)
   { * }
-
-#-------------------------------------------------------------------------------
-=begin pod
-=head1 Types
-=head2 GtkOrientation
-
-The orientation of the orientable.
-
-=item GTK_ORIENTATION_HORIZONTAL; horizontal orientation.
-=item GTK_ORIENTATION_VERTICAL; vertical orientation.
-
-=end pod
-
-enum GtkOrientation is export <
-  GTK_ORIENTATION_HORIZONTAL GTK_ORIENTATION_VERTICAL
->

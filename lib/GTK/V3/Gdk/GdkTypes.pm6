@@ -2,7 +2,7 @@ use v6;
 use NativeCall;
 
 #-------------------------------------------------------------------------------
-# See /usr/include/gtk-3.0/gdk/gdktypes.h
+# See /usr/include/gtk-3.0/gtk/gdktypes.h
 unit class GTK::V3::Gdk::GdkTypes:auth<github:MARTIMM>;
 
 #-------------------------------------------------------------------------------

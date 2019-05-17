@@ -81,7 +81,7 @@ method fallback ( $native-sub is copy --> Callable ) {
 
   method gtk_orientable_get_orientation ( GtkOrientation )
 
-Sets the orientation of the orientable.
+Sets the orientation of the orientable. This is a GtkOrientation enum type defined in GtkEnums.
 
 =end pod
 
@@ -95,7 +95,7 @@ sub gtk_orientable_set_orientation ( N-GObject $orientable, int32 $orientation )
 
   method gtk_orientable_get_orientation ( --> GtkOrientation $orientation )
 
-Set the orientation of the orientable.
+Set the orientation of the orientable. This is a GtkOrientation enum type defined in GtkEnums.
 
 =end pod
 

@@ -122,7 +122,7 @@ sub gtk_level_bar_new_for_interval ( num64 $min_value, num64 $max_value )
 
   method gtk_level_bar_set_mode ( GtkLevelBarMode $mode )
 
-=item $mode; the way that increments are made visible.
+=item $mode; the way that increments are made visible. This is a GtkLevelBarMode enum type defined in GtkEnums.
 
 =end pod
 
@@ -136,7 +136,7 @@ sub gtk_level_bar_set_mode ( N-GObject $levelbar, int32 $mode )
 
   method gtk_level_bar_get_mode ( --> GtkLevelBarMode )
 
-Returns current mode.
+Returns current mode. This is a GtkLevelBarMode enum type defined in GtkEnums.
 
 =end pod
 

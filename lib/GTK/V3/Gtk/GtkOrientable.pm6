@@ -4,7 +4,7 @@ use v6;
 
 =TITLE GTK::V3::Gtk::GtkOrientable
 
-=SUBTITLE
+=SUBTITLE GtkOrientable — An interface for flippable widgets
 
   unit class GTK::V3::Gtk::GtkOrientable;
   also is GTK::V3::Glib::GInterface;

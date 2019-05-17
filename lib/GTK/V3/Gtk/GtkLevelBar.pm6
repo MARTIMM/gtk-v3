@@ -4,7 +4,7 @@ use v6;
 
 =TITLE GTK::V3::Gtk::GtkLevelBar
 
-=SUBTITLE
+=SUBTITLE GtkLevelBar — A bar that can used as a level indicator
 
   unit class GTK::V3::Gtk::GtkLevelBar;
   also is GTK::V3::Gtk::GtkWidget;

@@ -264,9 +264,9 @@ Sets the reading direction on a particular widget. This direction controls the p
 
 If the direction is set to C<GTK_TEXT_DIR_NONE>, then the value set by C<gtk_widget_set_default_direction()> will be used.
 
-  method gtk_widget_set_direction ( GtkTextDirection $direction )
+  method gtk_widget_set_direction ( Int $direction )
 
-=item $direction; the new direction.
+=item Int $direction; the new direction. This is a GtkTextDirection enum type defined in GtkEnums.
 
 =end pod
 sub gtk_widget_set_direction ( N-GObject $widget, int32  $direction )
@@ -479,20 +479,3 @@ method fallback ( $native-sub is copy --> Callable ) {
 
   $s
 }
-
-#-------------------------------------------------------------------------------
-=begin pod
-=head1 Types
-=head2 GtkTextDirection
-
-Reading directions for text.
-
-=item GTK_TEXT_DIR_NONE; No direction.
-=item GTK_TEXT_DIR_LTR; Left to right text direction.
-=item GTK_TEXT_DIR_RTL; Right to left text direction.
-
-=end pod
-
-enum GtkTextDirection is export <
-  GTK_TEXT_DIR_NONE GTK_TEXT_DIR_LTR GTK_TEXT_DIR_RTL
->;

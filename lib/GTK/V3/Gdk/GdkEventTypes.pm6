@@ -1,5 +1,5 @@
 use v6;
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 
 =TITLE GTK::V3::Gdk::GdkEventTypes
@@ -34,7 +34,7 @@ The handler signature can also be defined as
 
 
 =end pod
-# ==============================================================================
+#-------------------------------------------------------------------------------
 use NativeCall;
 
 use GTK::V3::X;
@@ -42,7 +42,7 @@ use GTK::V3::N::NativeLib;
 use GTK::V3::N::N-GObject;
 #use GTK::V3::Glib::GTypes;
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 # https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html
 # https://developer.gnome.org/gdk3/stable/gdk3-Events.html
 =begin pod
@@ -51,7 +51,7 @@ use GTK::V3::N::N-GObject;
 
 unit class GTK::V3::Gdk::GdkEventTypes:auth<github:MARTIMM>;
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head1 Enums, Structs and Unions
 
@@ -135,7 +135,27 @@ enum GdkEventType is export <<
   :GDK_TRIPLE_BUTTON_PRESS(6)
   >>;
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 GdkScrollDirection
+
+Specifies the direction for GdkEventScroll.
+
+=item GDK_SCROLL_UP: the window is scrolled up.
+=item GDK_SCROLL_DOWN: the window is scrolled down.
+=item GDK_SCROLL_LEFT: the window is scrolled to the left.
+=item GDK_SCROLL_RIGHT: the window is scrolled to the right.
+=item GDK_SCROLL_SMOOTH: the scrolling is determined by the delta values in C<GdkEventScroll>.
+=comment See C<gdk_event_get_scroll_deltas()>. Since: 3.4
+
+=end pod
+
+enum GdkScrollDirection is export <<
+  GDK_SCROLL_UP GDK_SCROLL_DOWN GDK_SCROLL_LEFT GDK_SCROLL_RIGHT
+  GDK_SCROLL_SMOOTH
+>>;
+
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 class GdkEventAny
 
@@ -146,20 +166,21 @@ Contains the fields which are common to all event classes. This comes in handy t
 =item Int $.send_event; TRUE if the event was sent explicitly.
 
 =end pod
+
 class GdkEventAny is repr('CStruct') is export {
   has uint32 $.type;              # GdkEventType
   has N-GObject $.window;         # GdkWindow
   has int8 $.send_event;
 }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 class GdkEventKey
 
 Describes a key press or key release event. The type of the event will be one of GDK_KEY_PRESS or GDK_KEY_RELEASE.
 
 =item GdkEventType $.type
-=item N-GObject $.window
+=item N-GObject $.window; the window which received the event.
 =item Int $.send_event
 =item UInt $.time; the time of the event in milliseconds.
 =item UInt $.state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.	[type GdkModifierType].
@@ -170,6 +191,7 @@ Describes a key press or key release event. The type of the event will be one of
 =item UInt $.group; the keyboard group.
 =item UInt $.is_modifier; a flag that indicates if hardware_keycode is mapped to a modifier. Since 2.10
 =end pod
+
 class GdkEventKey is repr('CStruct') is export {
   has uint32 $.type;              # GdkEventType
   has N-GObject $.window;         # GdkWindow
@@ -184,7 +206,7 @@ class GdkEventKey is repr('CStruct') is export {
   has uint32 $.is_modifier;
 }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 class GdkEventButton
 
@@ -208,7 +230,7 @@ To handle e.g. a triple mouse button presses, all events can be ignored except G
   }
 
 =item GdkEventType $.type;
-=item N-GObject $.window;
+=item N-GObject $.window; the window which received the event.
 =item Int $.send_event;
 =item UInt $.time; the time of the event in milliseconds.
 =item Num $.x; the x coordinate of the pointer relative to the window.
@@ -221,6 +243,7 @@ To handle e.g. a triple mouse button presses, all events can be ignored except G
 =item Num $.y_root; the y coordinate of the pointer relative to the root of the screen.
 
 =end pod
+
 class GdkEventButton is repr('CStruct') is export {
   has uint32 $.type;              # GdkEventType
   has N-GObject $.window;         # GdkWindow
@@ -236,15 +259,16 @@ class GdkEventButton is repr('CStruct') is export {
   has num64 $.y_root;
 }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 class GdkEventTouch
+
 Used for touch events. type field will be one of GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END or GDK_TOUCH_CANCEL.
 
 Touch events are grouped into sequences by means of the sequence field, which can also be obtained with gdk_event_get_event_sequence(). Each sequence begins with a GDK_TOUCH_BEGIN event, followed by any number of GDK_TOUCH_UPDATE events, and ends with a GDK_TOUCH_END (or GDK_TOUCH_CANCEL) event. With multitouch devices, there may be several active sequences at the same time.
 
 =item GdkEventType $.type; the type of the event (GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END, GDK_TOUCH_CANCEL)
-=item N-GObject $.window;
+=item N-GObject $.window; the window which received the event.
 =item Int $.send_event;
 
 =item uint32 $.time; the time of the event in milliseconds.
@@ -259,6 +283,7 @@ Touch events are grouped into sequences by means of the sequence field, which ca
 =item num64 $.y_root; the y coordinate of the pointer relative to the root of the screen
 
 =end pod
+
 class GdkEventTouch is repr('CStruct') is export {
   has uint32 $.type;              # GdkEventType
   has N-GObject $.window;         # GdkWindow
@@ -275,20 +300,63 @@ class GdkEventTouch is repr('CStruct') is export {
   has num64 $.y_root;
 }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 GdkEventScroll:
+
+Generated from button presses for the buttons 4 to 7. Wheel mice are usually configured to generate button press events for buttons 4 and 5 when the wheel is turned.
+
+Some GDK backends can also generate “smooth” scroll events, which can be recognized by the GDK_SCROLL_SMOOTH scroll direction. For these, the scroll deltas can be obtained with gdk_event_get_scroll_deltas().
+
+ =item $.type: the type of the event (GDK_SCROLL).
+ =item $.window: the window which received the event.
+ =item $.send_event: 1 if the event was sent explicitly.
+ =item $.time: the time of the event in milliseconds.
+ =item $.x: the x coordinate of the pointer relative to the window.
+ =item $.y: the y coordinate of the pointer relative to the window.
+ =item $.state: (type GdkModifierType): a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
+ =item $.direction: the direction to scroll to (one of GDK_SCROLL_UP, GDK_SCROLL_DOWN, GDK_SCROLL_LEFT, GDK_SCROLL_RIGHT or GDK_SCROLL_SMOOTH).
+ =item $.device: the master device that the event originated from. Use gdk_event_get_source_device() to get the slave device.
+ =item $.x_root: the x coordinate of the pointer relative to the root of the screen.
+ =item $.y_root: the y coordinate of the pointer relative to the root of the screen.
+ =item $.delta_x: the x coordinate of the scroll delta
+ =item $.delta_y: the y coordinate of the scroll delta
+=end pod
+
+class GdkEventScroll is repr('CStruct') is export {
+  has uint32 $.type;
+  has N-GObject $.window;
+  has uint8 $.send_event;
+  has uint32 $.time;
+  has num64 $.x;
+  has num64 $.y;
+  has uint32 $.state;             # GdkModifierType
+  has uint32 $.direction;         # GdkScrollDirection
+  has N-GObject $.device;         # GdkDevice
+  has num64 $.x_root;
+  has num64 $.y_root;
+  has num64 $.delta_x;
+  has num64 $.delta_y;
+  has uint32 $.is_stop;
+};
+
+#-------------------------------------------------------------------------------
 =begin pod
 =head2 GdkEvent
 
 The event structures contain data specific to each type of event in GDK. The type is a union of all structures explained above.
+
 =end pod
+
 class GdkEvent is repr('CUnion') is export {
   HAS GdkEventAny $.event-any;
   HAS GdkEventKey $.event-key;
   HAS GdkEventButton $.event-button;
   HAS GdkEventTouch $.event-touch;
+  HAS GdkEventScroll $.event-scroll;
 }
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
 # No need to define subs because all can be read from structures above.
 #`{{
 

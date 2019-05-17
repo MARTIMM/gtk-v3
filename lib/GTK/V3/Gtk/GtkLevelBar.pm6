@@ -327,22 +327,6 @@ sub gtk_level_bar_remove_offset_value (
 
 #-------------------------------------------------------------------------------
 =begin pod
-=head1 Types
-=head2 GtkLevelBarMode
-
-Describes how GtkLevelBar contents should be rendered. Note that this enumeration could be extended with additional modes in the future.
-
-=item GTK_LEVEL_BAR_MODE_CONTINUOUS; the bar has a continuous mode.
-=item GTK_LEVEL_BAR_MODE_DISCRETE; the bar has a discrete mode.
-
-=end pod
-
-enum GtkLevelBarMode is export <
-  GTK_LEVEL_BAR_MODE_CONTINUOUS GTK_LEVEL_BAR_MODE_DISCRETE
->;
-
-#-------------------------------------------------------------------------------
-=begin pod
 =head1 Signals
 
 =head2 Not yet supported signals

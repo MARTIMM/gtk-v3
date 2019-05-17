@@ -483,6 +483,50 @@ class GdkEventCrossing is repr('CStruct') is export {
 
 #-------------------------------------------------------------------------------
 =begin pod
+=head2 GdkEventFocus
+
+Describes a change of keyboard focus.
+
+=item $.type: the type of the event (GDK_FOCUS_CHANGE).
+=item $.window: the window which received the event.
+=item $.send_event: %TRUE if the event was sent explicitly.
+=item $.in: 1 if the window has gained the keyboard focus, 0 if it has lost the focus.
+=end pod
+
+class GdkEventFocus is repr('CStruct') is export {
+  has uint32 $.type;
+  has N-GObject $.window;
+  has uint8 $.send_event;
+  has int16 $.in;
+};
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 GdkEventConfigure
+
+Generated when a window size or position has changed.
+
+=item GdkEventType $.type: the type of the event (GDK_CONFIGURE).
+=item N-GObject $.window: the window which received the event.
+=item Int $.send_event: 1 if the event was sent explicitly.
+=item Int $.x: the new x coordinate of the window, relative to its parent.
+=item Int $.y: the new y coordinate of the window, relative to its parent.
+=item Int $.width: the new width of the window.
+=item Int $.height: the new height of the window.
+=end pod
+
+class GdkEventConfigure is repr('CStruct') is export {
+  has uint32 $.type;
+  has N-GObject $.window;
+  has uint8 $.send_event;
+  has int32 $.x;
+  has int32 $.y;
+  has int32 $.width;
+  has int32 $.height;
+};
+
+#-------------------------------------------------------------------------------
+=begin pod
 =head2 GdkEvent
 
 The event structures contain data specific to each type of event in GDK. The type is a union of all structures explained above.
@@ -498,6 +542,8 @@ class GdkEvent is repr('CUnion') is export {
   HAS GdkEventMotion $.event-motion;
   HAS GdkEventExpose $.event-expose;
   HAS GdkEventCrossing $.event-crossing;
+  HAS GdkEventFocus $.event-focus;
+  HAS GdkEventConfigure $.event-configure;
 }
 
 #-------------------------------------------------------------------------------

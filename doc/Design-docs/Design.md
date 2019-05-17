@@ -90,6 +90,7 @@ title GTK Class hierary at GtkContainer
    * GtkImageMenuItem
 
  * GtkTextView
+ * GtkPaned
 @endmindmap
 ```
 

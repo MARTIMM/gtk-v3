@@ -1,5 +1,10 @@
 ## Release notes
 
+* 2019-05-17 0.12.0
+  * GdkEvents extended.
+  * GtkPaned widget added.
+  * GtkEnums for standard enumerations added.
+
 * 2019-05-10 0.11.0
   * New modules GTK::V3::Gtk::GtkLevelBar, GTK::V3::Gtk::GtkOrientable.
 

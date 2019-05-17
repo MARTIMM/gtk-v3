@@ -205,7 +205,7 @@ enum GdkNotifyType is export <
 
 Contains the fields which are common to all event classes. This comes in handy to check its type for instance.
 
-=item GdkEventType $.type; the type of the event.
+=item UInt $.type; the type of the event.
 =item N-GObject $.window; the window which received the event.
 =item Int $.send_event; 1 if the event was sent explicitly.
 
@@ -223,7 +223,7 @@ class GdkEventAny is repr('CStruct') is export {
 
 Describes a key press or key release event. The type of the event will be one of GDK_KEY_PRESS or GDK_KEY_RELEASE.
 
-=item GdkEventType $.type
+=item UInt $.type; the type of the event.
 =item N-GObject $.window; the window which received the event.
 =item Int $.send_event; 1 if the event was sent explicitly.
 =item UInt $.time; the time of the event in milliseconds.
@@ -241,7 +241,7 @@ class GdkEventKey is repr('CStruct') is export {
   has N-GObject $.window;         # GdkWindow
   has int8 $.send_event;
   has uint32 $.time;
-  has uint32 $.state;
+  has uint32 $.state;             # GdkModifierType
   has uint32 $.keyval;
   has int $.length;
   has Str $.string;
@@ -273,7 +273,7 @@ To handle e.g. a triple mouse button presses, all events can be ignored except G
     }
   }
 
-=item GdkEventType $.type;
+=item UInt $.type; the type of the event.
 =item N-GObject $.window; the window which received the event.
 =item Int $.send_event;
 =item UInt $.time; the time of the event in milliseconds.
@@ -296,9 +296,9 @@ class GdkEventButton is repr('CStruct') is export {
   has num64 $.x;
   has num64 $.y;
   has Pointer[num64] $.axes;
-  has uint32 $.state;
+  has uint32 $.state;             # GdkModifierType
   has uint32 $.button;
-  has N-GObject $.device;
+  has N-GObject $.device;         # GdkDevice
   has num64 $.x_root;
   has num64 $.y_root;
 }
@@ -311,20 +311,20 @@ Used for touch events. type field will be one of GDK_TOUCH_BEGIN, GDK_TOUCH_UPDA
 
 Touch events are grouped into sequences by means of the sequence field, which can also be obtained with gdk_event_get_event_sequence(). Each sequence begins with a GDK_TOUCH_BEGIN event, followed by any number of GDK_TOUCH_UPDATE events, and ends with a GDK_TOUCH_END (or GDK_TOUCH_CANCEL) event. With multitouch devices, there may be several active sequences at the same time.
 
-=item GdkEventType $.type; the type of the event (GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END, GDK_TOUCH_CANCEL)
+=item UInt $.type; the type of the event (GDK_TOUCH_BEGIN, GDK_TOUCH_UPDATE, GDK_TOUCH_END, GDK_TOUCH_CANCEL)
 =item N-GObject $.window; the window which received the event.
 =item Int $.send_event;
 
-=item uint32 $.time; the time of the event in milliseconds.
-=item num64 $.x; the x coordinate of the pointer relative to the window
-=item num64 $.y; the y coordinate of the pointer relative to the window
+=item UInt $.time; the time of the event in milliseconds.
+=item Num $.x; the x coordinate of the pointer relative to the window
+=item Num $.y; the y coordinate of the pointer relative to the window
 =item Pointer[num64] $.axes; x , y translated to the axes of device , or NULL if device is the mouse
-=item uint32 state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
+=item Num state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
 =item Pointer $.sequence; the event sequence that the event belongs to
-=item int32 emulating_pointer; whether the event should be used for emulating pointer event (0 or 1)
+=item Num emulating_pointer; whether the event should be used for emulating pointer event (0 or 1)
 =item N-GObject $.device; the master device that the event originated from. Use gdk_event_get_source_device() to get the slave device.
-=item num64 $.x_root; the x coordinate of the pointer relative to the root of the screen
-=item num64 $.y_root; the y coordinate of the pointer relative to the root of the screen
+=item Num $.x_root; the x coordinate of the pointer relative to the root of the screen
+=item Num $.y_root; the y coordinate of the pointer relative to the root of the screen
 
 =end pod
 
@@ -336,7 +336,7 @@ class GdkEventTouch is repr('CStruct') is export {
   has num64 $.x;
   has num64 $.y;
   has Pointer[num64] $.axes;
-  has uint32 $.state;
+  has uint32 $.state;             # GdkModifierType
   has Pointer $.sequence;         # GdkEventSequence
   has int32 $.emulating_pointer;
   has N-GObject $.device;         # GdkDevice
@@ -352,19 +352,19 @@ Generated from button presses for the buttons 4 to 7. Wheel mice are usually con
 
 Some GDK backends can also generate “smooth” scroll events, which can be recognized by the GDK_SCROLL_SMOOTH scroll direction. For these, the scroll deltas can be obtained with gdk_event_get_scroll_deltas().
 
- =item $.type: the type of the event (GDK_SCROLL).
- =item $.window: the window which received the event.
- =item $.send_event: 1 if the event was sent explicitly.
- =item $.time: the time of the event in milliseconds.
- =item $.x: the x coordinate of the pointer relative to the window.
- =item $.y: the y coordinate of the pointer relative to the window.
- =item $.state: (type GdkModifierType): a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
- =item $.direction: the direction to scroll to (one of GDK_SCROLL_UP, GDK_SCROLL_DOWN, GDK_SCROLL_LEFT, GDK_SCROLL_RIGHT or GDK_SCROLL_SMOOTH).
- =item $.device: the master device that the event originated from. Use gdk_event_get_source_device() to get the slave device.
- =item $.x_root: the x coordinate of the pointer relative to the root of the screen.
- =item $.y_root: the y coordinate of the pointer relative to the root of the screen.
- =item $.delta_x: the x coordinate of the scroll delta
- =item $.delta_y: the y coordinate of the scroll delta
+ =item UInt $.type: the type of the event (GDK_SCROLL).
+ =item N-GObject $.window: the window which received the event.
+ =item UInt $.send_event: 1 if the event was sent explicitly.
+ =item UInt $.time: the time of the event in milliseconds.
+ =item Num $.x: the x coordinate of the pointer relative to the window.
+ =item Num $.y: the y coordinate of the pointer relative to the window.
+ =item GdkModifierType $.state: a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
+ =item GdkScrollDirection $.direction: the direction to scroll to (one of GDK_SCROLL_UP, GDK_SCROLL_DOWN, GDK_SCROLL_LEFT, GDK_SCROLL_RIGHT or GDK_SCROLL_SMOOTH).
+ =item N-GObject $.device: the master device that the event originated from. Use gdk_event_get_source_device() to get the slave device.
+ =item Num $.x_root: the x coordinate of the pointer relative to the root of the screen.
+ =item Num $.y_root: the y coordinate of the pointer relative to the root of the screen.
+ =item Num $.delta_x: the x coordinate of the scroll delta
+ =item Num $.delta_y: the y coordinate of the scroll delta
 =end pod
 
 class GdkEventScroll is repr('CStruct') is export {
@@ -390,19 +390,18 @@ class GdkEventScroll is repr('CStruct') is export {
 
 Generated when the pointer moves.
 
-=item $.type: the type of the event.
-=item $.window: the window which received the event.
-=item $.send_event: %TRUE if the event was sent explicitly.
-=item $.time: the time of the event in milliseconds.
-=item $.x: the x coordinate of the pointer relative to the window.
-=item $.y: the y coordinate of the pointer relative to the window.
-=item $.axes: x, y translated to the axes of @device, or NULL if device is the mouse.
-=item $.state: (type GdkModifierType): a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
-=item $.is_hint: set to 1 if this event is just a hint, see the GDK_POINTER_MOTION_HINT_MASK value of GdkEventMask.
-=item $.device: the master device that the event originated from. Use C<gdk_event_get_source_device()> to get the slave device.
-=item $.x_root: the x coordinate of the pointer relative to the root of the screen.
-=item $.y_root: the y coordinate of the pointer relative to the root of the screen.
-
+=item UInt $.type: the type of the event.
+=item N-GObject $.window: the window which received the event.
+=item UInt $.send_event: %TRUE if the event was sent explicitly.
+=item UInt $.time: the time of the event in milliseconds.
+=item Num $.x: the x coordinate of the pointer relative to the window.
+=item Num $.y: the y coordinate of the pointer relative to the window.
+=item Pointer[Num] $.axes: x, y translated to the axes of @device, or NULL if device is the mouse.
+=item UInt $.state: (type GdkModifierType): a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
+=item Int $.is_hint: set to 1 if this event is just a hint, see the GDK_POINTER_MOTION_HINT_MASK value of GdkEventMask.
+=item N-GObject $.device: the master device that the event originated from. Use C<gdk_event_get_source_device()> to get the slave device.
+=item Num $.x_root: the x coordinate of the pointer relative to the root of the screen.
+=item Num $.y_root: the y coordinate of the pointer relative to the root of the screen.
 =end pod
 
 class GdkEventMotion is repr('CStruct') is export {
@@ -412,7 +411,7 @@ class GdkEventMotion is repr('CStruct') is export {
   has uint32 $.time;
   has num64 $.x;
   has num64 $.y;
-  has num64 $.axes;
+  has Pointer[num64] $.axes;
   has uint $.state;
   has int16 $.is_hint;
   has N-GObject $.device;         # GdkDevice
@@ -426,20 +425,20 @@ class GdkEventMotion is repr('CStruct') is export {
 
 Generated when all or part of a window becomes visible and needs to be redrawn.
 
-=item $.type: the type of the event (GDK_EXPOSE or GDK_DAMAGE).
-=item $.window: the window which received the event.
-=item $.send_event: 1 if the event was sent explicitly.
-=item $.area: bounding box of @egion.
-=item $.region: the region that needs to be redrawn. A region is of type C<cairo_region_t> and represents a set of integer-aligned rectangles. It allows set-theoretical operations like cairo_region_union() and cairo_region_intersect() to be performed on them.
+=item UInt $.type: the type of the event (GDK_EXPOSE or GDK_DAMAGE).
+=item N-GObject $.window: the window which received the event.
+=item UInt $.send_event: 1 if the event was sent explicitly.
+=item GdkRectangle $.area: bounding box of @egion.
+=item Pointer $.region: the region that needs to be redrawn. A region is of type C<cairo_region_t> and represents a set of integer-aligned rectangles. It allows set-theoretical operations like cairo_region_union() and cairo_region_intersect() to be performed on them.
 =comment Memory management of cairo_region_t is done with cairo_region_reference() and cairo_region_destroy().
-=item $.count: the number of contiguous GDK_EXPOSE events following this one. The only use for this is “exposure compression”, i.e. handling all contiguous GDK_EXPOSE events in one go, though GDK performs some exposure compression so this is not normally needed.
+=item Int $.count: the number of contiguous GDK_EXPOSE events following this one. The only use for this is “exposure compression”, i.e. handling all contiguous GDK_EXPOSE events in one go, though GDK performs some exposure compression so this is not normally needed.
 =end pod
 
 class GdkEventExpose is repr('CStruct') is export {
   has uint32 $.type;
   has N-GObject $.window;
   has uint8 $.send_event;
-  has Pointer $.area;             # GdkRectangle
+  has GdkRectangle $.area;             # GdkRectangle
   has Pointer $.region;           # cairo_region_t
   has int32 $.count;              # If non-zero, how many more events follow.
 };
@@ -450,19 +449,19 @@ class GdkEventExpose is repr('CStruct') is export {
 
 Generated when the pointer enters or leaves a window.
 
-=item $.type: the type of the event (GDK_ENTER_NOTIFY or GDK_LEAVE_NOTIFY).
-=item $.window: the window which received the event.
-=item $.send_event: 1 if the event was sent explicitly.
-=item $.subwindow: the window that was entered or left.
-=item $.time: the time of the event in milliseconds.
-=item $.x: the x coordinate of the pointer relative to the window.
-=item $.y: the y coordinate of the pointer relative to the window.
-=item $.x_root: the x coordinate of the pointer relative to the root of the screen.
-=item $.y_root: the y coordinate of the pointer relative to the root of the screen.
-=item $.mode: the crossing mode (GDK_CROSSING_NORMAL, GDK_CROSSING_GRAB, GDK_CROSSING_UNGRAB, GDK_CROSSING_GTK_GRAB, GDK_CROSSING_GTK_UNGRAB or GDK_CROSSING_STATE_CHANGED). GDK_CROSSING_GTK_GRAB, GDK_CROSSING_GTK_UNGRAB, GDK_CROSSING_STATE_CHANGED were added in 2.14 and are always synthesized, never native.
-=item $.detail: the kind of crossing that happened (GDK_NOTIFY_INFERIOR, GDK_NOTIFY_ANCESTOR, GDK_NOTIFY_VIRTUAL, GDK_NOTIFY_NONLINEAR or GDK_NOTIFY_NONLINEAR_VIRTUAL).
-=item $.focus: 1 if window is the focus window or an inferior.
-=item $.state: (type GdkModifierType): a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
+=item UInt $.type: the type of the event (GDK_ENTER_NOTIFY or GDK_LEAVE_NOTIFY).
+=item N-GObject $.window: the window which received the event.
+=item UInt $.send_event: 1 if the event was sent explicitly.
+=item N-GObject $.subwindow: the window that was entered or left.
+=item UInt $.time: the time of the event in milliseconds.
+=item Num $.x: the x coordinate of the pointer relative to the window.
+=item Num $.y: the y coordinate of the pointer relative to the window.
+=item Num $.x_root: the x coordinate of the pointer relative to the root of the screen.
+=item Num $.y_root: the y coordinate of the pointer relative to the root of the screen.
+=item GdkCrossingMode $.mode: the crossing mode (GDK_CROSSING_NORMAL, GDK_CROSSING_GRAB, GDK_CROSSING_UNGRAB, GDK_CROSSING_GTK_GRAB, GDK_CROSSING_GTK_UNGRAB or GDK_CROSSING_STATE_CHANGED). GDK_CROSSING_GTK_GRAB, GDK_CROSSING_GTK_UNGRAB, GDK_CROSSING_STATE_CHANGED were added in 2.14 and are always synthesized, never native.
+=item GdkNotifyType $.detail: the kind of crossing that happened (GDK_NOTIFY_INFERIOR, GDK_NOTIFY_ANCESTOR, GDK_NOTIFY_VIRTUAL, GDK_NOTIFY_NONLINEAR or GDK_NOTIFY_NONLINEAR_VIRTUAL).
+=item Int $.focus: 1 if window is the focus window or an inferior.
+=item UInt $.state: (type GdkModifierType): a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
 =end pod
 
 class GdkEventCrossing is repr('CStruct') is export {
@@ -478,7 +477,7 @@ class GdkEventCrossing is repr('CStruct') is export {
   has uint32 $.mode;              # GdkCrossingMode
   has uint32 $.detail;            # GdkNotifyType
   has int32 $.focus;
-  has uint32 $.state;
+  has uint32 $.state;             # GdkModifierType
 };
 
 #-------------------------------------------------------------------------------
@@ -487,10 +486,10 @@ class GdkEventCrossing is repr('CStruct') is export {
 
 Describes a change of keyboard focus.
 
-=item $.type: the type of the event (GDK_FOCUS_CHANGE).
-=item $.window: the window which received the event.
-=item $.send_event: %TRUE if the event was sent explicitly.
-=item $.in: 1 if the window has gained the keyboard focus, 0 if it has lost the focus.
+=item UInt $.type: the type of the event (GDK_FOCUS_CHANGE).
+=item N-GObject $.window: the window which received the event.
+=item UInt $.send_event: %TRUE if the event was sent explicitly.
+=item Int $.in: 1 if the window has gained the keyboard focus, 0 if it has lost the focus.
 =end pod
 
 class GdkEventFocus is repr('CStruct') is export {

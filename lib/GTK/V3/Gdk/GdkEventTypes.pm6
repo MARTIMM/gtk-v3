@@ -151,10 +151,53 @@ Specifies the direction for GdkEventScroll.
 
 =end pod
 
-enum GdkScrollDirection is export <<
+enum GdkScrollDirection is export <
   GDK_SCROLL_UP GDK_SCROLL_DOWN GDK_SCROLL_LEFT GDK_SCROLL_RIGHT
   GDK_SCROLL_SMOOTH
->>;
+>;
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 GdkCrossingMode
+
+Specifies the crossing mode for C<GdkEventCrossing>.
+
+=item GDK_CROSSING_NORMAL: crossing because of pointer motion.
+=item GDK_CROSSING_GRAB: crossing because a grab is activated.
+=item GDK_CROSSING_UNGRAB: crossing because a grab is deactivated.
+=item GDK_CROSSING_GTK_GRAB: crossing because a GTK+ grab is activated.
+=item GDK_CROSSING_GTK_UNGRAB: crossing because a GTK+ grab is deactivated.
+=item GDK_CROSSING_STATE_CHANGED: crossing because a GTK+ widget changed state (e.g. sensitivity).
+=item GDK_CROSSING_TOUCH_BEGIN: crossing because a touch sequence has begun, this event is synthetic as the pointer might have not left the window.
+=item GDK_CROSSING_TOUCH_END: crossing because a touch sequence has ended, this event is synthetic as the pointer might have not left the window.
+=item GDK_CROSSING_DEVICE_SWITCH: crossing because of a device switch (i.e. a mouse taking control of the pointer after a touch device), this event is synthetic as the pointer didn’t leave the window.
+
+=end pod
+
+enum GdkCrossingMode is export <
+  GDK_CROSSING_NORMAL GDK_CROSSING_GRAB GDK_CROSSING_UNGRAB
+  GDK_CROSSING_GTK_GRAB GDK_CROSSING_GTK_UNGRAB GDK_CROSSING_STATE_CHANGED
+  GDK_CROSSING_TOUCH_BEGIN GDK_CROSSING_TOUCH_END GDK_CROSSING_DEVICE_SWITCH
+>;
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 class GdkNotifyType
+
+ Specifies the kind of crossing for #GdkEventCrossing. See the X11 protocol specification of LeaveNotify for full details of crossing event generation.
+
+=item GDK_NOTIFY_ANCESTOR: the window is entered from an ancestor or left towards an ancestor.
+=item GDK_NOTIFY_VIRTUAL: the pointer moves between an ancestor and an inferior of the window.
+=item GDK_NOTIFY_INFERIOR: the window is entered from an inferior or left towards an inferior.
+=item GDK_NOTIFY_NONLINEAR: the window is entered from or left towards a window which is neither an ancestor nor an inferior.
+=item GDK_NOTIFY_NONLINEAR_VIRTUAL: the pointer moves between two windows which are not ancestors of each other and the window is part of the ancestor chain between one of these windows and their least common ancestor.
+=item GDK_NOTIFY_UNKNOWN: an unknown type of enter/leave event occurred.
+=end pod
+
+enum GdkNotifyType is export <
+  GDK_NOTIFY_ANCESTOR GDK_NOTIFY_VIRTUAL GDK_NOTIFY_INFERIOR
+  GDK_NOTIFY_NONLINEAR GDK_NOTIFY_NONLINEAR_VIRTUAL GDK_NOTIFY_UNKNOWN
+>;
 
 #-------------------------------------------------------------------------------
 =begin pod
@@ -164,7 +207,7 @@ Contains the fields which are common to all event classes. This comes in handy t
 
 =item GdkEventType $.type; the type of the event.
 =item N-GObject $.window; the window which received the event.
-=item Int $.send_event; TRUE if the event was sent explicitly.
+=item Int $.send_event; 1 if the event was sent explicitly.
 
 =end pod
 
@@ -182,7 +225,7 @@ Describes a key press or key release event. The type of the event will be one of
 
 =item GdkEventType $.type
 =item N-GObject $.window; the window which received the event.
-=item Int $.send_event
+=item Int $.send_event; 1 if the event was sent explicitly.
 =item UInt $.time; the time of the event in milliseconds.
 =item UInt $.state; a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.	[type GdkModifierType].
 =item UInt $.keyval; the key that was pressed or released. See the gdk/gdkkeysyms.h header file for a complete list of GDK key codes.
@@ -388,9 +431,8 @@ Generated when all or part of a window becomes visible and needs to be redrawn.
 =item $.send_event: 1 if the event was sent explicitly.
 =item $.area: bounding box of @egion.
 =item $.region: the region that needs to be redrawn. A region is of type C<cairo_region_t> and represents a set of integer-aligned rectangles. It allows set-theoretical operations like cairo_region_union() and cairo_region_intersect() to be performed on them.
-=comment Memory management of cairo_region_t is done with cairo_region_reference() and cairo_region_destroy(). 
+=comment Memory management of cairo_region_t is done with cairo_region_reference() and cairo_region_destroy().
 =item $.count: the number of contiguous GDK_EXPOSE events following this one. The only use for this is “exposure compression”, i.e. handling all contiguous GDK_EXPOSE events in one go, though GDK performs some exposure compression so this is not normally needed.
-
 =end pod
 
 class GdkEventExpose is repr('CStruct') is export {
@@ -399,7 +441,44 @@ class GdkEventExpose is repr('CStruct') is export {
   has uint8 $.send_event;
   has Pointer $.area;             # GdkRectangle
   has Pointer $.region;           # cairo_region_t
-  has gint $.count;               # If non-zero, how many more events follow.
+  has int32 $.count;              # If non-zero, how many more events follow.
+};
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 GdkEventCrossing
+
+Generated when the pointer enters or leaves a window.
+
+=item $.type: the type of the event (GDK_ENTER_NOTIFY or GDK_LEAVE_NOTIFY).
+=item $.window: the window which received the event.
+=item $.send_event: 1 if the event was sent explicitly.
+=item $.subwindow: the window that was entered or left.
+=item $.time: the time of the event in milliseconds.
+=item $.x: the x coordinate of the pointer relative to the window.
+=item $.y: the y coordinate of the pointer relative to the window.
+=item $.x_root: the x coordinate of the pointer relative to the root of the screen.
+=item $.y_root: the y coordinate of the pointer relative to the root of the screen.
+=item $.mode: the crossing mode (GDK_CROSSING_NORMAL, GDK_CROSSING_GRAB, GDK_CROSSING_UNGRAB, GDK_CROSSING_GTK_GRAB, GDK_CROSSING_GTK_UNGRAB or GDK_CROSSING_STATE_CHANGED). GDK_CROSSING_GTK_GRAB, GDK_CROSSING_GTK_UNGRAB, GDK_CROSSING_STATE_CHANGED were added in 2.14 and are always synthesized, never native.
+=item $.detail: the kind of crossing that happened (GDK_NOTIFY_INFERIOR, GDK_NOTIFY_ANCESTOR, GDK_NOTIFY_VIRTUAL, GDK_NOTIFY_NONLINEAR or GDK_NOTIFY_NONLINEAR_VIRTUAL).
+=item $.focus: 1 if window is the focus window or an inferior.
+=item $.state: (type GdkModifierType): a bit-mask representing the state of the modifier keys (e.g. Control, Shift and Alt) and the pointer buttons. See GdkModifierType.
+=end pod
+
+class GdkEventCrossing is repr('CStruct') is export {
+  has uint32 $.type;
+  has N-GObject $.window;
+  has uint8 $.send_event;
+  has N-GObject $.subwindow;      # GdkWindow
+  has uint32 $.time;
+  has num64 $.x;
+  has num64 $.y;
+  has num64 $.x_root;
+  has num64 $.y_root;
+  has uint32 $.mode;              # GdkCrossingMode
+  has uint32 $.detail;            # GdkNotifyType
+  has int32 $.focus;
+  has uint32 $.state;
 };
 
 #-------------------------------------------------------------------------------
@@ -418,6 +497,7 @@ class GdkEvent is repr('CUnion') is export {
   HAS GdkEventScroll $.event-scroll;
   HAS GdkEventMotion $.event-motion;
   HAS GdkEventExpose $.event-expose;
+  HAS GdkEventCrossing $.event-crossing;
 }
 
 #-------------------------------------------------------------------------------

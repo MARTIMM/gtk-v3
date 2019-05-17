@@ -41,6 +41,7 @@ use GTK::V3::X;
 use GTK::V3::N::NativeLib;
 use GTK::V3::N::N-GObject;
 #use GTK::V3::Glib::GTypes;
+use GTK::V3::Gdk::GdkTypes;
 
 #-------------------------------------------------------------------------------
 # https://developer.gnome.org/gdk3/stable/gdk3-Event-Structures.html
@@ -378,6 +379,31 @@ class GdkEventMotion is repr('CStruct') is export {
 
 #-------------------------------------------------------------------------------
 =begin pod
+=head2 GdkEventExpose
+
+Generated when all or part of a window becomes visible and needs to be redrawn.
+
+=item $.type: the type of the event (GDK_EXPOSE or GDK_DAMAGE).
+=item $.window: the window which received the event.
+=item $.send_event: 1 if the event was sent explicitly.
+=item $.area: bounding box of @egion.
+=item $.region: the region that needs to be redrawn. A region is of type C<cairo_region_t> and represents a set of integer-aligned rectangles. It allows set-theoretical operations like cairo_region_union() and cairo_region_intersect() to be performed on them.
+=comment Memory management of cairo_region_t is done with cairo_region_reference() and cairo_region_destroy(). 
+=item $.count: the number of contiguous GDK_EXPOSE events following this one. The only use for this is “exposure compression”, i.e. handling all contiguous GDK_EXPOSE events in one go, though GDK performs some exposure compression so this is not normally needed.
+
+=end pod
+
+class GdkEventExpose is repr('CStruct') is export {
+  has uint32 $.type;
+  has N-GObject $.window;
+  has uint8 $.send_event;
+  has Pointer $.area;             # GdkRectangle
+  has Pointer $.region;           # cairo_region_t
+  has gint $.count;               # If non-zero, how many more events follow.
+};
+
+#-------------------------------------------------------------------------------
+=begin pod
 =head2 GdkEvent
 
 The event structures contain data specific to each type of event in GDK. The type is a union of all structures explained above.
@@ -391,6 +417,7 @@ class GdkEvent is repr('CUnion') is export {
   HAS GdkEventTouch $.event-touch;
   HAS GdkEventScroll $.event-scroll;
   HAS GdkEventMotion $.event-motion;
+  HAS GdkEventExpose $.event-expose;
 }
 
 #-------------------------------------------------------------------------------

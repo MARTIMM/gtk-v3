@@ -4,6 +4,7 @@ use v6;
 
 my $t0 = now;
 
+use GTK::V3::Gtk::GtkEnums;
 use GTK::V3::Gtk::GtkMain;
 use GTK::V3::Gtk::GtkWindow;
 use GTK::V3::Gtk::GtkGrid;

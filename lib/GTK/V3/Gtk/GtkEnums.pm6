@@ -48,7 +48,7 @@ The orientation of the orientable.
 
 enum GtkOrientation is export <
   GTK_ORIENTATION_HORIZONTAL GTK_ORIENTATION_VERTICAL
->
+>;
 
 #-------------------------------------------------------------------------------
 =begin pod

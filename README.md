@@ -194,11 +194,12 @@ A few measures are implemented to help a bit preventing problems;
 | GTK::V3::Gtk::GtkImage |  [GtkImage.html][gtkimage]
 | GTK::V3::Gtk::GtkImageMenuItem |  [GtkImageMenuItem.html][gtkimagemenuitem]
 | GTK::V3::Gtk::GtkLabel |  [GtkLabel.html][gtklabel]
-| [ GTK::V3::Gtk::GtkLevelBar ][ GTK::V3::Gtk::GtkLevelBar pdf] |  [GtkLevelBar.html][][GtkLevelBar]
+| [ GTK::V3::Gtk::GtkLevelBar ][ GTK::V3::Gtk::GtkLevelBar pdf] |  [GtkLevelBar.html][GtkLevelBar]
 | GTK::V3::Gtk::GtkListBox |  [GtkListBox.html][gtklistbox]
 | [GTK::V3::Gtk::GtkMain][GTK::V3::Gtk::GtkMain pdf] |  [GtkMain.html][gtkmain]
 | GTK::V3::Gtk::GtkMenuItem |  [GtkMenuItem.html][gtkmenuitem]
 | [GTK::V3::Gtk::GtkOrientable][GTK::V3::Gtk::GtkOrientable pdf] |  [GtkOrientable.html][gtkmenuitem]
+| [GTK::V3::Gtk::GtkPaned][GTK::V3::Gtk::GtkPaned pdf] |  [GtkPaned.html][GtkPaned]
 | GTK::V3::Gtk::GtkRadioButton |  [GtkRadioButton.html][gtkradiobutton]
 | GTK::V3::Gtk::GtkStyleContext |  [GtkStyleContext.html][GtkStyleContext]
 | GTK::V3::Gtk::GtkTextBuffer |  [GtkTextBuffer.html][gtktextbuffer]
@@ -302,6 +303,9 @@ $grid.attach( $label, 0, 1, 1, 1);
 Name: **Marcel Timmerman**
 Github account name: **MARTIMM**
 
+# Issues
+
+There are always some problems! If you find one please help by filing an issue at [my github project](https://github.com/MARTIMM/gtk-v3/issues)
 
 # Documentation
 
@@ -336,6 +340,7 @@ Documentation is generated with
 [gtkmain]: https://developer.gnome.org/gtk3/stable/GtkMain.html
 [gtkmenuitem]: https://developer.gnome.org/gtk3/stable/GtkMenuItem.html
 [GtkOrientable]: https://developer.gnome.org/gtk3/stable/gtk3-Orientable.html
+[GtkPaned]: https://developer.gnome.org/gtk3/stable/GtkPaned.html
 [gtkradiobutton]: https://developer.gnome.org/gtk3/stable/GtkRadioButton.html
 [GtkStyleContext]: https://developer.gnome.org/gtk3/stable/GtkStyleContext.html
 [gtktextbuffer]: https://developer.gnome.org/gtk3/stable/GtkTextBuffer.html
@@ -405,3 +410,5 @@ Documentation is generated with
 [GTK::V3::Gtk::GtkWidget pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWidget.pdf
 [GTK::V3::Gtk::GtkWindow html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.html
 [GTK::V3::Gtk::GtkWindow pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.pdf
+[GTK::V3::Gtk::GtkPaned html]: https://nbviewer.jupyter.org/github/MARTIM/gtk-v3/blob/master/doc/GtkPaned.html
+[GTK::V3::Gtk::GtkPaned pdf]: https://nbviewer.jupyter.org/github/MARTIM/gtk-v3/blob/master/doc/GtkPaned.pdf

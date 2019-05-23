@@ -65,3 +65,19 @@ Reading directions for text.
 enum GtkTextDirection is export <
   GTK_TEXT_DIR_NONE GTK_TEXT_DIR_LTR GTK_TEXT_DIR_RTL
 >;
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 GtkSensitivityType
+
+Determines how GTK+ handles the sensitivity of stepper arrows at the end of range widgets.
+
+=item GTK_SENSITIVITY_AUTO: The arrow is made insensitive if the thumb is at the end
+=item GTK_SENSITIVITY_ON: The arrow is always sensitive
+=item GTK_SENSITIVITY_OFF: The arrow is always insensitive
+
+=end pod
+
+enum GtkSensitivityType is export <
+  GTK_SENSITIVITY_AUTO GTK_SENSITIVITY_ON GTK_SENSITIVITY_OFF
+>;

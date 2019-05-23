@@ -438,7 +438,7 @@ class GdkEventExpose is repr('CStruct') is export {
   has uint32 $.type;
   has N-GObject $.window;
   has uint8 $.send_event;
-  has GdkRectangle $.area;             # GdkRectangle
+  has GdkRectangle $.area;        # GdkRectangle
   has Pointer $.region;           # cairo_region_t
   has int32 $.count;              # If non-zero, how many more events follow.
 };

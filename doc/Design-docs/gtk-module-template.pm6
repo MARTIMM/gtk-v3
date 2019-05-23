@@ -18,6 +18,7 @@ use NativeCall;
 
 use GTK::V3::X;
 use GTK::V3::N::NativeLib;
+#use GTK::V3::N::N-GObject;
 #use GTK::V3::Glib::GObject;
 use GTK::V3::LIBRARY::PARENT;
 
@@ -119,15 +120,25 @@ Returns
 
 =end pod
 
-#`{{
-sub  (  )
+sub  ( N-GObject   )
   returns
   is native(&gtk-lib)
   { * }
 
-  is symbol('')
+#`{{
+sub  ( N-GObject )
+  returns
   is native(&gdk-lib)
-  is native(&gobject-lib)
+  { * }
+
+sub  ( N-GObject )
+  returns
+  is native(&g-lib)
+  { * }
+
+
+
+  is symbol('')
 }}
 
 #-------------------------------------------------------------------------------

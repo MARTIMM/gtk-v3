@@ -81,6 +81,7 @@ $second.register-signal( $ash, 'second-button-click', 'clicked');
 $top-window.show-all;
 $m.gtk-main;
 ```
+Result GUI will be like ![this screenshot][screenshot 1]
 
 # Design
 
@@ -242,7 +243,7 @@ A few measures are implemented to help a bit preventing problems;
   * `test-call ( $handler, $gobject, |c )`
 
 ## Release notes
-* [Changes]()
+* [Release notes][release]
 
 # Notes
   1) The `CALL-ME` method is coded in such a way that a native widget can be set or retrieved easily. E.g.
@@ -316,7 +317,8 @@ Documentation is generated with
 
 [//]: # (---- [refs] ----------------------------------------------------------)
 [release]: https://github.com/MARTIMM/gtk-glade/blob/master/doc/CHANGES.md
-[logo]: https://github.com/MARTIMM/gtk-glade/blob/master/doc/Design-docs/gtk-logo-100.png
+[logo]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/gtk-logo-100.png
+[screenshot 1]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/Screenshot_20190523_124617.png
 
 [gtkaboutdialog]: https://developer.gnome.org/gtk3/stable/GtkAboutDialog.html
 [gtkbin]: https://developer.gnome.org/gtk3/stable/GtkBin.html

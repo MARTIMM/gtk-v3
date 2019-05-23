@@ -2,6 +2,7 @@
 
 * 2019-05-20 0.13.0
   * Added GtkRange
+  * Additions to GtkEnum
 
 * 2019-05-17 0.12.0
   * GdkEvents extended.

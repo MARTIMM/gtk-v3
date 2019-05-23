@@ -281,7 +281,7 @@ Gets the reading direction for a particular widget.
 
   method gtk_widget_get_direction ( --> GtkTextDirection )
 
-Returns the current text direction.
+Returns the current text direction. This is a GtkTextDirection enum type defined in GtkEnums.
 
 =end pod
 

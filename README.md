@@ -201,6 +201,7 @@ A few measures are implemented to help a bit preventing problems;
 | [GTK::V3::Gtk::GtkOrientable][GTK::V3::Gtk::GtkOrientable pdf] |  [GtkOrientable.html][gtkmenuitem]
 | [GTK::V3::Gtk::GtkPaned][GTK::V3::Gtk::GtkPaned pdf] |  [GtkPaned.html][GtkPaned]
 | GTK::V3::Gtk::GtkRadioButton |  [GtkRadioButton.html][gtkradiobutton]
+| [GTK::V3::Gtk::GtkRange][GTK::V3::Gtk::GtkRange pdf] |  [GtkRange.html][GtkRange]
 | GTK::V3::Gtk::GtkStyleContext |  [GtkStyleContext.html][GtkStyleContext]
 | GTK::V3::Gtk::GtkTextBuffer |  [GtkTextBuffer.html][gtktextbuffer]
 | GTK::V3::Gtk::GtkTextTagTable |  [GtkTextTagTable.html][gtktexttagtable] |

@@ -1,5 +1,8 @@
 ## Release notes
 
+* 2019-05-20 0.13.0
+  * Added GtkRange
+
 * 2019-05-17 0.12.0
   * GdkEvents extended.
   * GtkPaned widget added.

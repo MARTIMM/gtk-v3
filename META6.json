@@ -1,7 +1,7 @@
 {
   "description": "Perl6 GTK Api Version 3",
   "name": "GTK::V3",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "authors": [ "Marcel Timmerman"],
   "tags": [ "Gui", "Gtk"],
 
@@ -56,6 +56,7 @@
     "GTK::V3::Gtk::GtkOrientable": "lib/GTK/V3/Gtk/GtkOrientable.pm6",
     "GTK::V3::Gtk::GtkPaned": "lib/GTK/V3/Gtk/GtkPaned.pm6",
     "GTK::V3::Gtk::GtkRadioButton": "lib/GTK/V3/Gtk/GtkRadioButton.pm6",
+    "GTK::V3::Gtk::GtkRange": "lib/GTK/V3/Gtk/GtkRange.pm6",
     "GTK::V3::Gtk::GtkSearchEntry": "lib/GTK/V3/Gtk/GtkSearchEntry.pm6",
     "GTK::V3::Gtk::GtkStyleContext": "lib/GTK/V3/Gtk/GtkStyleContext.pm6",
     "GTK::V3::Gtk::GtkTextBuffer": "lib/GTK/V3/Gtk/GtkTextBuffer.pm6",

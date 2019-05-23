@@ -449,14 +449,34 @@ This function returns the area that contains the range’s trough and its steppe
 
 This function is useful mainly for GtkRange subclasses.
 
-  method gtk_range_get_range_rect (  --> GdkRectangle )
+  method gtk_range_get_range_rect ( GdkRectangle $rectangle )
 
-Returns GdkRectangle. Type is defined in GdkTypes
+=item $rectangle. Location for the range rectangleType to return. GdkRectangle is defined in GdkTypes.
 
 =end pod
 
-sub gtk_range_get_range_rect ( N-GObject $range )
-  returns GdkRectangle
+sub gtk_range_get_range_rect ( N-GObject $range, GdkRectangle $rectangle )
+  is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 [gtk_range_] get_slider_range
+
+This function returns sliders range along the long dimension, in widget->window coordinates.
+
+This function is useful mainly for GtkRange subclasses.
+
+  method gtk_range_get_slider_range (  -->  )
+
+=item
+
+Returns
+
+=end pod
+
+sub gtk_range_get_slider_range ( N-GObject $range )
+  returns
   is native(&gtk-lib)
   { * }
 

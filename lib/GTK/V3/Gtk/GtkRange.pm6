@@ -463,20 +463,54 @@ sub gtk_range_get_range_rect ( N-GObject $range, GdkRectangle $rectangle )
 =begin pod
 =head2 [gtk_range_] get_slider_range
 
-This function returns sliders range along the long dimension, in widget->window coordinates.
+This function returns sliders range along the long dimension, in widgets window coordinates.
 
 This function is useful mainly for GtkRange subclasses.
 
-  method gtk_range_get_slider_range (  -->  )
+  method gtk_range_get_slider_range ( Int $slider_start, Int $slider_end )
 
-=item
-
-Returns
+=item $slider_start; return location for the slider's start, or NULL.
+=item $slider_end; return location for the slider's end, or NULL.
 
 =end pod
 
-sub gtk_range_get_slider_range ( N-GObject $range )
-  returns
+sub gtk_range_get_slider_range (
+  N-GObject $range, int32 $slider_start, int32 $slider_end
+) is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 [gtk_range_] get_slider_size_fixed
+
+This function is useful mainly for GtkRange subclasses.
+
+  method gtk_range_get_slider_size_fixed ( --> Int )
+
+Returns 1 if the range’s slider has a fixed size.
+
+=end pod
+
+sub gtk_range_get_slider_size_fixed ( N-GObject $range )
+  returns int32
+  is native(&gtk-lib)
+  { * }
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head2 [gtk_range_] set_slider_size_fixed
+
+Sets whether the range’s slider has a fixed size, or a size that depends on its adjustment’s page size.
+
+This function is useful mainly for GtkRange subclasses.
+
+  method gtk_range_set_slider_size_fixed ( Int $size_fixed )
+
+=item $size_fixed; 1 to make the slider size constant.
+
+=end pod
+
+sub gtk_range_set_slider_size_fixed ( N-GObject $range )
   is native(&gtk-lib)
   { * }
 

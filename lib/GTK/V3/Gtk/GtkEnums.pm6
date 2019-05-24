@@ -52,6 +52,22 @@ enum GtkOrientation is export <
 
 #-------------------------------------------------------------------------------
 =begin pod
+=head2 GtkPositionType
+
+Describes which edge of a widget a certain feature is positioned at, e.g. the tabs of a GtkNotebook, the handle of a GtkHandleBox or the label of a GtkScale.
+
+=item GTK_POS_LEFT: The feature is at the left edge.
+=item GTK_POS_RIGHT: The feature is at the right edge.
+=item GTK_POS_TOP: The feature is at the top edge.
+=item GTK_POS_BOTTOM: The feature is at the bottom edge.
+=end pod
+
+enum GtkPositionType is export <
+  GTK_POS_LEFT GTK_POS_RIGHT GTK_POS_TOP GTK_POS_BOTTOM
+>;
+
+#-------------------------------------------------------------------------------
+=begin pod
 =head2 GtkTextDirection
 
 Reading directions for text.

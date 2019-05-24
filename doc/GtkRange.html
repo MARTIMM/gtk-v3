@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <title>GTK::V3::Gtk::GtkRange</title>
+        <meta charset="UTF-8" />
+  <link type="text/css" rel="stylesheet" href="file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/8E2223EC8A82AFADF6C944FF8969408E59014865.css">
+        
+        
+    </head>
+ <body class="pod" onload="prettyPrint()">
+    <div id="___top"></div>
+    
+    <div class='title'><img src='file:///mnt/Data/opt/Perl6/rakudo/install/share/perl6/site/resources/0B7FF4E498A5251B3DC3E867D243E1F3A497ABA3.svg' align='left' />GTK::V3::Gtk::GtkRange</div>
+    <p class='subtitle'>GtkRange — Base class for widgets which visualize an adjustment</p>
+    <nav class="indexgroup">
+<table id="TOC">
+<caption><h2 id="TOC_Title">Table of Contents</h2></caption>
+   <tr class="toc-level-1"><td class="toc-number">1</td><td class="toc-text"><a href="#Synopsis">Synopsis</a></td></tr>
+ <tr class="toc-level-1"><td class="toc-number">2</td><td class="toc-text"><a href="#Methods">Methods</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">2.1</td><td class="toc-text"><a href="#new">new</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.2</td><td class="toc-text"><a href="#[gtk_range_]_get_fill_level">[gtk_range_] get_fill_level</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.3</td><td class="toc-text"><a href="#[gtk_range_]_get_restrict_to_fill_level">[gtk_range_] get_restrict_to_fill_level</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.4</td><td class="toc-text"><a href="#[gtk_range_]_get_show_fill_level">[gtk_range_] get_show_fill_level</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.5</td><td class="toc-text"><a href="#[gtk_range_]_set_fill_level">[gtk_range_] set_fill_level</a></td></tr>
+           <tr class="toc-level-2"><td class="toc-number">2.6</td><td class="toc-text"><a href="#[gtk_range_]_set_restrict_to_fill_level">[gtk_range_] set_restrict_to_fill_level</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.7</td><td class="toc-text"><a href="#[gtk_range_]_get_inverted">[gtk_range_] get_inverted</a></td></tr>
+      <tr class="toc-level-2"><td class="toc-number">2.8</td><td class="toc-text"><a href="#[gtk_range_]_set_inverted">[gtk_range_] set_inverted</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.9</td><td class="toc-text"><a href="#[gtk_range_]_get_value">[gtk_range_] get_value</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.10</td><td class="toc-text"><a href="#[gtk_range_]_set_value">[gtk_range_] set_value</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.11</td><td class="toc-text"><a href="#[gtk_range_]_set_increments">[gtk_range_] set_increments</a></td></tr>
+         <tr class="toc-level-2"><td class="toc-number">2.12</td><td class="toc-text"><a href="#[gtk_range_]_set_range">[gtk_range_] set_range</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.13</td><td class="toc-text"><a href="#[gtk_range_]_get_round_digits">[gtk_range_] get_round_digits</a></td></tr>
+   <tr class="toc-level-2"><td class="toc-number">2.14</td><td class="toc-text"><a href="#[gtk_range_]_set_round_digits">[gtk_range_] set_round_digits</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.15</td><td class="toc-text"><a href="#[gtk_range_]_set_lower_stepper_sensitivity">[gtk_range_] set_lower_stepper_sensitivity</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.16</td><td class="toc-text"><a href="#[gtk_range_]_get_lower_stepper_sensitivity">[gtk_range_] get_lower_stepper_sensitivity</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.17</td><td class="toc-text"><a href="#[gtk_range_]_set_upper_stepper_sensitivity">[gtk_range_] set_upper_stepper_sensitivity</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.18</td><td class="toc-text"><a href="#[gtk_range_]_get_upper_stepper_sensitivity">[gtk_range_] get_upper_stepper_sensitivity</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.19</td><td class="toc-text"><a href="#[gtk_range_]_get_flippable">[gtk_range_] get_flippable</a></td></tr>
+      <tr class="toc-level-2"><td class="toc-number">2.20</td><td class="toc-text"><a href="#[gtk_range_]_set_flippable">[gtk_range_] set_flippable</a></td></tr>
+         <tr class="toc-level-2"><td class="toc-number">2.21</td><td class="toc-text"><a href="#[gtk_range_]_get_range_rect">[gtk_range_] get_range_rect</a></td></tr>
+     <tr class="toc-level-2"><td class="toc-number">2.22</td><td class="toc-text"><a href="#[gtk_range_]_get_slider_range">[gtk_range_] get_slider_range</a></td></tr>
+      <tr class="toc-level-2"><td class="toc-number">2.23</td><td class="toc-text"><a href="#[gtk_range_]_get_slider_size_fixed">[gtk_range_] get_slider_size_fixed</a></td></tr>
+    <tr class="toc-level-2"><td class="toc-number">2.24</td><td class="toc-text"><a href="#[gtk_range_]_set_slider_size_fixed">[gtk_range_] set_slider_size_fixed</a></td></tr>
+     <tr class="toc-level-1"><td class="toc-number">3</td><td class="toc-text"><a href="#Types">Types</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">3.1</td><td class="toc-text"><a href="#"></a></td></tr>
+  <tr class="toc-level-1"><td class="toc-number">4</td><td class="toc-text"><a href="#Signals">Signals</a></td></tr>
+ <tr class="toc-level-2"><td class="toc-number">4.1</td><td class="toc-text"><a href="#Supported_signals">Supported signals</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">4.1.1</td><td class="toc-text"><a href="#value-changed">value-changed</a></td></tr>
+  <tr class="toc-level-2"><td class="toc-number">4.2</td><td class="toc-text"><a href="#Not_yet_supported_signals">Not yet supported signals</a></td></tr>
+ <tr class="toc-level-3"><td class="toc-number">4.2.1</td><td class="toc-text"><a href="#adjust-bounds">adjust-bounds</a></td></tr>
+  <tr class="toc-level-3"><td class="toc-number">4.2.2</td><td class="toc-text"><a href="#change-value">change-value</a></td></tr>
+   <tr class="toc-level-3"><td class="toc-number">4.2.3</td><td class="toc-text"><a href="#move-slider">move-slider</a></td></tr>
+ 
+</table>
+</nav>
+
+    <div class="pod-body">
+    <pre class="pod-block-code">unit class GTK::V3::Gtk::GtkRange;
+also is GTK::V3::Gtk::GtkWidget;</pre>
+<h1 id="Synopsis"><a class="u" href="#___top" title="go to top of document">Synopsis</a></h1>
+<h1 id="Methods"><a class="u" href="#___top" title="go to top of document">Methods</a></h1>
+<h2 id="new"><a class="u" href="#___top" title="go to top of document">new</a></h2>
+<pre class="pod-block-code">multi submethod BUILD ( :$widget! )</pre>
+<p>Create an object using a native object from elsewhere. See also Gtk::V3::Glib::GObject.</p>
+<h2 id="[gtk_range_]_get_fill_level"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_fill_level</a></h2>
+<p>Gets the current position of the fill level indicator.</p>
+<pre class="pod-block-code">method gtk_range_get_fill_level ( --&gt; Num )</pre>
+<p>Returns the current fill level</p>
+<h2 id="[gtk_range_]_get_restrict_to_fill_level"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_restrict_to_fill_level</a></h2>
+<p>Gets whether the range is restricted to the fill level.</p>
+<pre class="pod-block-code">method gtk_range_get_restrict_to_fill_level ( --&gt; Int )</pre>
+<p>Returns 1 if range is restricted to the fill level.</p>
+<h2 id="[gtk_range_]_get_show_fill_level"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_show_fill_level</a></h2>
+<pre class="pod-block-code">method gtk_range_get_show_fill_level ( --&gt; Int )</pre>
+<p>Returns 1 if range shows the fill level.</p>
+<h2 id="[gtk_range_]_set_fill_level"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_fill_level</a></h2>
+<p>Set the new position of the fill level indicator.</p>
+<p>The “fill level” is probably best described by its most prominent use case, which is an indicator for the amount of pre-buffering in a streaming media player. In that use case, the value of the range would indicate the current play position, and the fill level would be the position up to which the file/stream has been downloaded.</p>
+<p>This amount of prebuffering can be displayed on the range’s trough and is themeable separately from the trough. To enable fill level display, use <code>gtk_range_set_show_fill_level()</code>. The range defaults to not showing the fill level.</p>
+<p>Additionally, it’s possible to restrict the range’s slider position to values which are smaller than the fill level. This is controller by <code>gtk_range_set_restrict_to_fill_level()</code> and is by default enabled.</p>
+<pre class="pod-block-code">method gtk_range_set_fill_level ( Num $fill-level )</pre>
+<ul><li><p>$fill-level; the new position of the fill level indicator.</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_set_restrict_to_fill_level"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_restrict_to_fill_level</a></h2>
+<p>Sets whether the slider is restricted to the fill level. See gtk_range_set_fill_level() for a general description of the fill level concept.</p>
+<pre class="pod-block-code">method gtk_range_set_restrict_to_fill_level ( Int $show )</pre>
+<ul><li><p>$show; Whether a fill level indicator graphics is shown. Values are 0 or 1.</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_get_inverted"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_inverted</a></h2>
+<p>Gets the value set by <code>gtk_range_set_inverted()</code>.</p>
+<pre class="pod-block-code">method gtk_range_get_inverted ( --&gt; Int )</pre>
+<p>Returns 1 if the range is inverted</p>
+<h2 id="[gtk_range_]_set_inverted"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_inverted</a></h2>
+<p>Ranges normally move from lower to higher values as the slider moves from top to bottom or left to right. Inverted ranges have higher values at the top or on the right rather than on the bottom or left.</p>
+<pre class="pod-block-code">method gtk_range_set_inverted ( Int $setting )</pre>
+<ul><li><p>$setting; 1 to invert the range</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_get_value"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_value</a></h2>
+<p>Gets the current value of the range.</p>
+<pre class="pod-block-code">method gtk_range_get_value ( --&gt; Num )</pre>
+<h2 id="[gtk_range_]_set_value"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_value</a></h2>
+<p>Sets the current value of the range; if the value is outside the minimum or maximum range values, it will be clamped to fit inside them. The range emits the “value-changed” signal if the value changes.</p>
+<pre class="pod-block-code">method gtk_range_set_value ( Num $value )</pre>
+<ul><li><p>$value; new value of the range</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_set_increments"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_increments</a></h2>
+<p>Sets the step and page sizes for the range. The step size is used when the user clicks the GtkScrollbar arrows or moves GtkScale via arrow keys. The page size is used for example when moving via <strong>Page Up</strong> or <strong>Page Down</strong> keys.</p>
+<pre class="pod-block-code">method gtk_range_set_increments ( Num $step, Num $page )</pre>
+<ul><li><p>$step; step size</p>
+</li>
+<li><p>$page; page size</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_set_range"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_range</a></h2>
+<p>Sets the allowable values in the GtkRange, and clamps the range value to be between min and max. (If the range has a non-zero page size, it is clamped between min and max- page-size.)</p>
+<pre class="pod-block-code">method gtk_range_set_range ( Num $min, Num $max )</pre>
+<ul><li><p>$min; minimum range value</p>
+</li>
+<li><p>$max; maximum range value</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_get_round_digits"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_round_digits</a></h2>
+<pre class="pod-block-code">method gtk_range_get_round_digits ( --&gt; Int )</pre>
+<p>Returns the number of digits to round to</p>
+<h2 id="[gtk_range_]_set_round_digits"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_round_digits</a></h2>
+<p>Sets the number of digits to round the value to when it changes. See “change-value”.</p>
+<pre class="pod-block-code">method gtk_range_set_round_digits ( Int $round-digits )</pre>
+<ul><li><p>$round-digits; the precision in digits, or -1</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_set_lower_stepper_sensitivity"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_lower_stepper_sensitivity</a></h2>
+<p>Sets the sensitivity policy for the stepper that points to the &#39;lower&#39; end of the GtkRange’s adjustment.</p>
+<pre class="pod-block-code">method gtk_range_set_lower_stepper_sensitivity (
+  GtkSensitivityType $sensitivity
+)</pre>
+<ul><li><p>$sensitivity; the lower stepper’s sensitivity policy. GtkSensitivityType is defined in GtkEnums.</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_get_lower_stepper_sensitivity"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_lower_stepper_sensitivity</a></h2>
+<p>Gets the sensitivity policy for the stepper that points to the &#39;lower&#39; end of the GtkRange’s adjustment.</p>
+<pre class="pod-block-code">method gtk_range_get_lower_stepper_sensitivity (
+  GtkSensitivityType $sensitivity
+)</pre>
+<p>Returns the lower stepper’s sensitivity policy. This is an enum value of type GtkSensitivityType and is defined in GtkEnums.</p>
+<h2 id="[gtk_range_]_set_upper_stepper_sensitivity"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_upper_stepper_sensitivity</a></h2>
+<p>Sets the sensitivity policy for the stepper that points to the &#39;upper&#39; end of the GtkRange’s adjustment.</p>
+<pre class="pod-block-code">method gtk_range_set_upper_stepper_sensitivity (
+  GtkSensitivityType $sensitivity
+)</pre>
+<ul><li><p>$sensitivity; the upper stepper’s sensitivity policy. GtkSensitivityType is defined in GtkEnums.</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_get_upper_stepper_sensitivity"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_upper_stepper_sensitivity</a></h2>
+<p>Gets the sensitivity policy for the stepper that points to the &#39;lower&#39; end of the GtkRange’s adjustment.</p>
+<pre class="pod-block-code">method gtk_range_get_upper_stepper_sensitivity (
+  GtkSensitivityType $sensitivity
+)</pre>
+<p>Returns the upper stepper’s sensitivity policy. This is an enum value of type GtkSensitivityType and is defined in GtkEnums.</p>
+<h2 id="[gtk_range_]_get_flippable"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_flippable</a></h2>
+<p>Gets the value set by <code>gtk_range_set_flippable()</code>.</p>
+<pre class="pod-block-code">method gtk_range_get_flippable ( --&gt; Int )</pre>
+<p>Returns 1 if the range is flippable.</p>
+<h2 id="[gtk_range_]_set_flippable"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_flippable</a></h2>
+<p>If a range is flippable, it will switch its direction if it is horizontal and its direction is <code>GTK_TEXT_DIR_RTL</code>.</p>
+<p>See <code>gtk_widget_get_direction()</code>.</p>
+<pre class="pod-block-code">method gtk_range_set_flippable ( Int $flippable )</pre>
+<ul><li><p>$flippable; 1 to make the range flippable.</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_get_range_rect"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_range_rect</a></h2>
+<p>This function returns the area that contains the range’s trough and its steppers, in widgets window coordinates.</p>
+<p>This function is useful mainly for GtkRange subclasses.</p>
+<pre class="pod-block-code">method gtk_range_get_range_rect ( GTK::V3::Gdk::GdkRectangle $rectangle )</pre>
+<ul><li><p>$rectangle. Location for the range rectangleType to return. GdkRectangle is defined in GdkTypes.</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_get_slider_range"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_slider_range</a></h2>
+<p>This function returns sliders range along the long dimension, in widgets window coordinates.</p>
+<p>This function is useful mainly for GtkRange subclasses.</p>
+<pre class="pod-block-code">method gtk_range_get_slider_range ( Int $slider_start, Int $slider_end )</pre>
+<ul><li><p>$slider_start; return location for the slider&#39;s start, or NULL.</p>
+</li>
+<li><p>$slider_end; return location for the slider&#39;s end, or NULL.</p>
+</li>
+</ul>
+<h2 id="[gtk_range_]_get_slider_size_fixed"><a class="u" href="#___top" title="go to top of document">[gtk_range_] get_slider_size_fixed</a></h2>
+<p>This function is useful mainly for GtkRange subclasses.</p>
+<pre class="pod-block-code">method gtk_range_get_slider_size_fixed ( --&gt; Int )</pre>
+<p>Returns 1 if the range’s slider has a fixed size.</p>
+<h2 id="[gtk_range_]_set_slider_size_fixed"><a class="u" href="#___top" title="go to top of document">[gtk_range_] set_slider_size_fixed</a></h2>
+<p>Sets whether the range’s slider has a fixed size, or a size that depends on its adjustment’s page size.</p>
+<p>This function is useful mainly for GtkRange subclasses.</p>
+<pre class="pod-block-code">method gtk_range_set_slider_size_fixed ( Int $size_fixed )</pre>
+<ul><li><p>$size_fixed; 1 to make the slider size constant.</p>
+</li>
+</ul>
+<h1 id="Types"><a class="u" href="#___top" title="go to top of document">Types</a></h1>
+<h2 id=""><a class="u" href="#___top" title="go to top of document"></a></h2>
+<ul><li></li>
+</ul>
+<h1 id="Signals"><a class="u" href="#___top" title="go to top of document">Signals</a></h1>
+<h2 id="Supported_signals"><a class="u" href="#___top" title="go to top of document">Supported signals</a></h2>
+<h3 id="value-changed"><a class="u" href="#___top" title="go to top of document">value-changed</a></h3>
+<p>Emitted when the range value changes.</p>
+<h2 id="Not_yet_supported_signals"><a class="u" href="#___top" title="go to top of document">Not yet supported signals</a></h2>
+<h3 id="adjust-bounds"><a class="u" href="#___top" title="go to top of document">adjust-bounds</a></h3>
+<p>Emitted before clamping a value, to give the application a chance to adjust the bounds.</p>
+<h3 id="change-value"><a class="u" href="#___top" title="go to top of document">change-value</a></h3>
+<p>The “change-value” signal is emitted when a scroll action is performed on a range. It allows an application to determine the type of scroll event that occurred and the resultant new value. The application can handle the event itself and return TRUE to prevent further processing. Or, by returning FALSE, it can pass the event to other handlers until the default GTK+ handler is reached.</p>
+<p>The value parameter is unrounded. An application that overrides the GtkRange::change-value signal is responsible for clamping the value to the desired number of decimal digits; the default GTK+ handler clamps the value based on “round-digits”.</p>
+<h3 id="move-slider"><a class="u" href="#___top" title="go to top of document">move-slider</a></h3>
+<p>Virtual function that moves the slider. Used for keybindings.</p>
+
+    </div>
+    
+    
+<div class=footer>Generated using Pod::Render, Pod::To::HTML, Camelia™ (butterfly) is © 2009 by Larry Wall</div>    </body>
+</html>
+

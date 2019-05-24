@@ -57,6 +57,7 @@
     "GTK::V3::Gtk::GtkPaned": "lib/GTK/V3/Gtk/GtkPaned.pm6",
     "GTK::V3::Gtk::GtkRadioButton": "lib/GTK/V3/Gtk/GtkRadioButton.pm6",
     "GTK::V3::Gtk::GtkRange": "lib/GTK/V3/Gtk/GtkRange.pm6",
+    "GTK::V3::Gtk::GtkScale": "lib/GTK/V3/Gtk/GtkScale.pm6",
     "GTK::V3::Gtk::GtkSearchEntry": "lib/GTK/V3/Gtk/GtkSearchEntry.pm6",
     "GTK::V3::Gtk::GtkStyleContext": "lib/GTK/V3/Gtk/GtkStyleContext.pm6",
     "GTK::V3::Gtk::GtkTextBuffer": "lib/GTK/V3/Gtk/GtkTextBuffer.pm6",

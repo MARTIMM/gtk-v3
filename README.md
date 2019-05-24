@@ -26,6 +26,7 @@ This example does the same as the example from `GTK::Simple` to show you the dif
   * Not all documentation is written.
   * Not all classes and/or methods are supplied.
 
+A screenshot of the example ![this screenshot][screenshot 1]. The code can be found at `examples/01-hello-world.pl6`.
 ```
 use v6;
 
@@ -81,7 +82,6 @@ $second.register-signal( $ash, 'second-button-click', 'clicked');
 $top-window.show-all;
 $m.gtk-main;
 ```
-Result GUI will be like ![this screenshot][screenshot 1]
 
 # Design
 
@@ -203,6 +203,7 @@ A few measures are implemented to help a bit preventing problems;
 | [GTK::V3::Gtk::GtkPaned][GTK::V3::Gtk::GtkPaned pdf] |  [GtkPaned.html][GtkPaned]
 | GTK::V3::Gtk::GtkRadioButton |  [GtkRadioButton.html][gtkradiobutton]
 | [GTK::V3::Gtk::GtkRange][GTK::V3::Gtk::GtkRange pdf] |  [GtkRange.html][GtkRange]
+| [GTK::V3::Gtk::GtkScale][GTK::V3::Gtk::GtkScale pdf] |  [GtkScale.html][GtkScale]
 | GTK::V3::Gtk::GtkStyleContext |  [GtkStyleContext.html][GtkStyleContext]
 | GTK::V3::Gtk::GtkTextBuffer |  [GtkTextBuffer.html][gtktextbuffer]
 | GTK::V3::Gtk::GtkTextTagTable |  [GtkTextTagTable.html][gtktexttagtable] |
@@ -345,7 +346,15 @@ Documentation is generated with
 [//]: # (---- [refs] ----------------------------------------------------------)
 [release]: https://github.com/MARTIMM/gtk-glade/blob/master/doc/CHANGES.md
 [logo]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/gtk-logo-100.png
-[screenshot 1]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/Screenshot_20190523_124617.png
+
+
+
+[screenshot 1]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/ex-readme.png
+[screenshot 2]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/16a-level-bar.png
+[screenshot 3]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/16b-level-bar.png
+[screenshot 4]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/ex-GtkScale.png
+
+
 
 [gtkaboutdialog]: https://developer.gnome.org/gtk3/stable/GtkAboutDialog.html
 [gtkbin]: https://developer.gnome.org/gtk3/stable/GtkBin.html
@@ -373,6 +382,7 @@ Documentation is generated with
 [GtkPaned]: https://developer.gnome.org/gtk3/stable/GtkPaned.html
 [gtkradiobutton]: https://developer.gnome.org/gtk3/stable/GtkRadioButton.html
 [GtkStyleContext]: https://developer.gnome.org/gtk3/stable/GtkStyleContext.html
+[GtkScale]: https://developer.gnome.org/gtk3/stable/GtkScale.html
 [gtktextbuffer]: https://developer.gnome.org/gtk3/stable/GtkTextBuffer.html
 [gtktexttagtable]: https://developer.gnome.org/gtk3/stable/GtkTextTagTable.html
 [gtktextview]: https://developer.gnome.org/gtk3/stable/GtkTextView.html
@@ -404,7 +414,7 @@ Documentation is generated with
 
 [//]: # (https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GObject.pdf)
 [//]: # (Pod documentation rendered with)
-[//]: # (pod-render.pl6 --pdf --style=pod6 --g=github.com/MARTIMM/gtk-v3 lib)
+[//]: # (pod-render.pl6 --pdf --g=github.com/MARTIMM/gtk-v3 lib)
 
 [GTK::V3::Gdk::GdkEventTypes html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GdkEventTypes.html
 [GTK::V3::Gdk::GdkEventTypes pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GdkEventTypes.pdf
@@ -442,3 +452,5 @@ Documentation is generated with
 [GTK::V3::Gtk::GtkWindow pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.pdf
 [GTK::V3::Gtk::GtkPaned html]: https://nbviewer.jupyter.org/github/MARTIM/gtk-v3/blob/master/doc/GtkPaned.html
 [GTK::V3::Gtk::GtkPaned pdf]: https://nbviewer.jupyter.org/github/MARTIM/gtk-v3/blob/master/doc/GtkPaned.pdf
+[GTK::V3::Gtk::GtkScale html]: https://nbviewer.jupyter.org/github/github.com/MARTIMM/gtk-v3/blob/master/doc/GtkScale.html
+[GTK::V3::Gtk::GtkScale pdf]: https://nbviewer.jupyter.org/github/github.com/MARTIMM/gtk-v3/blob/master/doc/GtkScale.pdf

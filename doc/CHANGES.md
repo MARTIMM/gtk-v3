@@ -1,7 +1,7 @@
 ## Release notes
 
-* 2019-05-20 0.13.0
-  * Added GtkRange
+* 2019-05-24 0.13.0
+  * Added GtkRange add GtkScale.
   * Additions to GtkEnum
 
 * 2019-05-17 0.12.0

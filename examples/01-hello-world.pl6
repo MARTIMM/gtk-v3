@@ -25,6 +25,10 @@ class AppSignalHandlers {
   method second-button-click ( ) {
     $m.gtk-main-quit;
   }
+
+  method exit-program ( ) {
+    $m.gtk-main-quit;
+  }
 }
 
 # Create a top level window and set a title
@@ -51,6 +55,8 @@ $button.register-signal(
   $ash, 'first-button-click', 'clicked',  :other-button($second)
 );
 $second.register-signal( $ash, 'second-button-click', 'clicked');
+
+$top-window.register-signal( $ash, 'exit-program', 'delete-event');
 
 # Show everything and activate all
 $top-window.show-all;

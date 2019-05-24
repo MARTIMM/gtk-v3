@@ -349,7 +349,7 @@ Documentation is generated with
 
 
 
-[screenshot 1]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/ex-readme.png
+[screenshot 1]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/01-hello-world.png
 [screenshot 2]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/16a-level-bar.png
 [screenshot 3]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/16b-level-bar.png
 [screenshot 4]: https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/ex-GtkScale.png

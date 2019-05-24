@@ -58,7 +58,7 @@ submethod BUILD ( *%options ) {
   return unless self.^name eq 'GTK::V3::LIBRARY::MODULE';
 
   if ? %options<empty> {
-    # ... self.native-gobject(gtk_about_dialog_new());
+    # ... self.native-gobject(gtk__dialog_new());
   }
 
   elsif ? %options<widget> || %options<build-id> {
@@ -80,7 +80,7 @@ method fallback ( $native-sub is copy --> Callable ) {
 
   my Callable $s;
   try { $s = &::($native-sub); }
-  # ... try { $s = &::("gtk_about_dialog_$native-sub"); } unless ?$s;
+  # ... try { $s = &::("gtk__dialog_$native-sub"); } unless ?$s;
 
 #note "ad $native-sub: ", $s;
   $s = callsame unless ?$s;
@@ -90,20 +90,17 @@ method fallback ( $native-sub is copy --> Callable ) {
 
 #-------------------------------------------------------------------------------
 =begin pod
-=head2 gtk_..._new
+=head2 gtk__new
 
 Creates a new native ...
 
   method gtk__new ( --> N-GObject )
 
-Returns a native widget. Can be used to initialize another object using :widget. This is very cumbersome when you know that a oneliner does the job for you: `my GTK::V3::LIBRARY::MODULE $m .= new(:empty);
-
-  my GTK::V3::LIBRARY::MODULE $m;
-  $m .= :new(:widget($m.gtk__new());
+Returns a native widget. It is not advised to use it. The new()/BUILD() method can handle this better and easier.
 
 =end pod
 
-sub gtk_..._new ( )
+sub gtk__new ( )
   returns N-GObject
   is native(&gtk-lib)
   { * }

@@ -131,7 +131,7 @@ sub gtk_range_get_show_fill_level ( N-GObject $range )
 
 #-------------------------------------------------------------------------------
 =begin pod
-=head2 gtk_range_set_fill_level
+=head2 [gtk_range_] set_fill_level
 
 Set the new position of the fill level indicator.
 
@@ -153,7 +153,7 @@ sub gtk_range_set_fill_level ( N-GObject $range, num64 $fill-level )
 
 #-------------------------------------------------------------------------------
 =begin pod
-=head2 gtk_range_set_restrict_to_fill_level
+=head2 [gtk_range_] set_restrict_to_fill_level
 
 Sets whether the slider is restricted to the fill level. See gtk_range_set_fill_level() for a general description of the fill level concept.
 
@@ -269,7 +269,7 @@ sub gtk_range_set_value ( N-GObject $range, num64 $value )
 =begin pod
 =head2 [gtk_range_] set_increments
 
-Sets the step and page sizes for the range. The step size is used when the user clicks the GtkScrollbar arrows or moves GtkScale via arrow keys. The page size is used for example when moving via Page Up or Page Down keys.
+Sets the step and page sizes for the range. The step size is used when the user clicks the GtkScrollbar arrows or moves GtkScale via arrow keys. The page size is used for example when moving via B<Page Up> or B<Page Down> keys.
 
   method gtk_range_set_increments ( Num $step, Num $page )
 
@@ -363,7 +363,7 @@ Returns the lower stepper’s sensitivity policy. This is an enum value of type 
 
 =end pod
 
-sub gtk_range_set_lower_stepper_sensitivity ( N-GObject $range )
+sub gtk_range_get_lower_stepper_sensitivity ( N-GObject $range )
   returns int32
   is native(&gtk-lib)
   { * }
@@ -401,7 +401,7 @@ Returns the upper stepper’s sensitivity policy. This is an enum value of type 
 
 =end pod
 
-sub gtk_range_set_upper_stepper_sensitivity ( N-GObject $range )
+sub gtk_range_get_upper_stepper_sensitivity ( N-GObject $range )
   returns int32
   is native(&gtk-lib)
   { * }
@@ -449,14 +449,15 @@ This function returns the area that contains the range’s trough and its steppe
 
 This function is useful mainly for GtkRange subclasses.
 
-  method gtk_range_get_range_rect ( GdkRectangle $rectangle )
+  method gtk_range_get_range_rect ( GTK::V3::Gdk::GdkRectangle $rectangle )
 
 =item $rectangle. Location for the range rectangleType to return. GdkRectangle is defined in GdkTypes.
 
 =end pod
 
-sub gtk_range_get_range_rect ( N-GObject $range, GdkRectangle $rectangle )
-  is native(&gtk-lib)
+sub gtk_range_get_range_rect (
+  N-GObject $range, Pointer $rectangle
+) is native(&gtk-lib)
   { * }
 
 #-------------------------------------------------------------------------------

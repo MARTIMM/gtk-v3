@@ -381,6 +381,7 @@ Documentation is generated with
 [GtkOrientable]: https://developer.gnome.org/gtk3/stable/gtk3-Orientable.html
 [GtkPaned]: https://developer.gnome.org/gtk3/stable/GtkPaned.html
 [gtkradiobutton]: https://developer.gnome.org/gtk3/stable/GtkRadioButton.html
+[GtkRange]: https://developer.gnome.org/gtk3/stable/GtkRange.html
 [GtkStyleContext]: https://developer.gnome.org/gtk3/stable/GtkStyleContext.html
 [GtkScale]: https://developer.gnome.org/gtk3/stable/GtkScale.html
 [gtktextbuffer]: https://developer.gnome.org/gtk3/stable/GtkTextBuffer.html
@@ -452,5 +453,6 @@ Documentation is generated with
 [GTK::V3::Gtk::GtkWindow pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.pdf
 [GTK::V3::Gtk::GtkPaned html]: https://nbviewer.jupyter.org/github/MARTIM/gtk-v3/blob/master/doc/GtkPaned.html
 [GTK::V3::Gtk::GtkPaned pdf]: https://nbviewer.jupyter.org/github/MARTIM/gtk-v3/blob/master/doc/GtkPaned.pdf
-[GTK::V3::Gtk::GtkScale html]: https://nbviewer.jupyter.org/github/github.com/MARTIMM/gtk-v3/blob/master/doc/GtkScale.html
-[GTK::V3::Gtk::GtkScale pdf]: https://nbviewer.jupyter.org/github/github.com/MARTIMM/gtk-v3/blob/master/doc/GtkScale.pdf
+[GTK::V3::Gtk::GtkRange pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkRange.pdf
+[GTK::V3::Gtk::GtkScale html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkScale.html
+[GTK::V3::Gtk::GtkScale pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkScale.pdf

@@ -11,6 +11,28 @@ use v6;
 
 =head1 Synopsis
 
+  my GTK::V3::Gtk::GtkScale $scale .= new(:empty);
+
+  # Set min and max of scale.
+  $scale.set-range( -2e0, .2e2);
+
+  # Step (keys left/right) and page (mouse scroll on scale).
+  $scale.set-increments( .2e0, 5e0);
+
+  # Value of current position displayed below the scale
+  $scale.set-value-pos(GTK_POS_BOTTOM);
+
+  # Want to have two digits after the commma
+  $scale.set-digits(2);
+
+  # Want to have some scale ticks also below the scale
+  $scale.add-mark( 0e0, GTK_POS_BOTTOM, 'Zero');
+  $scale.add-mark( 5e0, GTK_POS_BOTTOM, 'Five');
+  $scale.add-mark( 10e0, GTK_POS_BOTTOM, 'Ten');
+  $scale.add-mark( 15e0, GTK_POS_BOTTOM, 'Fifteen');
+  $scale.add-mark( 20e0, GTK_POS_BOTTOM, 'Twenty');
+
+Result will be like L<this scale detail | https://github.com/MARTIMM/gtk-v3/blob/master/doc/Design-docs/ex-GtkScale-detail.png>.
 
 =end pod
 #-------------------------------------------------------------------------------
@@ -37,7 +59,7 @@ my Bool $signals-added = False;
 =head2 new
 
 =begin comment
-  multi submethod BUILD ( Int :$orientation!, N-GObject :$adjustment! )
+  multi method new ( Int :$orientation!, N-GObject :$adjustment! )
 
 Creates a new GtkScale based on an orientation and adjustment.
 
@@ -45,7 +67,7 @@ Creates a new GtkScale based on an orientation and adjustment.
 =item $adjustment; a value of type GtkAdjustment which sets the range of the scale, or NULL to create a new adjustment.
 =end comment
 
-  multi submethod BUILD ( Int :$orientation!, Num $min!, Num $max!, Num $step! )
+  multi method new ( Int :$orientation!, Num $min!, Num $max!, Num $step! )
 
 Creates a new GtkScale providinng an orientation and minimum, maximum and step size.
 
@@ -54,11 +76,11 @@ Creates a new GtkScale providinng an orientation and minimum, maximum and step s
 =item $max; maximum value
 =item $step; step increment (tick size) used with keyboard shortcuts
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create an object using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 
-  multi submethod BUILD ( Str :$build-id! )
+  multi method new ( Str :$build-id! )
 
 Create an object using a native object from a builder. See also Gtk::V3::Glib::GObject.
 

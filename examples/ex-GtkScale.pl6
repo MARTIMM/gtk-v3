@@ -99,7 +99,7 @@ $scale.set-range( -2e0, .2e2);
 $scale.set-increments( .2e0, 5e0);
 $scale.set-value-pos(GTK_POS_BOTTOM);
 $scale.set-digits(2);
-$scale.add-mark( 0e0, GTK_POS_BOTTOM, 'Nil');
+$scale.add-mark( 0e0, GTK_POS_BOTTOM, 'Zero');
 $scale.add-mark( 5e0, GTK_POS_BOTTOM, 'Five');
 $scale.add-mark( 10e0, GTK_POS_BOTTOM, 'Ten');
 $scale.add-mark( 15e0, GTK_POS_BOTTOM, 'Fifteen');

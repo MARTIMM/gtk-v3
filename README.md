@@ -452,5 +452,5 @@ Documentation is generated with
 [GTK::V3::Gtk::GtkWindow pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkWindow.pdf
 [GTK::V3::Gtk::GtkPaned html]: https://nbviewer.jupyter.org/github/MARTIM/gtk-v3/blob/master/doc/GtkPaned.html
 [GTK::V3::Gtk::GtkPaned pdf]: https://nbviewer.jupyter.org/github/MARTIM/gtk-v3/blob/master/doc/GtkPaned.pdf
-[GTK::V3::Gtk::GtkScale html]: https://nbviewer.jupyter.org/github/github.com/MARTIMM/gtk-v3/blob/master/doc/GtkScale.html
-[GTK::V3::Gtk::GtkScale pdf]: https://nbviewer.jupyter.org/github/github.com/MARTIMM/gtk-v3/blob/master/doc/GtkScale.pdf
+[GTK::V3::Gtk::GtkScale html]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkScale.html
+[GTK::V3::Gtk::GtkScale pdf]: https://nbviewer.jupyter.org/github/MARTIMM/gtk-v3/blob/master/doc/GtkScale.pdf

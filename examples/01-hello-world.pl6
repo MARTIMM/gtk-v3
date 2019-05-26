@@ -56,7 +56,7 @@ $button.register-signal(
 );
 $second.register-signal( $ash, 'second-button-click', 'clicked');
 
-$top-window.register-signal( $ash, 'exit-program', 'delete-event');
+$top-window.register-signal( $ash, 'exit-program', 'destroy');
 
 # Show everything and activate all
 $top-window.show-all;

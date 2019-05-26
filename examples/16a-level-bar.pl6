@@ -102,7 +102,7 @@ $inc-button.register-signal( $ash, 'inc-level-bar', 'clicked');
 $dec-button.register-signal( $ash, 'dec-level-bar', 'clicked');
 $inverted-button.register-signal( $ash, 'invert-level-bar', 'toggled');
 
-$top-window.register-signal( $ash, 'exit-program', 'delete-event');
+$top-window.register-signal( $ash, 'exit-program', 'destroy');
 
 # Show everything and activate all
 $top-window.show-all;

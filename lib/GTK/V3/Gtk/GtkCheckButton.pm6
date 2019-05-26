@@ -79,19 +79,19 @@ sub gtk_check_button_new_with_mnemonic ( Str $label )
 =begin pod
 =head2 new
 
-  multi submethod BUILD ( Str :$label )
+  multi method new ( Str :$label )
 
 Create GtkCheckButton object with a label.
 
-  multi submethod BUILD ( Bool :$empty )
+  multi method new ( Bool :$empty )
 
 Create an empty GtkCheckButton.
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create a check button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 
-  multi submethod BUILD ( Str :$build-id! )
+  multi method new ( Str :$build-id! )
 
 Create a check button using a native object from a builder. See also Gtk::V3::Glib::GObject.
 =end pod

@@ -40,15 +40,15 @@ my Bool $signals-added = False;
 =head1 Methods
 =head2 new
 
-  multi submethod BUILD ( :$orientation! )
+  multi method new ( :$orientation! )
 
 Create a new object with an orientation set to C<GTK_ORIENTATION_HORIZONTAL> or C<GTK_ORIENTATION_VERTICAL>.
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create an object using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 
-  multi submethod BUILD ( Str :$build-id! )
+  multi method new ( Str :$build-id! )
 
 Create an object using a native object from a builder. See also Gtk::V3::Glib::GObject.
 

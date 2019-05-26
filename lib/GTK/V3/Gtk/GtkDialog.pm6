@@ -122,15 +122,15 @@ my Bool $signals-added = False;
 =begin pod
 =head2 new
 
-  multi submethod BUILD ( Bool :$empty! )
+  multi method new ( Bool :$empty! )
 
 Create an empty dialog
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create a dialog using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 
-  multi submethod BUILD ( Str :$build-id! )
+  multi method new ( Str :$build-id! )
 
 Create a dialog using a native object from a builder. See also Gtk::V3::Glib::GObject.
 

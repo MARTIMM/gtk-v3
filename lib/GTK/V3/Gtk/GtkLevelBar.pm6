@@ -38,19 +38,19 @@ my Bool $signals-added = False;
 =head1 Methods
 =head2 new
 
-  multi submethod BUILD ( Bool :$empty! )
+  multi method new ( Bool :$empty! )
 
 Create a GtkLevelBar object.
 
-  multi submethod BUILD ( Num :$min!, Num :$min! )
+  multi method new ( Num :$min!, Num :$min! )
 
 Create a new GtkLevelBar with a specified range.
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create an object using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 
-  multi submethod BUILD ( Str :$build-id! )
+  multi method new ( Str :$build-id! )
 
 Create an object using a native object from a builder. See also Gtk::V3::Glib::GObject.
 

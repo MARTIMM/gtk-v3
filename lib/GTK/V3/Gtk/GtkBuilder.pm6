@@ -153,15 +153,15 @@ sub gtk_builder_get_type_from_name ( N-GObject $builder, Str $type_name )
 =begin pod
 =head2 new
 
-  multi submethod BUILD ( Str :$filename )
+  multi method new ( Str :$filename )
 
 Create builder object and load gui design.
 
-  multi submethod BUILD ( Str :$string )
+  multi method new ( Str :$string )
 
 Same as above but read the design from the string.
 
-  multi submethod BUILD ( Bool :$empty )
+  multi method new ( Bool :$empty )
 
 Create an empty builder.
 =end pod

@@ -322,7 +322,7 @@ method fallback ( $native-sub --> Callable ) {
 =begin pod
 =head2 new
 
-=head3  multi submethod BUILD ( :$widget! )
+=head3  multi method new ( :$widget! )
 
 Please note that this class is mostly not instantiated directly but is used indirectly when a child class is instantiated.
 
@@ -355,7 +355,7 @@ Another example is a difficult way to get a button.
     :widget(GTK::V3::Gtk::GtkButton.gtk_button_new_with_label('Start'))
   );
 
-=head3  multi submethod BUILD ( Str :$build-id! )
+=head3  multi method new ( Str :$build-id! )
 
 Create a Perl6 widg
 #`{{
@@ -521,8 +521,7 @@ method set-builder ( $builder ) {
 Register a handler to process a signal or an event. There are several types of callbacks which can be handled by this regstration. They can be controlled by using a named argument with a special name.
 
   method register-signal (
-    $handler-object, Str:D $handler-name, Str:D $signal-name,
-    Int :$connect-flags = 0, *%user-options
+    $handler-object, Str:D $handler-name, Str:D $signal-name, *%user-options
     --> Bool
   )
 
@@ -537,7 +536,6 @@ Other forms are explained in the widget documentations when signals are provided
 
 
 =item $signal-name is the name of the event to be handled. Each gtk widget has its own series of signals, please look for it in the documentation of gtk.
-=item $connect-flags can be one of C<G_CONNECT_AFTER> or C<G_CONNECT_SWAPPED>. See L<documentation here|https://developer.gnome.org/gobject/stable/gobject-Signals.html#GConnectFlags>.
 =item %user-options. Any other user data in whatever type. These arguments are provided to the user handler when an event for the handler is fired. There will always be one named argument C<:$widget> which holds the class object on which the signal was registered. The name 'widget' is therefore reserved. An other reserved named argument is of course C<:$event>.
 
 

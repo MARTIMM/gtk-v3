@@ -75,7 +75,7 @@ sub gtk_file_chooser_dialog_new_two_buttons (
 =begin pod
 =head2 new
 
-  multi submethod BUILD ( Str :$title! )
+  multi method new ( Str :$title! )
 
 Create a filechooser dialog with given title. There will be only two buttons
 C<:bt1text> and C<:bt2text>. These are by default C<Cancel> and C<Accept>.
@@ -89,11 +89,11 @@ The parent window is set by C<:window> and is by default C<Any>.
 
 The values are defined in C<GTK::V3::Gtk::GtkDialog> and C<GtkFileChooser>.
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create a filechooser dialog using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 
-  multi submethod BUILD ( Str :$build-id! )
+  multi method new ( Str :$build-id! )
 
 Create a filechooser dialog using a native object from a builder. See also Gtk::V3::Glib::GObject.
 

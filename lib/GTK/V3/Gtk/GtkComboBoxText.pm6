@@ -160,11 +160,11 @@ sub gtk_combo_box_text_get_active_text ( N-GObject $combo_box )
 =begin pod
 =head2 new
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create a simple text combobox using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 
-  multi submethod BUILD ( Str :$build-id! )
+  multi method new ( Str :$build-id! )
 
 Create a simple text combobox using a native object from a builder. See also Gtk::V3::Glib::GObject.
 

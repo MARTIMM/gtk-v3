@@ -95,11 +95,11 @@ my Bool $signals-added = False;
 =begin pod
 =head2 new
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create a combobox using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 
-  multi submethod BUILD ( Str :$build-id! )
+  multi method new ( Str :$build-id! )
 
 Create a combobox using a native object from a builder. See also Gtk::V3::Glib::GObject.
 

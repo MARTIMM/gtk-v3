@@ -37,7 +37,7 @@ also is GTK::V3::Glib::GInterface;
 
 Create an orientable object.
 
-  multi submethod BUILD ( :$widget )
+  multi method new ( :$widget )
 
 Create an orientable object using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 

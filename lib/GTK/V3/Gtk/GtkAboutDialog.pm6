@@ -43,15 +43,15 @@ my Bool $signals-added = False;
 =head1 Methods
 =head2 new
 
-  multi submethod BUILD ( Bool :$empty! )
+  multi method new ( Bool :$empty! )
 
 Create an empty about dialog
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create an about dialog using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 
-  multi submethod BUILD ( Str :$build-id! )
+  multi method new ( Str :$build-id! )
 
 Create an about dialog using a native object from a builder. See also Gtk::V3::Glib::GObject.
 
@@ -104,7 +104,7 @@ method fallback ( $native-sub is copy --> Callable ) {
   method gtk_about_dialog_new ( --> N-GObject )
 
 Creates a new empty about dialog widget. See also L<gnome developer docs|https://developer.gnome.org/gtk3/stable/GtkAboutDialog.html#gtk-about-dialog-new>.
-Better, shorter and easier is to use C<.new(:empty)>. See info below.
+Better, shorter and easier is to use C<.new(:empty)>. See info for C<new()>.
 =end pod
 
 sub gtk_about_dialog_new ( )

@@ -35,7 +35,7 @@ my Bool $signals-added = False;
 =head1 Methods
 =head2 new
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create an object using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 

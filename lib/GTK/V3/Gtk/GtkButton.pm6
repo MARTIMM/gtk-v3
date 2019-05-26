@@ -35,19 +35,19 @@ my Bool $signals-added = False;
 =head1 Methods
 =head2 new
 
-  multi submethod BUILD ( Bool :$empty! )
+  multi method new ( Bool :$empty! )
 
 Create an empty button
 
-  multi submethod BUILD ( Str :$label! )
+  multi method new ( Str :$label! )
 
 Creates a new button object with a label
 
-  multi submethod BUILD ( :$widget! )
+  multi method new ( :$widget! )
 
 Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
 
-  multi submethod BUILD ( Str :$build-id! )
+  multi method new ( Str :$build-id! )
 
 Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.
 =end pod

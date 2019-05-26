@@ -1,5 +1,9 @@
 ## Release notes
 
+* 2019-05-26 0.13.1
+  * Documentation additions and changes.
+  * GtkWindow can be initialized with :$title to new(). Also added and changed some pod documentation.
+
 * 2019-05-24 0.13.0
   * Added GtkRange add GtkScale.
   * Additions to GtkEnum

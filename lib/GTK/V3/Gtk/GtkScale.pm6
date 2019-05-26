@@ -415,15 +415,6 @@ sub  ( N-GObject )
 
 #-------------------------------------------------------------------------------
 =begin pod
-=head1 Types
-=head2
-
-=item
-
-=end pod
-
-#-------------------------------------------------------------------------------
-=begin pod
 =head1 Signals
 
 =head2 Not yet supported signals

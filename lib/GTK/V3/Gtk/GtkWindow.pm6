@@ -2,16 +2,12 @@ use v6;
 # ==============================================================================
 =begin pod
 
-=TITLE class GTK::V3::Gtk::GtkWindow
+=TITLE GTK::V3::Gtk::GtkWindow
 
-=SUBTITLE
+=SUBTITLE GtkWindow — Toplevel which can contain other widgets
 
   unit class GTK::V3::Gtk::GtkWindow;
   also is GTK::V3::Gtk::GtkBin;
-
-=head2 GtkWindow — Toplevel which can contain other widgets
-
-See readme for an example.
 
 =end pod
 # ==============================================================================
@@ -28,47 +24,87 @@ use GTK::V3::Gtk::GtkBin;
 unit class GTK::V3::Gtk::GtkWindow:auth<github:MARTIMM>;
 also is GTK::V3::Gtk::GtkBin;
 
-# ==============================================================================
+#-------------------------------------------------------------------------------
+my Bool $signals-added = False;
+#-------------------------------------------------------------------------------
 =begin pod
-=head1 Enums
+=head1 Methods
+=head2 new
 
-=head2 GtkWindowPosition
+  multi method new (
+    Bool :$empty!, GtkWindowType :$window-type = GTK_WINDOW_TOPLEVEL
+  )
 
-Window placement can be influenced using this enumeration. Note that using GTK_WIN_POS_CENTER_ALWAYS is almost always a bad idea. It won’t necessarily work well with all window managers or on all windowing systems.
+Create an empty top level window or popup.
 
-=item GTK_WIN_POS_NONE. No influence is made on placement.
-=item GTK_WIN_POS_CENTER. Windows should be placed in the center of the screen.
-=item GTK_WIN_POS_MOUSE. Windows should be placed at the current mouse position.
-=item GTK_WIN_POS_CENTER_ALWAYS. Keep window centered as it changes size, etc.
-=item GTK_WIN_POS_CENTER_PARENT. Center the window on its transient parent.
+  multi method new (
+    Bool :$title!, GtkWindowType :$window-type = GTK_WINDOW_TOPLEVEL
+  )
+
+Create a top level window or popup with title set.
+
+  multi method new ( :$widget! )
+
+Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
+
+  multi method new ( Str :$build-id! )
+
+Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.
 
 =end pod
-enum GtkWindowPosition is export (
-    GTK_WIN_POS_NONE               => 0,
-    GTK_WIN_POS_CENTER             => 1,
-    GTK_WIN_POS_MOUSE              => 2,
-    GTK_WIN_POS_CENTER_ALWAYS      => 3,
-    GTK_WIN_POS_CENTER_ON_PARENT   => 4,
-);
+submethod BUILD ( *%options ) {
+
+  $signals-added = self.add-signal-types( $?CLASS.^name,
+    :signal<activate-default activate-focus keys-changed>,
+    :nativewidget<set-focus>,
+    :bool<enable-debugging>,
+  ) unless $signals-added;
+
+  # prevent creating wrong widgets
+  return unless self.^name eq 'GTK::V3::Gtk::GtkWindow';
+
+  if ?%options<empty> {
+    my $wtype = %options<window-type> // 0;       # 0 = GTK_WINDOW_TOPLEVEL
+    self.native-gobject(gtk_window_new($wtype));
+  }
+
+  elsif ? %options<title> {
+    my $wtype = %options<window-type> // 0;       # 0 = GTK_WINDOW_TOPLEVEL;
+    self.native-gobject(gtk_window_new($wtype));
+    self.gtk_window_set_title(%options<title>);
+  }
+
+  elsif ? %options<widget> || %options<build-id> {
+    # provided in GObject
+  }
+
+  elsif %options.keys.elems {
+    die X::GTK::V3.new(
+      :message('Unsupported options for ' ~ self.^name ~
+               ': ' ~ %options.keys.join(', ')
+              )
+    );
+  }
+}
+
+#-------------------------------------------------------------------------------
+# no pod. user does not have to know about it.
+method fallback ( $native-sub is copy --> Callable ) {
+
+  my Callable $s;
+  try { $s = &::($native-sub); }
+  try { $s = &::("gtk_window_$native-sub"); } unless ?$s;
+
+  $s = callsame unless ?$s;
+
+  $s;
+}
 
 #-------------------------------------------------------------------------------
 =begin pod
-=head2 GtkWindowType
-
-A GtkWindow can be one of these types. Most things you’d consider a “window” should have type GTK_WINDOW_TOPLEVEL; windows with this type are managed by the window manager and have a frame by default (call gtk_window_set_decorated() to toggle the frame). Windows with type GTK_WINDOW_POPUP are ignored by the window manager; window manager keybindings won’t work on them, the window manager won’t decorate the window with a frame, many GTK+ features that rely on the window manager will not work (e.g. resize grips and maximization/minimization). GTK_WINDOW_POPUP is used to implement widgets such as GtkMenu or tooltips that you normally don’t think of as windows per se. Nearly all windows should be GTK_WINDOW_TOPLEVEL. In particular, do not use GTK_WINDOW_POPUP just to turn off the window borders; use gtk_window_set_decorated() for that.
-
-=item GTK_WINDOW_TOPLEVEL. A regular window, such as a dialog.
-=item GTK_WINDOW_POPUP. A special window such as a tooltip.
-
-=end pod
-enum GtkWindowType is export < GTK_WINDOW_TOPLEVEL GTK_WINDOW_POPUP >;
-
-# ==============================================================================
-=begin pod
-=head1 Methods
 =head2 gtk_window_new
 
-  method gtk_window_new ( GtkWindowType $type )
+  method gtk_window_new ( int32 $type )
 
 Creates a new GtkWindow, which is a toplevel window that can contain other widgets. Nearly always, the type of the window should be GTK_WINDOW_TOPLEVEL. If you’re implementing something like a popup menu from scratch (which is a bad idea, just use GtkMenu), you might use GTK_WINDOW_POPUP. GTK_WINDOW_POPUP is not for dialogs, though in some other toolkits dialogs are called “popups”. In GTK+, GTK_WINDOW_POPUP means a pop-up menu or pop-up tooltip. On X11, popup windows are not controlled by the window manager.
 
@@ -145,69 +181,102 @@ sub gtk_window_set_transient_for ( N-GObject $window, N-GObject $parent )
   is native(&gtk-lib)
   { * }
 
-# = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
-my Bool $signals-added = False;
 #-------------------------------------------------------------------------------
 =begin pod
-=head2 new
+=head1 Types
 
-  multi submethod BUILD (
-    Bool :$empty!, GtkWindowType :$window-type = GTK_WINDOW_TOPLEVEL
-  )
+=head2 GtkWindowPosition
 
-Create an empty top level window or popup.
+Window placement can be influenced using this enumeration. Note that using GTK_WIN_POS_CENTER_ALWAYS is almost always a bad idea. It won’t necessarily work well with all window managers or on all windowing systems.
 
-  multi submethod BUILD ( :$widget! )
-
-Create a button using a native object from elsewhere. See also Gtk::V3::Glib::GObject.
-
-  multi submethod BUILD ( Str :$build-id! )
-
-Create a button using a native object from a builder. See also Gtk::V3::Glib::GObject.
+=item GTK_WIN_POS_NONE. No influence is made on placement.
+=item GTK_WIN_POS_CENTER. Windows should be placed in the center of the screen.
+=item GTK_WIN_POS_MOUSE. Windows should be placed at the current mouse position.
+=item GTK_WIN_POS_CENTER_ALWAYS. Keep window centered as it changes size, etc.
+=item GTK_WIN_POS_CENTER_PARENT. Center the window on its transient parent.
 
 =end pod
-submethod BUILD ( *%options ) {
-
-  $signals-added = self.add-signal-types( $?CLASS.^name, 
-    :signal<activate-default activate-focus keys-changed>,
-    :nativewidget<set-focus>,
-    :bool<enable-debugging>,
-  ) unless $signals-added;
-
-  # prevent creating wrong widgets
-  return unless self.^name eq 'GTK::V3::Gtk::GtkWindow';
-
-  if ?%options<empty> {
-    if ? %options<window-type> and %options<window-type> ~~ GtkWindowType {
-      self.native-gobject(gtk_window_new(%options<window-type>));
-    }
-
-    else {
-      self.native-gobject(gtk_window_new(GTK_WINDOW_TOPLEVEL));
-    }
-  }
-
-  elsif ? %options<widget> || %options<build-id> {
-    # provided in GObject
-  }
-
-  elsif %options.keys.elems {
-    die X::GTK::V3.new(
-      :message('Unsupported options for ' ~ self.^name ~
-               ': ' ~ %options.keys.join(', ')
-              )
-    );
-  }
-}
+enum GtkWindowPosition is export <
+  GTK_WIN_POS_NONE
+  GTK_WIN_POS_CENTER
+  GTK_WIN_POS_MOUSE
+  GTK_WIN_POS_CENTER_ALWAYS
+  GTK_WIN_POS_CENTER_ON_PARENT
+>;
 
 #-------------------------------------------------------------------------------
-method fallback ( $native-sub is copy --> Callable ) {
+=begin pod
+=head2 GtkWindowType
 
-  my Callable $s;
-  try { $s = &::($native-sub); }
-  try { $s = &::("gtk_window_$native-sub"); } unless ?$s;
+A GtkWindow can be one of these types. Most things you’d consider a “window” should have type GTK_WINDOW_TOPLEVEL; windows with this type are managed by the window manager and have a frame by default (call gtk_window_set_decorated() to toggle the frame). Windows with type GTK_WINDOW_POPUP are ignored by the window manager; window manager keybindings won’t work on them, the window manager won’t decorate the window with a frame, many GTK+ features that rely on the window manager will not work (e.g. resize grips and maximization/minimization). GTK_WINDOW_POPUP is used to implement widgets such as GtkMenu or tooltips that you normally don’t think of as windows per se. Nearly all windows should be GTK_WINDOW_TOPLEVEL. In particular, do not use GTK_WINDOW_POPUP just to turn off the window borders; use gtk_window_set_decorated() for that.
 
-  $s = callsame unless ?$s;
+=item GTK_WINDOW_TOPLEVEL. A regular window, such as a dialog.
+=item GTK_WINDOW_POPUP. A special window such as a tooltip.
 
-  $s;
-}
+=end pod
+enum GtkWindowType is export < GTK_WINDOW_TOPLEVEL GTK_WINDOW_POPUP >;
+
+#-------------------------------------------------------------------------------
+=begin pod
+=head1 Signals
+
+=head2 Supported signals
+=head3 activate-default
+
+The C<activate-default> signal is a keybinding signal which gets emitted when the user activates the default widget of window.
+
+=head4 Signal Handler Signature
+
+  method handler (
+    GTK::V3::Glib::GObject :$widget, :$user-option1, ..., $user-optionN
+  )
+
+=head3 activate-focus
+
+The C<activate-focus> signal is a keybinding signal which gets emitted when the user activates the currently focused widget of window.
+
+=head4 Signal Handler Signature
+
+  method handler (
+    GTK::V3::Glib::GObject :$widget, :$user-option1, ..., $user-optionN
+  )
+
+=head3 keys-changed
+
+The C<keys-changed> signal gets emitted when the set of accelerators or mnemonics that are associated with window changes.
+
+=head4 Signal Handler Signature
+
+  method handler (
+    GTK::V3::Glib::GObject :$widget, :$user-option1, ..., $user-optionN
+  )
+
+=head3 set-focus
+
+=head4 Signal Handler Signature
+
+  method handler (
+    GTK::V3::Glib::GObject :$widget, N-GObject :$nativewidget,
+    :$user-option1, ..., :$user-optionN
+  )
+
+=comment Flags: Run Last
+
+
+=head2 Not yet supported signals
+=head3 enable-debugging
+
+The C<enable-debugging> signal is a keybinding signal which gets emitted when the user enables or disables interactive debugging. When toggle is 1, interactive debugging is toggled on or off, when it is 0, the debugger will be pointed at the widget under the pointer.
+
+The default bindings for this signal are K<Ctrl-Shift-I> and K<Ctrl-Shift-D>.
+
+Return: 1 if the key binding was handled
+
+
+=head2 Handler Method Arguments
+=item $widget; This can be any perl6 widget with C<GTK::V3::Glib::GObject> as the top parent class e.g. C<GTK::V3::Gtk::GtkButton>.
+=item $event; A structure defined in C<GTK::V3::Gdk::GdkEventTypes>.
+=item $nativewidget; A native widget which can be turned into a perl6 widget using C<.new(:widget())> on the appropriate class.
+=item $user-option*; Any extra options given by the user when registering the signal.
+
+=end pod

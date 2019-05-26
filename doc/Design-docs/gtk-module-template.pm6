@@ -154,13 +154,42 @@ sub  ( N-GObject )
 =head2 Supported signals
 =head3
 
-
 =head2 Unsupported signals
 =head3
 
 
 =head2 Not yet supported signals
 =head3
+
+
+
+
+=head4 Signal Handler Signature
+
+  method handler (
+    GTK::V3::Glib::GObject :$widget, :$user-option1, ..., $user-optionN
+  )
+
+=head4 Event Handler Signature
+
+  method handler (
+    GTK::V3::Glib::GObject :$widget, GdkEvent :$event,
+    :$user-option1, ..., $user-optionN
+  )
+
+=head4 Native Object Handler Signature
+
+  method handler (
+    GTK::V3::Glib::GObject :$widget, N-GObject :$nativewidget,
+    :$user-option1, ..., :$user-optionN
+  )
+
+=head2 Handler Method Arguments
+=item $widget; This can be any perl6 widget with C<GTK::V3::Glib::GObject> as the top parent class e.g. C<GTK::V3::Gtk::GtkButton>.
+=item $event; A structure defined in C<GTK::V3::Gdk::GdkEventTypes>.
+=item $nativewidget; A native widget which can be turned into a perl6 widget using C<.new(:widget())> on the appropriate class.
+=item $user-option*; Any extra options given by the user when registering the signal.
+
 
 
 =end pod

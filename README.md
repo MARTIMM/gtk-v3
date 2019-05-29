@@ -3,6 +3,15 @@
 # GTK::V3 - Accessing Gtk version 3.*
 [![License](http://martimm.github.io/label/License-label.svg)](http://www.perlfoundation.org/artistic_license_2_0)
 
+# NOTE
+## This project is refactored into the following projects
+* Gnome::Gtk3
+* Gnome::Gdk
+* Gnome::GObject
+* Gnome::Glib
+* Gnome::N
+## To install, type 'zef install Gnome::Gtk3' and all modules will be installed with it.
+
 # Description
 First of all, I would like to thank the developers of the `GTK::Simple` project because of the information I got while reading the code. Also because one of the files is copied unaltered for which I did not had to think about to get that right. The examples in that project are also useful to compare code with each other and to see what is or is not possible.
 

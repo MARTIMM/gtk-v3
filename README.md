@@ -4,9 +4,9 @@
 [![License](http://martimm.github.io/label/License-label.svg)](http://www.perlfoundation.org/artistic_license_2_0)
 
 # NOTE
-## This project is refactored into the following projects
+## This project is refactored into the following projects. This project will stay for a while but will not be extended. Please look at the README.md of  Gnome::Gtk3 if you like to follow the progress of those packages.
 * Gnome::Gtk3
-* Gnome::Gdk
+* Gnome::Gdk3
 * Gnome::GObject
 * Gnome::Glib
 * Gnome::N

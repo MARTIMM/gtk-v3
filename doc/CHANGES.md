@@ -1,5 +1,8 @@
 ## Release notes
 
+* 2019-06-01 0.13.2
+  * Renamed Gtk project into `Gnome::Gtk3`. This branch is not continued
+
 * 2019-05-26 0.13.1
   * Documentation additions and changes.
   * GtkWindow can be initialized with :$title to new(). Also added and changed some pod documentation.
